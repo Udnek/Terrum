@@ -1,15 +1,11 @@
 package me.udnek.tests;
 
-import me.udnek.objects.PointObject;
 import me.udnek.objects.PolygonObject;
 import me.udnek.scene.RayTracer;
-import me.udnek.scene.Scene;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Set;
 
 public class Tests {
     public static void run(){

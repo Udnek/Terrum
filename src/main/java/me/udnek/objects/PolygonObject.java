@@ -1,8 +1,6 @@
 package me.udnek.objects;
 
-import me.udnek.scene.Scene;
 import me.udnek.utils.Triangle;
-import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class PolygonObject extends SceneObject{
