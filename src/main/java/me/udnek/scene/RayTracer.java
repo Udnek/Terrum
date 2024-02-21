@@ -2,7 +2,6 @@ package me.udnek.scene;
 
 import me.udnek.objects.PolygonObject;
 import me.udnek.objects.SceneObject;
-import me.udnek.utils.Vector3;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
