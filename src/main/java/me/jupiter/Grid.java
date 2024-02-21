@@ -24,23 +24,16 @@ public class Grid {
         for (int i = 0; i < sizeX*sizeY*sizeZ; i++) {
             grid[i] = new GridSegment();
             Vector3d randomVelocity = new Vector3d();
-            randomVelocity.x = Math.random() * 5;
-            randomVelocity.y = Math.random() * 5;
-            randomVelocity.z = Math.random() * 5;
+            randomVelocity.x = Math.random();
+            randomVelocity.y = Math.random();
+            randomVelocity.z = Math.random();
             grid[i].setVelocity(randomVelocity);
         }
     }
 
-//    public GridSegment getSegment(int x, int y, int z){
-//        return grid[x + sizeX*y + sizeX*sizeY*z];
-//    }
-//    public void setSegment(int x, int y, int z, GridSegment targetSegment){
-//        grid[x + sizeX*y + sizeX*sizeY*z] = targetSegment;
-//    }
-
     public void recalculateAcceleration() {
         Vector3d gravitationalAcceleration = new Vector3d(0, 0, 9.806);
-        for (int i = 0; i < grid.length; i++) {
+        for (int i = 0; i < grid.length - (1 + sizeX + sizeX*sizeY); i++) {
             Vector3d velocity = grid[i].getVelocity();
             Vector3d acceleration = new Vector3d();
             Vector3d deltaVelocity = new Vector3d();

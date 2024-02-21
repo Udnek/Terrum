@@ -2,7 +2,7 @@ package me.jupiter;
 
 import org.realityforge.vecmath.Vector3d;
 
-public class GridSegment {
+public class GridSegment { 
     private Vector3d velocity = new Vector3d();
     private Vector3d acceleration = new Vector3d();
 
