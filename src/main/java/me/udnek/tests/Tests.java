@@ -14,16 +14,14 @@ public class Tests {
 
                 new Triangle(
                         new Triangle(
-                                new Vector3d(0, 0, 10),
-                                new Vector3d(0, 1, 8),
-                                new Vector3d(1, 0, 10)
+                                new Vector3d(-0.5, 0, 0),
+                                new Vector3d(0.4, 1, 0.5),
+                                new Vector3d(0.4, 0, 0.5)
                         )
                 )
         );
 
         RayTracer rayTracer = new RayTracer(new Vector3d(0, 0, 0), Collections.singletonList(polygonObject));
 
-        int i = rayTracer.rayCast(new Vector3d(0, 0, 1));
-        //System.out.println(i);
     }
 }

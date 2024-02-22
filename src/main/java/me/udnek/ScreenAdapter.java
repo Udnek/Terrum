@@ -6,11 +6,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class ScreenAdapter extends WindowAdapter {
-    private JFrame frame;
-    private boolean isScreenOpen = true;
+    private final JFrame frame;
+    private boolean screenIsOpen = true;
 
     public ScreenAdapter(){
-        this.frame = new JFrame();
+        this.frame = new JFrame("WRLS");
         frame.addWindowListener(this);
         frame.setIgnoreRepaint(true);
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
@@ -20,7 +20,7 @@ public class ScreenAdapter extends WindowAdapter {
     }
 
     public void nextFrame(){
-        System.out.println("NEXFRAME??????????????????????");
+        System.out.println("NEXFRAME?");
         frame.repaint();
     }
 
@@ -29,7 +29,7 @@ public class ScreenAdapter extends WindowAdapter {
 
         int nanosecondsBetweenUpdates = (int) (Math.pow(10, 9) / fps);
         long previousStartTime = System.nanoTime();
-        while (isScreenOpen) {
+        while (screenIsOpen) {
             long thisStartTime = System.nanoTime();
             long elapsedTime = thisStartTime - previousStartTime;
             previousStartTime = thisStartTime;
@@ -49,7 +49,7 @@ public class ScreenAdapter extends WindowAdapter {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        isScreenOpen = false;
+        screenIsOpen = false;
         frame.dispose();
     }
 

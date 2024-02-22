@@ -2,7 +2,7 @@ package me.udnek.objects;
 
 import org.realityforge.vecmath.Vector3d;
 
-public class PointObject extends SceneObject{
+public abstract class PointObject extends SceneObject{
     public PointObject(double x, double y, double z) {
         this(new Vector3d(x, y, z));
     }
