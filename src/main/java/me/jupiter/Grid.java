@@ -26,8 +26,8 @@ public class Grid {
             grid[i] = new GridSegment();
             Vector3d initialVelocity = new Vector3d();
             GridPosition gridPosition = toGridPosition(i);
-            initialVelocity.x = gridPosition.y - ((double) grid.length / 2);
-            initialVelocity.y = gridPosition.x - ((double) grid.length / 2);
+            initialVelocity.x = gridPosition.y - ((double) sizeY / 2);
+            initialVelocity.y = gridPosition.x - ((double) sizeX / 2);
             initialVelocity.z = 0;
             grid[i].setVelocity(initialVelocity);
         }
@@ -69,6 +69,7 @@ public class Grid {
             grid[i].setAcceleration(acceleration);
         }
     }
+
     public void recalculateVelocity(double deltaTime){
         for (GridSegment gridSegment : grid) {
             Vector3d acceleration = gridSegment.getAcceleration();
@@ -145,6 +146,17 @@ public class Grid {
     }
 
     public GridSegment getSegment(int position) {return grid[position].copy();}
+
+    public void recalculateParticlePosition(Particle particle){
+        double particleXPosition = particle.getPosition().x;
+        double particleYPosition = particle.getPosition().y;
+        double particleZPosition = particle.getPosition().z;
+        GridPosition particleGridPosition = new GridPosition((int) Math.round(particleXPosition),
+                                                             (int) Math.round(particleYPosition),
+                                                             (int) Math.round(particleZPosition));
+        //UNDONE
+
+    }
 
     public static class GridPosition {
         public int x;
