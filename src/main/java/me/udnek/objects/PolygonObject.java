@@ -3,6 +3,11 @@ package me.udnek.objects;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class PolygonObject extends SceneObject{
 
     private Triangle plane;
@@ -27,5 +32,10 @@ public class PolygonObject extends SceneObject{
 
     public double getArea(){
         return plane.getArea();
+    }
+
+    @Override
+    public List<Triangle> getRenderTriangles() {
+        return Collections.singletonList(getPlane());
     }
 }

@@ -50,6 +50,13 @@ public class Triangle {
         return getVertex0().sub(getVertex2());
     }
 
+    public Vector3d getCenter(){
+        return new Vector3d(
+                (vertex0.x + vertex1.x + vertex2.x)/3,
+                (vertex0.y + vertex1.y + vertex2.y)/3,
+                (vertex0.z + vertex1.z + vertex2.z)/3
+        );
+    }
     public Vector3d getNormal(){return new Vector3d().cross(getEdge0(), getEdge1());}
     public double getArea(){
         return VectorUtils.getAreaOfTriangle(getEdge0(), getEdge1());
@@ -57,5 +64,19 @@ public class Triangle {
 
     public Triangle copy(){
         return new Triangle(this);
+    }
+
+    public Triangle addToAllVertexes(Vector3d vector){
+        this.vertex0.add(vector);
+        this.vertex1.add(vector);
+        this.vertex2.add(vector);
+        return this;
+    }
+
+    public Triangle subFromAllVertexes(Vector3d vector){
+        this.vertex0.sub(vector);
+        this.vertex1.sub(vector);
+        this.vertex2.sub(vector);
+        return this;
     }
 }

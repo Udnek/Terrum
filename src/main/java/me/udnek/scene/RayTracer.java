@@ -1,7 +1,7 @@
 package me.udnek.scene;
 
-import me.udnek.objects.PolygonObject;
 import me.udnek.objects.SceneObject;
+import me.udnek.utils.Triangle;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -23,21 +23,65 @@ public class RayTracer {
         this.cameraPosition = cameraPosition;
         this.objectsToRender = objectsToRender;
     }
-    public int rayCast(Vector3d direction){
+    public RayTraceResult rayTrace(Vector3d direction){
+
+
+        ArrayList<RayTraceResult> rayTraceResults = new ArrayList<>();
         for (SceneObject object : objectsToRender) {
-            if (rayCastObject(direction, object)) return Color.WHITE.getRGB();
+            RayTraceResult rayTraceResult = rayTraceObject(direction, object);
+            if (rayTraceResult.isHitted()){
+                rayTraceResults.add(rayTraceResult);
+            }
         }
 
-        return Color.BLACK.getRGB();
+        return sortNearest(rayTraceResults);
     }
 
-    private boolean rayCastObject(Vector3d direction, SceneObject sceneObject){
-        if (sceneObject instanceof PolygonObject){
-            return (VectorUtils.triangleRayIntersection(direction, ((PolygonObject) sceneObject).getPlane()) != null);
+    private RayTraceResult rayTraceObject(Vector3d direction, SceneObject sceneObject){
+
+        ArrayList<RayTraceResult> rayTraceResults = new ArrayList<>();
+
+        for (Triangle plane : sceneObject.getRenderTriangles()) {
+            plane.addToAllVertexes(sceneObject.getPosition()).subFromAllVertexes(cameraPosition);
+            Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
+
+            if (hitPosition != null){
+                RayTraceResult rayTraceResult = new RayTraceResult(hitPosition);
+                //rayTraceResult.setSuggestedColor(Color.WHITE.getRGB());
+                rayTraceResult.setSuggestedColor(colorizeRayTraceResult(rayTraceResult, plane));
+                rayTraceResults.add(rayTraceResult);
+
+
+            }
         }
-        else {
-            double distance = VectorUtils.distanceFromLineToPoint(direction, sceneObject.getPosition().sub(cameraPosition));
-            return distance < 0.1;
+
+        return sortNearest(rayTraceResults);
+    }
+
+
+    private RayTraceResult sortNearest(List<RayTraceResult> rayTraceResults){
+        if (rayTraceResults.isEmpty()) return new RayTraceResult();
+
+        RayTraceResult nearestRayTrace = rayTraceResults.get(0);
+
+        for (RayTraceResult rayTraceResult : rayTraceResults) {
+            if (rayTraceResult.getDistance() < nearestRayTrace.getDistance()){
+                nearestRayTrace = rayTraceResult;
+            }
         }
+        return nearestRayTrace;
+    }
+
+    private int colorizeRayTraceResult(RayTraceResult rayTraceResult, Triangle triangle){
+        Vector3d hitPosition = rayTraceResult.getHitPosition();
+
+        double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
+        double d1 = VectorUtils.distance(hitPosition, triangle.getVertex1());
+        double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
+        Vector3d color = new Vector3d(1/d0, 1/d1 ,1/d2);
+        color.div(VectorUtils.getMax(color));
+        VectorUtils.cutTo(color, 1f);
+
+        return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
     }
 }

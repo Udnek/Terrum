@@ -3,18 +3,51 @@ package me.udnek.utils;
 import org.realityforge.vecmath.Vector3d;
 
 public class VectorUtils {
+    public static double distanceSquared(Vector3d vector0, Vector3d vector1){
+        return Math.pow((vector0.x-vector1.x), 2) + Math.pow((vector0.y-vector1.y), 2) + Math.pow((vector0.z-vector1.z), 2);
+    }
+    public static double distance(Vector3d vector0, Vector3d vector1){
+        return Math.sqrt(distanceSquared(vector0, vector1));
+    }
 
     public static double getAreaOfTriangle(Vector3d edge0, Vector3d edge1){
         return getAreaOfParallelogram(edge0, edge1)/2;
     }
 
-    public static double getCrossProductLength(Vector3d edge0, Vector3d edge1){
-        return new Vector3d().cross(edge0, edge1).length();
+    public static double getCrossProductLength(Vector3d vector0, Vector3d vector1){
+        return new Vector3d().cross(vector0, vector1).length();
     }
 
     public static double getAreaOfParallelogram(Vector3d edge0, Vector3d edge1){
         return getCrossProductLength(edge0, edge1);
     }
+
+    public static double getMax(Vector3d vector){
+        double x = vector.x;
+        double y = vector.y;
+        double z = vector.z;
+        if (x > y && x > z) return x;
+        if (y > x && y > z) return y;
+        return z;
+    }
+
+    public static double getMin(Vector3d vector){
+        double x = vector.x;
+        double y = vector.y;
+        double z = vector.z;
+        if (x < y && x < z) return x;
+        if (y < x && y < z) return y;
+        return z;
+    }
+
+    public static void cutTo(Vector3d vector, double value){
+        vector.x = Math.min(vector.x, value);
+        vector.y = Math.min(vector.y, value);
+        vector.z = Math.min(vector.z, value);
+    }
+    ///////////////////////////////////////////////////////////////////////////
+    // FOR 3D CALCS
+    ///////////////////////////////////////////////////////////////////////////
 
     public static Vector3d triangleRayIntersection(Vector3d direction, Triangle triangle) {
 
@@ -42,7 +75,7 @@ public class VectorUtils {
         double area1 = getAreaOfTriangle(pointToVertex1, pointToVertex2);
         double area2 = getAreaOfTriangle(pointToVertex2, pointToVertex0);
 
-        if (area0 + area1 + area2 > actualArea+0.00001) return null;
+        if (area0 + area1 + area2 > actualArea+EPSILON) return null;
 
         return onPlanePosition;
     }
@@ -50,5 +83,4 @@ public class VectorUtils {
     public static double distanceFromLineToPoint(Vector3d direction, Vector3d point){
         return new Vector3d().cross(direction, point).length()/direction.length();
     }
-
 }
