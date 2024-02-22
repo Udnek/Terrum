@@ -26,7 +26,7 @@ public class Scene{
         sceneObjects.add(
                 new TetrahedronObject(
                         //pos
-                        new Vector3d(0, 0, 0.5),
+                        new Vector3d(0, 3, 0.5),
                         //up
                         new Vector3d(0.5, 1, 0.5),
                         //bottom
@@ -56,6 +56,10 @@ public class Scene{
         RayTracer rayTracer = new RayTracer(camera.getPosition(), sceneObjects);
 
         Vector3d cameraDirection = camera.getDirection();
+
+        sceneObjects.get(0).move(new Vector3d(0, -0.1, 0));
+        //System.out.println(sceneObjects.get(0).getPosition().asString());
+        //System.out.println(sceneObjects.get(0).getRenderTriangles()[0].asString());
 
         float xOffset = -width/2f;
         float yOffset = -height/2f;

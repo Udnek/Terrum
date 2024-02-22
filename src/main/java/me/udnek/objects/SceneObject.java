@@ -20,5 +20,8 @@ public abstract class SceneObject {
         this.position = position;
     }
 
-    public abstract List<Triangle> getRenderTriangles();
+    public void move(Vector3d position){
+        setPosition(getPosition().add(position));
+    }
+    public abstract Triangle[] getRenderTriangles();
 }

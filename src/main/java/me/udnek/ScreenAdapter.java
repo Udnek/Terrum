@@ -20,12 +20,19 @@ public class ScreenAdapter extends WindowAdapter {
     }
 
     public void nextFrame(){
-        System.out.println("NEXFRAME?");
+        System.out.println("NEXTFRAME");
+
         frame.repaint();
+        frame.paintComponents(frame.getGraphics());
+        frame.update(frame.getGraphics());
+        frame.repaint();
+        //frame.paintComponents(frame.getGraphics());
+        //frame.validate();
+        //frame.setVisible(true);
     }
 
     public void loop(){
-        int fps = 1;
+        int fps = 5;
 
         int nanosecondsBetweenUpdates = (int) (Math.pow(10, 9) / fps);
         long previousStartTime = System.nanoTime();

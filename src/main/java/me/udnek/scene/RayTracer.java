@@ -47,7 +47,7 @@ public class RayTracer {
 
             if (hitPosition != null){
                 RayTraceResult rayTraceResult = new RayTraceResult(hitPosition);
-                //rayTraceResult.setSuggestedColor(Color.WHITE.getRGB());
+
                 rayTraceResult.setSuggestedColor(colorizeRayTraceResult(rayTraceResult, plane));
                 rayTraceResults.add(rayTraceResult);
 
