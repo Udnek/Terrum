@@ -8,16 +8,18 @@ public class Grid {
     public final int sizeX;
     public final int sizeY;
     public final int sizeZ;
+    public final double deltaTime;
     private GridSegment[] grid;
     public Grid()
     {
-        this(100, 100, 100);
+        this(100, 100, 100, 0.001);
     }
-    public Grid(int sizeX, int sizeY, int sizeZ)
+    public Grid(int sizeX, int sizeY, int sizeZ, double deltaTime)
     {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.sizeZ = sizeZ;
+        this.deltaTime = deltaTime;
         initializeGrid();
     }
     private void initializeGrid() {
@@ -70,7 +72,7 @@ public class Grid {
         }
     }
 
-    public void recalculateVelocity(double deltaTime){
+    public void recalculateVelocity(){
         for (GridSegment gridSegment : grid) {
             Vector3d acceleration = gridSegment.getAcceleration();
             Vector3d velocity = gridSegment.getVelocity();
@@ -151,11 +153,19 @@ public class Grid {
         double particleXPosition = particle.getPosition().x;
         double particleYPosition = particle.getPosition().y;
         double particleZPosition = particle.getPosition().z;
-        GridPosition particleGridPosition = new GridPosition((int) Math.round(particleXPosition),
-                                                             (int) Math.round(particleYPosition),
-                                                             (int) Math.round(particleZPosition));
-        //UNDONE
+        GridPosition particleGridPosition = new GridPosition((int) (particleXPosition),
+                                                             (int) (particleYPosition),
+                                                             (int) (particleZPosition));
 
+        int particleLinearGridPosition = fromGridPosition(particleGridPosition);
+
+        double particleXVelocity = grid[particleLinearGridPosition].getVelocity().x;
+        double particleYVelocity = grid[particleLinearGridPosition].getVelocity().y;
+        double particleZVelocity = grid[particleLinearGridPosition].getVelocity().z;
+
+        particle.setPosition(new Vector3d(particleXPosition + particleXVelocity*deltaTime,
+                particleYPosition + particleYVelocity*deltaTime,
+                particleZPosition + particleZVelocity*deltaTime));
     }
 
     public static class GridPosition {
