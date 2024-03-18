@@ -79,4 +79,8 @@ public class Triangle {
         this.vertex2.sub(vector);
         return this;
     }
+
+    public String asString() {
+        return vertex0.asString() + vertex1.asString() + vertex2.asString();
+    }
 }

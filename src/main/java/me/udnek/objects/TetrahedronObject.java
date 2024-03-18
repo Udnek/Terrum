@@ -1,12 +1,9 @@
 package me.udnek.objects;
 
 import me.udnek.utils.Triangle;
-import me.udnek.utils.Vector3;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class TetrahedronObject extends SceneObject{
     private Triangle plane0;
@@ -29,7 +26,7 @@ public class TetrahedronObject extends SceneObject{
 
 
     @Override
-    public List<Triangle> getRenderTriangles() {
-        return Arrays.asList(plane0.copy(), plane1.copy(), plane2.copy(), planeBottom.copy());
+    public Triangle[] getRenderTriangles() {
+        return new Triangle[]{plane0.copy(), plane1.copy(), plane2.copy(), planeBottom.copy()};
     }
 }

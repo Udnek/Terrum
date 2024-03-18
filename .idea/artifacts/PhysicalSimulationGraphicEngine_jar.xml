@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PhysicalSimulationGraphicEngine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PhysicalSimulationGraphicEngine_jar</output-path>
+    <root id="archive" name="PhysicalSimulationGraphicEngine.jar">
+      <element id="module-output" name="PhysicalSimulationGraphicEngine" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/vecmath/vecmath/0.13/vecmath-0.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/jsinterop/jsinterop-annotations/2.0.0/jsinterop-annotations-2.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/grim/grim-annotations/0.06/grim-annotations-0.06.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/javax/annotation/javax.annotation/1.0.1/javax.annotation-1.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
