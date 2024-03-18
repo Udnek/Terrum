@@ -17,8 +17,7 @@ public class Panel extends JPanel {
 
     @Override
     public void paint(Graphics graphics) {
-        super.paint(graphics);
-        super.paint(graphics);
+        //super.paint(graphics);
         //System.out.println("DRAWCALL");
         graphics.drawImage(scene.renderFrame(this.getWidth(), this.getHeight()), 0, 0, null);
 
@@ -30,9 +29,10 @@ public class Panel extends JPanel {
 
 
     public void loop(){
-        int fps = 20;
+        int fps = 1;
 
         int timeBetweenUpdate = (int) (Math.pow(10, 9) / fps);
+        System.out.println(timeBetweenUpdate);
 
         while (true) {
             long startTime = System.nanoTime();
@@ -41,16 +41,16 @@ public class Panel extends JPanel {
 
             this.nextFrame();
 
-            //long waitedInTotal = 0;
-            while(System.nanoTime() < nextFrameTime) {
-                    //waitedInTotal ++;
+            long waitedInTotal = 0;
+            while (System.nanoTime() < nextFrameTime) {
+                waitedInTotal ++;
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(0,1);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            //System.out.println(waitedInTotal);
+            System.out.println(waitedInTotal);
         }
     }
 

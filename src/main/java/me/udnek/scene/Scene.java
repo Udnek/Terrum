@@ -72,8 +72,8 @@ public class Scene{
 
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
-        for (int i = 0; i < bufferedImage.getWidth(); i++) {
-            for (int j = 0; j < bufferedImage.getHeight(); j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
 
                 Vector3d direction = new Vector3d(
                         (i+xOffset) * fovMultiplayer,
