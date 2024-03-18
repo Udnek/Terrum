@@ -16,7 +16,7 @@ public class Screen extends Canvas
     }
 
     public void paint(Graphics graphics){
-        System.out.println("DRAWCALL");
+        System.out.println("D");
         graphics.drawImage(scene.renderFrame(this.getWidth(), this.getHeight()), 0, 0, null);
     }
 
