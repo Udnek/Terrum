@@ -26,7 +26,7 @@ public class Scene{
         sceneObjects.add(
                 new TetrahedronObject(
                         //pos
-                        new Vector3d(0, 3, 0.5),
+                        new Vector3d(0, 0, 3),
                         //up
                         new Vector3d(0.5, 1, 0.5),
                         //bottom
@@ -57,7 +57,8 @@ public class Scene{
 
         Vector3d cameraDirection = camera.getDirection();
 
-        sceneObjects.get(0).move(new Vector3d(0, -0.1, 0));
+        //sceneObjects.get(0).move(new Vector3d(0, -0.04, 0));
+        sceneObjects.get(0).move(new Vector3d(0, 0, -0.07));
         //System.out.println(sceneObjects.get(0).getPosition().asString());
         //System.out.println(sceneObjects.get(0).getRenderTriangles()[0].asString());
 
@@ -65,10 +66,11 @@ public class Scene{
         float yOffset = -height/2f;
 
 
-        float fovMultiplayer = 10f;
-        fovMultiplayer = fovMultiplayer/width;
+/*        float fovMultiplayer = 10f;
+        fovMultiplayer = fovMultiplayer/width;*/
+        float fovMultiplayer = 0.05f;
 
-        fovMultiplayer = 0.1f;
+
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
         for (int i = 0; i < bufferedImage.getWidth(); i++) {
             for (int j = 0; j < bufferedImage.getHeight(); j++) {
@@ -77,7 +79,7 @@ public class Scene{
                         (i+xOffset) * fovMultiplayer,
                         (j+yOffset) * fovMultiplayer,
                         -10
-                ).normalize();
+                );
 
                 int color = rayTracer.rayTrace(direction).getSuggestedColor();
                 bufferedImage.setRGB(i, j, color);
