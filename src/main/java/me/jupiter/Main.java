@@ -5,8 +5,8 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Grid grid = new Grid();
-        int iterationsCount = 500;
-        int segmentUnderInspectionIndex = 1000;
+        int iterationsCount = 52;
+        int segmentUnderInspectionIndex = grid.sizeX/2 + grid.sizeX*grid.sizeY/2 + grid.sizeX*grid.sizeY*grid.sizeZ/2;
 
         double[] averageVelocities = new double[iterationsCount];
         double[] averageAccelerations = new double[iterationsCount];
@@ -19,7 +19,7 @@ public class Main {
         double[] segmentYAcceleration = new double[iterationsCount];
         double[] segmentZAcceleration = new double[iterationsCount];
 
-        for (int i= 0; i < 500; i++) {
+        for (int i= 0; i < iterationsCount; i++) {
             GridSegment segmentUnderInspection = grid.getSegment(segmentUnderInspectionIndex);
             segmentXSpeed[i] = segmentUnderInspection.getVelocity().x;
             segmentYSpeed[i] = segmentUnderInspection.getVelocity().y;
