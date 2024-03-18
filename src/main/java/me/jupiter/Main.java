@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Grid grid = new Grid(100, 100, 100, 0.005);
-        int iterationsCount = 100;
+        int iterationsCount = 101;
 //        int segmentUnderInspectionIndex = grid.sizeX/2 + grid.sizeX*grid.sizeY/2 + grid.sizeX*grid.sizeY*grid.sizeZ/2;
 
 //        double[] averageVelocities = new double[iterationsCount];

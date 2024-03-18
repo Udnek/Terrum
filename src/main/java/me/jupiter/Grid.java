@@ -130,10 +130,6 @@ public class Grid {
         return velocities/grid.length;
     }
 
-    public int fromGridPosition(int x, int y, int z){
-        return x + sizeX*y + sizeX*sizeY*z;
-    }
-
     public int fromGridPosition(GridPosition gridPosition){
         return gridPosition.x + sizeX*gridPosition.y + sizeX*sizeY*gridPosition.z;
     }
