@@ -3,8 +3,6 @@ package me.udnek.objects;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.Collections;
-
 public class PolygonObject extends SceneObject{
 
     private Triangle plane;

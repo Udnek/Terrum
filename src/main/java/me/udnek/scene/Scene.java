@@ -2,6 +2,7 @@ package me.udnek.scene;
 
 
 import me.udnek.objects.SceneObject;
+import me.udnek.objects.SphereObject;
 import me.udnek.objects.TetrahedronObject;
 import org.realityforge.vecmath.Vector3d;
 
@@ -16,7 +17,9 @@ public class Scene{
     public Scene(){
         camera = new Camera();
 
-        sceneObjects.add(
+        sceneObjects.add(new SphereObject(new Vector3d(0, 0, 3), 2));
+
+/*        sceneObjects.add(
                 new TetrahedronObject(
                         //pos
                         new Vector3d(0, 0, 1),
@@ -41,7 +44,7 @@ public class Scene{
                         new Vector3d(-0.1, 0, 0)
 
                 )
-        );
+        );*/
     }
 
     public BufferedImage renderFrame(int width, int height){
