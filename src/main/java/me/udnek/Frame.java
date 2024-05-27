@@ -14,7 +14,7 @@ public class Frame extends JFrame implements KeyListener {
         this.add(panel);
         this.pack();
         this.setVisible(true);
-        this.setSize(500, 500);
+        this.setSize(800, 800);
         this.setFocusable(true);
 
         addKeyListener(this);

@@ -13,6 +13,8 @@ public class Panel extends JPanel {
 
     private boolean screenIsOpen = true;
     private Scene scene;
+
+    private boolean renderInProgress = false;
     public Panel(){
         setBackground(Color.GRAY);
 
@@ -22,9 +24,11 @@ public class Panel extends JPanel {
     @Override
     public void paint(Graphics graphics) {
         graphics.drawImage(scene.renderFrame(this.getWidth(), this.getHeight()), 0, 0, null);
+        renderInProgress = false;
     }
 
     public void nextFrame(){
+        renderInProgress = true;
         repaint();
     }
 
@@ -49,22 +53,19 @@ public class Panel extends JPanel {
 
     public void loop(){
 
-        int fps = 30;
-
-        int timeBetweenUpdate = (int) (Math.pow(10, 9) / fps);
-
         while (true) {
             long startTime = System.nanoTime();
-            long nextFrameTime = startTime + timeBetweenUpdate;
             this.nextFrame();
 
-            while (System.nanoTime() < nextFrameTime) {
+            while (renderInProgress) {
                 try {
-                    Thread.sleep(0, 1);
+                    Thread.sleep(1, 0);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
+
+            System.out.println("RenderTime: " + ((System.nanoTime() - startTime)/Math.pow(10, 9)));
         }
     }
 }

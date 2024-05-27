@@ -16,7 +16,6 @@ public class RayTracer {
     public RayTracer(Vector3d cameraPosition){
         this.objectsToRender = new ArrayList<>();
     }
-
     public RayTracer(List<SceneObject> objectsToRender){
         this.objectsToRender = objectsToRender;
     }
@@ -78,7 +77,7 @@ public class RayTracer {
         double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
         Vector3d distances = new Vector3d(d0, d1, d2);
         double minDistance = VectorUtils.getMin(distances);
-        if (minDistance <= 0.1) return Color.WHITE.getRGB();
+        if (minDistance <= 0.05) return Color.WHITE.getRGB();
 
         Vector3d color = new Vector3d(1/d0, 1/d1 ,1/d2);
         color.div(VectorUtils.getMax(color));
