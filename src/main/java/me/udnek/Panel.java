@@ -1,9 +1,13 @@
 package me.udnek;
 
+import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
+import me.udnek.utils.UserAction;
+import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Panel extends JPanel {
 
@@ -17,48 +21,50 @@ public class Panel extends JPanel {
 
     @Override
     public void paint(Graphics graphics) {
-        //super.paint(graphics);
-        //System.out.println("DRAWCALL");
         graphics.drawImage(scene.renderFrame(this.getWidth(), this.getHeight()), 0, 0, null);
-
     }
 
     public void nextFrame(){
         repaint();
     }
 
+    public void handleKeyInput(KeyEvent keyEvent){
+        UserAction userAction = UserAction.getByCode(keyEvent.getKeyCode());
+        Camera camera = scene.getCamera();
+        final float moveSpeed = 0.05f;
+        final float rotateSpeed = 1.5f;
+        switch (userAction){
+            case FORWARD -> camera.moveAlongDirection(new Vector3d(0, 0, moveSpeed));
+            case BACKWARD -> camera.moveAlongDirection(new Vector3d(0, 0, -moveSpeed));
+            case RIGHT -> camera.moveAlongDirection(new Vector3d(moveSpeed, 0, 0));
+            case LEFT -> camera.moveAlongDirection(new Vector3d(-moveSpeed, 0, 0));
+
+            case CAMERA_UP -> camera.rotatePitch(-rotateSpeed);
+            case CAMERA_DOWN -> camera.rotatePitch(rotateSpeed);
+            case CAMERA_RIGHT -> camera.rotateYaw(-rotateSpeed);
+            case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
+        }
+
+    }
 
     public void loop(){
-        int fps = 1;
+
+        int fps = 30;
 
         int timeBetweenUpdate = (int) (Math.pow(10, 9) / fps);
-        System.out.println(timeBetweenUpdate);
 
         while (true) {
             long startTime = System.nanoTime();
-
             long nextFrameTime = startTime + timeBetweenUpdate;
-
             this.nextFrame();
 
-            long waitedInTotal = 0;
             while (System.nanoTime() < nextFrameTime) {
-                waitedInTotal ++;
                 try {
-                    Thread.sleep(0,1);
+                    Thread.sleep(0, 1);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println(waitedInTotal);
         }
     }
-
-
-/*    @Override
-    public void windowClosing(WindowEvent e) {
-        screenIsOpen = false;
-        frame.dispose();
-    }*/
-
 }
