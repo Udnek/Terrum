@@ -12,24 +12,21 @@ import java.util.List;
 public class RayTracer {
 
     private List<SceneObject> objectsToRender;
-    private final Vector3d cameraPosition;
 
     public RayTracer(Vector3d cameraPosition){
-        this.cameraPosition = cameraPosition;
         this.objectsToRender = new ArrayList<>();
     }
 
-    public RayTracer(Vector3d cameraPosition, List<SceneObject> objectsToRender){
-        this.cameraPosition = cameraPosition;
+    public RayTracer(List<SceneObject> objectsToRender){
         this.objectsToRender = objectsToRender;
     }
-    public RayTraceResult rayTrace(Vector3d direction){
+    public RayTraceResult rayTrace(Vector3d cameraPosition, Vector3d direction){
 
 
         ArrayList<RayTraceResult> rayTraceResults = new ArrayList<>();
         for (SceneObject object : objectsToRender) {
-            RayTraceResult rayTraceResult = rayTraceObject(direction, object);
-            if (rayTraceResult.isHitted()){
+            RayTraceResult rayTraceResult = rayTraceObject(cameraPosition, direction, object);
+            if (rayTraceResult.isHit()){
                 rayTraceResults.add(rayTraceResult);
             }
         }
@@ -37,7 +34,7 @@ public class RayTracer {
         return sortNearest(rayTraceResults);
     }
 
-    private RayTraceResult rayTraceObject(Vector3d direction, SceneObject sceneObject){
+    private RayTraceResult rayTraceObject(Vector3d cameraPosition, Vector3d direction, SceneObject sceneObject){
 
         ArrayList<RayTraceResult> rayTraceResults = new ArrayList<>();
 
@@ -61,11 +58,12 @@ public class RayTracer {
 
     private RayTraceResult sortNearest(List<RayTraceResult> rayTraceResults){
         if (rayTraceResults.isEmpty()) return new RayTraceResult();
-
         RayTraceResult nearestRayTrace = rayTraceResults.get(0);
+        if (rayTraceResults.size() == 1) return nearestRayTrace;
 
-        for (RayTraceResult rayTraceResult : rayTraceResults) {
-            if (rayTraceResult.getDistance() < nearestRayTrace.getDistance()){
+        for (int i = 1; i < rayTraceResults.size(); i++) {
+            RayTraceResult rayTraceResult = rayTraceResults.get(i);
+            if (rayTraceResult.getDistance() < nearestRayTrace.getDistance()) {
                 nearestRayTrace = rayTraceResult;
             }
         }
@@ -78,6 +76,10 @@ public class RayTracer {
         double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
         double d1 = VectorUtils.distance(hitPosition, triangle.getVertex1());
         double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
+        Vector3d distances = new Vector3d(d0, d1, d2);
+        double minDistance = VectorUtils.getMin(distances);
+        if (minDistance <= 0.1) return Color.WHITE.getRGB();
+
         Vector3d color = new Vector3d(1/d0, 1/d1 ,1/d2);
         color.div(VectorUtils.getMax(color));
         VectorUtils.cutTo(color, 1f);

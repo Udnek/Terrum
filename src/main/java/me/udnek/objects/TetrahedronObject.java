@@ -3,8 +3,6 @@ package me.udnek.objects;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.Arrays;
-
 public class TetrahedronObject extends SceneObject{
     private Triangle plane0;
     private Triangle plane1;
