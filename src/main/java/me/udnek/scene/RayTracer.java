@@ -76,6 +76,10 @@ public class RayTracer {
         double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
         double d1 = VectorUtils.distance(hitPosition, triangle.getVertex1());
         double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
+        Vector3d distances = new Vector3d(d0, d1, d2);
+        double minDistance = VectorUtils.getMin(distances);
+        if (minDistance <= 0.1) return Color.WHITE.getRGB();
+
         Vector3d color = new Vector3d(1/d0, 1/d1 ,1/d2);
         color.div(VectorUtils.getMax(color));
         VectorUtils.cutTo(color, 1f);

@@ -1,12 +1,8 @@
 package me.udnek.tests;
 
-import me.udnek.objects.PolygonObject;
-import me.udnek.scene.RayTracer;
 import me.udnek.utils.Triangle;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
-
-import java.util.Collections;
 
 public class Tests {
     public static void run(){
