@@ -11,7 +11,7 @@ public class VectorUtils {
     }
 
     public static double getAreaOfTriangle(Vector3d edge0, Vector3d edge1){
-        return getAreaOfParallelogram(edge0, edge1)/2;
+        return getAreaOfParallelogram(edge0, edge1) / 2.0;
     }
 
     public static double getCrossProductLength(Vector3d vector0, Vector3d vector1){
@@ -51,20 +51,22 @@ public class VectorUtils {
 
     public static Vector3d triangleRayIntersection(Vector3d direction, Triangle triangle) {
 
-        final float EPSILON = 0.00001f;
+        final float EPSILON = 0.0001f;
 
         Vector3d vertex0 = triangle.getVertex0();
         Vector3d vertex1 = triangle.getVertex1();
         Vector3d vertex2 = triangle.getVertex2();
 
         Vector3d normal = triangle.getNormal();
-        double perpendicularity = new Vector3d().cross(normal, direction).length();
-        if (-EPSILON <= perpendicularity && perpendicularity <= EPSILON){
+        double parallelityWithNormal = 1 - new Vector3d().cross(normal, direction).length();
+        if (-EPSILON <= parallelityWithNormal && parallelityWithNormal <= EPSILON){
             return null;
         }
 
         double distanceToPlane = normal.dot(vertex0);
-        Vector3d onPlanePosition = direction.dup().mul(distanceToPlane / normal.dot(direction));
+        double directionCoefficient = distanceToPlane / normal.dot(direction);
+        if (directionCoefficient < 0) return null;
+        Vector3d onPlanePosition = direction.dup().mul(directionCoefficient);
         double actualArea = triangle.getArea();
 
         Vector3d pointToVertex0 = vertex0.sub(onPlanePosition);
@@ -75,7 +77,7 @@ public class VectorUtils {
         double area1 = getAreaOfTriangle(pointToVertex1, pointToVertex2);
         double area2 = getAreaOfTriangle(pointToVertex2, pointToVertex0);
 
-        if (area0 + area1 + area2 > actualArea+EPSILON) return null;
+        if (area0 + area1 + area2 > actualArea + EPSILON) return null;
 
         return onPlanePosition;
     }
@@ -83,4 +85,30 @@ public class VectorUtils {
     public static double distanceFromLineToPoint(Vector3d direction, Vector3d point){
         return new Vector3d().cross(direction, point).length()/direction.length();
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // ROTATION
+    ///////////////////////////////////////////////////////////////////////////
+
+    public static void rotateYaw(Vector3d vector, float angle){
+        double x = vector.x;
+        double z = vector.z;
+        vector.x = x*Math.cos(angle) + -z*Math.sin(angle);
+        vector.z = x*Math.sin(angle) + z*Math.cos(angle);
+    }
+
+    public static void rotateRoll(Vector3d vector, float angle){
+        double x = vector.x;
+        double y = vector.y;
+        vector.x = x*Math.cos(angle) + -y*Math.sin(angle);
+        vector.y = x*Math.sin(angle) + y*Math.cos(angle);
+    }
+
+    public static void rotatePitch(Vector3d vector, float angle){
+        double y = vector.y;
+        double z = vector.z;
+        vector.y = y*Math.cos(angle) + -z*Math.sin(angle);
+        vector.z = y*Math.sin(angle) + z*Math.cos(angle);
+    }
+
 }

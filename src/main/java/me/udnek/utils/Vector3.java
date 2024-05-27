@@ -1,6 +1,6 @@
 package me.udnek.utils;
 
-
+@Deprecated
 public class Vector3{
     public double x;
     public double y;

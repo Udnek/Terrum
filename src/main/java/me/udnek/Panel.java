@@ -4,6 +4,9 @@ import me.udnek.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Random;
+import java.util.SplittableRandom;
 
 public class Panel extends JPanel {
 
@@ -17,10 +20,7 @@ public class Panel extends JPanel {
 
     @Override
     public void paint(Graphics graphics) {
-        //super.paint(graphics);
-        //System.out.println("DRAWCALL");
         graphics.drawImage(scene.renderFrame(this.getWidth(), this.getHeight()), 0, 0, null);
-
     }
 
     public void nextFrame(){
@@ -29,36 +29,23 @@ public class Panel extends JPanel {
 
 
     public void loop(){
-        int fps = 1;
+
+        int fps = 30;
 
         int timeBetweenUpdate = (int) (Math.pow(10, 9) / fps);
-        System.out.println(timeBetweenUpdate);
 
         while (true) {
             long startTime = System.nanoTime();
-
             long nextFrameTime = startTime + timeBetweenUpdate;
-
             this.nextFrame();
 
-            long waitedInTotal = 0;
             while (System.nanoTime() < nextFrameTime) {
-                waitedInTotal ++;
                 try {
-                    Thread.sleep(0,1);
+                    Thread.sleep(0, 1);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println(waitedInTotal);
         }
     }
-
-
-/*    @Override
-    public void windowClosing(WindowEvent e) {
-        screenIsOpen = false;
-        frame.dispose();
-    }*/
-
 }
