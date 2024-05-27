@@ -1,10 +1,14 @@
 package me.udnek;
 
-import me.udnek.scene.Scene;
+import me.udnek.utils.UserAction;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Frame extends JFrame {
+public class Frame extends JFrame implements KeyListener {
 
     private Panel panel;
     Frame(){
@@ -15,9 +19,27 @@ public class Frame extends JFrame {
         this.pack();
         this.setVisible(true);
         this.setSize(500, 500);
+        this.setFocusable(true);
+
+        addKeyListener(this);
 
         panel.loop();
     }
 
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        panel.handleKeyInput(e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 
 }

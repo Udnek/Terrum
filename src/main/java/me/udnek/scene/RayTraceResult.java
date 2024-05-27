@@ -25,7 +25,7 @@ public class RayTraceResult {
     }
 
     public double getDistance() {return this.distance;}
-    public boolean isHitted(){
+    public boolean isHit(){
         return hitPosition != null;
     }
 
