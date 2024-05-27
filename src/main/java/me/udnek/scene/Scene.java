@@ -13,9 +13,6 @@ public class Scene{
     private Camera camera;
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
 
-    @Deprecated
-    private float rotation = 0.0f;
-
     public Scene(){
         camera = new Camera();
 
@@ -51,19 +48,10 @@ public class Scene{
 
         RayTracer rayTracer = new RayTracer(sceneObjects);
 
-        //Vector3d cameraDirection = camera.getDirection();
-
-        //sceneObjects.get(0).move(new Vector3d(0.00, 0.01, 0));
-        //sceneObjects.get(0).move(new Vector3d(0, 0, -0.03));
-        //System.out.println(sceneObjects.get(0).getPosition().asString());
-        //System.out.println(sceneObjects.get(0).getRenderTriangles()[0].asString());
-
         float xOffset = -width/2f;
         float yOffset = -height/2f;
 
         float fovMultiplayer = 0.05f;
-
-        camera.move(new Vector3d(0, 0, 0.1));
 
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
@@ -85,6 +73,8 @@ public class Scene{
         return bufferedImage;
     }
 
-
+    public Camera getCamera(){
+        return camera;
+    }
 
 }

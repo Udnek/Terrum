@@ -1,12 +1,13 @@
 package me.udnek;
 
+import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
+import me.udnek.utils.UserAction;
+import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.Random;
-import java.util.SplittableRandom;
+import java.awt.event.KeyEvent;
 
 public class Panel extends JPanel {
 
@@ -27,6 +28,24 @@ public class Panel extends JPanel {
         repaint();
     }
 
+    public void handleKeyInput(KeyEvent keyEvent){
+        UserAction userAction = UserAction.getByCode(keyEvent.getKeyCode());
+        Camera camera = scene.getCamera();
+        final float moveSpeed = 0.05f;
+        final float rotateSpeed = 1.5f;
+        switch (userAction){
+            case FORWARD -> camera.moveAlongDirection(new Vector3d(0, 0, moveSpeed));
+            case BACKWARD -> camera.moveAlongDirection(new Vector3d(0, 0, -moveSpeed));
+            case RIGHT -> camera.moveAlongDirection(new Vector3d(moveSpeed, 0, 0));
+            case LEFT -> camera.moveAlongDirection(new Vector3d(-moveSpeed, 0, 0));
+
+            case CAMERA_UP -> camera.rotatePitch(-rotateSpeed);
+            case CAMERA_DOWN -> camera.rotatePitch(rotateSpeed);
+            case CAMERA_RIGHT -> camera.rotateYaw(-rotateSpeed);
+            case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
+        }
+
+    }
 
     public void loop(){
 

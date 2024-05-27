@@ -6,7 +6,6 @@ import org.realityforge.vecmath.Vector3d;
 
 public class Camera extends PositionedObject {
 
-    private Vector3d direction;
     private float pitch = 0f;
     private float yaw = 0f;
 
@@ -17,11 +16,9 @@ public class Camera extends PositionedObject {
         super(new Vector3d());
     }
 
-    public Vector3d getDirection() {
-        return new Vector3d(direction);
-    }
-    public void setDirection(Vector3d direction) {
-        this.direction = direction;
+    public void moveAlongDirection(Vector3d vector){
+        rotateVector(vector);
+        move(vector);
     }
 
     public float getPitch() {return pitch;}
@@ -34,8 +31,8 @@ public class Camera extends PositionedObject {
 
     public float getYaw() {return yaw;}
     public void setYaw(float angle) {
-        angle = angle % 360;
-        if (angle < 0) angle = 360 - angle;
+        angle = angle % 360f;
+        if (angle < 0) angle = 360f + angle;
         yaw = angle;
     }
     public void rotateYaw(float angle) {setYaw(yaw + angle);}
