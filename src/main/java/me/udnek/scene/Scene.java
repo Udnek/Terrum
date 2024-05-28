@@ -1,6 +1,7 @@
 package me.udnek.scene;
 
 
+import me.udnek.objects.AxisCrosshairObject;
 import me.udnek.objects.SceneObject;
 import me.udnek.objects.SpringObject;
 import me.udnek.objects.VertexObject;
@@ -22,7 +23,7 @@ public class Scene{
     private int tick = 0;
 
     public Scene(){
-        camera = new Camera();
+        camera = new Camera(new Vector3d(0.1, 0.1, 0.1));
 
 
         vertex0 = new VertexObject(new Vector3d(-1, 0, 3));
@@ -32,6 +33,7 @@ public class Scene{
         sceneObjects.add(vertex0);
         sceneObjects.add(vertex1);
         sceneObjects.add(spring);
+        sceneObjects.add(new AxisCrosshairObject());
 
         //sceneObjects.add(new IcosphereObject(new Vector3d(0, 0, 3), 0.4));
         //sceneObjects.add(new IcosahedronObject(new Vector3d(0, 0, 5), 1));
@@ -76,11 +78,11 @@ public class Scene{
         float yOffset = -renderHeight/2f;
         final float fovMultiplayer = 20f/pixelScaling;
 
-        vertex0.move(0, Math.sin(tick/20)/20, 0);
-        vertex1.move(0, Math.cos(tick/30)/30, 0);
+        vertex0.move(0, Math.sin(tick/20.0)/20.0, 0);
+        vertex1.move(0, Math.cos(tick/30.0)/30.0, 0);
         spring.recalculateTips();
 
-
+        // TODO: 5/28/2024 CACHE PLAYER POSITION
 
         rayTracer.recacheObjects(camera.getPosition());
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
