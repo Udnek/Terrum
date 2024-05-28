@@ -1,9 +1,10 @@
-package me.udnek.objects;
+package me.udnek.objects.shape;
 
+import me.udnek.objects.SceneObject;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class IcosphereObject extends SceneObject{
+public class IcosphereObject extends SceneObject {
 
     private final double radius;
     private Triangle[] polygons;

@@ -12,7 +12,7 @@ public enum UserAction {
     MOVE_LEFT(KeyEvent.VK_A),
 
     MOVE_DOWN(KeyEvent.VK_SHIFT),
-    MOVE_UP(KeyEvent.VK_SHIFT),
+    MOVE_UP(KeyEvent.VK_SPACE),
 
     CAMERA_UP(KeyEvent.VK_UP),
     CAMERA_DOWN(KeyEvent.VK_DOWN),

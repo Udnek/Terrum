@@ -30,6 +30,12 @@ public class Triangle {
         this.vertex2 = vertex;
     }
 
+    public void setVertices(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2){
+        setVertex0(vertex0);
+        setVertex1(vertex1);
+        setVertex2(vertex2);
+    }
+
     public Vector3d getVertex0() {
         return this.vertex0.dup();
     }

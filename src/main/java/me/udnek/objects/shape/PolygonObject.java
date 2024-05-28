@@ -1,9 +1,10 @@
-package me.udnek.objects;
+package me.udnek.objects.shape;
 
+import me.udnek.objects.SceneObject;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class PolygonObject extends SceneObject{
+public class PolygonObject extends SceneObject {
 
     private Triangle plane;
 
