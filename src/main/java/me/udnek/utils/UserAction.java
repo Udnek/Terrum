@@ -6,10 +6,13 @@ public enum UserAction {
 
     NOTHING(0),
 
-    FORWARD(KeyEvent.VK_W),
-    BACKWARD(KeyEvent.VK_S),
-    RIGHT(KeyEvent.VK_D),
-    LEFT(KeyEvent.VK_A),
+    MOVE_FORWARD(KeyEvent.VK_W),
+    MOVE_BACKWARD(KeyEvent.VK_S),
+    MOVE_RIGHT(KeyEvent.VK_D),
+    MOVE_LEFT(KeyEvent.VK_A),
+
+    MOVE_DOWN(KeyEvent.VK_SHIFT),
+    MOVE_UP(KeyEvent.VK_SPACE),
 
     CAMERA_UP(KeyEvent.VK_UP),
     CAMERA_DOWN(KeyEvent.VK_DOWN),

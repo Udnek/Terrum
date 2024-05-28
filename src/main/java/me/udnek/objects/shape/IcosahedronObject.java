@@ -1,9 +1,10 @@
-package me.udnek.objects;
+package me.udnek.objects.shape;
 
+import me.udnek.objects.SceneObject;
 import me.udnek.utils.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class IcosahedronObject extends SceneObject{
+public class IcosahedronObject extends SceneObject {
 
     public static final float FI = (float) ((1.0f + Math.sqrt(5.0f))/2.0f);
     private Triangle[] polygons;

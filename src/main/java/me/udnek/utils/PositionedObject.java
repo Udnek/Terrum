@@ -17,6 +17,9 @@ public class PositionedObject {
         this.position = position;
     }
     public void move(Vector3d position){
-        setPosition(getPosition().add(position));
+        this.position.add(position);
+    }
+    public void move(double x, double y, double z){
+        this.position.add(x, y, z);
     }
 }
