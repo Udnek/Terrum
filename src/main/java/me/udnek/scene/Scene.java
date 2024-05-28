@@ -1,9 +1,9 @@
 package me.udnek.scene;
 
 
+import me.udnek.objects.IcosphereObject;
 import me.udnek.objects.SceneObject;
-import me.udnek.objects.SphereObject;
-import me.udnek.objects.TetrahedronObject;
+import me.udnek.objects.IcosahedronObject;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
@@ -17,7 +17,8 @@ public class Scene{
     public Scene(){
         camera = new Camera();
 
-        sceneObjects.add(new SphereObject(new Vector3d(0, 0, 3), 2));
+        sceneObjects.add(new IcosphereObject(new Vector3d(0, 0, 3), 2.3));
+        //sceneObjects.add(new IcosahedronObject(new Vector3d(0, 0, 5), 1));
 
 /*        sceneObjects.add(
                 new TetrahedronObject(
