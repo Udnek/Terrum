@@ -69,13 +69,14 @@ public class VectorUtils {
         Vector3d onPlanePosition = direction.dup().mul(directionCoefficient);
         double actualArea = triangle.getArea();
 
-        Vector3d pointToVertex0 = vertex0.sub(onPlanePosition);
-        Vector3d pointToVertex1 = vertex1.sub(onPlanePosition);
-        Vector3d pointToVertex2 = vertex2.sub(onPlanePosition);
+        // points to vertices
+        vertex0.sub(onPlanePosition);
+        vertex1.sub(onPlanePosition);
+        vertex2.sub(onPlanePosition);
 
-        double area0 = getAreaOfTriangle(pointToVertex0, pointToVertex1);
-        double area1 = getAreaOfTriangle(pointToVertex1, pointToVertex2);
-        double area2 = getAreaOfTriangle(pointToVertex2, pointToVertex0);
+        double area0 = getAreaOfTriangle(vertex0, vertex1);
+        double area1 = getAreaOfTriangle(vertex1, vertex2);
+        double area2 = getAreaOfTriangle(vertex2, vertex0);
 
         if (area0 + area1 + area2 > actualArea + EPSILON) return null;
 

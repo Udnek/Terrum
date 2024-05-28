@@ -8,6 +8,7 @@ import org.realityforge.vecmath.Vector3d;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class Panel extends JPanel {
 
@@ -23,7 +24,8 @@ public class Panel extends JPanel {
 
     @Override
     public void paint(Graphics graphics) {
-        graphics.drawImage(scene.renderFrame(this.getWidth(), this.getHeight()), 0, 0, null);
+        BufferedImage bufferedImage = scene.renderFrame(getWidth(), getHeight(), 4);
+        graphics.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
         renderInProgress = false;
     }
 

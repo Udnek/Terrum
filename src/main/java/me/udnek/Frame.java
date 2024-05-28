@@ -8,13 +8,15 @@ public class Frame extends JFrame implements KeyListener {
 
     private Panel panel;
     Frame(){
+
+
         panel = new Panel();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);
         this.pack();
         this.setVisible(true);
-        this.setSize(800, 800);
+        this.setSize(500, 500);
         this.setFocusable(true);
 
         addKeyListener(this);

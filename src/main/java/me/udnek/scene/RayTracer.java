@@ -12,62 +12,48 @@ import java.util.List;
 public class RayTracer {
 
     private List<SceneObject> objectsToRender;
+    private List<Triangle> cachedPlanes;
+    private Vector3d cameraPosition;
     public RayTracer(List<SceneObject> objectsToRender){
         this.objectsToRender = objectsToRender;
     }
-    public RayTraceResult rayTrace(Vector3d cameraPosition, Vector3d direction){
 
-        ArrayList<RayTraceResult> rayTraceResults = new ArrayList<>();
+    public void recacheObjects(Vector3d cameraPosition){
+        cachedPlanes = new ArrayList<>();
 
         for (SceneObject object : objectsToRender) {
-            RayTraceResult rayTraceResult = rayTraceObject(cameraPosition, direction, object);
-            if (rayTraceResult.isHit()){
-                rayTraceResults.add(rayTraceResult);
+            Vector3d objectPosition = object.getPosition();
+            for (Triangle plane: object.getRenderTriangles()) {
+                plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
+                cachedPlanes.add(plane);
             }
         }
-
-        return chooseNearest(rayTraceResults);
     }
 
-    private RayTraceResult rayTraceObject(Vector3d cameraPosition, Vector3d direction, SceneObject sceneObject){
+    public int rayTrace(Vector3d direction){
 
-        ArrayList<RayTraceResult> rayTraceResults = new ArrayList<>();
+        Vector3d nearestHitPosition = null;
+        Triangle nearestPlane = null;
+        double nearestDistance = Double.POSITIVE_INFINITY;
 
-        for (Triangle plane : sceneObject.getRenderTriangles()) {
-            plane.addToAllVertexes(sceneObject.getPosition()).subFromAllVertexes(cameraPosition);
+
+        for (Triangle plane : cachedPlanes) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
 
             if (hitPosition != null){
-                RayTraceResult rayTraceResult = new RayTraceResult(hitPosition);
-
-                rayTraceResult.setSuggestedColor(colorizeRayTraceResult(rayTraceResult, plane));
-                rayTraceResults.add(rayTraceResult);
-
-
+                if (hitPosition.lengthSquared() < nearestDistance){
+                    nearestHitPosition = hitPosition;
+                    nearestPlane = plane;
+                    nearestDistance = hitPosition.lengthSquared();
+                }
             }
         }
-
-        return chooseNearest(rayTraceResults);
+        if (nearestPlane == null) return 0;
+        return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
 
-    private RayTraceResult chooseNearest(List<RayTraceResult> rayTraceResults){
-        if (rayTraceResults.isEmpty()) return new RayTraceResult();
-        RayTraceResult nearestRayTrace = rayTraceResults.get(0);
-        if (rayTraceResults.size() == 1) return nearestRayTrace;
-
-        for (int i = 1; i < rayTraceResults.size(); i++) {
-            RayTraceResult rayTraceResult = rayTraceResults.get(i);
-            if (rayTraceResult.getDistance() < nearestRayTrace.getDistance()) {
-                nearestRayTrace = rayTraceResult;
-            }
-        }
-        return nearestRayTrace;
-    }
-
-    private int colorizeRayTraceResult(RayTraceResult rayTraceResult, Triangle triangle){
-        Vector3d hitPosition = rayTraceResult.getHitPosition();
-
+    private int colorizeRayTrace(Vector3d hitPosition, Triangle triangle){
         double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
         double d1 = VectorUtils.distance(hitPosition, triangle.getVertex1());
         double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
