@@ -1,14 +1,13 @@
 package me.udnek.objects;
 
 import me.udnek.utils.Triangle;
-import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class IcosphereObject extends SceneObject{
 
     private final double radius;
     private Triangle[] polygons;
-    public static final int SUBDIVIDE_ITERATIONS = 4;
+    public static final int SUBDIVIDE_ITERATIONS = 2;
     public IcosphereObject(Vector3d position, double radius) {
         super(position);
         this.radius = radius;

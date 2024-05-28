@@ -51,7 +51,7 @@ public class VectorUtils {
 
     public static Vector3d triangleRayIntersection(Vector3d direction, Triangle triangle) {
 
-        final float EPSILON = 0.0001f;
+        final float EPSILON = 0.00001f;
 
         Vector3d vertex0 = triangle.getVertex0();
         Vector3d vertex1 = triangle.getVertex1();

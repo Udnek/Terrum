@@ -1,41 +1,61 @@
 package me.udnek.tests;
 
+import com.aparapi.Kernel;
+import com.aparapi.Range;
 import me.udnek.utils.Triangle;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class Tests {
-    public static void run(){
+    public static void run() {
 
-        double zPos = 2.0;
+        long startTime = System.nanoTime();
 
-        Triangle triangle = new Triangle(
-                new Vector3d(-2, -1, zPos),
-                new Vector3d(0.5, 1, zPos),
-                new Vector3d(1, -1, zPos)
-        );
+        int n = (int) Math.pow(2, 24);
 
-        Vector3d dir = new Vector3d(0, 0, 1);
+        calc(n);
 
-        Vector3d vector3d = VectorUtils.triangleRayIntersection(dir, triangle);
+        System.out.println(((System.nanoTime() - startTime) / Math.pow(10, 9)));
 
-        System.out.println(vector3d == null ? "null" : vector3d.asString());
+        startTime = System.nanoTime();
+        kernelCalc(n);
 
-
-
-/*        PolygonObject polygonObject = new PolygonObject(
-                new Vector3d(0, 0, 0),
-
-                new Triangle(
-                        new Triangle(
-                                new Vector3d(-0.5, 0, 0),
-                                new Vector3d(0.4, 1, 0.5),
-                                new Vector3d(0.4, 0, 0.5)
-                        )
-                )
-        );
-
-        RayTracer rayTracer = new RayTracer(new Vector3d(0, 0, 0), Collections.singletonList(polygonObject));*/
-
+        System.out.println(((System.nanoTime() - startTime) / Math.pow(10, 9)));
     }
+
+    public static void calc(int n){
+
+        double[] result = new double[n];
+
+        for (int i = 0; i < n; i++) {
+            result[i] = functionToCalc();
+        }
+    }
+
+    public static void kernelCalc(int n){
+
+        double[] result = new double[n];
+        Kernel kernel = new Kernel(){
+            @Override
+            public void run() {
+                int gid = getGlobalId();
+                result[gid] = functionToCalc();
+            }
+
+        };
+        kernel.execute(Range.create(n));
+        kernel.dispose();
+    }
+
+    public static double functionToCalc(){
+        return VectorUtils.triangleRayIntersection(
+                new Vector3d(0, 0, 1),
+                new Triangle(
+                        new Vector3d(-10, -10, 1),
+                        new Vector3d(10, 10, (Math.random()+1)*10.0),
+                        new Vector3d(10, -10, 1)
+                )
+        ).length();
+    }
+
 }
