@@ -1,10 +1,11 @@
 package me.jupiter;
 
-import org.realityforge.vecmath.Vector3d;
+import me.jupiter.image_reader.NetMapReader;
 
 public class Main {
     public static void main(String[] args) {
-        Net testNet = new Net();
-        System.out.println(testNet.calculateDistance(new Vector3d(0, 0, 0), new Vector3d(0, 0, 1)));
+        NetMapReader test = new NetMapReader();
+        test.readNetMap("C:/Coding/images/test_highNetMap.png");
+        System.out.println(test.getWidth());
     }
 }
