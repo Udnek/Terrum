@@ -3,7 +3,6 @@ package me.udnek.scene;
 
 import me.udnek.objects.IcosphereObject;
 import me.udnek.objects.SceneObject;
-import me.udnek.objects.IcosahedronObject;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
@@ -13,11 +12,14 @@ public class Scene{
 
     private Camera camera;
     private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
+    private RayTracer rayTracer;
 
     public Scene(){
         camera = new Camera();
 
         sceneObjects.add(new IcosphereObject(new Vector3d(0, 0, 3), 2.3));
+
+
         //sceneObjects.add(new IcosahedronObject(new Vector3d(0, 0, 5), 1));
 
 /*        sceneObjects.add(
@@ -46,34 +48,41 @@ public class Scene{
 
                 )
         );*/
+
+        rayTracer = new RayTracer(sceneObjects);
     }
 
-    public BufferedImage renderFrame(int width, int height){
+    public BufferedImage renderFrame(final int width, final int height, final int pixelScaling){
 
-        RayTracer rayTracer = new RayTracer(sceneObjects);
+        int renderWidth = width/pixelScaling;
+        int renderHeight = height/pixelScaling;
 
-        float xOffset = -width/2f;
-        float yOffset = -height/2f;
+        float xOffset = -renderWidth/2f;
+        float yOffset = -renderHeight/2f;
 
-        float fovMultiplayer = 0.05f;
+        final float fovMultiplayer = 20f/pixelScaling;
 
+        rayTracer.recacheObjects(camera.getPosition());
 
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
+
+        int[] image = new int[renderHeight*renderWidth];
+
+        for (int x = 0; x < renderWidth; x++) {
+            for (int y = 0; y < renderHeight; y++) {
 
                 Vector3d direction = new Vector3d(
-                        (i+xOffset) * fovMultiplayer,
-                        (j+yOffset) * fovMultiplayer,
-                        10
+                        (x+xOffset),
+                        (y+yOffset),
+                        10*fovMultiplayer
                 );
                 camera.rotateVector(direction);
 
-                int color = rayTracer.rayTrace(camera.getPosition(), direction).getSuggestedColor();
-
-                bufferedImage.setRGB(i, height-j-1, color);
+                int color = rayTracer.rayTrace(direction);
+                image[(renderHeight-y-1)*renderWidth + x] = color;
             }
         }
+        bufferedImage.setRGB(0, 0, renderWidth, renderHeight, image, 0, renderWidth);
         return bufferedImage;
     }
 

@@ -4,6 +4,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import javax.annotation.Nonnull;
 
+@Deprecated
 public class RayTraceResult {
 
     private final Vector3d hitPosition;
@@ -21,7 +22,7 @@ public class RayTraceResult {
     }
 
     public Vector3d getHitPosition() {
-        return hitPosition.dup();
+        return hitPosition;
     }
 
     public double getDistance() {return this.distance;}
