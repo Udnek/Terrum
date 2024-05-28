@@ -7,7 +7,7 @@ public class IcosphereObject extends SceneObject{
 
     private final double radius;
     private Triangle[] polygons;
-    public static final int SUBDIVIDE_ITERATIONS = 2;
+    public static final int SUBDIVIDE_ITERATIONS = 1;
     public IcosphereObject(Vector3d position, double radius) {
         super(position);
         this.radius = radius;

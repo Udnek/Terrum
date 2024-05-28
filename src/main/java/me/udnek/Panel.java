@@ -6,6 +6,7 @@ import me.udnek.utils.UserAction;
 import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
+import java.awt.Frame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -14,17 +15,18 @@ public class Panel extends JPanel {
 
     private boolean screenIsOpen = true;
     private Scene scene;
+    private final Frame frame;
 
     private boolean renderInProgress = false;
-    public Panel(){
+    public Panel(Frame frame){
         setBackground(Color.GRAY);
-
+        this.frame = frame;
         scene = new Scene();
     }
 
     @Override
     public void paint(Graphics graphics) {
-        BufferedImage bufferedImage = scene.renderFrame(getWidth(), getHeight(), 4);
+        BufferedImage bufferedImage = scene.renderFrame(getWidth(), getHeight(), 2);
         graphics.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
         renderInProgress = false;
     }
@@ -37,13 +39,16 @@ public class Panel extends JPanel {
     public void handleKeyInput(KeyEvent keyEvent){
         UserAction userAction = UserAction.getByCode(keyEvent.getKeyCode());
         Camera camera = scene.getCamera();
-        final float moveSpeed = 0.05f;
+        final float moveSpeed = 0.07f;
         final float rotateSpeed = 1.5f;
         switch (userAction){
-            case FORWARD -> camera.moveAlongDirection(new Vector3d(0, 0, moveSpeed));
-            case BACKWARD -> camera.moveAlongDirection(new Vector3d(0, 0, -moveSpeed));
-            case RIGHT -> camera.moveAlongDirection(new Vector3d(moveSpeed, 0, 0));
-            case LEFT -> camera.moveAlongDirection(new Vector3d(-moveSpeed, 0, 0));
+            case MOVE_FORWARD -> camera.moveAlongDirection(new Vector3d(0, 0, moveSpeed));
+            case MOVE_BACKWARD -> camera.moveAlongDirection(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_RIGHT -> camera.moveAlongDirection(new Vector3d(moveSpeed, 0, 0));
+            case MOVE_LEFT -> camera.moveAlongDirection(new Vector3d(-moveSpeed, 0, 0));
+
+            case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
+            case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed, 0));
 
             case CAMERA_UP -> camera.rotatePitch(-rotateSpeed);
             case CAMERA_DOWN -> camera.rotatePitch(rotateSpeed);
@@ -67,7 +72,9 @@ public class Panel extends JPanel {
                 }
             }
 
-            System.out.println("RenderTime: " + ((System.nanoTime() - startTime)/Math.pow(10, 9)));
+            double renderTime = (System.nanoTime() - startTime)/Math.pow(10, 9);
+            frame.setTitle("RenderTime: " + renderTime);
+            if (renderTime > 1) System.out.println("RenderTime: " + renderTime);
         }
     }
 }

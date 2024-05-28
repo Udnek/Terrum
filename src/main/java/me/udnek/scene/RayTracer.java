@@ -12,8 +12,8 @@ import java.util.List;
 public class RayTracer {
 
     private List<SceneObject> objectsToRender;
-    private List<Triangle> cachedPlanes;
-    private Vector3d cameraPosition;
+    private List<Triangle> cachedPlanes = new ArrayList<>();;
+    private Vector3d cameraPosition = new Vector3d();
     public RayTracer(List<SceneObject> objectsToRender){
         this.objectsToRender = objectsToRender;
     }

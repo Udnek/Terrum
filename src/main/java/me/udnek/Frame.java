@@ -10,7 +10,7 @@ public class Frame extends JFrame implements KeyListener {
     Frame(){
 
 
-        panel = new Panel();
+        panel = new Panel(this);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);
