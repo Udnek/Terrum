@@ -5,6 +5,7 @@ import me.udnek.objects.AxisCrosshairObject;
 import me.udnek.objects.SceneObject;
 import me.udnek.objects.SpringObject;
 import me.udnek.objects.VertexObject;
+import me.udnek.objects.shape.IcosphereObject;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
@@ -36,7 +37,7 @@ public class Scene{
         sceneObjects.add(new AxisCrosshairObject());
         //sceneObjects.add(new PlaneObject(new Vector3d(), 50, 50, -50, -50, 0));
 
-        //sceneObjects.add(new IcosphereObject(new Vector3d(0, 0, 3), 0.4));
+        sceneObjects.add(new IcosphereObject(new Vector3d(0, 0, 3), 0.4));
         //sceneObjects.add(new IcosahedronObject(new Vector3d(0, 0, 5), 1));
 
 /*        sceneObjects.add(
