@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Net net = new Net(1, 1, System.getProperty("user.dir") + "/assets/image/chaos.png");
+        Net net = new Net(1, 1, System.getProperty("user.dir") + "/src/main/assets/image/chaos.png");
 
         Instant start = Instant.now();
         net.initiateNet();
