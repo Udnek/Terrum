@@ -7,10 +7,7 @@ public abstract class NetVertex {
     protected final float springRelaxedLength;
     protected final float springStiffness;
 
-    protected NetVertex neighbourUp;
-    protected NetVertex neighbourRight;
-    protected NetVertex neighbourDown;
-    protected NetVertex neighbourLeft;
+    protected NetVertex[] neighbours;
 
     public NetVertex(Vector3d position, float springRelaxedLength, float springStiffness) {
         this.position = position;
@@ -25,18 +22,13 @@ public abstract class NetVertex {
     public void setPosition(Vector3d position) {this.position = position;}
 
     public void setupNeighbours(NetVertex[] neighbours){
-        this.neighbourUp = neighbours[0];
-        this.neighbourRight = neighbours[1];
-        this.neighbourDown = neighbours[2];
-        this.neighbourLeft = neighbours[3];
+        this.neighbours = neighbours;
     }
 
-    public double[][] getNeighboursCoordinates(){
-        double[][] result = new double[4][3];
-        result[0] = neighbourUp.position.toArray();
-        result[1] = neighbourLeft.position.toArray();
-        result[2] = neighbourDown.position.toArray();
-        result[3] = neighbourLeft.position.toArray();
-        return result;
+    public int getNeighboursAmount(){
+        return neighbours.length;
+    }
+    public NetVertex[] getNeighbours(){
+        return this.neighbours;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Net net = new Net(1, 1, "C:/Coding/images/theForm.png");
+        Net net = new Net(1, 1, System.getProperty("user.dir") + "/assets/image/chaos.png");
 
         Instant start = Instant.now();
         net.initiateNet();
@@ -21,7 +21,6 @@ public class Main {
         end = Instant.now();
         System.out.println("Neighbours initialization took " + Duration.between(start, end).toMillis() + " milliseconds" + "\n");
 
-        System.out.println(Arrays.deepToString(net.netMap[0][0].getNeighboursCoordinates()));
         for (int i = 0; i < net.getSizeZ(); i++) {
             for (int j = 0; j < net.getSizeX(); j++) {
                 if (net.netMap[i][j] instanceof NetStaticVertex){
@@ -34,5 +33,7 @@ public class Main {
             }
             System.out.println();
         }
+
+        System.out.println(Arrays.toString(net.netMap[0][1].getNeighbours()));
     }
 }
