@@ -1,6 +1,7 @@
 package me.udnek.scene;
 
 import me.udnek.objects.SceneObject;
+import me.udnek.objects.light.LightSource;
 import me.udnek.utils.Triangle;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -11,22 +12,47 @@ import java.util.List;
 
 public class RayTracer {
 
+    private Vector3d cameraPosition;
     private List<SceneObject> objectsToRender;
-    private List<Triangle> cachedPlanes = new ArrayList<>();;
-    private Vector3d cameraPosition = new Vector3d();
-    public RayTracer(List<SceneObject> objectsToRender){
+    private List<Triangle> cachedPlanes;
+
+    private LightSource lightSource;
+    private Vector3d lastLightPosition;
+    private List<Triangle> lightCachedPlanes;
+
+
+
+    public RayTracer(List<SceneObject> objectsToRender, LightSource lightSource){
         this.objectsToRender = objectsToRender;
+        this.lightSource = lightSource;
+        this.lastLightPosition = null;
     }
 
-    public void recacheObjects(Vector3d cameraPosition){
-        cachedPlanes = new ArrayList<>();
+    public void recacheObjects(Vector3d position){
+        cameraPosition = position;
 
+        // camera cache
+        cachedPlanes = new ArrayList<>();
         for (SceneObject object : objectsToRender) {
-            Vector3d objectPosition = object.getPosition();
-            for (Triangle plane: object.getRenderTriangles()) {
-                plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
-                cachedPlanes.add(plane);
-            }
+            cacheObject(cachedPlanes, object, cameraPosition);
+        }
+        cacheObject(cachedPlanes, lightSource, cameraPosition);
+
+        // light cache
+        Vector3d lightSourcePosition = lightSource.getPosition();
+        if (lastLightPosition != null && lightSourcePosition.isEqualTo(lastLightPosition)) return; //skipping light recache
+        lastLightPosition = lightSourcePosition;
+        lightCachedPlanes = new ArrayList<>();
+        for (SceneObject object : objectsToRender) {
+            cacheObject(lightCachedPlanes, object, lightSourcePosition);
+        }
+    }
+
+    private void cacheObject(List<Triangle> cache, SceneObject object, Vector3d position){
+        Vector3d objectPosition = object.getPosition();
+        for (Triangle plane: object.getRenderTriangles()) {
+            plane.addToAllVertexes(objectPosition).subFromAllVertexes(position);
+            cache.add(plane);
         }
     }
 
@@ -52,9 +78,43 @@ public class RayTracer {
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
+    private double positionLighted(Vector3d position, Triangle plane){
 
-    private int colorizeRayTrace(Vector3d hitPosition, Triangle triangle){
-        double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
+        // to absolute position;
+        position.add(cameraPosition);
+        // to light relative position
+        position.sub(lastLightPosition);
+
+        // from light to point direction
+        //Vector3d direction = position.sub(lightSource.getPosition());
+        Vector3d direction = position;
+
+        final float EPSILON = 0.0001f;
+
+        for (Triangle triangle : lightCachedPlanes) {
+            Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, triangle);
+            if (hitPosition != null){
+                if (direction.lengthSquared() - EPSILON > hitPosition.lengthSquared()){
+                    return 0;
+                }
+            }
+        }
+        double perpendicularity = 1 - new Vector3d().cross(plane.getNormal().normalize(), direction.normalize()).length();
+        return perpendicularity;
+    }
+
+    private int colorizeRayTrace(Vector3d hitPosition, Triangle plane){
+
+        float color = (float) positionLighted(hitPosition, plane);
+        color += 0.1f;
+        if (color < 0.15) color = 0.15f;
+        else if (color > 1) color = 1;
+        //System.out.println(color);
+        return new Color(color, color, color).getRGB();
+
+
+
+/*        double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
         double d1 = VectorUtils.distance(hitPosition, triangle.getVertex1());
         double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
         Vector3d distances = new Vector3d(d0, d1, d2);
@@ -65,6 +125,6 @@ public class RayTracer {
         color.div(VectorUtils.getMax(color));
         VectorUtils.cutTo(color, 1f);
 
-        return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
+        return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();*/
     }
 }
