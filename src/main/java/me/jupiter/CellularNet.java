@@ -7,20 +7,15 @@ import me.jupiter.object.NetVertex;
 import me.jupiter.object.NetVoidVertex;
 import org.realityforge.vecmath.Vector3d;
 
-public class Net {
+public class CellularNet {
     private int sizeX;
     private int sizeZ;
     private final String imagePath;
     private final float springStiffness;
     private final float springRelaxedLength;
     public NetVertex[][] netMap;
-    Net()
-    {
-        this.springStiffness = 1;
-        this.springRelaxedLength = 1;
-        this.imagePath = "C:/Coding/images/test_netmap.png";
-    }
-    Net(float springStiffness, float springRelaxedLength, String imagePath)
+
+    CellularNet(float springStiffness, float springRelaxedLength, String imagePath)
     {
         this.springStiffness = springStiffness;
         this.springRelaxedLength = springRelaxedLength;
@@ -40,9 +35,7 @@ public class Net {
         NetMapReader reader = new NetMapReader();
         reader.readNetMap(imagePath);
         sizeX = reader.getWidth();
-        System.out.println("Image width is " + sizeX);
         sizeZ = reader.getHeight();
-        System.out.println("Image height is " + sizeZ + "\n");
         netMap = new NetVertex[sizeZ][sizeX];
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
@@ -86,7 +79,7 @@ public class Net {
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (netMap[i][j] instanceof NetStaticVertex) {
-                    netMap[i][j].setupNeighbours(locateNeighbourDynamicVertices(j, i));
+                    netMap[i][j].addNeighbours(locateNeighbourDynamicVertices(j, i));
                 }
             }
         }
