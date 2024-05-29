@@ -20,7 +20,7 @@ public class NetDynamicVertex extends NetVertex{
     public Vector3d getPositionDifferential() {return positionDifferential.dup();}
     public void setPositionDifferential(Vector3d positionDifferential) {this.positionDifferential = positionDifferential;}
 
-    public void calculatePostitonDifferential() {
+    public void calculatePositionDifferential() {
 
     }
 }
