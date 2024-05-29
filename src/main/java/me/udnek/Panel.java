@@ -40,7 +40,7 @@ public class Panel extends JPanel {
         UserAction userAction = UserAction.getByCode(keyEvent.getKeyCode());
         Camera camera = scene.getCamera();
         final float moveSpeed = 0.07f;
-        final float rotateSpeed = 1.5f;
+        final float rotateSpeed = 2f;
         switch (userAction){
             case MOVE_FORWARD -> camera.moveAlongDirection(new Vector3d(0, 0, moveSpeed));
             case MOVE_BACKWARD -> camera.moveAlongDirection(new Vector3d(0, 0, -moveSpeed));
