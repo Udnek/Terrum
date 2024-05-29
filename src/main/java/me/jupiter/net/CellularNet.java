@@ -3,6 +3,7 @@ package me.jupiter.net;
 import me.jupiter.image_reader.ImageReader;
 import me.jupiter.object.NetVertex;
 import me.jupiter.object.NetVoidVertex;
+import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class CellularNet {
             for (int x = 0; x < sizeX; x++) {
                 Color color = reader.getColor(x, z);
                 NetVertex vertex = VertexColor.getVertex(color);
+                vertex.setPosition(new Vector3d(x, 0, z));
                 setVertex(vertex, x, z);
             }
         }
@@ -47,9 +49,7 @@ public class CellularNet {
     public NetVertex getVertex(int x, int z){ return netMap[z][x];}
     public void setVertex(NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
 
-    public boolean isInBounds(int x, int z){
-        return (x > 0 && x < sizeX && z > 0 && z < sizeZ);
-    }
+    public boolean isInBounds(int x, int z) {return (x >= 0 && x < sizeX && z >= 0 && z < sizeZ);}
     public List<NetVertex> getNeighbourVertices(int posX, int posZ) {
         List<NetVertex> vertices = new ArrayList<>();
         for (int i = -1; i <= 1; i++) {

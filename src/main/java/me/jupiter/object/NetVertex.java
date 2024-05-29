@@ -8,22 +8,11 @@ import java.util.List;
 public abstract class NetVertex {
     public Vector3d position;
 
-    // TODO: 5/29/2024 MOVE TO DYNAMIC
-    protected final float springRelaxedLength;
-    protected final float springStiffness;
-
     protected List<NetVertex> neighbours = new ArrayList<>();
-
-    // TODO: 5/29/2024 MOVE TO DYNAMIC
-    public NetVertex(){
-        springStiffness =1;
-        springRelaxedLength =1;
-    }
+    public NetVertex(){}
 
     public NetVertex(Vector3d position, float springRelaxedLength, float springStiffness) {
         this.position = position;
-        this.springRelaxedLength = springRelaxedLength;
-        this.springStiffness = springStiffness;
     }
     public NetVertex(Vector3d position){
         this(position, 1, 1);
