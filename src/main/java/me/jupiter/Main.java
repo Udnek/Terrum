@@ -42,8 +42,8 @@ public class Main {
 
         //System.out.println(net.netMap[0][1].getNeighbours().toString());
         if (net.netMap[1][1] instanceof  NetDynamicVertex) {
-            net.netMap[1][1].setPosition(new Vector3d(1, 5, 1));
-            for (int i = 0; i < 100; i++) {
+            net.netMap[1][1].setPosition(new Vector3d(1, -5, 1));
+            for (int i = 0; i < 1000; i++) {
                 System.out.println((net.netMap[1][1]).getPosition().asString());
                 ((NetDynamicVertex) net.netMap[1][1]).calculatePositionDifferential(0.01);
                 ((NetDynamicVertex) net.netMap[1][1]).updatePosition();
