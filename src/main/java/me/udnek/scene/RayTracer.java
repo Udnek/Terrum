@@ -105,26 +105,28 @@ public class RayTracer {
 
     private int colorizeRayTrace(Vector3d hitPosition, Triangle plane){
 
-        float color = (float) positionLighted(hitPosition, plane);
-        color += 0.1f;
-        if (color < 0.15) color = 0.15f;
-        else if (color > 1) color = 1;
-        //System.out.println(color);
-        return new Color(color, color, color).getRGB();
-
-
-
-/*        double d0 = VectorUtils.distance(hitPosition, triangle.getVertex0());
-        double d1 = VectorUtils.distance(hitPosition, triangle.getVertex1());
-        double d2 = VectorUtils.distance(hitPosition, triangle.getVertex2());
+        double d0 = VectorUtils.distance(hitPosition, plane.getVertex0());
+        double d1 = VectorUtils.distance(hitPosition, plane.getVertex1());
+        double d2 = VectorUtils.distance(hitPosition, plane.getVertex2());
         Vector3d distances = new Vector3d(d0, d1, d2);
         double minDistance = VectorUtils.getMin(distances);
-        if (minDistance <= 0.01) return Color.WHITE.getRGB();
+        Vector3d color;
+        if (minDistance <= 0.01){
+            color = new Vector3d(1f, 1f, 1f);
+        } else {
+            color = new Vector3d(1/d0, 1/d1 ,1/d2);
+            color.div(VectorUtils.getMax(color));
+            VectorUtils.cutTo(color, 1f);
+        }
 
-        Vector3d color = new Vector3d(1/d0, 1/d1 ,1/d2);
-        color.div(VectorUtils.getMax(color));
-        VectorUtils.cutTo(color, 1f);
+        float light = (float) positionLighted(hitPosition, plane);
+        light += 0.1f;
+        if (light < 0.15) light = 0.15f;
+        else if (light > 1) light = 1;
 
-        return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();*/
+        color.mul(light);
+
+        return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
+
     }
 }
