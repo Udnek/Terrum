@@ -6,9 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class NetMapReader {
+public class ImageReader {
     private BufferedImage image;
-    public NetMapReader(){}
+    public ImageReader(){}
     public void readNetMap(String imagePath){
         try {
             image = ImageIO.read(new File(imagePath));
@@ -26,5 +26,10 @@ public class NetMapReader {
     }
     public int getHeight(){
         return image.getData().getHeight();
+    }
+
+
+    public static String getImageDirectory(){
+        return System.getProperty("user.dir") + "/src/main/assets/image/";
     }
 }

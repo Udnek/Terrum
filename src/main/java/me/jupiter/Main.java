@@ -1,5 +1,7 @@
 package me.jupiter;
 
+import me.jupiter.image_reader.ImageReader;
+import me.jupiter.net.CellularNet;
 import me.jupiter.object.NetDynamicVertex;
 import me.jupiter.object.NetStaticVertex;
 
@@ -8,7 +10,11 @@ import java.time.Instant;
 
 public class Main {
     public static void main(String[] args) {
-        CellularNet net = new CellularNet(1, 1, System.getProperty("user.dir") + "/src/main/assets/image/chaos.png");
+        CellularNet net = new CellularNet(
+                1,
+                1,
+                ImageReader.getImageDirectory() + "frame.png");
+
 
         Instant start = Instant.now();
         net.initiateNet();
