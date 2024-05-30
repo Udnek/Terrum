@@ -50,5 +50,9 @@ public class Main {
                 //System.out.println(((NetDynamicVertex) net.netMap[1][1]).getNormalizedDirection(net.netMap[0][0].getPosition(), net.netMap[1][1].getPosition()).asString());
             }
         }
+
+        NetScene scene = new NetScene(net);
+        scene.init();
+        me.udnek.Main.runWithScene(scene);
     }
 }

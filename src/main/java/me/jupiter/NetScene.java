@@ -1,4 +1,4 @@
-package me.udnek.scene.example;
+package me.jupiter;
 
 import me.jupiter.net.CellularNet;
 import me.jupiter.object.NetVertex;
