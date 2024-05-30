@@ -1,4 +1,4 @@
-package me.udnek.scene.example;
+package me.udnek.scene.instances;
 
 import me.udnek.objects.SceneObject;
 import me.udnek.objects.light.LightSource;
