@@ -13,7 +13,7 @@ import java.util.List;
 public class RayTracer {
 
     private Vector3d cameraPosition;
-    private List<SceneObject> objectsToRender;
+    private List<? extends SceneObject> objectsToRender;
     private List<Triangle> cachedPlanes;
 
     private LightSource lightSource;
@@ -22,7 +22,7 @@ public class RayTracer {
 
 
 
-    public RayTracer(List<SceneObject> objectsToRender, LightSource lightSource){
+    public RayTracer(List<? extends SceneObject> objectsToRender, LightSource lightSource){
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
         this.lastLightPosition = null;
