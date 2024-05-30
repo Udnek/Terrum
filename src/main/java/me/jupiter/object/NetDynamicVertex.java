@@ -51,7 +51,6 @@ public class NetDynamicVertex extends NetVertex{
     }
     public void calculatePositionDifferential() {
         Vector3d appliedForce = new Vector3d(0, 0, 0);
-
         for (NetVertex neighbour : neighbours) {
             if (neighbour != null) {
                 Vector3d normalizedDirection = getNormalizedDirection(neighbour.getPosition(), this.getPosition());
@@ -61,9 +60,9 @@ public class NetDynamicVertex extends NetVertex{
                 appliedForce.add(normalizedDirection.mul(elasticForce));
             }
         }
-        Vector3d decayValue = velocity.dup().mul(decayCoefficient);
+        //Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         acceleration = appliedForce.dup().div(mass);
-        acceleration.sub(decayValue);
+        //acceleration.sub(decayValue);
         velocity.add(acceleration.dup().mul(deltaTime));
         positionDifferential = velocity.dup().mul(deltaTime);
     }

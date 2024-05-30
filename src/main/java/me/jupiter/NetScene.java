@@ -57,7 +57,7 @@ public class NetScene extends Scene {
 
     @Override
     public void tick() {
-        System.out.println(net.getVertex(4, 4).getPosition().asString());
+        System.out.println(net.getVertex(3, 3).getPosition().asString());
         net.updateVerticesPositionDifferentials();
         net.updateVerticesPositions();
         for (VertexObject vertex : vertices) {
