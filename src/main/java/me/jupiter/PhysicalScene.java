@@ -1,8 +1,6 @@
 package me.jupiter;
 
 import me.jupiter.net.CellularNet;
-import me.udnek.objects.SpringObject;
-import me.udnek.objects.VertexObject;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
 
@@ -16,12 +14,8 @@ public class PhysicalScene extends NetScene {
         System.out.println(net.getVertex(4, 4).getPosition().asString());
         net.updateVerticesPositionDifferentials();
         net.updateVerticesPositions();
-        for (VertexObject vertex : vertices) {
-            vertex.update();
-        }
-        for (SpringObject springObject : springs) {
-            springObject.update();
-        }
+
+        synchroniseObjects();
     }
 
     public void setup(double springStiffness,
