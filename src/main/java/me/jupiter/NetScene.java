@@ -2,6 +2,7 @@ package me.jupiter;
 
 import me.jupiter.net.CellularNet;
 import me.jupiter.object.NetVertex;
+import me.jupiter.object.NetVoidVertex;
 import me.udnek.objects.SceneObject;
 import me.udnek.objects.VertexObject;
 import me.udnek.objects.light.LightSource;
@@ -14,13 +15,13 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static me.jupiter.image_reader.ImageReader.getImageDirectory;
+
 public class NetScene extends Scene {
     private CellularNet net;
     private List<VertexObject> vertices;
     private List<Spring> springs;
-    public NetScene(CellularNet net){
-        this.net = net;
-    }
+    public NetScene(){}
 
 
     @Override
@@ -31,6 +32,7 @@ public class NetScene extends Scene {
         for (int x = 0; x < net.getSizeX(); x++) {
             for (int z = 0; z < net.getSizeZ(); z++) {
                 NetVertex netVertex = net.getVertex(x, z);
+                if (netVertex instanceof NetVoidVertex) continue;
                 vertices.add(new VertexObject(new Vector3d(netVertex.getPosition()), netVertex));
             }
         }
@@ -42,7 +44,7 @@ public class NetScene extends Scene {
 
     @Override
     protected Camera initCamera() {
-        return new Camera();
+        return new Camera(new Vector3d(5,4,5));
     }
 
 
@@ -53,8 +55,33 @@ public class NetScene extends Scene {
 
     @Override
     public void tick() {
+        System.out.println(net.getVertex(4, 4).getPosition().asString());
+        net.updateVerticesPositionDifferentials();
+        net.updateVerticesPositions();
         for (VertexObject vertex : vertices) {
             vertex.update();
         }
     }
+
+    @Override
+    public boolean doLight() {
+        return false;
+    }
+
+    public void setup(double springStiffness,
+                           double springRelaxedLength,
+                           double vertexMass,
+                           double deltaTime,
+                           String imageFileName){
+        net = new CellularNet(getImageDirectory() + imageFileName);
+        net.initiateNet();
+        net.initiateNeighbours();
+        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime);
+        init();
+    }
+
+    public void setInitialDeviation(int x, int z, double yShift) {
+        net.getVertex(x, z).setPosition(new Vector3d(x, yShift, z));
+    }
 }
+
