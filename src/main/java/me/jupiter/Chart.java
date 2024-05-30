@@ -17,7 +17,7 @@ public class Chart extends Application {
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Number of Month");
         //creating the chart
-        final LineChart<Number,Number> lineChart =
+        final LineChart<Numberr> lineChart =
                 new LineChart<Number,Number>(xAxis,yAxis);
 
         lineChart.setTitle("Stock Monitoring, 2010");
