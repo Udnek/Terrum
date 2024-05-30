@@ -1,16 +1,22 @@
 package me.udnek;
 
 
-import me.udnek.tests.Tests;
+import me.udnek.scene.Scene;
+import me.udnek.scene.instances.DynamicScene;
+import me.udnek.test.Tests;
 
 public class Main{
     public static void main(String[] args) {
-        new Frame();
+        Scene scene = new DynamicScene();
+        scene.init();
+        runWithScene(scene);
         //test();
     }
 
 
-
+    public static void runWithScene(Scene scene){
+        new Frame(scene);
+    }
 
     public static void test(){
         Tests.run();

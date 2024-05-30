@@ -1,99 +1,66 @@
 package me.udnek.scene;
 
 
-import me.udnek.objects.AxisCrosshairObject;
 import me.udnek.objects.SceneObject;
-import me.udnek.objects.SpringObject;
-import me.udnek.objects.VertexObject;
+import me.udnek.objects.light.LightSource;
+import me.udnek.utils.UserAction;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Scene{
+public abstract class Scene{
 
-    private Camera camera;
-    private ArrayList<SceneObject> sceneObjects = new ArrayList<>();
-    private RayTracer rayTracer;
-
-    private VertexObject vertex0;
-    private VertexObject vertex1;
-    private SpringObject spring;
-
-    private int tick = 0;
+    protected Camera camera;
+    protected List<? extends SceneObject> sceneObjects = new ArrayList<>();
+    protected RayTracer rayTracer;
+    protected LightSource lightSource;
 
     public Scene(){
-        camera = new Camera(new Vector3d(0.1, 0.1, 0.1));
 
-
-        vertex0 = new VertexObject(new Vector3d(-1, 0, 3));
-        vertex1 = new VertexObject(new Vector3d(1, 0, 3));
-        spring = new SpringObject(new Vector3d(), vertex0, vertex1);
-
-        sceneObjects.add(vertex0);
-        sceneObjects.add(vertex1);
-        sceneObjects.add(spring);
-        sceneObjects.add(new AxisCrosshairObject());
-
-        //sceneObjects.add(new IcosphereObject(new Vector3d(0, 0, 3), 0.4));
-        //sceneObjects.add(new IcosahedronObject(new Vector3d(0, 0, 5), 1));
-
-/*        sceneObjects.add(
-                new TetrahedronObject(
-                        //pos
-                        new Vector3d(0, 0, 1),
-                        //up
-                        new Vector3d(0.5, 1, 0.5),
-                        //bottom
-                        new Vector3d(-1, -0.5, 1),
-                        new Vector3d(0.6, 0, 0),
-                        new Vector3d(-0.1, 0, 0)
-
-                )
-        );
-        sceneObjects.add(
-                new TetrahedronObject(
-                        //pos
-                        new Vector3d(0, 0, -1.1),
-                        //up
-                        new Vector3d(0.5, 1, 0.5),
-                        //bottom
-                        new Vector3d(-1, -0.5, 1),
-                        new Vector3d(0.6, 0, 0),
-                        new Vector3d(-0.1, 0, 0)
-
-                )
-        );*/
-
-        rayTracer = new RayTracer(sceneObjects);
     }
 
-    public BufferedImage renderFrame(final int width, final int height, final int pixelScaling){
+    public void init(){
+        camera = initCamera();
+        lightSource = initLightSource();
+        sceneObjects = initSceneObjects();
+        rayTracer = new RayTracer(sceneObjects, lightSource, doLight());
+    }
 
-        tick++;
+    protected abstract Camera initCamera();
+    protected abstract List<? extends SceneObject> initSceneObjects();
+    protected abstract LightSource initLightSource();
+    public abstract void tick();
+
+    public boolean doLight(){return true;};
+
+
+
+
+    public BufferedImage renderFrame(final int width, final int height, final int pixelScaling){
 
         int renderWidth = width/pixelScaling;
         int renderHeight = height/pixelScaling;
         float xOffset = -renderWidth/2f;
         float yOffset = -renderHeight/2f;
-        final float fovMultiplayer = 20f/pixelScaling;
-
-        vertex0.move(0, Math.sin(tick/20.0)/20.0, 0);
-        vertex1.move(0, Math.cos(tick/30.0)/30.0, 0);
-        spring.recalculateTips();
+        final float fovMultiplier = 20f/pixelScaling;
 
         // TODO: 5/28/2024 CACHE PLAYER POSITION
+
+
 
         rayTracer.recacheObjects(camera.getPosition());
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
         int[] image = new int[renderHeight*renderWidth];
+
         for (int x = 0; x < renderWidth; x++) {
             for (int y = 0; y < renderHeight; y++) {
 
                 Vector3d direction = new Vector3d(
                         (x+xOffset),
                         (y+yOffset),
-                        10*fovMultiplayer
+                        10*fovMultiplier
                 );
                 camera.rotateVector(direction);
 
@@ -101,12 +68,31 @@ public class Scene{
                 image[(renderHeight-y-1)*renderWidth + x] = color;
             }
         }
+
         bufferedImage.setRGB(0, 0, renderWidth, renderHeight, image, 0, renderWidth);
         return bufferedImage;
     }
 
-    public Camera getCamera(){
-        return camera;
+
+
+    public void handleUserInput(UserAction userAction){;
+        final float moveSpeed = 0.07f;
+        final float rotateSpeed = 2f;
+        switch (userAction){
+            case MOVE_FORWARD -> camera.move(new Vector3d(0, 0, moveSpeed));
+            case MOVE_BACKWARD -> camera.move(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_RIGHT -> camera.move(new Vector3d(moveSpeed, 0, 0));
+            case MOVE_LEFT -> camera.move(new Vector3d(-moveSpeed, 0, 0));
+
+            case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
+            case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed*2, 0));
+
+            case CAMERA_UP -> camera.rotatePitch(-rotateSpeed);
+            case CAMERA_DOWN -> camera.rotatePitch(rotateSpeed);
+            case CAMERA_RIGHT -> camera.rotateYaw(-rotateSpeed);
+            case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
+        }
+
     }
 
 }

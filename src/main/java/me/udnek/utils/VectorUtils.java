@@ -58,6 +58,7 @@ public class VectorUtils {
         Vector3d vertex2 = triangle.getVertex2();
 
         Vector3d normal = triangle.getNormal();
+        // TODO: 5/29/2024 NORMALIZE VECTORS???
         double parallelityWithNormal = 1 - new Vector3d().cross(normal, direction).length();
         if (-EPSILON <= parallelityWithNormal && parallelityWithNormal <= EPSILON){
             return null;
