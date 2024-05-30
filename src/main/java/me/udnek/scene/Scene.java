@@ -35,26 +35,32 @@ public abstract class Scene{
 
     public boolean doLight(){return true;};
 
+
+
+
     public BufferedImage renderFrame(final int width, final int height, final int pixelScaling){
 
         int renderWidth = width/pixelScaling;
         int renderHeight = height/pixelScaling;
         float xOffset = -renderWidth/2f;
         float yOffset = -renderHeight/2f;
-        final float fovMultiplayer = 20f/pixelScaling;
+        final float fovMultiplier = 20f/pixelScaling;
 
         // TODO: 5/28/2024 CACHE PLAYER POSITION
+
+
 
         rayTracer.recacheObjects(camera.getPosition());
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
         int[] image = new int[renderHeight*renderWidth];
+
         for (int x = 0; x < renderWidth; x++) {
             for (int y = 0; y < renderHeight; y++) {
 
                 Vector3d direction = new Vector3d(
                         (x+xOffset),
                         (y+yOffset),
-                        10*fovMultiplayer
+                        10*fovMultiplier
                 );
                 camera.rotateVector(direction);
 
@@ -62,9 +68,12 @@ public abstract class Scene{
                 image[(renderHeight-y-1)*renderWidth + x] = color;
             }
         }
+
         bufferedImage.setRGB(0, 0, renderWidth, renderHeight, image, 0, renderWidth);
         return bufferedImage;
     }
+
+
 
     public void handleUserInput(UserAction userAction){;
         final float moveSpeed = 0.07f;
