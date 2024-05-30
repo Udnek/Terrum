@@ -1,6 +1,8 @@
 package me.jupiter.net;
 
 import me.jupiter.image_reader.ImageReader;
+import me.jupiter.object.NetDynamicVertex;
+import me.jupiter.object.NetStaticVertex;
 import me.jupiter.object.NetVertex;
 import me.jupiter.object.NetVoidVertex;
 import org.realityforge.vecmath.Vector3d;
@@ -13,14 +15,10 @@ public class CellularNet {
     private int sizeX;
     private int sizeZ;
     private final String imagePath;
-    private final float springStiffness;
-    private final float springRelaxedLength;
     private NetVertex[][] netMap;
 
-    public CellularNet(float springStiffness, float springRelaxedLength, String imagePath)
+    public CellularNet(String imagePath)
     {
-        this.springStiffness = springStiffness;
-        this.springRelaxedLength = springRelaxedLength;
         this.imagePath = imagePath;
     }
 
@@ -77,6 +75,57 @@ public class CellularNet {
                 List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
                 netVertex.addNeighbours(neighbourVertices);
             }
+        }
+    }
+
+    public void setupVerticesVariables(double springStiffness,
+                                       double springRelaxedLength,
+                                       double vertexMass,
+                                       double deltaTime){
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex){
+                    ((NetDynamicVertex) getVertex(j, i)).setVariables(springStiffness,
+                                                                        springRelaxedLength,
+                                                                        vertexMass,
+                                                                        deltaTime);
+                }
+            }
+        }
+    }
+
+    public void updateVerticesPositionDifferentials(){
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex){
+                    ((NetDynamicVertex) getVertex(j, i)).calculatePositionDifferential();
+                }
+            }
+        }
+    }
+
+    public void updateVerticesPositions(){
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex){
+                    ((NetDynamicVertex) getVertex(j, i)).updatePosition();
+                }
+            }
+        }
+    }
+
+    public void printMap(){
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetStaticVertex){
+                    System.out.print("[ ]");
+                } else if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    System.out.print(" - ");
+                } else {
+                    System.out.print("   ");
+                }
+            }
+            System.out.println();
         }
     }
 }
