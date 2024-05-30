@@ -44,7 +44,9 @@ public class NetScene extends Scene {
 
     @Override
     protected Camera initCamera() {
-        return new Camera(new Vector3d(5,4,5));
+        Camera camera = new Camera(new Vector3d(2, 4, 2));
+        camera.rotatePitch(90);
+        return camera;
     }
 
 
@@ -72,11 +74,12 @@ public class NetScene extends Scene {
                            double springRelaxedLength,
                            double vertexMass,
                            double deltaTime,
+                           double decayCoefficient,
                            String imageFileName){
         net = new CellularNet(getImageDirectory() + imageFileName);
         net.initiateNet();
         net.initiateNeighbours();
-        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime);
+        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
         init();
     }
 
