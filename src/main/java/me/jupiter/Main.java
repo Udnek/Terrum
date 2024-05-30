@@ -3,7 +3,7 @@ package me.jupiter;
 public class Main {
     public static void main(String[] args) {
         PhysicalScene scene = new PhysicalScene();
-        scene.setup(500,
+        scene.setup(250,
                 0.5,
                 5,
                 0.01,

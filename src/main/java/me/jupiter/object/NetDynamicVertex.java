@@ -22,7 +22,7 @@ public class NetDynamicVertex extends NetVertex{
         this.springRelaxedLength = 1;
         this.mass = 1;
         this.deltaTime = 0.1;
-        this.decayCoefficient = 0.2;
+        //this.decayCoefficient = 0;
     }
 
     public void setVariables(double springStiffness,
@@ -34,7 +34,7 @@ public class NetDynamicVertex extends NetVertex{
         this.springRelaxedLength = springRelaxedLength;
         this.mass = mass;
         this.deltaTime = deltaTime;
-        this.decayCoefficient = decayCoefficient;
+        //this.decayCoefficient = decayCoefficient;
     }
 
     public Vector3d getVelocity() {return velocity.dup();}
