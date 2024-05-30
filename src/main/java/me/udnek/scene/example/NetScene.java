@@ -20,15 +20,11 @@ public class NetScene extends Scene {
     private List<Spring> springs;
     public NetScene(CellularNet net){
         this.net = net;
-        initSceneObjects();
     }
 
 
     @Override
     protected List<? extends SceneObject> initSceneObjects() {
-
-        if (net == null) return new ArrayList<>();
-
         vertices = new ArrayList<>();
         springs = new ArrayList<>();
 

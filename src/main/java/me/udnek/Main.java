@@ -7,7 +7,9 @@ import me.udnek.tests.Tests;
 
 public class Main{
     public static void main(String[] args) {
-        runWithScene(new LightTestScene());
+        LightTestScene scene = new LightTestScene();
+        scene.init();
+        runWithScene(scene);
         //test();
     }
 
