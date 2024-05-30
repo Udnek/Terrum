@@ -4,6 +4,7 @@ import me.jupiter.net.CellularNet;
 import me.jupiter.object.NetVertex;
 import me.jupiter.object.NetVoidVertex;
 import me.udnek.objects.SceneObject;
+import me.udnek.objects.SpringObject;
 import me.udnek.objects.VertexObject;
 import me.udnek.objects.light.LightSource;
 import me.udnek.objects.light.PointLight;
@@ -11,14 +12,13 @@ import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
 import org.realityforge.vecmath.Vector3d;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NetScene extends Scene {
     protected CellularNet net;
     protected List<VertexObject> vertices;
-    protected List<Spring> springs;
+    protected List<SpringObject> springs;
     public NetScene(){}
 
 
@@ -26,16 +26,32 @@ public abstract class NetScene extends Scene {
     protected List<? extends SceneObject> initSceneObjects() {
         vertices = new ArrayList<>();
         springs = new ArrayList<>();
+        List<NetVertex> addedNetVertices = new ArrayList<>();
 
         for (int x = 0; x < net.getSizeX(); x++) {
             for (int z = 0; z < net.getSizeZ(); z++) {
+
                 NetVertex netVertex = net.getVertex(x, z);
+
+                if (addedNetVertices.contains(netVertex)) continue;
                 if (netVertex instanceof NetVoidVertex) continue;
-                vertices.add(new VertexObject(new Vector3d(netVertex.getPosition()), netVertex));
+
+                VertexObject vertexObject = new VertexObject(new Vector3d(netVertex.getPosition()), netVertex);
+                vertices.add(vertexObject);
+                addedNetVertices.add(netVertex);
+                for (NetVertex neighbour : netVertex.getNeighbours()) {
+                    VertexObject neighbourObject = new VertexObject(new Vector3d(neighbour.getPosition()), neighbour);
+                    vertices.add(neighbourObject);
+                    addedNetVertices.add(neighbour);
+                    springs.add(new SpringObject(new Vector3d(), vertexObject, neighbourObject));
+                }
             }
         }
 
-        return vertices;
+        List<SceneObject> sceneObjects = new ArrayList<>();
+        sceneObjects.addAll(vertices);
+        sceneObjects.addAll(springs);
+        return sceneObjects;
     }
 
     @Override

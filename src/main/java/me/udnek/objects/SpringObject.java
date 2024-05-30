@@ -16,18 +16,18 @@ public class SpringObject extends SceneObject{
         this.tipFirst = tipFirst;
         this.tipSecond = tipSecond;
         this.plane0 = new Triangle(new Vector3d(), new Vector3d(), new Vector3d());
-        this.plane1 = new Triangle(new Vector3d(), new Vector3d(), new Vector3d());
+        //this.plane1 = new Triangle(new Vector3d(), new Vector3d(), new Vector3d());
 
-        recalculateTips();
+        update();
     }
 
-    public void recalculateTips(){
+    public void update(){
         plane0.setVertices(tipFirst.getPosition(), tipFirst.getPosition().add(0, 0.1, 0), tipSecond.getPosition().add(0, 0.1, 0));
-        plane1.setVertices(tipFirst.getPosition(), tipSecond.getPosition(), tipSecond.getPosition().add(0, 0.1, 0));
+        //plane1.setVertices(tipFirst.getPosition(), tipSecond.getPosition(), tipSecond.getPosition().add(0, 0.1, 0));
     }
 
     @Override
     public Triangle[] getRenderTriangles() {
-        return new Triangle[]{plane0.copy(), plane1.copy()};
+        return new Triangle[]{plane0.copy()};
     }
 }
