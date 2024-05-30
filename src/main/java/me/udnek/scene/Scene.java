@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class Scene{
 
     protected Camera camera;
-    protected List<SceneObject> sceneObjects = new ArrayList<>();
+    protected List<? extends SceneObject> sceneObjects = new ArrayList<>();
     protected RayTracer rayTracer;
     protected LightSource lightSource;
 
@@ -25,7 +25,7 @@ public abstract class Scene{
     }
 
     protected abstract Camera initCamera();
-    protected abstract List<SceneObject> initSceneObjects();
+    protected abstract List<? extends SceneObject> initSceneObjects();
     protected abstract LightSource initLightSource();
     public abstract void tick();
 

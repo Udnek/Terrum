@@ -43,8 +43,8 @@ public class DynamicScene extends Scene {
     protected List<SceneObject> initSceneObjects() {
         List<SceneObject> sceneObjects = new ArrayList<>();
 
-        vertex0 = new VertexObject(new Vector3d(-1, 0, 3));
-        vertex1 = new VertexObject(new Vector3d(1, 0, 3));
+        vertex0 = new VertexObject(new Vector3d(-1, 0, 3), null);
+        vertex1 = new VertexObject(new Vector3d(1, 0, 3), null);
         spring = new SpringObject(new Vector3d(), vertex0, vertex1);
 
         sceneObjects.add(vertex0);
