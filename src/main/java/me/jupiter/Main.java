@@ -2,7 +2,7 @@ package me.jupiter;
 
 public class Main {
     public static void main(String[] args) {
-        NetScene scene = new NetScene();
+        PhysicalScene scene = new PhysicalScene();
         scene.setup(500,
                 1,
                 5,
