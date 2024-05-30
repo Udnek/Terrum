@@ -25,13 +25,15 @@ public abstract class Scene{
         camera = initCamera();
         lightSource = initLightSource();
         sceneObjects = initSceneObjects();
-        rayTracer = new RayTracer(sceneObjects, lightSource);
+        rayTracer = new RayTracer(sceneObjects, lightSource, doLight());
     }
 
     protected abstract Camera initCamera();
     protected abstract List<? extends SceneObject> initSceneObjects();
     protected abstract LightSource initLightSource();
     public abstract void tick();
+
+    public boolean doLight(){return true;};
 
     public BufferedImage renderFrame(final int width, final int height, final int pixelScaling){
 

@@ -20,12 +20,15 @@ public class RayTracer {
     private Vector3d lastLightPosition;
     private List<Triangle> lightCachedPlanes;
 
+    private final boolean doLight;
 
 
-    public RayTracer(List<? extends SceneObject> objectsToRender, LightSource lightSource){
+
+    public RayTracer(List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight){
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
         this.lastLightPosition = null;
+        this.doLight = doLight;
     }
 
     public void recacheObjects(Vector3d position){
@@ -39,6 +42,8 @@ public class RayTracer {
         cacheObject(cachedPlanes, lightSource, cameraPosition);
 
         // light cache
+        if (!doLight) return;
+
         Vector3d lightSourcePosition = lightSource.getPosition();
         if (lastLightPosition != null && lightSourcePosition.isEqualTo(lastLightPosition)) return; //skipping light recache
         lastLightPosition = lightSourcePosition;
@@ -119,12 +124,15 @@ public class RayTracer {
             VectorUtils.cutTo(color, 1f);
         }
 
-        float light = (float) positionLighted(hitPosition, plane);
-        light += 0.1f;
-        if (light < 0.15) light = 0.15f;
-        else if (light > 1) light = 1;
+        if (doLight){
+            float light = (float) positionLighted(hitPosition, plane);
+            light += 0.1f;
+            if (light < 0.15) light = 0.15f;
+            else if (light > 1) light = 1;
 
-        color.mul(light);
+            color.mul(light);
+        }
+
 
         return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
 

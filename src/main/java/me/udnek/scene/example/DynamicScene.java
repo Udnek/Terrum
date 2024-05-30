@@ -40,6 +40,11 @@ public class DynamicScene extends Scene {
     }
 
     @Override
+    public boolean doLight() {
+        return false;
+    }
+
+    @Override
     protected List<SceneObject> initSceneObjects() {
         List<SceneObject> sceneObjects = new ArrayList<>();
 
