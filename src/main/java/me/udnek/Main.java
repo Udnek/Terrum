@@ -2,12 +2,12 @@ package me.udnek;
 
 
 import me.udnek.scene.Scene;
-import me.udnek.scene.example.LightTestScene;
+import me.udnek.scene.example.DynamicScene;
 import me.udnek.tests.Tests;
 
 public class Main{
     public static void main(String[] args) {
-        LightTestScene scene = new LightTestScene();
+        Scene scene = new DynamicScene();
         scene.init();
         runWithScene(scene);
         //test();
