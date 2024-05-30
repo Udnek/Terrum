@@ -29,9 +29,9 @@ public class Main {
 
         for (int i = 0; i < net.getSizeZ(); i++) {
             for (int j = 0; j < net.getSizeX(); j++) {
-                if (net.netMap[i][j] instanceof NetStaticVertex){
+                if (net.getVertex(j, i) instanceof NetStaticVertex){
                     System.out.print("[ ]");
-                } else if (net.netMap[i][j] instanceof NetDynamicVertex) {
+                } else if (net.getVertex(j, i) instanceof NetDynamicVertex) {
                     System.out.print(" - ");
                 } else {
                     System.out.print("   ");
@@ -41,12 +41,12 @@ public class Main {
         }
 
         //System.out.println(net.netMap[0][1].getNeighbours().toString());
-        if (net.netMap[1][1] instanceof  NetDynamicVertex) {
-            net.netMap[1][1].setPosition(new Vector3d(1, 5, 1));
+        if (net.getVertex(1, 1) instanceof  NetDynamicVertex) {
+            net.getVertex(1, 1).setPosition(new Vector3d(1, -5, 1));
             for (int i = 0; i < 100; i++) {
-                System.out.println((net.netMap[1][1]).getPosition().asString());
-                ((NetDynamicVertex) net.netMap[1][1]).calculatePositionDifferential(0.01);
-                ((NetDynamicVertex) net.netMap[1][1]).updatePosition();
+                System.out.println((net.getVertex(1, 1)).getPosition().asString());
+                ((NetDynamicVertex) net.getVertex(1, 1)).calculatePositionDifferential(0.01);
+                ((NetDynamicVertex) net.getVertex(1, 1)).updatePosition();
                 //System.out.println(((NetDynamicVertex) net.netMap[1][1]).getNormalizedDirection(net.netMap[0][0].getPosition(), net.netMap[1][1].getPosition()).asString());
             }
         }

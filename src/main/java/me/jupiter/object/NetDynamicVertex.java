@@ -8,17 +8,18 @@ public class NetDynamicVertex extends NetVertex{
     private Vector3d acceleration;
     private Vector3d positionDifferential;
     private Vector3d appliedForce;
-    private double springStiffness;
-    private double springRelaxedLength;
-    private double mass;
+    private final double springStiffness;
+    private final double springRelaxedLength;
+    private final double mass;
 
 
     public NetDynamicVertex(Vector3d position) {
         super(position);
         this.velocity = new Vector3d(0, 0, 0);
+        this.acceleration = new Vector3d(0, 0, 0);
         this.springStiffness = 1;
-        this.springRelaxedLength = 0.5;
-        this.mass = 0.5;
+        this.springRelaxedLength = 1;
+        this.mass = 1;
     }
 
     public Vector3d getVelocity() {return velocity.dup();}
@@ -47,9 +48,12 @@ public class NetDynamicVertex extends NetVertex{
                 appliedForce.add(normalizedDirection.mul(elasticForce));
             }
         }
-        acceleration = appliedForce.div(mass);
-        velocity.add(acceleration);
-        positionDifferential = velocity.mul(deltaTime);
+        //System.out.println("Прикладываемая сила до операции ускорения: " + appliedForce.asString());
+        acceleration = appliedForce.dup().div(mass);
+        //System.out.println("Прикладываемая сила после операции ускорения: " + appliedForce.asString() + "\n");
+
+        velocity.add(acceleration.dup().mul(deltaTime));
+        positionDifferential = velocity.dup().mul(deltaTime);
     }
 
     public void updatePosition(){

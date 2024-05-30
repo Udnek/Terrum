@@ -1,5 +1,7 @@
 package me.udnek;
 
+import me.udnek.scene.Scene;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,10 +9,10 @@ import java.awt.event.KeyListener;
 public class Frame extends JFrame implements KeyListener {
 
     private Panel panel;
-    Frame(){
+    public Frame(Scene scene){
 
 
-        panel = new Panel(this);
+        panel = new Panel(this, scene);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);

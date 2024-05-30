@@ -15,7 +15,7 @@ public class CellularNet {
     private final String imagePath;
     private final float springStiffness;
     private final float springRelaxedLength;
-    public NetVertex[][] netMap;
+    private NetVertex[][] netMap;
 
     public CellularNet(float springStiffness, float springRelaxedLength, String imagePath)
     {
