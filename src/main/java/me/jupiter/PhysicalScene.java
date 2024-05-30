@@ -1,6 +1,7 @@
 package me.jupiter;
 
 import me.jupiter.net.CellularNet;
+import me.udnek.objects.SpringObject;
 import me.udnek.objects.VertexObject;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
@@ -17,6 +18,9 @@ public class PhysicalScene extends NetScene {
         net.updateVerticesPositions();
         for (VertexObject vertex : vertices) {
             vertex.update();
+        }
+        for (SpringObject springObject : springs) {
+            springObject.update();
         }
     }
 
