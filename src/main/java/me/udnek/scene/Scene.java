@@ -18,6 +18,10 @@ public abstract class Scene{
     protected LightSource lightSource;
 
     public Scene(){
+
+    }
+
+    public void init(){
         camera = initCamera();
         lightSource = initLightSource();
         sceneObjects = initSceneObjects();
