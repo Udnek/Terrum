@@ -39,7 +39,6 @@ public class RayTracer {
         for (SceneObject object : objectsToRender) {
             cacheObject(cachedPlanes, object, cameraPosition);
         }
-        cacheObject(cachedPlanes, lightSource, cameraPosition);
 
         // light cache
         if (!doLight) return;
@@ -63,22 +62,24 @@ public class RayTracer {
 
     public int rayTrace(Vector3d direction){
 
+
         Vector3d nearestHitPosition = null;
         Triangle nearestPlane = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
-
+        //System.out.println(cachedPlanes.size());
         for (Triangle plane : cachedPlanes) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
 
-            if (hitPosition != null){
-                if (hitPosition.lengthSquared() < nearestDistance){
+            if (hitPosition != null) {
+                if (hitPosition.lengthSquared() < nearestDistance) {
                     nearestHitPosition = hitPosition;
                     nearestPlane = plane;
                     nearestDistance = hitPosition.lengthSquared();
                 }
             }
         }
+
         if (nearestPlane == null) return 0;
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }

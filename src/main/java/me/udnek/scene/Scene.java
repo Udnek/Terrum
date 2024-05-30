@@ -70,10 +70,10 @@ public abstract class Scene{
         final float moveSpeed = 0.07f;
         final float rotateSpeed = 2f;
         switch (userAction){
-            case MOVE_FORWARD -> camera.moveAlongDirection(new Vector3d(0, 0, moveSpeed));
-            case MOVE_BACKWARD -> camera.moveAlongDirection(new Vector3d(0, 0, -moveSpeed));
-            case MOVE_RIGHT -> camera.moveAlongDirection(new Vector3d(moveSpeed, 0, 0));
-            case MOVE_LEFT -> camera.moveAlongDirection(new Vector3d(-moveSpeed, 0, 0));
+            case MOVE_FORWARD -> camera.move(new Vector3d(0, 0, moveSpeed));
+            case MOVE_BACKWARD -> camera.move(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_RIGHT -> camera.move(new Vector3d(moveSpeed, 0, 0));
+            case MOVE_LEFT -> camera.move(new Vector3d(-moveSpeed, 0, 0));
 
             case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
             case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed*2, 0));
