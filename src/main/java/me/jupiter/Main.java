@@ -7,8 +7,9 @@ public class Main {
                 0.5,
                 5,
                 0.01,
-                "small_square.png");
-        scene.setInitialDeviation(2, 2, 0);
+                0.5,
+                "small_frame.png");
+        scene.setInitialDeviation(2, 2, 5);
         me.udnek.Main.runWithScene(scene);
     }
 }

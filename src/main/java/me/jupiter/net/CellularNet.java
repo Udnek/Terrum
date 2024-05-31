@@ -81,14 +81,16 @@ public class CellularNet {
     public void setupVerticesVariables(double springStiffness,
                                        double springRelaxedLength,
                                        double vertexMass,
-                                       double deltaTime){
+                                       double deltaTime,
+                                       double decayCoefficient){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (getVertex(j, i) instanceof NetDynamicVertex){
                     ((NetDynamicVertex) getVertex(j, i)).setVariables(springStiffness,
                             springRelaxedLength,
                             vertexMass,
-                            deltaTime);
+                            deltaTime,
+                            decayCoefficient);
                 }
             }
         }

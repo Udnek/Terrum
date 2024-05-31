@@ -1,6 +1,8 @@
 package me.jupiter;
 
 import me.jupiter.net.CellularNet;
+import me.udnek.objects.SpringObject;
+import me.udnek.objects.VertexObject;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
 
@@ -14,7 +16,6 @@ public class PhysicalScene extends NetScene {
         System.out.println(net.getVertex(2, 2).getPosition().asString());
         net.updateVerticesPositionDifferentials();
         net.updateVerticesPositions();
-
         synchroniseObjects();
     }
 
@@ -22,11 +23,12 @@ public class PhysicalScene extends NetScene {
                       double springRelaxedLength,
                       double vertexMass,
                       double deltaTime,
+                      double decayCoefficient,
                       String imageFileName){
         net = new CellularNet(getImageDirectory() + imageFileName);
         net.initiateNet();
         net.initiateNeighbours();
-        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime);
+        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
         init();
     }
 

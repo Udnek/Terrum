@@ -22,17 +22,19 @@ public class NetDynamicVertex extends NetVertex{
         this.springRelaxedLength = 1;
         this.mass = 1;
         this.deltaTime = 0.1;
-        //this.decayCoefficient = 0;
+        this.decayCoefficient = 0;
     }
 
     public void setVariables(double springStiffness,
                              double springRelaxedLength,
                              double mass,
-                             double deltaTime){
+                             double deltaTime,
+                             double decayCoefficient){
         this.springStiffness = springStiffness;
         this.springRelaxedLength = springRelaxedLength;
         this.mass = mass;
         this.deltaTime = deltaTime;
+        this.decayCoefficient = decayCoefficient;
     }
 
     public Vector3d getVelocity() {return velocity.dup();}
@@ -58,7 +60,9 @@ public class NetDynamicVertex extends NetVertex{
                 appliedForce.add(normalizedDirection.mul(elasticForce));
             }
         }
+        Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         acceleration = appliedForce.dup().div(mass);
+        acceleration.sub(decayValue);
         velocity.add(acceleration.dup().mul(deltaTime));
         positionDifferential = velocity.dup().mul(deltaTime);
     }
