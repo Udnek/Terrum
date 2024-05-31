@@ -1,8 +1,11 @@
 package me.udnek.app;
 
+import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
 import me.udnek.utils.UserAction;
+import org.decimal4j.util.DoubleRounder;
 import org.jcodec.api.awt.AWTSequenceEncoder;
+import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
 import java.awt.Frame;
@@ -109,7 +112,12 @@ public class Panel extends JPanel {
             }
 
             double renderTime = (System.nanoTime() - startTime)/Math.pow(10, 9);
-            frame.setTitle("RenderTime: " + renderTime);
+            Camera camera = scene.getCamera();
+            Vector3d pos = camera.getPosition();
+            frame.setTitle("SPF: "+renderTime +
+                    " ("+getWidth()+"x"+getHeight()+")" +
+                    " x:"+ DoubleRounder.round(pos.x, 2) + " y:"+DoubleRounder.round(pos.y, 2) + " z:" + DoubleRounder.round(pos.z, 2) + " yaw:"+camera.getYaw() + " pitch:"+camera.getPitch()
+                    );
             if (renderTime > 1) System.out.println("RenderTime: " + renderTime);
         }
     }
