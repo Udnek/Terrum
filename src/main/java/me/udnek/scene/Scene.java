@@ -44,7 +44,7 @@ public abstract class Scene{
         int renderHeight = height/pixelScaling;
         float xOffset = -renderWidth/2f;
         float yOffset = -renderHeight/2f;
-        final float fovMultiplier = 20f/pixelScaling;
+        final float fovMultiplier = (1f/70f)*width;
 
         // TODO: 5/28/2024 CACHE PLAYER POSITION
 

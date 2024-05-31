@@ -12,6 +12,6 @@ public class Main {
                 0.5,
                 "small_frame.png");
         scene.setInitialDeviation(2, 2, 4);
-        me.udnek.Main.runWithScene(scene, Settings.DEFAULT);
+        me.udnek.Main.runWithScene(scene, Settings.withRecording(1920, 1080, "dimas"));
     }
 }
