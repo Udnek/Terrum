@@ -54,6 +54,15 @@ public abstract class NetScene extends Scene {
         return sceneObjects;
     }
 
+    public void synchroniseObjects(){
+        for (VertexObject vertex : vertices) {
+            vertex.update();
+        }
+        for (SpringObject springObject : springs) {
+            springObject.update();
+        }
+    }
+
     @Override
     protected Camera initCamera() {
         Camera camera = new Camera(new Vector3d(2, 4, 2));
