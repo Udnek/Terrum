@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ImageReader {
     private BufferedImage image;
     public ImageReader(){}
-    public void readNetMap(String imagePath){
+    public void readImage(String imagePath){
         try {
             image = ImageIO.read(new File(imagePath));
         } catch (IOException e) {
