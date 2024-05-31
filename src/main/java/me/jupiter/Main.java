@@ -9,7 +9,7 @@ public class Main {
                 0.01,
                 0.5,
                 "small_frame.png");
-        scene.setInitialDeviation(2, 2, 5);
+        scene.setInitialDeviation(2, 2, 4);
         me.udnek.Main.runWithScene(scene);
     }
 }
