@@ -1,20 +1,23 @@
 package me.udnek;
 
 
+import me.udnek.app.Frame;
+import me.udnek.app.Settings;
 import me.udnek.scene.Scene;
+import me.udnek.scene.instances.DynamicScene;
 import me.udnek.test.Tests;
 
 public class Main{
     public static void main(String[] args) {
-/*        Scene scene = new DynamicScene();
+        Scene scene = new DynamicScene();
         scene.init();
-        runWithScene(scene);*/
-        test();
+        runWithScene(scene, Settings.withRecording(100, 100, "test"));
+        //test();
     }
 
 
-    public static void runWithScene(Scene scene){
-        new Frame(scene);
+    public static void runWithScene(Scene scene, Settings settings){
+        new Frame(scene, settings);
     }
 
     public static void test(){

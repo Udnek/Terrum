@@ -1,18 +1,20 @@
-package me.udnek;
+package me.udnek.app;
 
 import me.udnek.scene.Scene;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Frame extends JFrame implements KeyListener {
 
     private Panel panel;
-    public Frame(Scene scene){
+    public Frame(Scene scene, Settings settings){
 
 
-        panel = new Panel(this, scene);
+        panel = new Panel(this, scene, settings);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);
@@ -22,6 +24,14 @@ public class Frame extends JFrame implements KeyListener {
         this.setFocusable(true);
 
         addKeyListener(this);
+
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                panel.onWindowClosed();
+            }
+        });
+
 
         panel.loop();
     }

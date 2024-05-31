@@ -1,26 +1,11 @@
 package me.udnek.test;
 
-import me.jupiter.image_reader.ImageReader;
-import org.jcodec.api.awt.AWTSequenceEncoder;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Tests {
     public static void run() {
 
-        List<BufferedImage> listBI = new ArrayList<>();
-        try {
-            listBI.add(ImageIO.read(new File(ImageReader.getImageDirectory() + "1.png")));
-            listBI.add(ImageIO.read(new File(ImageReader.getImageDirectory() + "2.png")));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+/*        List<BufferedImage> listBI = new ArrayList<>();
+        ImageReader imageReader = new ImageReader();
+        imageRead
 
         File out;
         try {
@@ -37,7 +22,7 @@ public class Tests {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
 
 /*        AWTSequenceEncoder encoder;
