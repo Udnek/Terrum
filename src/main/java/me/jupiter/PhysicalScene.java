@@ -13,7 +13,7 @@ public class PhysicalScene extends NetScene {
 
     @Override
     public void tick() {
-        System.out.println(net.getVertex(4, 4).getPosition().asString());
+        System.out.println(net.getVertex(2, 2).getPosition().asString());
         net.updateVerticesPositionDifferentials();
         net.updateVerticesPositions();
         for (VertexObject vertex : vertices) {
@@ -28,12 +28,11 @@ public class PhysicalScene extends NetScene {
                       double springRelaxedLength,
                       double vertexMass,
                       double deltaTime,
-                      double decayCoefficient,
                       String imageFileName){
         net = new CellularNet(getImageDirectory() + imageFileName);
         net.initiateNet();
         net.initiateNeighbours();
-        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
+        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime);
         init();
     }
 
