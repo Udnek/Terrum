@@ -22,7 +22,9 @@ public class DynamicScene extends Scene {
 
     @Override
     protected Camera initCamera() {
-        return new Camera(new Vector3d(0.1, 0.1, 0.1));
+        Camera camera = new Camera(new Vector3d(0.001, 0.01, 0.001));
+        camera.rotateYaw(-45);
+        return camera;
     }
 
     @Override

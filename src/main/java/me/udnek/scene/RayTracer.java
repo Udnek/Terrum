@@ -13,6 +13,12 @@ import java.util.List;
 public class RayTracer {
 
     private Vector3d cameraPosition;
+    private double cameraYaw, cameraPitch;
+    private int width, height;
+    private double fovMultiplier;
+
+    private int[] frame;
+
     private List<? extends SceneObject> objectsToRender;
     private List<Triangle> cachedPlanes;
 
@@ -22,14 +28,16 @@ public class RayTracer {
 
     private final boolean doLight;
 
-
-
     public RayTracer(List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight){
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
         this.lastLightPosition = null;
         this.doLight = doLight;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // CACHING
+    ///////////////////////////////////////////////////////////////////////////
 
     public void recacheObjects(Vector3d position){
         cameraPosition = position;
@@ -60,14 +68,15 @@ public class RayTracer {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // TRACING
+    ///////////////////////////////////////////////////////////////////////////
+
     public int rayTrace(Vector3d direction){
-
-
         Vector3d nearestHitPosition = null;
         Triangle nearestPlane = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
-        //System.out.println(cachedPlanes.size());
         for (Triangle plane : cachedPlanes) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
 
@@ -84,15 +93,120 @@ public class RayTracer {
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
+    public void rotateDirectionAsCamera(Vector3d direction){
+        VectorUtils.rotateYaw(direction, cameraYaw);
+        VectorUtils.rotatePitch(direction, cameraPitch);
+    }
+
+    public boolean allThreadsDone(RayTracerThread[] threads){
+        for (RayTracerThread thread : threads) {
+            if (!thread.done) return false;
+        }
+        return true;
+    }
+
+    public int[] renderFrame(int width, int height, double cameraYaw, double cameraPitch, double fovMultiplier){
+        frame = new int[width*height];
+
+        this.width = width;
+        this.height = height;
+        this.cameraYaw = Math.toRadians(cameraYaw);
+        this.cameraPitch = Math.toRadians(cameraPitch);
+        this.fovMultiplier = fovMultiplier;
+
+        int cores = 12;
+
+        switch (cores){
+            case 12: {
+                int threadXStep = width / 12;
+
+                RayTracerThread[] threads = new RayTracerThread[12];
+                for (int i = 0; i < 12; i++) {
+                    threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
+                }
+                for (RayTracerThread thread : threads) {
+                    thread.run();
+                }
+
+                while (!allThreadsDone(threads)) {
+                    try {
+                        Thread.sleep(1, 0);
+                    } catch (InterruptedException e) { throw new RuntimeException(e);}
+                }
+                break;
+            }
+
+
+
+            case 6: {
+                int threadXStep = width / 6;
+
+                RayTracerThread thread0 = new RayTracerThread(threadXStep * 0, threadXStep * 1, 0, height);
+                RayTracerThread thread1 = new RayTracerThread(threadXStep * 1, threadXStep * 2, 0, height);
+                RayTracerThread thread2 = new RayTracerThread(threadXStep * 2, threadXStep * 3, 0, height);
+                RayTracerThread thread3 = new RayTracerThread(threadXStep * 3, threadXStep * 4, 0, height);
+                RayTracerThread thread4 = new RayTracerThread(threadXStep * 4, threadXStep * 5, 0, height);
+                RayTracerThread thread5 = new RayTracerThread(threadXStep * 5, threadXStep * 6, 0, height);
+                new Thread(thread0).start();
+                new Thread(thread1).start();
+                new Thread(thread2).start();
+                new Thread(thread3).start();
+                new Thread(thread4).start();
+                new Thread(thread5).start();
+
+                while (!(thread0.done && thread1.done && thread2.done && thread3.done && thread4.done && thread5.done)) {
+                    try {
+                        Thread.sleep(1, 0);
+                    } catch (InterruptedException e) { throw new RuntimeException(e);}
+                }
+                break;
+            }
+
+            case 4: {
+                RayTracerThread thread0 = new RayTracerThread(0, width / 2, height / 2, height);
+                RayTracerThread thread1 = new RayTracerThread(width / 2, width, height / 2, height);
+                RayTracerThread thread2 = new RayTracerThread(0, width / 2, 0, height / 2);
+                RayTracerThread thread3 = new RayTracerThread(width / 2, width, 0, height / 2);
+                new Thread(thread0).start();
+                new Thread(thread1).start();
+                new Thread(thread2).start();
+                new Thread(thread3).start();
+
+                while (!(thread0.done && thread1.done && thread2.done && thread3.done)) {
+                    try {
+                        Thread.sleep(1, 0);
+                    } catch (InterruptedException e) {throw new RuntimeException(e);}
+                }
+                break;
+            }
+
+            case 1: {
+                RayTracerThread thread0 = new RayTracerThread(0, width, 0, height);
+                new Thread(thread0).start();
+                while (!thread0.done) {
+                    try {
+                        Thread.sleep(1, 0);
+                    } catch (InterruptedException e) {throw new RuntimeException(e);}
+                }
+                break;
+            }
+        }
+
+
+        return frame;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // COLORIZING
+    ///////////////////////////////////////////////////////////////////////////
+
     private double positionLighted(Vector3d position, Triangle plane){
 
         // to absolute position;
         position.add(cameraPosition);
         // to light relative position
         position.sub(lastLightPosition);
-
         // from light to point direction
-        //Vector3d direction = position.sub(lightSource.getPosition());
         Vector3d direction = position;
 
         final float EPSILON = 0.0001f;
@@ -137,5 +251,38 @@ public class RayTracer {
 
         return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
 
+    }
+    public class RayTracerThread implements Runnable{
+        private final int xFrom, xTo, yFrom, yTo;
+        private boolean done = false;
+        public RayTracerThread(int xFrom, int xTo, int yFrom, int yTo){
+            this.xFrom = xFrom;
+            this.xTo = xTo;
+            this.yFrom = yFrom;
+            this.yTo = yTo;
+        }
+
+        @Override
+        public void run() {
+            double xOffset = -width/2.0;
+            double yOffset = -height/2.0;
+
+            for (int x = xFrom; x < xTo; x++) {
+                for (int y = yFrom; y < yTo; y++) {
+
+                    Vector3d direction = new Vector3d(
+                            (x+xOffset),
+                            (y+yOffset),
+                            fovMultiplier
+                    );
+
+                    rotateDirectionAsCamera(direction);
+
+                    int color = rayTrace(direction);
+                    frame[(height-y-1)*width + x] = color;
+                }
+            }
+            done = true;
+        }
     }
 }

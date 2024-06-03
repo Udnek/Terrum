@@ -92,21 +92,21 @@ public class VectorUtils {
     // ROTATION
     ///////////////////////////////////////////////////////////////////////////
 
-    public static void rotateYaw(Vector3d vector, float angle){
+    public static void rotateYaw(Vector3d vector, double angle){
         double x = vector.x;
         double z = vector.z;
         vector.x = x*Math.cos(angle) + -z*Math.sin(angle);
         vector.z = x*Math.sin(angle) + z*Math.cos(angle);
     }
 
-    public static void rotateRoll(Vector3d vector, float angle){
+    public static void rotateRoll(Vector3d vector, double angle){
         double x = vector.x;
         double y = vector.y;
         vector.x = x*Math.cos(angle) + -y*Math.sin(angle);
         vector.y = x*Math.sin(angle) + y*Math.cos(angle);
     }
 
-    public static void rotatePitch(Vector3d vector, float angle){
+    public static void rotatePitch(Vector3d vector, double angle){
         double y = vector.y;
         double z = vector.z;
         vector.y = y*Math.cos(angle) + -z*Math.sin(angle);
