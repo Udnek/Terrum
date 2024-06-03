@@ -1,5 +1,7 @@
 package me.jupiter;
 
+import me.udnek.app.Settings;
+
 public class Main {
     public static void main(String[] args) {
         PhysicalScene scene = new PhysicalScene();
@@ -10,7 +12,7 @@ public class Main {
                 0.5,
                 "small_frame.png");
         scene.setInitialDeviation(2, 2, 4);
-        //me.udnek.Main.runWithScene(scene, Settings.noRecording(2));
+        me.udnek.Main.runWithScene(scene, Settings.noRecording(2, 16));
         //me.udnek.Main.runWithScene(scene, Settings.withRecording(1920, 1080, "dimas"));
     }
 }
