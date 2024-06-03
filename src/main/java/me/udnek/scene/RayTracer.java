@@ -94,8 +94,8 @@ public class RayTracer {
     }
 
     public void rotateDirectionAsCamera(Vector3d direction){
-        VectorUtils.rotateYaw(direction, cameraYaw);
         VectorUtils.rotatePitch(direction, cameraPitch);
+        VectorUtils.rotateYaw(direction, cameraYaw);
     }
 
     public boolean allThreadsDone(RayTracerThread[] threads){
@@ -105,7 +105,7 @@ public class RayTracer {
         return true;
     }
 
-    public int[] renderFrame(int width, int height, double cameraYaw, double cameraPitch, double fovMultiplier){
+    public int[] renderFrame(int width, int height, double cameraYaw, double cameraPitch, double fovMultiplier, int cores){
         frame = new int[width*height];
 
         this.width = width;
@@ -114,9 +114,22 @@ public class RayTracer {
         this.cameraPitch = Math.toRadians(cameraPitch);
         this.fovMultiplier = fovMultiplier;
 
-        int cores = 12;
+        RayTracerThread[] threads = new RayTracerThread[cores];
+        int threadXStep = width / cores;
+        for (int i = 0; i < cores; i++) {
+            threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
+        }
+        for (RayTracerThread thread : threads) {
+            new Thread(thread).start();
+        }
+        while (!allThreadsDone(threads)) {
+            try {
+                Thread.sleep(1, 0);
+            } catch (InterruptedException e) { throw new RuntimeException(e);}
+        }
+        return frame;
 
-        switch (cores){
+/*        switch (cores){
             case 12: {
                 int threadXStep = width / 12;
 
@@ -125,7 +138,7 @@ public class RayTracer {
                     threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
                 }
                 for (RayTracerThread thread : threads) {
-                    thread.run();
+                    new Thread(thread).start();
                 }
 
                 while (!allThreadsDone(threads)) {
@@ -190,10 +203,10 @@ public class RayTracer {
                 }
                 break;
             }
-        }
+        }*/
 
 
-        return frame;
+        //return frame;
     }
 
     ///////////////////////////////////////////////////////////////////////////

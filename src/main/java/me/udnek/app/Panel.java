@@ -53,7 +53,7 @@ public class Panel extends JPanel {
         }
 
 
-        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling);
+        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling, settings.cores);
 
         if (settings.recordVideo){
             try {

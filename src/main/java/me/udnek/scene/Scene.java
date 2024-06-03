@@ -38,7 +38,7 @@ public abstract class Scene{
 
 
 
-    public BufferedImage renderFrame(final int width, final int height, final int pixelScaling){
+    public BufferedImage renderFrame(final int width, final int height, final int pixelScaling, int cores){
 
         int renderWidth = width/pixelScaling;
         int renderHeight = height/pixelScaling;
@@ -47,7 +47,7 @@ public abstract class Scene{
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
         rayTracer.recacheObjects(camera.getPosition());
-        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, camera.getYaw(), camera.getPitch(), fovMultiplier);
+        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, camera.getYaw(), camera.getPitch(), fovMultiplier, cores);
 
         //System.out.println(Arrays.stream(frame).sum());
 
