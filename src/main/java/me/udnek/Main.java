@@ -11,7 +11,8 @@ public class Main{
     public static void main(String[] args) {
         Scene scene = new LightTestScene();
         scene.init();
-        runWithScene(scene, Settings.noRecording(1));
+        Settings settings = Settings.noRecording(2, 12);
+        runWithScene(scene, settings);
         //test();
     }
 
