@@ -22,7 +22,7 @@ public class Main{
         runWithScene(scene, settings);*/
         Scene scene = new LightTestScene();
         scene.init();
-        runWithScene(scene, Settings.noRecording(1, 1));
+        runWithScene(scene, Settings.noRecording(4, 12));
         //test();
     }
 
