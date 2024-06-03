@@ -3,6 +3,7 @@ package me.udnek.app;
 import me.udnek.scene.Scene;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
@@ -32,6 +33,7 @@ public class Frame extends JFrame implements KeyListener {
             }
         });
 
+        Toolkit.getDefaultToolkit().setDynamicLayout(false);
 
         panel.loop();
     }
