@@ -13,7 +13,7 @@ public class AxisCrosshairObject extends SceneObject{
         super(position);
         final float size = 0.05f;
         planeX = new Triangle(new Vector3d(1, 0, 0), new Vector3d(), new Vector3d(0, size, 0));
-        planeY = new Triangle(new Vector3d(), new Vector3d(0, 1, 0), new Vector3d(size, 0, size));
+        planeY = new Triangle(new Vector3d(), new Vector3d(0, 1, 0), new Vector3d(-size, 0, -size));
         planeZ = new Triangle(new Vector3d(), new Vector3d(0, size, 0), new Vector3d(0, 0, 1));
     }
 

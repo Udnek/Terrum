@@ -1,6 +1,7 @@
 package me.udnek.scene.instances;
 
 import me.jupiter.net.CellularNet;
+import me.jupiter.object.NetStaticVertex;
 import me.jupiter.object.NetVertex;
 import me.jupiter.object.NetVoidVertex;
 import me.udnek.objects.SceneObject;
@@ -13,6 +14,7 @@ import me.udnek.scene.Scene;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class NetScene extends Scene {
@@ -26,24 +28,41 @@ public abstract class NetScene extends Scene {
     protected List<? extends SceneObject> initSceneObjects() {
         vertices = new ArrayList<>();
         springs = new ArrayList<>();
-        List<NetVertex> addedNetVertices = new ArrayList<>();
+        //List<NetVertex> addedNetVertices = new ArrayList<>();
+        HashMap<NetVertex, List<NetVertex>> addedNeighbours = new HashMap<>();
+
 
         for (int x = 0; x < net.getSizeX(); x++) {
             for (int z = 0; z < net.getSizeZ(); z++) {
 
                 NetVertex netVertex = net.getVertex(x, z);
 
-                if (addedNetVertices.contains(netVertex)) continue;
                 if (netVertex instanceof NetVoidVertex) continue;
+                if (netVertex instanceof NetStaticVertex) continue;
+
+                if (addedNeighbours.containsKey(netVertex)) continue;
+
 
                 VertexObject vertexObject = new VertexObject(new Vector3d(netVertex.getPosition()), netVertex);
                 vertices.add(vertexObject);
-                addedNetVertices.add(netVertex);
+                List<NetVertex> addedNeighbourVertices = addedNeighbours.getOrDefault(netVertex, null);
+                if (addedNeighbourVertices == null) {
+                    addedNeighbourVertices = new ArrayList<>();
+                    addedNeighbours.put(netVertex, addedNeighbourVertices);
+                }
+
+                // TODO: 5/31/2024 FIX AND OPTIMIZE
+
                 for (NetVertex neighbour : netVertex.getNeighbours()) {
+                    //if (addedNeighbourVertices.contains(neighbour)) continue;
+                    if (addedNeighbours.containsKey(neighbour)) continue;
+
+
+
                     VertexObject neighbourObject = new VertexObject(new Vector3d(neighbour.getPosition()), neighbour);
                     vertices.add(neighbourObject);
-                    addedNetVertices.add(neighbour);
                     springs.add(new SpringObject(new Vector3d(), vertexObject, neighbourObject));
+
                 }
             }
         }
@@ -54,10 +73,19 @@ public abstract class NetScene extends Scene {
         return sceneObjects;
     }
 
+    public void synchroniseObjects(){
+        for (VertexObject vertex : vertices) {
+            vertex.update();
+        }
+        for (SpringObject springObject : springs) {
+            springObject.update();
+        }
+    }
+
     @Override
     protected Camera initCamera() {
-        Camera camera = new Camera(new Vector3d(2, 4, 2));
-        camera.rotatePitch(90);
+        Camera camera = new Camera(new Vector3d(1, 1, -2));
+        camera.rotatePitch(45);
         return camera;
     }
 

@@ -1,27 +1,18 @@
 package me.jupiter;
 
 import me.jupiter.net.CellularNet;
-import me.udnek.objects.SpringObject;
-import me.udnek.objects.VertexObject;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
-
-import static me.jupiter.image_reader.ImageReader.getImageDirectory;
 
 public class PhysicalScene extends NetScene {
 
 
     @Override
     public void tick() {
-        System.out.println(net.getVertex(4, 4).getPosition().asString());
+        System.out.println(net.getVertex(2, 2).getPosition().asString());
         net.updateVerticesPositionDifferentials();
         net.updateVerticesPositions();
-        for (VertexObject vertex : vertices) {
-            vertex.update();
-        }
-        for (SpringObject springObject : springs) {
-            springObject.update();
-        }
+        synchroniseObjects();
     }
 
     public void setup(double springStiffness,
@@ -30,11 +21,10 @@ public class PhysicalScene extends NetScene {
                       double deltaTime,
                       double decayCoefficient,
                       String imageFileName){
-        net = new CellularNet(getImageDirectory() + imageFileName);
+        net = new CellularNet(imageFileName);
         net.initiateNet();
         net.initiateNeighbours();
         net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
-        init();
     }
 
     public void setInitialDeviation(int x, int z, double yShift) {

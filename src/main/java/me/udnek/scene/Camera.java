@@ -6,19 +6,30 @@ import org.realityforge.vecmath.Vector3d;
 
 public class Camera extends PositionedObject {
 
-    private float pitch = 0f;
-    private float yaw = 0f;
+    private float yaw;
+    private float pitch;
+    private double fov = 2f;
+
+    public Camera(Vector3d position, float yaw, float pitch) {
+        super(position);
+        this.yaw = yaw;
+        this.pitch = pitch;
+    }
 
     public Camera(Vector3d position) {
-        super(position);
+        this(position, 0, 0);
     }
     public Camera(){
-        super(new Vector3d());
+        this(new Vector3d(), 0, 0);
     }
 
-    public void moveAlongDirection(Vector3d vector){
-        rotateVector(vector);
-        move(vector);
+    public void moveAlongDirection(Vector3d position){
+        rotateVector(position);
+        move(position);
+    }
+    public void moveAlongDirectionParallelXZ(Vector3d position){
+        VectorUtils.rotateYaw(position, (float) Math.toRadians(yaw));
+        move(position);
     }
 
     public float getPitch() {return pitch;}
@@ -37,14 +48,14 @@ public class Camera extends PositionedObject {
     }
     public void rotateYaw(float angle) {setYaw(yaw + angle);}
 
-
-    public void rotate(float pitch, float yaw){
-        rotatePitch(pitch);
-        rotateYaw(yaw);
-    }
-
     public void rotateVector(Vector3d vector3d){
-        VectorUtils.rotatePitch(vector3d, (float) Math.toRadians(pitch));
-        VectorUtils.rotateYaw(vector3d, (float) Math.toRadians(yaw));
+        VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));
+        VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));
+    }
+    public void rotateVectorYaw(Vector3d vector3d){VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));}
+    public void rotateVectorPitch(Vector3d vector3d){VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));}
+
+    public double getFov() {
+        return fov;
     }
 }

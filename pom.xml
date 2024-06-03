@@ -20,6 +20,23 @@
             <artifactId>vecmath</artifactId>
             <version>0.13</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jcodec</groupId>
+            <artifactId>jcodec</artifactId>
+            <version>0.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jcodec</groupId>
+            <artifactId>jcodec-javase</artifactId>
+            <version>0.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.decimal4j</groupId>
+            <artifactId>decimal4j</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>

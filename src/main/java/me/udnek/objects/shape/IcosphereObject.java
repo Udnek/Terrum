@@ -8,7 +8,7 @@ public class IcosphereObject extends SceneObject {
 
     private final double radius;
     private Triangle[] polygons;
-    public static final int SUBDIVIDE_ITERATIONS = 1;
+    public static final int SUBDIVIDE_ITERATIONS = 2;
     public IcosphereObject(Vector3d position, double radius) {
         super(position);
         this.radius = radius;
@@ -45,8 +45,8 @@ public class IcosphereObject extends SceneObject {
         Vector3d newVertex02 = face.getVertex2().add(face.getVertex0()).div(2);
 
         double distance0 = newVertex01.length();
-        double distance1 = newVertex01.length();
-        double distance2 = newVertex01.length();
+        double distance1 = newVertex12.length();
+        double distance2 = newVertex02.length();
 
         newVertex01.div(distance0).mul(radius);
         newVertex12.div(distance1).mul(radius);

@@ -27,7 +27,7 @@ public class CellularNet {
 
     public void initiateNet() {
         ImageReader reader = new ImageReader();
-        reader.readNetMap(imagePath);
+        reader.readImage(imagePath);
 
         sizeX = reader.getWidth();
         sizeZ = reader.getHeight();
