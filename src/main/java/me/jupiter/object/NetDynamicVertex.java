@@ -96,9 +96,9 @@ public class NetDynamicVertex extends NetVertex{
         Vector3d[] coefficient4 = RKMethodFunction(phaseVector3);
 
         Vector3d positionDifferentialComponent = new Vector3d(coefficient1[0].dup().add(
-                                                              coefficient2[0].dup().mul(2).add(
-                                                              coefficient3[0].dup().mul(2).add(
-                                                              coefficient4[0].dup()))));
+                                                              coefficient2[0].dup().mul(2)).add(
+                                                              coefficient3[0].dup().mul(2)).add(
+                                                              coefficient4[0].dup()));
         positionDifferentialComponent.mul(deltaTime/6);
 
         Vector3d velocityDifferentialComponent = new Vector3d(coefficient1[1].dup().add(
