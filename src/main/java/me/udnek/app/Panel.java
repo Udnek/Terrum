@@ -52,17 +52,6 @@ public class Panel extends JPanel {
             renderHeight = getHeight();
         }
 
-/*        int pixelScaling = 2;
-
-        int renderWidth = getWidth();
-        int renderHeight = getHeight();
-        while ((renderWidth/pixelScaling) % 2 != 0){
-            renderWidth -= 1;
-        }
-        while ((renderHeight/pixelScaling) % 2 != 0){
-            renderHeight -= 1;
-        }*/
-
 
         BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling);
 
@@ -114,7 +103,9 @@ public class Panel extends JPanel {
             double renderTime = (System.nanoTime() - startTime)/Math.pow(10, 9);
             Camera camera = scene.getCamera();
             Vector3d pos = camera.getPosition();
-            frame.setTitle("SPF: "+renderTime +
+            frame.setTitle(
+                    "FPS: "+DoubleRounder.round(1/renderTime, 2) +
+                    " SPF: "+DoubleRounder.round(renderTime, 4) +
                     " ("+getWidth()+"x"+getHeight()+")" +
                     " x:"+ DoubleRounder.round(pos.x, 2) + " y:"+DoubleRounder.round(pos.y, 2) + " z:" + DoubleRounder.round(pos.z, 2) + " yaw:"+camera.getYaw() + " pitch:"+camera.getPitch()
                     );

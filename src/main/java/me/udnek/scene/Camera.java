@@ -48,7 +48,7 @@ public class Camera extends PositionedObject {
     }
 
     public void rotateVector(Vector3d vector3d){
-        VectorUtils.rotatePitch(vector3d, (float) Math.toRadians(pitch));
-        VectorUtils.rotateYaw(vector3d, (float) Math.toRadians(yaw));
+        VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));
+        VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));
     }
 }

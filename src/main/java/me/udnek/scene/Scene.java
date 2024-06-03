@@ -42,34 +42,16 @@ public abstract class Scene{
 
         int renderWidth = width/pixelScaling;
         int renderHeight = height/pixelScaling;
-        float xOffset = -renderWidth/2f;
-        float yOffset = -renderHeight/2f;
-        final float fovMultiplier = (1f/35f)*renderWidth;
+        double fovMultiplier = renderWidth/2f;
 
-        // TODO: 5/28/2024 CACHE PLAYER POSITION
-
-
+        BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
         rayTracer.recacheObjects(camera.getPosition());
-        BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
-        int[] image = new int[renderHeight*renderWidth];
+        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, camera.getYaw(), camera.getPitch(), fovMultiplier);
 
-        for (int x = 0; x < renderWidth; x++) {
-            for (int y = 0; y < renderHeight; y++) {
+        //System.out.println(Arrays.stream(frame).sum());
 
-                Vector3d direction = new Vector3d(
-                        (x+xOffset),
-                        (y+yOffset),
-                        10*fovMultiplier
-                );
-                camera.rotateVector(direction);
-
-                int color = rayTracer.rayTrace(direction);
-                image[(renderHeight-y-1)*renderWidth + x] = color;
-            }
-        }
-
-        bufferedImage.setRGB(0, 0, renderWidth, renderHeight, image, 0, renderWidth);
+        bufferedImage.setRGB(0, 0, renderWidth, renderHeight, frame, 0, renderWidth);
         return bufferedImage;
     }
 
