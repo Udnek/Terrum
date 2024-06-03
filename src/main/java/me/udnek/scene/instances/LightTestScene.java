@@ -35,7 +35,10 @@ public class LightTestScene extends Scene {
     }
 
     @Override
-    public void tick() {
+    public void tick() {}
 
+    @Override
+    public boolean doLight() {
+        return false;
     }
 }

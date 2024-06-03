@@ -25,7 +25,7 @@ public abstract class Scene{
         camera = initCamera();
         lightSource = initLightSource();
         sceneObjects = initSceneObjects();
-        rayTracer = new RayTracer(sceneObjects, lightSource, doLight());
+        rayTracer = new RayTracer(camera, sceneObjects, lightSource, doLight());
     }
 
     protected abstract Camera initCamera();
@@ -46,8 +46,7 @@ public abstract class Scene{
 
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
-        rayTracer.recacheObjects(camera.getPosition());
-        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, camera.getYaw(), camera.getPitch(), fovMultiplier, cores);
+        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, fovMultiplier, cores);
 
         //System.out.println(Arrays.stream(frame).sum());
 

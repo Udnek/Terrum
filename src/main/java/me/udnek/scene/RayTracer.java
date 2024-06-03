@@ -12,6 +12,7 @@ import java.util.List;
 
 public class RayTracer {
 
+    private Camera camera;
     private Vector3d cameraPosition;
     private double cameraYaw, cameraPitch;
     private int width, height;
@@ -28,7 +29,8 @@ public class RayTracer {
 
     private final boolean doLight;
 
-    public RayTracer(List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight){
+    public RayTracer(Camera camera, List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight){
+        this.camera = camera;
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
         this.lastLightPosition = null;
@@ -39,9 +41,7 @@ public class RayTracer {
     // CACHING
     ///////////////////////////////////////////////////////////////////////////
 
-    public void recacheObjects(Vector3d position){
-        cameraPosition = position;
-
+    public void recacheObjects(){
         // camera cache
         cachedPlanes = new ArrayList<>();
         for (SceneObject object : objectsToRender) {
@@ -69,6 +69,22 @@ public class RayTracer {
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    // UTILS
+    ///////////////////////////////////////////////////////////////////////////
+
+    public void rotateDirectionAsCamera(Vector3d direction){
+        VectorUtils.rotatePitch(direction, cameraPitch);
+        VectorUtils.rotateYaw(direction, cameraYaw);
+    }
+
+    private boolean allThreadsDone(RayTracerThread[] threads){
+        for (RayTracerThread thread : threads) {
+            if (!thread.done) return false;
+        }
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     // TRACING
     ///////////////////////////////////////////////////////////////////////////
 
@@ -93,26 +109,17 @@ public class RayTracer {
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
-    public void rotateDirectionAsCamera(Vector3d direction){
-        VectorUtils.rotatePitch(direction, cameraPitch);
-        VectorUtils.rotateYaw(direction, cameraYaw);
-    }
-
-    public boolean allThreadsDone(RayTracerThread[] threads){
-        for (RayTracerThread thread : threads) {
-            if (!thread.done) return false;
-        }
-        return true;
-    }
-
-    public int[] renderFrame(int width, int height, double cameraYaw, double cameraPitch, double fovMultiplier, int cores){
+    public int[] renderFrame(int width, int height, double fovMultiplier, int cores){
         frame = new int[width*height];
 
         this.width = width;
         this.height = height;
-        this.cameraYaw = Math.toRadians(cameraYaw);
-        this.cameraPitch = Math.toRadians(cameraPitch);
+        this.cameraPosition = camera.getPosition();
+        this.cameraYaw = Math.toRadians(camera.getYaw());
+        this.cameraPitch = Math.toRadians(camera.getPitch());
         this.fovMultiplier = fovMultiplier;
+
+        recacheObjects();
 
         if (cores != 1){
             RayTracerThread[] threads = new RayTracerThread[cores];
@@ -192,6 +199,11 @@ public class RayTracer {
         return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
 
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // THREAD
+    ///////////////////////////////////////////////////////////////////////////
+
     public class RayTracerThread implements Runnable{
         private final int xFrom, xTo, yFrom, yTo;
         private boolean done = false;
