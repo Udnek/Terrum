@@ -71,8 +71,13 @@ public class NetDynamicVertex extends NetVertex{
     }
 
     private Vector3d[] RKMethodCalculateNextPhaseVector(Vector3d[] previousPhaseVector, Vector3d[] coefficient){
-        Vector3d resultPositionComponent = previousPhaseVector[0].dup().add(coefficient[0].mul(deltaTime));
-        Vector3d resultVelocityComponent = previousPhaseVector[1].dup().add(coefficient[1].mul(deltaTime));
+        Vector3d resultPositionComponent = previousPhaseVector[0].dup().add(coefficient[0].dup().mul(deltaTime/2));
+        Vector3d resultVelocityComponent = previousPhaseVector[1].dup().add(coefficient[1].dup().mul(deltaTime/2));
+        return new Vector3d[]{resultPositionComponent, resultVelocityComponent};
+    }
+    private Vector3d[] RKMethodCalculateFinalPhaseVector(Vector3d[] previousPhaseVector, Vector3d[] coefficient){
+        Vector3d resultPositionComponent = previousPhaseVector[0].dup().add(coefficient[0].dup().mul(deltaTime));
+        Vector3d resultVelocityComponent = previousPhaseVector[1].dup().add(coefficient[1].dup().mul(deltaTime));
         return new Vector3d[]{resultPositionComponent, resultVelocityComponent};
     }
 
@@ -86,7 +91,7 @@ public class NetDynamicVertex extends NetVertex{
         Vector3d[] phaseVector2 = RKMethodCalculateNextPhaseVector(phaseVector1, coefficient2);
 
         Vector3d[] coefficient3 = RKMethodFunction(phaseVector2);
-        Vector3d[] phaseVector3 = RKMethodCalculateNextPhaseVector(phaseVector2, coefficient3);
+        Vector3d[] phaseVector3 = RKMethodCalculateFinalPhaseVector(phaseVector2, coefficient3);
 
         Vector3d[] coefficient4 = RKMethodFunction(phaseVector3);
 
@@ -105,24 +110,25 @@ public class NetDynamicVertex extends NetVertex{
         return new Vector3d[]{positionDifferentialComponent, velocityDifferentialComponent};
     }
 
-    public void calculateAppliedForce() {
-        Vector3d appliedForce = new Vector3d(0, 0, 0);
-        for (NetVertex neighbour : neighbours) {
-            if (neighbour != null) {
-                Vector3d normalizedDirection = getNormalizedDirection(neighbour.getPosition(), this.getPosition());
-                double distanceToNeighbour = VectorUtils.distance(this.getPosition(), neighbour.getPosition());
-                double sizeDifferential = Math.abs(distanceToNeighbour - springRelaxedLength);
-                double elasticForce = springStiffness * sizeDifferential;
-                appliedForce.add(normalizedDirection.mul(elasticForce));
-            }
-        }
-    }
+//    public void calculateAppliedForce() {
+//        Vector3d appliedForce = new Vector3d(0, 0, 0);
+//        for (NetVertex neighbour : neighbours) {
+//            if (neighbour != null) {
+//                Vector3d normalizedDirection = getNormalizedDirection(neighbour.getPosition(), this.getPosition());
+//                double distanceToNeighbour = VectorUtils.distance(this.getPosition(), neighbour.getPosition());
+//                double sizeDifferential = Math.abs(distanceToNeighbour - springRelaxedLength);
+//                double elasticForce = springStiffness * sizeDifferential;
+//                appliedForce.add(normalizedDirection.mul(elasticForce));
+//            }
+//        }
+//    }
 
     public void calculatePositionDifferential(){
-        Vector3d decayValue = velocity.dup().mul(decayCoefficient);
-        acceleration = RKMethodCalculateAcceleration(this.getPosition(), this.getVelocity());
-        velocity.add(acceleration.dup().mul(deltaTime));
-        positionDifferential = velocity.dup().mul(deltaTime);
+        Vector3d[] phaseDifferentialVector = RKMethodCalculatePhaseDifferentialVector();
+        Vector3d velocity = phaseDifferentialVector[0];
+        Vector3d acceleration = phaseDifferentialVector[1];
+        this.velocity.add(acceleration.dup());
+        positionDifferential = velocity.dup();
     }
 
     public void updatePosition(){
