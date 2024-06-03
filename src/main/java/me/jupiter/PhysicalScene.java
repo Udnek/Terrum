@@ -25,7 +25,6 @@ public class PhysicalScene extends NetScene {
         net.initiateNet();
         net.initiateNeighbours();
         net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
-        init();
     }
 
     public void setInitialDeviation(int x, int z, double yShift) {

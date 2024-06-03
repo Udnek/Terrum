@@ -8,6 +8,7 @@ public class Camera extends PositionedObject {
 
     private float yaw;
     private float pitch;
+    private double fov = 2f;
 
     public Camera(Vector3d position, float yaw, float pitch) {
         super(position);
@@ -50,5 +51,11 @@ public class Camera extends PositionedObject {
     public void rotateVector(Vector3d vector3d){
         VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));
         VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));
+    }
+    public void rotateVectorYaw(Vector3d vector3d){VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));}
+    public void rotateVectorPitch(Vector3d vector3d){VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));}
+
+    public double getFov() {
+        return fov;
     }
 }

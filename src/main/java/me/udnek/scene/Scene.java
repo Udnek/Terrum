@@ -1,6 +1,7 @@
 package me.udnek.scene;
 
 
+import me.udnek.app.Settings;
 import me.udnek.objects.SceneObject;
 import me.udnek.objects.light.LightSource;
 import me.udnek.utils.UserAction;
@@ -21,11 +22,11 @@ public abstract class Scene{
 
     }
 
-    public void init(){
+    public void init(Settings.PolygonHolderType polygonHolderType){
         camera = initCamera();
         lightSource = initLightSource();
         sceneObjects = initSceneObjects();
-        rayTracer = new RayTracer(camera, sceneObjects, lightSource, doLight());
+        rayTracer = new RayTracer(camera, sceneObjects, lightSource, doLight(), polygonHolderType);
     }
 
     protected abstract Camera initCamera();
@@ -42,13 +43,10 @@ public abstract class Scene{
 
         int renderWidth = width/pixelScaling;
         int renderHeight = height/pixelScaling;
-        double fovMultiplier = renderWidth/2f;
 
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
-        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, fovMultiplier, cores);
-
-        //System.out.println(Arrays.stream(frame).sum());
+        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, cores);
 
         bufferedImage.setRGB(0, 0, renderWidth, renderHeight, frame, 0, renderWidth);
         return bufferedImage;

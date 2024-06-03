@@ -1,7 +1,16 @@
 package me.udnek.test;
 
+import org.realityforge.vecmath.Vector3d;
+
 public class Tests {
     public static void run() {
+
+        Vector3d origin = new Vector3d(-2, 0, 1);
+        Vector3d second = new Vector3d(-1, 0, 1);
+
+        double dot = origin.x * -second.z + origin.z * second.x;
+        System.out.println(dot < 0);
+
 
 /*        List<BufferedImage> listBI = new ArrayList<>();
         ImageReader imageReader = new ImageReader();

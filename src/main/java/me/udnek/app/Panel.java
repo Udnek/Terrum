@@ -24,6 +24,12 @@ public class Panel extends JPanel {
     private final Settings settings;
 
     private boolean renderInProgress = false;
+
+    // STATS
+    private int framesAmount = 0;
+    private double fpsSum = 0;
+
+
     public Panel(Frame frame, Scene scene, Settings settings){
         setBackground(Color.GRAY);
         this.frame = frame;
@@ -34,6 +40,7 @@ public class Panel extends JPanel {
             try {videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, 25);
             } catch (IOException e) {throw new RuntimeException(e);}
         }
+        scene.init(settings.polygonHolderType);
 
     }
 
@@ -80,6 +87,8 @@ public class Panel extends JPanel {
                 throw new RuntimeException(e);
             }
         }
+        System.out.println("Frames: "+ framesAmount);
+        System.out.println("Avg FPS: "+ fpsSum/framesAmount);
 
     }
     public void handleKeyInput(KeyEvent e) {
@@ -110,7 +119,13 @@ public class Panel extends JPanel {
                     " x:"+ DoubleRounder.round(pos.x, 2) + " y:"+DoubleRounder.round(pos.y, 2) + " z:" + DoubleRounder.round(pos.z, 2) + " yaw:"+camera.getYaw() + " pitch:"+camera.getPitch()
                     );
             if (renderTime > 1) System.out.println("RenderTime: " + renderTime);
+
+            fpsSum += 1/renderTime;
+            framesAmount++;
+
         }
+
+
     }
 
 }

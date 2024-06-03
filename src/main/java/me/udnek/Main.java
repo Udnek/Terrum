@@ -17,12 +17,10 @@ public class Main{
                 0.5,
                 "small_frame.png");
         scene.setInitialDeviation(2, 2, 4);
-        //Settings settings = Settings.noRecording(2, 12);
-        Settings settings = Settings.withRecording(512, 512, "test1", 12);
-        runWithScene(scene, settings);*/
+        Settings settings = Settings.noRecording(2, 12);*/
+        //Settings settings = Settings.withRecording(512, 512, "test1", 12);
         Scene scene = new LightTestScene();
-        scene.init();
-        runWithScene(scene, Settings.noRecording(2, 12));
+        runWithScene(scene, Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT));
         //test();
     }
 

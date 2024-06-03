@@ -16,7 +16,7 @@ public class LightTestScene extends Scene {
     protected Camera initCamera() {
 /*        Camera camera = new Camera(new Vector3d(0.6, 1.3, 0));
         camera.rotatePitch(10);*/
-        Camera camera = new Camera(new Vector3d(0.32, 0.95, 1.78), 32, 8);
+        Camera camera = new Camera(new Vector3d(1, 0.3, 0.3), 32, 10);
         return camera;
     }
 
