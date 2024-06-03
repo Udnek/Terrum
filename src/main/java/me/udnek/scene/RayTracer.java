@@ -114,99 +114,26 @@ public class RayTracer {
         this.cameraPitch = Math.toRadians(cameraPitch);
         this.fovMultiplier = fovMultiplier;
 
-        RayTracerThread[] threads = new RayTracerThread[cores];
-        int threadXStep = width / cores;
-        for (int i = 0; i < cores; i++) {
-            threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
+        if (cores != 1){
+            RayTracerThread[] threads = new RayTracerThread[cores];
+            int threadXStep = width / cores;
+            for (int i = 0; i < cores; i++) {
+                threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
+            }
+            for (RayTracerThread thread : threads) {
+                new Thread(thread).start();
+            }
+            while (!allThreadsDone(threads)) {
+                try {
+                    Thread.sleep(1, 0);
+                } catch (InterruptedException e) { throw new RuntimeException(e);}
+            }
+        } else {
+            RayTracerThread thread = new RayTracerThread(0, width, 0, height);
+            thread.run();
         }
-        for (RayTracerThread thread : threads) {
-            new Thread(thread).start();
-        }
-        while (!allThreadsDone(threads)) {
-            try {
-                Thread.sleep(1, 0);
-            } catch (InterruptedException e) { throw new RuntimeException(e);}
-        }
+
         return frame;
-
-/*        switch (cores){
-            case 12: {
-                int threadXStep = width / 12;
-
-                RayTracerThread[] threads = new RayTracerThread[12];
-                for (int i = 0; i < 12; i++) {
-                    threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
-                }
-                for (RayTracerThread thread : threads) {
-                    new Thread(thread).start();
-                }
-
-                while (!allThreadsDone(threads)) {
-                    try {
-                        Thread.sleep(1, 0);
-                    } catch (InterruptedException e) { throw new RuntimeException(e);}
-                }
-                break;
-            }
-
-
-
-            case 6: {
-                int threadXStep = width / 6;
-
-                RayTracerThread thread0 = new RayTracerThread(threadXStep * 0, threadXStep * 1, 0, height);
-                RayTracerThread thread1 = new RayTracerThread(threadXStep * 1, threadXStep * 2, 0, height);
-                RayTracerThread thread2 = new RayTracerThread(threadXStep * 2, threadXStep * 3, 0, height);
-                RayTracerThread thread3 = new RayTracerThread(threadXStep * 3, threadXStep * 4, 0, height);
-                RayTracerThread thread4 = new RayTracerThread(threadXStep * 4, threadXStep * 5, 0, height);
-                RayTracerThread thread5 = new RayTracerThread(threadXStep * 5, threadXStep * 6, 0, height);
-                new Thread(thread0).start();
-                new Thread(thread1).start();
-                new Thread(thread2).start();
-                new Thread(thread3).start();
-                new Thread(thread4).start();
-                new Thread(thread5).start();
-
-                while (!(thread0.done && thread1.done && thread2.done && thread3.done && thread4.done && thread5.done)) {
-                    try {
-                        Thread.sleep(1, 0);
-                    } catch (InterruptedException e) { throw new RuntimeException(e);}
-                }
-                break;
-            }
-
-            case 4: {
-                RayTracerThread thread0 = new RayTracerThread(0, width / 2, height / 2, height);
-                RayTracerThread thread1 = new RayTracerThread(width / 2, width, height / 2, height);
-                RayTracerThread thread2 = new RayTracerThread(0, width / 2, 0, height / 2);
-                RayTracerThread thread3 = new RayTracerThread(width / 2, width, 0, height / 2);
-                new Thread(thread0).start();
-                new Thread(thread1).start();
-                new Thread(thread2).start();
-                new Thread(thread3).start();
-
-                while (!(thread0.done && thread1.done && thread2.done && thread3.done)) {
-                    try {
-                        Thread.sleep(1, 0);
-                    } catch (InterruptedException e) {throw new RuntimeException(e);}
-                }
-                break;
-            }
-
-            case 1: {
-                RayTracerThread thread0 = new RayTracerThread(0, width, 0, height);
-                new Thread(thread0).start();
-                while (!thread0.done) {
-                    try {
-                        Thread.sleep(1, 0);
-                    } catch (InterruptedException e) {throw new RuntimeException(e);}
-                }
-                break;
-            }
-        }*/
-
-
-        //return frame;
     }
 
     ///////////////////////////////////////////////////////////////////////////
