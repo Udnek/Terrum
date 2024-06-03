@@ -11,7 +11,7 @@ public class Main{
     public static void main(String[] args) {
         Scene scene = new DynamicScene();
         scene.init();
-        runWithScene(scene, Settings.noRecording(2));
+        runWithScene(scene, Settings.noRecording(1));
         //test();
     }
 

@@ -44,7 +44,7 @@ public abstract class Scene{
         int renderHeight = height/pixelScaling;
         float xOffset = -renderWidth/2f;
         float yOffset = -renderHeight/2f;
-        final float fovMultiplier = (1f/70f)*width;
+        final float fovMultiplier = (1f/35f)*renderWidth;
 
         // TODO: 5/28/2024 CACHE PLAYER POSITION
 
@@ -79,10 +79,10 @@ public abstract class Scene{
         final float moveSpeed = 0.07f;
         final float rotateSpeed = 2f;
         switch (userAction){
-            case MOVE_FORWARD -> camera.move(new Vector3d(0, 0, moveSpeed));
-            case MOVE_BACKWARD -> camera.move(new Vector3d(0, 0, -moveSpeed));
-            case MOVE_RIGHT -> camera.move(new Vector3d(moveSpeed, 0, 0));
-            case MOVE_LEFT -> camera.move(new Vector3d(-moveSpeed, 0, 0));
+            case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
+            case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_RIGHT -> camera.moveAlongDirectionParallelXZ(new Vector3d(moveSpeed, 0, 0));
+            case MOVE_LEFT -> camera.moveAlongDirectionParallelXZ(new Vector3d(-moveSpeed, 0, 0));
 
             case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
             case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed*2, 0));
@@ -95,4 +95,7 @@ public abstract class Scene{
 
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
 }

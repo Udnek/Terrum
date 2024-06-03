@@ -16,9 +16,13 @@ public class Camera extends PositionedObject {
         super(new Vector3d());
     }
 
-    public void moveAlongDirection(Vector3d vector){
-        rotateVector(vector);
-        move(vector);
+    public void moveAlongDirection(Vector3d position){
+        rotateVector(position);
+        move(position);
+    }
+    public void moveAlongDirectionParallelXZ(Vector3d position){
+        VectorUtils.rotateYaw(position, (float) Math.toRadians(yaw));
+        move(position);
     }
 
     public float getPitch() {return pitch;}
