@@ -94,8 +94,8 @@ public class RayTracer {
     }
 
     public void rotateDirectionAsCamera(Vector3d direction){
-        VectorUtils.rotateYaw(direction, cameraYaw);
         VectorUtils.rotatePitch(direction, cameraPitch);
+        VectorUtils.rotateYaw(direction, cameraYaw);
     }
 
     public boolean allThreadsDone(RayTracerThread[] threads){
