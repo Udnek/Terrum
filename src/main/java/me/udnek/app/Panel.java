@@ -8,7 +8,6 @@ import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
-import java.awt.Frame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -22,12 +21,14 @@ public class Panel extends JPanel {
     private final Frame frame;
     private AWTSequenceEncoder videoEncoder;
     private final Settings settings;
+    private final DebugMenu debugMenu;
 
     private boolean renderInProgress = false;
 
     // STATS
     private int framesAmount = 0;
     private double fpsSum = 0;
+    private double renderTime;
 
 
     public Panel(Frame frame, Scene scene, Settings settings){
@@ -41,6 +42,7 @@ public class Panel extends JPanel {
             } catch (IOException e) {throw new RuntimeException(e);}
         }
         scene.init(settings.polygonHolderType);
+        this.debugMenu = new DebugMenu(settings);
 
     }
 
@@ -59,19 +61,43 @@ public class Panel extends JPanel {
             renderHeight = getHeight();
         }
 
-
         BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling, settings.cores);
+
+        if (debugMenu.isEnabled()){
+            debugMenu.resetForNewFrame(frame);
+            showDebug();
+        }
+
 
         if (settings.recordVideo){
             try {
                 videoEncoder.encodeImage(frame);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            } catch (IOException e) {throw new RuntimeException(e);}
         }
 
         graphics.drawImage(frame, 0, 0, getWidth(), getHeight(), null);
         renderInProgress = false;
+    }
+
+    private void showDebug(){
+        Camera camera = scene.getCamera();
+        Vector3d position = camera.getPosition();
+        debugMenu.addText(
+                "FPS: "+DoubleRounder.round(1/renderTime, 2) +
+                " SPF: "+DoubleRounder.round(renderTime, 4)
+        );
+        debugMenu.addText(
+                "x:"+ DoubleRounder.round(position.x, 2) +
+                " y:" + DoubleRounder.round(position.y, 2) +
+                " z:" + DoubleRounder.round(position.z, 2) +
+                " yaw:" + camera.getYaw() +
+                " pitch:" + camera.getPitch()
+        );
+        String[] extraDebug = scene.getExtraDebug();
+        if (extraDebug == null) return;
+        for (String text : extraDebug) {
+            debugMenu.addText(text);
+        }
     }
 
     public void nextFrame(){
@@ -92,11 +118,14 @@ public class Panel extends JPanel {
 
     }
     public void handleKeyInput(KeyEvent e) {
-        scene.handleUserInput(UserAction.getByCode(e.getKeyCode()));
+        UserAction userAction = UserAction.getByCode(e.getKeyCode());
+        if (userAction == UserAction.DEBUG_MENU){
+            debugMenu.toggle();
+        }
+        scene.handleUserInput(userAction);
     }
 
     public void loop(){
-
         while (true) {
             long startTime = System.nanoTime();
             this.nextFrame();
@@ -109,23 +138,14 @@ public class Panel extends JPanel {
                 }
             }
 
-            double renderTime = (System.nanoTime() - startTime)/Math.pow(10, 9);
-            Camera camera = scene.getCamera();
-            Vector3d pos = camera.getPosition();
-            frame.setTitle(
-                    "FPS: "+DoubleRounder.round(1/renderTime, 2) +
-                    " SPF: "+DoubleRounder.round(renderTime, 4) +
-                    " ("+getWidth()+"x"+getHeight()+")" +
-                    " x:"+ DoubleRounder.round(pos.x, 2) + " y:"+DoubleRounder.round(pos.y, 2) + " z:" + DoubleRounder.round(pos.z, 2) + " yaw:"+camera.getYaw() + " pitch:"+camera.getPitch()
-                    );
+            renderTime = (System.nanoTime() - startTime)/Math.pow(10, 9);
+
+            frame.setTitle("WRLS" + " ("+getWidth()+"x"+getHeight()+")");
             if (renderTime > 1) System.out.println("RenderTime: " + renderTime);
 
             fpsSum += 1/renderTime;
             framesAmount++;
-
         }
-
-
     }
 
 }

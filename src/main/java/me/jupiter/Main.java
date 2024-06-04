@@ -12,7 +12,7 @@ public class Main {
                 5,
                 "singular_vertex.png");
         scene.setInitialDeviation(1, 0, 2, 0, 0);
-        me.udnek.Main.runWithScene(scene, Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT));
+        me.udnek.Main.runApplication(scene, Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT));
         //me.udnek.Main.runWithScene(scene, Settings.withRecording(512, 512, "dimas", 12, Settings.PolygonHolderType.DEFAULT));
     }
 }

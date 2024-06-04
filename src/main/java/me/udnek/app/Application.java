@@ -9,10 +9,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Frame extends JFrame implements KeyListener {
+public class Application extends JFrame implements KeyListener {
 
     private Panel panel;
-    public Frame(Scene scene, Settings settings){
+    public Application(Scene scene, Settings settings){
 
 
         panel = new Panel(this, scene, settings);

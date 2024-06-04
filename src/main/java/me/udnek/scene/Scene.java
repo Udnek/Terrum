@@ -36,7 +36,7 @@ public abstract class Scene{
 
     public boolean doLight(){return true;};
 
-
+    public String[] getExtraDebug(){return null;}
 
 
     public BufferedImage renderFrame(final int width, final int height, final int pixelScaling, int cores){

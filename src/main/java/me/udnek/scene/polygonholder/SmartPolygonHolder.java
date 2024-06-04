@@ -119,15 +119,6 @@ public class SmartPolygonHolder implements PolygonHolder{
         return VectorUtils.triangleRayIntersection(vector, triangle) != null;
     }
 
-/*    private boolean vectorInLeftDownTriangle(Vector3d vector){
-        Vector3d intersection = VectorUtils.triangleRayIntersection(vector, leftDownTriangle);
-        return intersection != null;
-    }
-    private boolean vectorInRightUpTriangle(Vector3d vector){
-        Vector3d intersection = VectorUtils.triangleRayIntersection(vector, rightUpTriangle);
-        return intersection != null;
-    }*/
-
     public List<Triangle> getCachedPlanes(Vector3d direction) {
         if (isVectorInTriangle(direction, downTriangle)) return downCachedPlanes;
         if (isVectorInTriangle(direction, leftTriangle)) return leftCachedPlanes;

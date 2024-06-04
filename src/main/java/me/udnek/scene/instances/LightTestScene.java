@@ -14,8 +14,6 @@ import java.util.List;
 public class LightTestScene extends Scene {
     @Override
     protected Camera initCamera() {
-/*        Camera camera = new Camera(new Vector3d(0.6, 1.3, 0));
-        camera.rotatePitch(10);*/
         Camera camera = new Camera(new Vector3d(0, 0.3, 0), 356, 8);
         return camera;
     }

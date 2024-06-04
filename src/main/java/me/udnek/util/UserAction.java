@@ -17,7 +17,9 @@ public enum UserAction {
     CAMERA_UP(KeyEvent.VK_UP),
     CAMERA_DOWN(KeyEvent.VK_DOWN),
     CAMERA_RIGHT(KeyEvent.VK_RIGHT),
-    CAMERA_LEFT(KeyEvent.VK_LEFT);
+    CAMERA_LEFT(KeyEvent.VK_LEFT),
+
+    DEBUG_MENU(KeyEvent.VK_F3);
 
     public final int code;
     UserAction(int code){
