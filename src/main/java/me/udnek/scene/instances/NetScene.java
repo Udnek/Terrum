@@ -84,7 +84,7 @@ public abstract class NetScene extends Scene {
 
     @Override
     protected Camera initCamera() {
-        Camera camera = new Camera(new Vector3d(0.5, 2, -1.5));
+        Camera camera = new Camera(new Vector3d(2, 2, -1.5));
         camera.rotatePitch(35);
         return camera;
     }
