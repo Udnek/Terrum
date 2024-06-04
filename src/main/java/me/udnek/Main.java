@@ -15,10 +15,10 @@ public class Main{
                 10,
                 0.01,
                 0.5,
-                "small_frame.png");
-        scene.setInitialDeviation(2, 2, 4);*/
+                "big_frame.png");
+        scene.setInitialDeviation(2, 2, 2, 2, 2);*/
         Settings settings;
-        settings = Settings.noRecording(2, 12, Settings.PolygonHolderType.SMART);
+        settings = Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT);
         //settings = Settings.withRecording(512, 512, "test2", 12, Settings.PolygonHolderType.SMART);
         Scene scene = new LightTestScene();
         runWithScene(scene, settings);
