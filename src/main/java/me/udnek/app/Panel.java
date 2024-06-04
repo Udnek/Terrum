@@ -2,7 +2,7 @@ package me.udnek.app;
 
 import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
-import me.udnek.utils.UserAction;
+import me.udnek.util.UserAction;
 import org.decimal4j.util.DoubleRounder;
 import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.realityforge.vecmath.Vector3d;

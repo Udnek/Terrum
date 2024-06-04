@@ -1,4 +1,4 @@
-package me.udnek.objects;
+package me.udnek.object;
 
 import me.jupiter.object.NetVertex;
 import org.realityforge.vecmath.Vector3d;

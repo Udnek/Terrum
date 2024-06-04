@@ -1,4 +1,4 @@
-package me.udnek.utils;
+package me.udnek.util;
 
 import org.realityforge.vecmath.Vector3d;
 
@@ -111,6 +111,23 @@ public class VectorUtils {
         double z = vector.z;
         vector.y = y*Math.cos(angle) + -z*Math.sin(angle);
         vector.z = y*Math.sin(angle) + z*Math.cos(angle);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // ANGLES
+    ///////////////////////////////////////////////////////////////////////////
+    public static double length2d(double a, double b){
+        return Math.sqrt(a*a + b*b);
+    }
+
+    public static double angleX(Vector3d a, Vector3d b){
+        return Math.acos(a.y * b.y + a.z * b.z / length2d(a.y, a.z) / length2d(b.y, b.z));
+    }
+    public static double angleY(Vector3d a, Vector3d b){
+        return Math.acos(a.x * b.x + a.z * b.z / length2d(a.x, a.z) / length2d(b.x, b.z));
+    }
+    public static double angleZ(Vector3d a, Vector3d b){
+        return Math.acos(a.x * b.x + a.y * b.y / length2d(a.x, a.y) / length2d(b.x, b.y));
     }
 
 }

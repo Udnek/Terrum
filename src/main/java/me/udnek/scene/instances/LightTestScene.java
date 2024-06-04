@@ -1,9 +1,9 @@
 package me.udnek.scene.instances;
 
-import me.udnek.objects.SceneObject;
-import me.udnek.objects.light.LightSource;
-import me.udnek.objects.light.PointLight;
-import me.udnek.objects.shape.IcosphereObject;
+import me.udnek.object.SceneObject;
+import me.udnek.object.light.LightSource;
+import me.udnek.object.light.PointLight;
+import me.udnek.object.shape.IcosphereObject;
 import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
 import org.realityforge.vecmath.Vector3d;
@@ -16,7 +16,7 @@ public class LightTestScene extends Scene {
     protected Camera initCamera() {
 /*        Camera camera = new Camera(new Vector3d(0.6, 1.3, 0));
         camera.rotatePitch(10);*/
-        Camera camera = new Camera(new Vector3d(1, 0.3, 0.3), 32, 10);
+        Camera camera = new Camera(new Vector3d(0, 0.3, 0), 356, 8);
         return camera;
     }
 

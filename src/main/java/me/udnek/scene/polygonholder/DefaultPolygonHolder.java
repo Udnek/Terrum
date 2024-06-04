@@ -1,8 +1,8 @@
 package me.udnek.scene.polygonholder;
 
-import me.udnek.objects.SceneObject;
+import me.udnek.object.SceneObject;
 import me.udnek.scene.Camera;
-import me.udnek.utils.Triangle;
+import me.udnek.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;

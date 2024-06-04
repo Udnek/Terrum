@@ -12,6 +12,7 @@ public class Settings {
 
     public static Settings DEFAULT_12_CORES = noRecording(2, 12, PolygonHolderType.SMART);
     public static Settings DEFAULT_16_CORES = noRecording(2, 16, PolygonHolderType.SMART);
+    public static Settings THE_SLOWEST = noRecording(1, 1, PolygonHolderType.DEFAULT);
 
     private Settings(boolean recordVideo, int videoWidth, int videoHeight, String videoName, int pixelScaling, int cores, PolygonHolderType holderType){
         this.recordVideo = recordVideo;

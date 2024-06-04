@@ -1,9 +1,9 @@
 package me.udnek.scene.polygonholder;
 
-import me.udnek.objects.SceneObject;
+import me.udnek.object.SceneObject;
 import me.udnek.scene.Camera;
-import me.udnek.utils.Triangle;
-import me.udnek.utils.VectorUtils;
+import me.udnek.util.Triangle;
+import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -12,12 +12,11 @@ import java.util.List;
 public class SmartPolygonHolder implements PolygonHolder{
     private List<? extends SceneObject> objectsToRender;
     private Camera camera;
-    private List<Triangle> leftCachedPlanes;
-    private List<Triangle> rightCachedPlanes;
+    private List<Triangle> leftDownCachedPlanes;
+    private List<Triangle> rightUpCachedPlanes;
 
-    private Vector3d centerDirection;
-/*    private Vector3d maxLeftDirection;
-    private Vector3d maxRightDirection;*/
+    private Triangle leftDownTriangle;
+    private Triangle rightUpTriangle;
 
     public SmartPolygonHolder(List<? extends SceneObject> objectsToRender, Camera camera){
         this.objectsToRender = objectsToRender;
@@ -28,16 +27,22 @@ public class SmartPolygonHolder implements PolygonHolder{
 
         double fovMultiplier = width/camera.getFov();
 
-        centerDirection = new Vector3d(0, 0, 1);
-        camera.rotateVectorYaw(centerDirection);
-        Vector3d maxLeftDirection = new Vector3d(-width/2.0, 0, fovMultiplier);
-        VectorUtils.rotateYaw(maxLeftDirection, Math.toRadians(camera.getYaw()));
-        Vector3d maxRightDirection = new Vector3d(width/2.0, 0, fovMultiplier);
-        VectorUtils.rotateYaw(maxRightDirection, Math.toRadians(camera.getYaw()));
+/*        Vector3d centerDirection = new Vector3d(0, 0, 1);
+        camera.rotateVector(centerDirection);*/
+        Vector3d leftDownCorner = new Vector3d(-width / 2.0, -height / 2.0, fovMultiplier);
+        camera.rotateVector(leftDownCorner);
+        Vector3d rightDownCorner = new Vector3d(width / 2.0, -height / 2.0, fovMultiplier);
+        camera.rotateVector(rightDownCorner);
+        Vector3d leftUpCorner = new Vector3d(-width / 2.0, height / 2.0, fovMultiplier);
+        camera.rotateVector(leftUpCorner);
+        Vector3d rightUpCorner = new Vector3d(width / 2.0, height / 2.0, fovMultiplier);
+        camera.rotateVector(rightUpCorner);
 
+        leftDownTriangle = new Triangle(rightDownCorner, leftDownCorner, leftUpCorner);
+        rightUpTriangle = new Triangle(rightDownCorner, leftUpCorner, rightUpCorner);
 
-        leftCachedPlanes = new ArrayList<>();
-        rightCachedPlanes = new ArrayList<>();
+        leftDownCachedPlanes = new ArrayList<>();
+        rightUpCachedPlanes = new ArrayList<>();
 
         Vector3d cameraPosition = camera.getPosition();
 
@@ -46,51 +51,37 @@ public class SmartPolygonHolder implements PolygonHolder{
             for (Triangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
 
-                boolean outRightBound = Boolean.FALSE.equals(isAllLefter(maxRightDirection, plane));
-                if (outRightBound) continue;
-                boolean outLeftBound = Boolean.TRUE.equals(isAllLefter(maxLeftDirection, plane));
-                if (outLeftBound) continue;
-                Boolean allLefter = isAllLefter(centerDirection, plane);
+                Vector3d vertex0 = plane.getVertex0();
+                Vector3d vertex1 = plane.getVertex1();
+                Vector3d vertex2 = plane.getVertex2();
 
-                if (allLefter == null){
-                    leftCachedPlanes.add(plane);
-                    rightCachedPlanes.add(plane);
-                }
-                else if (allLefter){
-                    leftCachedPlanes.add(plane);
-                }
-                else {
-                    rightCachedPlanes.add(plane);
-                }
+                boolean vertex0Intersection = vectorInLeftDownTriangle(vertex0);
+                boolean vertex1Intersection = vectorInLeftDownTriangle(vertex1);
+                boolean vertex2Intersection = vectorInLeftDownTriangle(vertex2);
+
+                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) leftDownCachedPlanes.add(plane);
+
+                vertex0Intersection = vectorInRightUpTriangle(vertex0);
+                vertex1Intersection = vectorInRightUpTriangle(vertex1);
+                vertex2Intersection = vectorInRightUpTriangle(vertex2);
+
+                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) rightUpCachedPlanes.add(plane);
             }
         }
     }
 
-    private boolean isVectorLefter(Vector3d origin, Vector3d second){
-        double dot = origin.x * -second.z + origin.z * second.x;
-        return (dot < 0);
+    private boolean vectorInLeftDownTriangle(Vector3d vector){
+        Vector3d intersection = VectorUtils.triangleRayIntersection(vector, leftDownTriangle);
+        return intersection != null;
     }
-
-    private Boolean isAllLefter(Vector3d origin, Triangle triangle){
-        boolean vertex0Lefter = isVectorLefter(origin, triangle.getVertex0());
-        boolean vertex1Lefter = isVectorLefter(origin, triangle.getVertex1());
-        boolean vertex2Lefter = isVectorLefter(origin, triangle.getVertex2());
-        if (vertex0Lefter && vertex1Lefter && vertex2Lefter) return true;
-        if (!vertex0Lefter && !vertex1Lefter && !vertex2Lefter) return false;
-        return null;
+    private boolean vectorInRightUpTriangle(Vector3d vector){
+        Vector3d intersection = VectorUtils.triangleRayIntersection(vector, rightUpTriangle);
+        return intersection != null;
     }
-
-/*    private void cacheObject(List<Triangle> cache, SceneObject object, Vector3d position){
-        Vector3d objectPosition = object.getPosition();
-        for (Triangle plane: object.getRenderTriangles()) {
-            plane.addToAllVertexes(objectPosition).subFromAllVertexes(position);
-            cache.add(plane);
-        }
-    }*/
 
     public List<Triangle> getCachedPlanes(Vector3d direction) {
-        if (isVectorLefter(centerDirection, direction)) return leftCachedPlanes;
-        return rightCachedPlanes;
+        if (vectorInLeftDownTriangle(direction)) return leftDownCachedPlanes;
+        return rightUpCachedPlanes;
     }
 
 }

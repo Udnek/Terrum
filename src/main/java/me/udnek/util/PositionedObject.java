@@ -1,4 +1,4 @@
-package me.udnek.utils;
+package me.udnek.util;
 
 import org.realityforge.vecmath.Vector3d;
 

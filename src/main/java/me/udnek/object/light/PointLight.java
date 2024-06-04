@@ -1,4 +1,4 @@
-package me.udnek.objects.light;
+package me.udnek.object.light;
 
 import org.realityforge.vecmath.Vector3d;
 
