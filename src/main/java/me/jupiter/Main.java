@@ -9,7 +9,7 @@ public class Main {
                 1,
                 10,
                 0.01,
-                1,
+                5,
                 "singular_vertex.png");
         scene.setInitialDeviation(1, 0, 2, 0, 0);
         me.udnek.Main.runWithScene(scene, Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT));
