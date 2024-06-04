@@ -12,11 +12,17 @@ import java.util.List;
 public class SmartPolygonHolder implements PolygonHolder{
     private List<? extends SceneObject> objectsToRender;
     private Camera camera;
-    private List<Triangle> leftDownCachedPlanes;
-    private List<Triangle> rightUpCachedPlanes;
 
-    private Triangle leftDownTriangle;
-    private Triangle rightUpTriangle;
+    private List<Triangle> leftCachedPlanes;
+    private List<Triangle> downCachedPlanes;
+    private List<Triangle> rightCachedPlanes;
+    private List<Triangle> upCachedPlanes;
+
+    private Triangle leftTriangle;
+    private Triangle downTriangle;
+    private Triangle rightTriangle;
+    private Triangle upTriangle;
+
 
     public SmartPolygonHolder(List<? extends SceneObject> objectsToRender, Camera camera){
         this.objectsToRender = objectsToRender;
@@ -27,8 +33,8 @@ public class SmartPolygonHolder implements PolygonHolder{
 
         double fovMultiplier = width/camera.getFov();
 
-/*        Vector3d centerDirection = new Vector3d(0, 0, 1);
-        camera.rotateVector(centerDirection);*/
+        Vector3d centerDirection = new Vector3d(0, 0, 1);
+        camera.rotateVector(centerDirection);
         Vector3d leftDownCorner = new Vector3d(-width / 2.0, -height / 2.0, fovMultiplier);
         camera.rotateVector(leftDownCorner);
         Vector3d rightDownCorner = new Vector3d(width / 2.0, -height / 2.0, fovMultiplier);
@@ -38,11 +44,15 @@ public class SmartPolygonHolder implements PolygonHolder{
         Vector3d rightUpCorner = new Vector3d(width / 2.0, height / 2.0, fovMultiplier);
         camera.rotateVector(rightUpCorner);
 
-        leftDownTriangle = new Triangle(rightDownCorner, leftDownCorner, leftUpCorner);
-        rightUpTriangle = new Triangle(rightDownCorner, leftUpCorner, rightUpCorner);
+        leftTriangle = new Triangle(leftDownCorner, centerDirection, leftUpCorner);
+        downTriangle = new Triangle(leftDownCorner, centerDirection, rightDownCorner);
+        rightTriangle = new Triangle(rightDownCorner, centerDirection, rightUpCorner);
+        upTriangle = new Triangle(leftUpCorner, centerDirection, rightUpCorner);
 
-        leftDownCachedPlanes = new ArrayList<>();
-        rightUpCachedPlanes = new ArrayList<>();
+        leftCachedPlanes = new ArrayList<>();
+        downCachedPlanes = new ArrayList<>();
+        rightCachedPlanes = new ArrayList<>();
+        upCachedPlanes = new ArrayList<>();
 
         Vector3d cameraPosition = camera.getPosition();
 
@@ -55,33 +65,47 @@ public class SmartPolygonHolder implements PolygonHolder{
                 Vector3d vertex1 = plane.getVertex1();
                 Vector3d vertex2 = plane.getVertex2();
 
-                boolean vertex0Intersection = vectorInLeftDownTriangle(vertex0);
-                boolean vertex1Intersection = vectorInLeftDownTriangle(vertex1);
-                boolean vertex2Intersection = vectorInLeftDownTriangle(vertex2);
+                boolean vertex0Intersection = isVectorInTriangle(vertex0, leftTriangle);
+                boolean vertex1Intersection = isVectorInTriangle(vertex1, leftTriangle);
+                boolean vertex2Intersection = isVectorInTriangle(vertex2, leftTriangle);
+                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) leftCachedPlanes.add(plane);
 
-                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) leftDownCachedPlanes.add(plane);
+                vertex0Intersection = isVectorInTriangle(vertex0, downTriangle);
+                vertex1Intersection = isVectorInTriangle(vertex1, downTriangle);
+                vertex2Intersection = isVectorInTriangle(vertex2, downTriangle);
+                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) downCachedPlanes.add(plane);
 
-                vertex0Intersection = vectorInRightUpTriangle(vertex0);
-                vertex1Intersection = vectorInRightUpTriangle(vertex1);
-                vertex2Intersection = vectorInRightUpTriangle(vertex2);
+                vertex0Intersection = isVectorInTriangle(vertex0, rightTriangle);
+                vertex1Intersection = isVectorInTriangle(vertex1, rightTriangle);
+                vertex2Intersection = isVectorInTriangle(vertex2, rightTriangle);
+                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) rightCachedPlanes.add(plane);
 
-                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) rightUpCachedPlanes.add(plane);
+                vertex0Intersection = isVectorInTriangle(vertex0, upTriangle);
+                vertex1Intersection = isVectorInTriangle(vertex1, upTriangle);
+                vertex2Intersection = isVectorInTriangle(vertex2, upTriangle);
+                if (vertex0Intersection || vertex1Intersection || vertex2Intersection) upCachedPlanes.add(plane);
             }
         }
     }
 
-    private boolean vectorInLeftDownTriangle(Vector3d vector){
+    private boolean isVectorInTriangle(Vector3d vector, Triangle triangle){
+        return VectorUtils.triangleRayIntersection(vector, triangle) != null;
+    }
+
+/*    private boolean vectorInLeftDownTriangle(Vector3d vector){
         Vector3d intersection = VectorUtils.triangleRayIntersection(vector, leftDownTriangle);
         return intersection != null;
     }
     private boolean vectorInRightUpTriangle(Vector3d vector){
         Vector3d intersection = VectorUtils.triangleRayIntersection(vector, rightUpTriangle);
         return intersection != null;
-    }
+    }*/
 
     public List<Triangle> getCachedPlanes(Vector3d direction) {
-        if (vectorInLeftDownTriangle(direction)) return leftDownCachedPlanes;
-        return rightUpCachedPlanes;
+        if (isVectorInTriangle(direction, leftTriangle)) return leftCachedPlanes;
+        if (isVectorInTriangle(direction, downTriangle)) return downCachedPlanes;
+        if (isVectorInTriangle(direction, rightTriangle)) return rightCachedPlanes;
+        return upCachedPlanes;
     }
 
 }
