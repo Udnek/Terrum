@@ -1,6 +1,6 @@
 package me.jupiter.object;
 
-import me.udnek.utils.VectorUtils;
+import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 @SuppressWarnings("FieldMayBeFinal")
