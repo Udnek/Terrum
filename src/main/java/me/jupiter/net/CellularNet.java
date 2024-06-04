@@ -100,7 +100,7 @@ public class CellularNet {
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (getVertex(j, i) instanceof NetDynamicVertex){
-                    ((NetDynamicVertex) getVertex(j, i)).calculatePositionDifferential();
+                    ((NetDynamicVertex) getVertex(j, i)).dumbCalculatePositionDifferential();
                 }
             }
         }
