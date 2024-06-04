@@ -10,8 +10,10 @@ public class PhysicalScene extends NetScene {
     @Override
     public void tick() {
         System.out.println(net.getVertex(2, 2).getPosition().asString());
-        net.updateVerticesPositionDifferentials();
-        net.updateVerticesPositions();
+        for (int i = 0; i < 4; i++) {
+            net.updateVerticesPositionDifferentials();
+            net.updateVerticesPositions();
+        }
         synchroniseObjects();
     }
 

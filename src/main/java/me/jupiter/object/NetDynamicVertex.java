@@ -3,6 +3,7 @@ package me.jupiter.object;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
+@SuppressWarnings("FieldMayBeFinal")
 public class NetDynamicVertex extends NetVertex{
     private Vector3d velocity;
     private Vector3d acceleration;
@@ -44,7 +45,7 @@ public class NetDynamicVertex extends NetVertex{
         return positionEnd.sub(positionStart).normalize();
     }
 
-    private Vector3d[] RKMethodFunction(Vector3d[] inputComponents){    //Runge-Kutta method function
+    private Vector3d[] RKMethodFunction(Vector3d[] inputComponents){
         Vector3d[] resultComponents = new Vector3d[2];
         resultComponents[0] = inputComponents[1];
         resultComponents[1] = RKMethodCalculateAcceleration(inputComponents[0], inputComponents[1]);
