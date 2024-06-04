@@ -1,5 +1,6 @@
 package me.jupiter.object;
 
+import me.udnek.Main;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -41,7 +42,7 @@ public class NetDynamicVertex extends NetVertex{
         this.decayCoefficient = decayCoefficient;
     }
 
-    public Vector3d getNormalizedDirection(Vector3d positionEnd, Vector3d positionStart){
+    public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
         return positionEnd.sub(positionStart).normalize();
     }
 
@@ -55,17 +56,16 @@ public class NetDynamicVertex extends NetVertex{
     private Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         Vector3d appliedForce = new Vector3d(0, 0, 0);
         for (NetVertex neighbour : neighbours) {
-            if (neighbour != null) {
-                Vector3d normalizedDirection = getNormalizedDirection(neighbour.getPosition(), position);
-                double distanceToNeighbour = VectorUtils.distance(position, neighbour.getPosition());
-                double sizeDifferential = Math.abs(distanceToNeighbour - springRelaxedLength);
-                double elasticForce = springStiffness * sizeDifferential;
-                appliedForce.add(normalizedDirection.mul(elasticForce));
-            }
+            Vector3d normalizedDirection = getNormalizedDirection(position, neighbour.getPosition());
+            double distanceToNeighbour = VectorUtils.distance(position, neighbour.getPosition());
+            double distanceDifferential = distanceToNeighbour - springRelaxedLength;
+            double elasticForce = springStiffness * distanceDifferential;
+            appliedForce.add(normalizedDirection.mul(elasticForce));
         }
+
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
-        Vector3d resultAcceleration = appliedForce.div(mass);
-        resultAcceleration.sub(decayValue);
+        Vector3d resultAcceleration = appliedForce.sub(decayValue);
+        resultAcceleration.div(mass);
         return resultAcceleration;
     }
 
