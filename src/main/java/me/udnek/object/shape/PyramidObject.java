@@ -1,7 +1,7 @@
-package me.udnek.objects.shape;
+package me.udnek.object.shape;
 
-import me.udnek.objects.SceneObject;
-import me.udnek.utils.Triangle;
+import me.udnek.object.SceneObject;
+import me.udnek.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
 public class PyramidObject extends SceneObject {

@@ -1,4 +1,4 @@
-package me.udnek.utils;
+package me.udnek.util;
 
 import org.realityforge.vecmath.Vector3d;
 
@@ -58,9 +58,9 @@ public class Triangle {
 
     public Vector3d getCenter(){
         return new Vector3d(
-                (vertex0.x + vertex1.x + vertex2.x)/3,
-                (vertex0.y + vertex1.y + vertex2.y)/3,
-                (vertex0.z + vertex1.z + vertex2.z)/3
+                (vertex0.x + vertex1.x + vertex2.x)/3.0,
+                (vertex0.y + vertex1.y + vertex2.y)/3.0,
+                (vertex0.z + vertex1.z + vertex2.z)/3.0
         );
     }
     public Vector3d getNormal(){return new Vector3d().cross(getEdge0(), getEdge1());}

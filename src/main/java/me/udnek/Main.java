@@ -16,19 +16,16 @@ public class Main{
                 0.01,
                 0.5,
                 "small_frame.png");
-        scene.setInitialDeviation(2, 2, 4);
-        Settings settings = Settings.noRecording(2, 12);*/
-        //Settings settings = Settings.withRecording(512, 512, "test1", 12);
+        scene.setInitialDeviation(2, 2, 4);*/
+        Settings settings;
+        settings = Settings.noRecording(2, 12, Settings.PolygonHolderType.SMART);
+        //settings = Settings.withRecording(512, 512, "test2", 12, Settings.PolygonHolderType.SMART);
         Scene scene = new LightTestScene();
-        runWithScene(scene, Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT));
+        runWithScene(scene, settings);
         //test();
     }
 
-
-    public static void runWithScene(Scene scene, Settings settings){
-        new Frame(scene, settings);
-    }
-
+    public static void runWithScene(Scene scene, Settings settings){ new Frame(scene, settings);}
     public static void test(){
         Tests.run();
     }

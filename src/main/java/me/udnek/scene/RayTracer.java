@@ -1,13 +1,13 @@
 package me.udnek.scene;
 
 import me.udnek.app.Settings;
-import me.udnek.objects.SceneObject;
-import me.udnek.objects.light.LightSource;
+import me.udnek.object.SceneObject;
+import me.udnek.object.light.LightSource;
 import me.udnek.scene.polygonholder.DefaultPolygonHolder;
 import me.udnek.scene.polygonholder.PolygonHolder;
 import me.udnek.scene.polygonholder.SmartPolygonHolder;
-import me.udnek.utils.Triangle;
-import me.udnek.utils.VectorUtils;
+import me.udnek.util.Triangle;
+import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;

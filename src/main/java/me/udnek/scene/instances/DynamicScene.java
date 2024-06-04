@@ -1,11 +1,11 @@
 package me.udnek.scene.instances;
 
-import me.udnek.objects.AxisCrosshairObject;
-import me.udnek.objects.SceneObject;
-import me.udnek.objects.SpringObject;
-import me.udnek.objects.VertexObject;
-import me.udnek.objects.light.LightSource;
-import me.udnek.objects.light.PointLight;
+import me.udnek.object.AxisCrosshairObject;
+import me.udnek.object.SceneObject;
+import me.udnek.object.SpringObject;
+import me.udnek.object.VertexObject;
+import me.udnek.object.light.LightSource;
+import me.udnek.object.light.PointLight;
 import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
 import org.realityforge.vecmath.Vector3d;

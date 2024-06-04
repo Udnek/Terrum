@@ -1,4 +1,4 @@
-package me.udnek.utils;
+package me.udnek.util;
 
 import java.awt.event.KeyEvent;
 

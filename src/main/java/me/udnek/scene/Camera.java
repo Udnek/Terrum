@@ -1,7 +1,7 @@
 package me.udnek.scene;
 
-import me.udnek.utils.PositionedObject;
-import me.udnek.utils.VectorUtils;
+import me.udnek.util.PositionedObject;
+import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class Camera extends PositionedObject {

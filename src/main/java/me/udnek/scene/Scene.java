@@ -2,9 +2,9 @@ package me.udnek.scene;
 
 
 import me.udnek.app.Settings;
-import me.udnek.objects.SceneObject;
-import me.udnek.objects.light.LightSource;
-import me.udnek.utils.UserAction;
+import me.udnek.object.SceneObject;
+import me.udnek.object.light.LightSource;
+import me.udnek.util.UserAction;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;

@@ -3,8 +3,6 @@ package me.jupiter.object;
 import me.udnek.utils.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
-import static me.jupiter.PhysicsUtility.valueToVector;
-
 public class NetDynamicVertex extends NetVertex{
     private Vector3d velocity;
     private Vector3d acceleration;

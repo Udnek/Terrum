@@ -1,7 +1,7 @@
-package me.udnek.objects.light;
+package me.udnek.object.light;
 
-import me.udnek.objects.SceneObject;
-import me.udnek.utils.Triangle;
+import me.udnek.object.SceneObject;
+import me.udnek.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
 public abstract class LightSource extends SceneObject {

@@ -1,6 +1,6 @@
-package me.udnek.objects;
+package me.udnek.object;
 
-import me.udnek.utils.Triangle;
+import me.udnek.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
 public class AxisCrosshairObject extends SceneObject{
