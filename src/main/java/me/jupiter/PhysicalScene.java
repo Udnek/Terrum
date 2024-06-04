@@ -9,7 +9,6 @@ public class PhysicalScene extends NetScene {
 
     @Override
     public void tick() {
-        System.out.println(net.getVertex(2, 2).getPosition().asString());
         for (int i = 0; i < 4; i++) {
             net.updateVerticesPositionDifferentials();
             net.updateVerticesPositions();
@@ -29,8 +28,8 @@ public class PhysicalScene extends NetScene {
         net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
     }
 
-    public void setInitialDeviation(int x, int z, double yShift) {
-        net.getVertex(x, z).setPosition(new Vector3d(x, yShift, z));
+    public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {
+        net.getVertex(x, z).setPosition(new Vector3d(xNew, yNew, zNew));
     }
 
 }

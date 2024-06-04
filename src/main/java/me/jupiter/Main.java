@@ -10,9 +10,9 @@ public class Main {
                 10,
                 0.01,
                 1,
-                "small_frame.png");
-        scene.setInitialDeviation(2, 2, 5);
-        //me.udnek.Main.runWithScene(scene, Settings.noRecording(2, 16, Settings.PolygonHolderType.DEFAULT));
-        me.udnek.Main.runWithScene(scene, Settings.withRecording(512, 512, "dimas", 16, Settings.PolygonHolderType.DEFAULT));
+                "singular_vertex.png");
+        scene.setInitialDeviation(1, 0, 2, 0, 0);
+        me.udnek.Main.runWithScene(scene, Settings.noRecording(2, 12, Settings.PolygonHolderType.DEFAULT));
+        //me.udnek.Main.runWithScene(scene, Settings.withRecording(512, 512, "dimas", 12, Settings.PolygonHolderType.DEFAULT));
     }
 }
