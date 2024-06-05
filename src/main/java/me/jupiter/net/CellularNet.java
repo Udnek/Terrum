@@ -13,6 +13,9 @@ import java.util.List;
 public class CellularNet {
     private int sizeX;
     private int sizeZ;
+    public double potentialEnergy;
+    public double kineticEnergy;
+    public double fullEnergy;
     private final String imagePath;
     private NetVertex[][] netMap;
 
@@ -117,7 +120,7 @@ public class CellularNet {
         }
     }
 
-    public double getNetKineticEnergy(){
+    public void updateNetKineticEnergy(){
         double kineticSum = 0;
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
@@ -126,8 +129,31 @@ public class CellularNet {
                 }
             }
         }
-        return kineticSum;
+        this.kineticEnergy = kineticSum;
     }
+    public void updateNetPotentialEnergy(){
+        double potentialSum = 0;
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex){
+                    potentialSum += ((NetDynamicVertex) getVertex(j, i)).getPotentialEnergy();
+                }
+            }
+        }
+        this.potentialEnergy = potentialSum;
+    }
+    public void updateNetFullEnergy(){
+        this.fullEnergy = kineticEnergy+potentialEnergy;
+    }
+
+    public void updateNet(){
+        updateNetPotentialEnergy();
+        updateNetKineticEnergy();
+        updateNetFullEnergy();
+        updateVerticesPositionDifferentials();
+        updateVerticesPositions();
+    }
+
     public void printMap(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {

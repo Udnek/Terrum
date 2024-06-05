@@ -6,12 +6,15 @@ import org.realityforge.vecmath.Vector3d;
 
 public class PhysicalScene extends NetScene {
 
+    @Override
+    public String[] getExtraDebug() {
+        return new String[]{"KE: " + net.kineticEnergy, "PE: " + net.potentialEnergy, "FE: " + net.fullEnergy};
+    }
 
     @Override
     public void tick() {
         for (int i = 0; i < 4; i++) {
-            net.updateVerticesPositionDifferentials();
-            net.updateVerticesPositions();
+            net.updateNet();
         }
         synchroniseObjects();
     }
