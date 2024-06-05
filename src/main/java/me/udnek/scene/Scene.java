@@ -61,10 +61,7 @@ public abstract class Scene implements ConsoleHandler {
         final float rotateSpeed = 2f;
         switch (userAction){
             case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
-            case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
-            case MOVE_RIGHT -> camera.moveAlongDirectionParallelXZ(new Vector3d(moveSpeed, 0, 0));
             case MOVE_LEFT -> camera.moveAlongDirectionParallelXZ(new Vector3d(-moveSpeed, 0, 0));
-
             case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
             case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed*2, 0));
 
@@ -73,7 +70,10 @@ public abstract class Scene implements ConsoleHandler {
             case CAMERA_RIGHT -> camera.rotateYaw(-rotateSpeed);
             case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
         }
-
+    }
+    public void handleMousePressedDifference(int xDifference, int yDifference){
+        camera.rotateYaw(xDifference/10f);
+        camera.rotatePitch(yDifference/-10f);
     }
 
     public Camera getCamera() {
