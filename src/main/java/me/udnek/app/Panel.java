@@ -18,12 +18,14 @@ import java.io.IOException;
 
 public class Panel extends JPanel implements ConsoleHandler {
 
-    private boolean screenIsOpen = true;
     private Scene scene;
     private final Frame frame;
     private AWTSequenceEncoder videoEncoder;
     private final AppSettings appSettings;
     private final DebugMenu debugMenu;
+
+    private boolean mousePressed = false;
+    private Point previousMouseLocation;
 
     private boolean renderInProgress = false;
 
@@ -105,6 +107,8 @@ public class Panel extends JPanel implements ConsoleHandler {
     }
 
     public void nextFrame(){
+        if (mousePressed) mousePressedTick();
+
         renderInProgress = true;
         repaint();
     }
@@ -131,6 +135,21 @@ public class Panel extends JPanel implements ConsoleHandler {
     @Override
     public void handleCommand(Command command, String[] args) {
         scene.handleCommand(command, args);
+    }
+
+    public void setMousePressed(boolean pressed){;
+        this.mousePressed = pressed;
+        if (pressed){
+            previousMouseLocation = MouseInfo.getPointerInfo().getLocation();
+        }
+    }
+
+    public void mousePressedTick(){
+        Point newMouseLocation = MouseInfo.getPointerInfo().getLocation();
+        int xDifference = newMouseLocation.x - previousMouseLocation.x;
+        int yDifference = newMouseLocation.y - previousMouseLocation.y;
+        previousMouseLocation = newMouseLocation;
+        scene.handleMousePressedDifference(xDifference, yDifference);
     }
 
     public void loop(){

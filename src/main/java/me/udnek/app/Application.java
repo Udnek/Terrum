@@ -8,12 +8,9 @@ import me.udnek.util.UserAction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-public class Application extends JFrame implements KeyListener, ConsoleHandler {
+public class Application extends JFrame implements KeyListener, MouseListener, ConsoleHandler {
 
     private Panel panel;
     public Application(Scene scene, AppSettings appSettings){
@@ -29,6 +26,8 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler {
         this.setFocusable(true);
 
         addKeyListener(this);
+        addMouseListener(this);
+
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e) {
@@ -45,15 +44,32 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler {
     }
 
     @Override
-    public void handleCommand(Command command, String[] args) {}
+    public void handleCommand(Command command, String[] args) {
+        panel.handleCommand(command, args);
+    }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        panel.handleKeyInput(UserAction.getByCode(e.getKeyCode()));
+    public void keyPressed(KeyEvent keyEvent) {
+        panel.handleKeyInput(UserAction.getByCode(keyEvent.getKeyCode()));
     }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        panel.setMousePressed(true);
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        panel.setMousePressed(false);
+    }
+
+    // UNUSED
     @Override
     public void keyTyped(KeyEvent e) {}
     @Override
     public void keyReleased(KeyEvent e) {}
-
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
