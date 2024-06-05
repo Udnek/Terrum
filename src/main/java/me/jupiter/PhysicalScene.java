@@ -2,6 +2,7 @@ package me.jupiter;
 
 import me.jupiter.net.CellularNet;
 import me.jupiter.net.NetSettings;
+import me.udnek.app.console.Command;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
 
@@ -10,6 +11,11 @@ public class PhysicalScene extends NetScene {
     @Override
     public String[] getExtraDebug() {
         return new String[]{"KE: " + net.kineticEnergy, "PE: " + net.potentialEnergy, "FE: " + net.fullEnergy};
+    }
+
+    @Override
+    public void handleCommand(Command command, String[] args) {
+        super.handleCommand(command, args);
     }
 
     @Override

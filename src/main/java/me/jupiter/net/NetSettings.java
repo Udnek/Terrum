@@ -22,6 +22,6 @@ public class NetSettings {
 
     public static NetSettings defaultSettings(){
         return new NetSettings(1000, 0.8, 10,
-                0.001, 5, "small_frame.png", 4);
+                0.001, 0, "brick.png", 4);
     }
 }

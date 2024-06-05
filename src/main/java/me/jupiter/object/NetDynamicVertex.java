@@ -9,6 +9,7 @@ public class NetDynamicVertex extends NetVertex{
     private Vector3d velocity;
     private Vector3d acceleration;
     private Vector3d positionDifferential;
+    private Vector3d velocityDifferential;
     private double springStiffness;
     private double springRelaxedLength;
     private double mass;
@@ -132,7 +133,7 @@ public class NetDynamicVertex extends NetVertex{
         Vector3d[] phaseDifferentialVector = RKMethodCalculatePhaseDifferentialVector();
         Vector3d velocity = phaseDifferentialVector[0];
         Vector3d acceleration = phaseDifferentialVector[1];
-        this.velocity.add(acceleration.dup());
+        velocityDifferential = acceleration.dup();
         positionDifferential = velocity.dup();
     }
 
@@ -154,6 +155,7 @@ public class NetDynamicVertex extends NetVertex{
     }
 
     public void updatePosition(){
+        velocity.add(velocityDifferential);
         position.add(positionDifferential);
     }
 }
