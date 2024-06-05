@@ -1,8 +1,8 @@
 package me.udnek;
 
 
+import me.udnek.app.AppSettings;
 import me.udnek.app.Application;
-import me.udnek.app.Settings;
 import me.udnek.scene.Scene;
 import me.udnek.scene.instances.LightTestScene;
 import me.udnek.test.Tests;
@@ -17,16 +17,16 @@ public class Main{
                 0.5,
                 "small_frame.png");
         scene.setInitialDeviation(2, 2, 2, 2, 2);*/
-        Settings settings;
+        AppSettings appSettings;
         //settings = Settings.noRecording(2, 6, Settings.PolygonHolderType.SMART);
-        settings = Settings.withRecording(512, 512, "testDir", 6, Settings.PolygonHolderType.SMART);
+        appSettings = AppSettings.withRecording(512, 512, "testDir", 6, AppSettings.PolygonHolderType.SMART);
         Scene scene = new LightTestScene();
-        runApplication(scene, settings);
+        runApplication(scene, appSettings);
         //test();
     }
 
-    public static void runApplication(Scene scene, Settings settings){
-        new Application(scene, settings);
+    public static void runApplication(Scene scene, AppSettings appSettings){
+        new Application(scene, appSettings);
     }
     public static void test(){
         Tests.run();

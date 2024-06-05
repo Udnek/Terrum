@@ -1,6 +1,8 @@
 package me.udnek.app;
 
 import me.jupiter.file_managment.FileManager;
+import me.udnek.app.console.Command;
+import me.udnek.app.console.ConsoleHandler;
 import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
 import me.udnek.util.UserAction;
@@ -10,18 +12,17 @@ import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Panel extends JPanel {
+public class Panel extends JPanel implements ConsoleHandler {
 
     private boolean screenIsOpen = true;
     private Scene scene;
     private final Frame frame;
     private AWTSequenceEncoder videoEncoder;
-    private final Settings settings;
+    private final AppSettings appSettings;
     private final DebugMenu debugMenu;
 
     private boolean renderInProgress = false;
@@ -33,17 +34,17 @@ public class Panel extends JPanel {
     private double averageFpsLastSecond;
 
 
-    public Panel(Frame frame, Scene scene, Settings settings){
+    public Panel(Frame frame, Scene scene, AppSettings appSettings){
         setBackground(Color.GRAY);
         this.frame = frame;
         this.scene = scene;
-        this.settings = settings;
-        if (settings.recordVideo){
-            File file = FileManager.readFile(FileManager.Directory.VIDEO, settings.videoName+".mp4");
+        this.appSettings = appSettings;
+        if (appSettings.recordVideo){
+            File file = FileManager.readFile(FileManager.Directory.VIDEO, appSettings.videoName+".mp4");
             try {videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, 25);
             } catch (IOException e) {throw new RuntimeException(e);}
         }
-        scene.init(settings.polygonHolderType);
+        scene.init(appSettings.polygonHolderType);
         this.debugMenu = new DebugMenu(15);
 
     }
@@ -54,19 +55,19 @@ public class Panel extends JPanel {
 
         int renderWidth;
         int renderHeight;
-        if (settings.recordVideo){
-            renderWidth = settings.videoWidth;
-            renderHeight = settings.videoHeight;
+        if (appSettings.recordVideo){
+            renderWidth = appSettings.videoWidth;
+            renderHeight = appSettings.videoHeight;
         }
         else {
             renderWidth = getWidth();
             renderHeight = getHeight();
         }
 
-        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling, settings.cores);
+        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, appSettings.pixelScaling, appSettings.cores);
 
 
-        if (settings.recordVideo){
+        if (appSettings.recordVideo){
             try {
                 videoEncoder.encodeImage(frame);
             } catch (IOException e) {throw new RuntimeException(e);}
@@ -109,23 +110,27 @@ public class Panel extends JPanel {
     }
 
     public void onWindowClosed(){
-        if (settings.recordVideo){
+        if (appSettings.recordVideo){
             try {
                 videoEncoder.finish();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+        System.out.println();
         System.out.println("Frames: "+ framesAmount);
         System.out.println("Avg FPS: "+ fpsSum/framesAmount);
 
     }
-    public void handleKeyInput(KeyEvent e) {
-        UserAction userAction = UserAction.getByCode(e.getKeyCode());
+    public void handleKeyInput(UserAction userAction) {
         if (userAction == UserAction.DEBUG_MENU){
             debugMenu.toggle();
         }
         scene.handleUserInput(userAction);
+    }
+    @Override
+    public void handleCommand(Command command, String[] args) {
+        scene.handleCommand(command, args);
     }
 
     public void loop(){
@@ -156,7 +161,6 @@ public class Panel extends JPanel {
                 fpsSumLastTime = 0;
                 framesSinceAverageFpsUpdate = 0;
             }
-            if (renderTime > 1) System.out.println("RenderTime: " + renderTime);
 
             frame.setTitle("WRLS" + " ("+getWidth()+"x"+getHeight()+")");
             // stats

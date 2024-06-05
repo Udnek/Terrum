@@ -1,7 +1,9 @@
 package me.udnek.scene;
 
 
-import me.udnek.app.Settings;
+import me.udnek.app.AppSettings;
+import me.udnek.app.console.Command;
+import me.udnek.app.console.ConsoleHandler;
 import me.udnek.object.SceneObject;
 import me.udnek.object.light.LightSource;
 import me.udnek.util.UserAction;
@@ -11,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Scene{
+public abstract class Scene implements ConsoleHandler {
 
     protected Camera camera;
     protected List<? extends SceneObject> sceneObjects = new ArrayList<>();
@@ -22,7 +24,7 @@ public abstract class Scene{
 
     }
 
-    public void init(Settings.PolygonHolderType polygonHolderType){
+    public void init(AppSettings.PolygonHolderType polygonHolderType){
         camera = initCamera();
         lightSource = initLightSource();
         sceneObjects = initSceneObjects();
@@ -77,4 +79,7 @@ public abstract class Scene{
     public Camera getCamera() {
         return camera;
     }
+
+    @Override
+    public void handleCommand(Command command, String[] args) {}
 }

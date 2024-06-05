@@ -1,6 +1,6 @@
 package me.udnek.scene;
 
-import me.udnek.app.Settings;
+import me.udnek.app.AppSettings;
 import me.udnek.object.SceneObject;
 import me.udnek.object.light.LightSource;
 import me.udnek.scene.polygonholder.DefaultPolygonHolder;
@@ -34,13 +34,13 @@ public class RayTracer {
 
     private final boolean doLight;
 
-    public RayTracer(Camera camera, List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight, Settings.PolygonHolderType polygonHolderType){
+    public RayTracer(Camera camera, List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight, AppSettings.PolygonHolderType polygonHolderType){
         this.camera = camera;
 /*        this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
         this.lastLightPosition = null;*/
         this.doLight = doLight;
-        if (polygonHolderType == Settings.PolygonHolderType.SMART)
+        if (polygonHolderType == AppSettings.PolygonHolderType.SMART)
             polygonHolder = new SmartPolygonHolder(objectsToRender, camera);
         else
             polygonHolder = new DefaultPolygonHolder(objectsToRender, camera);
