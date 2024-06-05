@@ -23,7 +23,6 @@ public abstract class NetVertex {
 
     public void addNeighbours(List<NetVertex> toAddNeighbours){
         for (NetVertex neighbour : toAddNeighbours) {
-            if (neighbour instanceof NetVoidVertex) continue;
             if (neighbours.contains(neighbour)) continue;
             neighbours.add(neighbour);
             neighbour.addOneWayNeighbour(this);

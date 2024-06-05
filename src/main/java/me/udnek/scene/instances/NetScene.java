@@ -3,7 +3,6 @@ package me.udnek.scene.instances;
 import me.jupiter.net.CellularNet;
 import me.jupiter.object.NetStaticVertex;
 import me.jupiter.object.NetVertex;
-import me.jupiter.object.NetVoidVertex;
 import me.udnek.object.SceneObject;
 import me.udnek.object.SpringObject;
 import me.udnek.object.VertexObject;
@@ -37,7 +36,7 @@ public abstract class NetScene extends Scene {
 
                 NetVertex netVertex = net.getVertex(x, z);
 
-                if (netVertex instanceof NetVoidVertex) continue;
+                if (netVertex == null) continue;
                 if (netVertex instanceof NetStaticVertex) continue;
 
                 if (addedNeighbours.containsKey(netVertex)) continue;
