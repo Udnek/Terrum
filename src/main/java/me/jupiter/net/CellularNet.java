@@ -11,17 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CellularNet {
+    private NetSettings settings;
     private int sizeX;
     private int sizeZ;
     public double potentialEnergy;
     public double kineticEnergy;
     public double fullEnergy;
-    private final String imagePath;
+    private final String imageName;
     private NetVertex[][] netMap;
 
-    public CellularNet(String imagePath)
+    public CellularNet(String imageName)
     {
-        this.imagePath = imagePath;
+        this.imageName = imageName;
     }
 
     public int getSizeX(){return this.sizeX;}
@@ -29,7 +30,7 @@ public class CellularNet {
 
     public void initiateNet() {
         ImageWrapper reader = new ImageWrapper();
-        reader.readImage(imagePath);
+        reader.readImage(imageName);
 
         sizeX = reader.getWidth();
         sizeZ = reader.getHeight();
@@ -82,19 +83,12 @@ public class CellularNet {
         }
     }
 
-    public void setupVerticesVariables(double springStiffness,
-                                       double springRelaxedLength,
-                                       double vertexMass,
-                                       double deltaTime,
-                                       double decayCoefficient){
+    public void setupVerticesVariables(NetSettings settings){
+        this.settings = settings;
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (getVertex(j, i) instanceof NetDynamicVertex){
-                    ((NetDynamicVertex) getVertex(j, i)).setVariables(springStiffness,
-                            springRelaxedLength,
-                            vertexMass,
-                            deltaTime,
-                            decayCoefficient);
+                    ((NetDynamicVertex) getVertex(j, i)).setVariables(settings);
                 }
             }
         }
@@ -147,11 +141,13 @@ public class CellularNet {
     }
 
     public void updateNet(){
-        updateNetPotentialEnergy();
-        updateNetKineticEnergy();
-        updateNetFullEnergy();
-        updateVerticesPositionDifferentials();
-        updateVerticesPositions();
+        for (int i = 0; i < settings.iterationsPerTick; i++) {
+            updateNetPotentialEnergy();
+            updateNetKineticEnergy();
+            updateNetFullEnergy();
+            updateVerticesPositionDifferentials();
+            updateVerticesPositions();
+        }
     }
 
     public void printMap(){

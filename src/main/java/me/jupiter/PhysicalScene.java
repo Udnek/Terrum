@@ -1,11 +1,12 @@
 package me.jupiter;
 
 import me.jupiter.net.CellularNet;
+import me.jupiter.net.NetSettings;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
 
 public class PhysicalScene extends NetScene {
-
+    private NetSettings settings;
     @Override
     public String[] getExtraDebug() {
         return new String[]{"KE: " + net.kineticEnergy, "PE: " + net.potentialEnergy, "FE: " + net.fullEnergy};
@@ -13,22 +14,16 @@ public class PhysicalScene extends NetScene {
 
     @Override
     public void tick() {
-        for (int i = 0; i < 4; i++) {
-            net.updateNet();
-        }
+        net.updateNet();
         synchroniseObjects();
     }
 
-    public void setup(double springStiffness,
-                      double springRelaxedLength,
-                      double vertexMass,
-                      double deltaTime,
-                      double decayCoefficient,
-                      String imageFileName){
-        net = new CellularNet(imageFileName);
+    public void setup(NetSettings settings){
+        this.settings = settings;
+        net = new CellularNet(settings.imageFileName);
         net.initiateNet();
         net.initiateNeighbours();
-        net.setupVerticesVariables(springStiffness, springRelaxedLength, vertexMass, deltaTime, decayCoefficient);
+        net.setupVerticesVariables(settings);
     }
 
     public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {

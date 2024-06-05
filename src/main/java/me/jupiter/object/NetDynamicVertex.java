@@ -1,5 +1,6 @@
 package me.jupiter.object;
 
+import me.jupiter.net.NetSettings;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -29,16 +30,12 @@ public class NetDynamicVertex extends NetVertex{
     public Vector3d getVelocity(){
         return this.velocity.dup();
     }
-    public void setVariables(double springStiffness,
-                             double springRelaxedLength,
-                             double mass,
-                             double deltaTime,
-                             double decayCoefficient){
-        this.springStiffness = springStiffness;
-        this.springRelaxedLength = springRelaxedLength;
-        this.mass = mass;
-        this.deltaTime = deltaTime;
-        this.decayCoefficient = decayCoefficient;
+    public void setVariables(NetSettings settings){
+        this.springStiffness = settings.springStiffness;
+        this.springRelaxedLength = settings.springRelaxedLength;
+        this.mass = settings.vertexMass;
+        this.deltaTime = settings.deltaTime;
+        this.decayCoefficient = settings.decayCoefficient;
     }
 
     public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
@@ -147,7 +144,11 @@ public class NetDynamicVertex extends NetVertex{
         for (NetVertex neighbour : neighbours) {
             double distanceToNeighbour = VectorUtils.distance(position, neighbour.getPosition());
             double distanceDifferential = distanceToNeighbour - springRelaxedLength;
-            potentialEnergy += (Math.pow(distanceDifferential, 2)*springStiffness)/4;
+            if (neighbour instanceof NetStaticVertex) {
+                potentialEnergy += (Math.pow(distanceDifferential, 2) * springStiffness) / 2;
+            } else {
+                potentialEnergy += (Math.pow(distanceDifferential, 2) * springStiffness) / 4;
+            }
         }
         return potentialEnergy;
     }
