@@ -18,8 +18,8 @@ public class Main{
                 "small_frame.png");
         scene.setInitialDeviation(2, 2, 2, 2, 2);*/
         Settings settings;
-        settings = Settings.noRecording(2, 6, Settings.PolygonHolderType.SMART);
-        //settings = Settings.withRecording(512, 512, "test2", 12, Settings.PolygonHolderType.SMART);
+        //settings = Settings.noRecording(2, 6, Settings.PolygonHolderType.SMART);
+        settings = Settings.withRecording(512, 512, "testDir", 6, Settings.PolygonHolderType.SMART);
         Scene scene = new LightTestScene();
         runApplication(scene, settings);
         //test();

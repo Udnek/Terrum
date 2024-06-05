@@ -1,5 +1,6 @@
 package me.udnek.app;
 
+import me.jupiter.file_managment.FileManager;
 import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
 import me.udnek.util.UserAction;
@@ -29,6 +30,7 @@ public class Panel extends JPanel {
     private int framesAmount = 0;
     private double fpsSum = 0;
     private double renderTime;
+    private double averageFpsLastSecond;
 
 
     public Panel(Frame frame, Scene scene, Settings settings){
@@ -37,12 +39,12 @@ public class Panel extends JPanel {
         this.scene = scene;
         this.settings = settings;
         if (settings.recordVideo){
-            File file = new File(System.getProperty("user.dir") + "/src/main/assets/video/" + settings.videoName+".mp4");
+            File file = FileManager.readFile(FileManager.Directory.VIDEO, settings.videoName+".mp4");
             try {videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, 25);
             } catch (IOException e) {throw new RuntimeException(e);}
         }
         scene.init(settings.polygonHolderType);
-        this.debugMenu = new DebugMenu(settings);
+        this.debugMenu = new DebugMenu(15);
 
     }
 
@@ -63,11 +65,6 @@ public class Panel extends JPanel {
 
         BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling, settings.cores);
 
-        if (debugMenu.isEnabled()){
-            debugMenu.resetForNewFrame(frame);
-            showDebug();
-        }
-
 
         if (settings.recordVideo){
             try {
@@ -76,17 +73,23 @@ public class Panel extends JPanel {
         }
 
         graphics.drawImage(frame, 0, 0, getWidth(), getHeight(), null);
+
+        if (debugMenu.isEnabled()){
+            debugMenu.resetForNewFrame(graphics, getWidth());
+            showDebug();
+        }
+
         renderInProgress = false;
     }
 
     private void showDebug(){
         Camera camera = scene.getCamera();
         Vector3d position = camera.getPosition();
-        debugMenu.addText(
-                "FPS: "+DoubleRounder.round(1/renderTime, 2) +
+        debugMenu.addTextToLeft(
+                "FPS: "+DoubleRounder.round(averageFpsLastSecond, 2) +
                 " SPF: "+DoubleRounder.round(renderTime, 4)
         );
-        debugMenu.addText(
+        debugMenu.addTextToRight(
                 "x:"+ DoubleRounder.round(position.x, 2) +
                 " y:" + DoubleRounder.round(position.y, 2) +
                 " z:" + DoubleRounder.round(position.z, 2) +
@@ -96,7 +99,7 @@ public class Panel extends JPanel {
         String[] extraDebug = scene.getExtraDebug();
         if (extraDebug == null) return;
         for (String text : extraDebug) {
-            debugMenu.addText(text);
+            debugMenu.addTextToLeft(text);
         }
     }
 
@@ -126,6 +129,9 @@ public class Panel extends JPanel {
     }
 
     public void loop(){
+        double timeSinceAverageFpsUpdate = 0;
+        double fpsSumLastTime = 0;
+        double framesSinceAverageFpsUpdate = 0;
         while (true) {
             long startTime = System.nanoTime();
             this.nextFrame();
@@ -140,9 +146,20 @@ public class Panel extends JPanel {
 
             renderTime = (System.nanoTime() - startTime)/Math.pow(10, 9);
 
-            frame.setTitle("WRLS" + " ("+getWidth()+"x"+getHeight()+")");
+            timeSinceAverageFpsUpdate += renderTime;
+            fpsSumLastTime += 1/renderTime;
+            framesSinceAverageFpsUpdate++;
+
+            if (timeSinceAverageFpsUpdate >= 0.5){
+                averageFpsLastSecond = fpsSumLastTime/framesSinceAverageFpsUpdate;
+                timeSinceAverageFpsUpdate = 0;
+                fpsSumLastTime = 0;
+                framesSinceAverageFpsUpdate = 0;
+            }
             if (renderTime > 1) System.out.println("RenderTime: " + renderTime);
 
+            frame.setTitle("WRLS" + " ("+getWidth()+"x"+getHeight()+")");
+            // stats
             fpsSum += 1/renderTime;
             framesAmount++;
         }

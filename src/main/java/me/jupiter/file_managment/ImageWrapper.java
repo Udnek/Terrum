@@ -1,20 +1,20 @@
-package me.jupiter.image_reader;
+package me.jupiter.file_managment;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-public class ImageReader {
+public class ImageWrapper {
     private BufferedImage image;
-    public ImageReader(){}
+    public ImageWrapper(){}
     public void readImage(String imageName){
         try {
-            image = ImageIO.read(new File(getImageDirectory() + imageName));
+            image = ImageIO.read(FileManager.readFile(FileManager.Directory.IMAGE, imageName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public Color getColor(int x, int y){
@@ -28,8 +28,4 @@ public class ImageReader {
     }
 
     public BufferedImage getImage() {return image;}
-
-    public static String getImageDirectory(){
-        return System.getProperty("user.dir") + "/src/main/assets/image/";
-    }
 }
