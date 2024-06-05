@@ -116,6 +116,17 @@ public class CellularNet {
         }
     }
 
+    public double getNetKineticEnergy(){
+        double kineticSum = 0;
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex){
+                    kineticSum += ((NetDynamicVertex) getVertex(j, i)).getKineticEnergy();
+                }
+            }
+        }
+        return kineticSum;
+    }
     public void printMap(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {

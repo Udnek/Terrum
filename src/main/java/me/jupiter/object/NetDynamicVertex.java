@@ -143,6 +143,7 @@ public class NetDynamicVertex extends NetVertex{
     public double getKineticEnergy(){
         return (Math.pow(velocity.dup().length(), 2)*mass) / 2;
     }
+
     public void updatePosition(){
         position.add(positionDifferential);
     }
