@@ -1,6 +1,6 @@
 package me.jupiter.net;
 
-import me.jupiter.image_reader.ImageReader;
+import me.jupiter.file_managment.ImageWrapper;
 import me.jupiter.object.NetDynamicVertex;
 import me.jupiter.object.NetStaticVertex;
 import me.jupiter.object.NetVertex;
@@ -26,7 +26,7 @@ public class CellularNet {
     public int getSizeZ(){return this.sizeZ;}
 
     public void initiateNet() {
-        ImageReader reader = new ImageReader();
+        ImageWrapper reader = new ImageWrapper();
         reader.readImage(imagePath);
 
         sizeX = reader.getWidth();
