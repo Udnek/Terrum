@@ -1,6 +1,5 @@
 package me.jupiter.object;
 
-import me.udnek.Main;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -142,6 +141,15 @@ public class NetDynamicVertex extends NetVertex{
 
     public double getKineticEnergy(){
         return (Math.pow(velocity.dup().length(), 2)*mass) / 2;
+    }
+    public double getPotentialEnergy() {
+        double potentialEnergy = 0;
+        for (NetVertex neighbour : neighbours) {
+            double distanceToNeighbour = VectorUtils.distance(position, neighbour.getPosition());
+            double distanceDifferential = distanceToNeighbour - springRelaxedLength;
+            potentialEnergy += (Math.pow(distanceDifferential, 2)*springStiffness)/4;
+        }
+        return potentialEnergy;
     }
 
     public void updatePosition(){
