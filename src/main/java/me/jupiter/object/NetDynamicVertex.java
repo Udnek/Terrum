@@ -57,11 +57,7 @@ public class NetDynamicVertex extends NetVertex{
             double distanceToNeighbour = VectorUtils.distance(position, neighbor.getPosition());
             double distanceDifferential = distanceToNeighbour - springRelaxedLength;
             double elasticForce = springStiffness * distanceDifferential;
-            if (neighbor instanceof NetDynamicVertex){
-                appliedForce.add(normalizedDirection.mul(elasticForce));
-            } else {
-                appliedForce.add(normalizedDirection.mul(elasticForce));
-            }
+            appliedForce.add(normalizedDirection.mul(elasticForce));
         }
 
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
