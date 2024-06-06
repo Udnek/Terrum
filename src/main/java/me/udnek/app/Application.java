@@ -17,13 +17,12 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
 
 
         panel = new Panel(this, scene);
+        this.add(panel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
-        this.pack();
         this.setVisible(true);
-        this.setSize(400, 400);
         this.setFocusable(true);
+        panel.setPreferredSize(new Dimension(400, 400));
 
         addKeyListener(this);
         addMouseListener(this);
@@ -36,16 +35,12 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
             }
         });
 
+        this.pack();
+
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
 
         new Console(this).start();
-
         panel.loop();
-    }
-
-    @Override
-    public void setSize(int width, int height) {
-        super.setSize(width+14, height+37);
     }
 
     @Override

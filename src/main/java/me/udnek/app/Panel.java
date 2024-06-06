@@ -48,6 +48,8 @@ public class Panel extends JPanel implements ConsoleHandler {
         scene.init();
         this.debugMenu = new DebugMenu(15);
 
+        //setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
+
     }
 
     @Override
@@ -90,7 +92,7 @@ public class Panel extends JPanel implements ConsoleHandler {
                 " SPF: "+DoubleRounder.round(renderTime, 4)
         );
         debugMenu.addTextToRight(
-                "Cores: " + settings.cores
+                "Cores: " + settings.cores + " Total: " + Runtime.getRuntime().availableProcessors()
         );
         debugMenu.addTextToRight(
                 "x:"+ DoubleRounder.round(position.x, 2) +
@@ -141,8 +143,13 @@ public class Panel extends JPanel implements ConsoleHandler {
             case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
             case SET_CORES -> settings.cores = (int) args[0];
             case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
-            case SET_WINDOW_SIZE -> frame.setSize((Integer) args[0], (Integer) args[1]);
+            case SET_WINDOW_SIZE -> setPreferredSize((Integer) args[0], (Integer) args[1]);
         }
+    }
+
+    public void setPreferredSize(Integer width, Integer height) {
+        setPreferredSize(new Dimension(width, height));
+        frame.pack();
     }
 
     public void setMousePressed(boolean pressed){;
