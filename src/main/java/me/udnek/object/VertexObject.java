@@ -21,6 +21,12 @@ public class VertexObject extends PlaneObject {
         this.netVertex = netVertex;
     }
 
+    @Override
+    public void setPosition(Vector3d position) {
+        super.setPosition(position);
+        netVertex.setPosition(position);
+    }
+
     public void update(){
         setPosition(netVertex.getPosition());
     }

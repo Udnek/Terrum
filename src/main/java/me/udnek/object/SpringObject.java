@@ -27,6 +27,15 @@ public class SpringObject extends SceneObject{
     }
 
     @Override
+    public void setPosition(Vector3d position) {}
+
+    @Override
+    public void move(Vector3d position) {}
+
+    @Override
+    public void move(double x, double y, double z) {}
+
+    @Override
     public Triangle[] getRenderTriangles() {
         return new Triangle[]{plane0.copy()};
     }

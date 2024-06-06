@@ -27,6 +27,12 @@ public class Camera extends PositionedObject {
         rotateVector(position);
         move(position);
     }
+
+    public Vector3d getDirection(){
+        Vector3d direction = new Vector3d(0, 0, 1);
+        rotateVector(direction);
+        return direction;
+    }
     public void moveAlongDirectionParallelXZ(Vector3d position){
         VectorUtils.rotateYaw(position, (float) Math.toRadians(yaw));
         move(position);

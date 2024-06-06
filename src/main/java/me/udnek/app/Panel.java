@@ -24,6 +24,7 @@ public class Panel extends JPanel implements ConsoleHandler {
     private final DebugMenu debugMenu;
 
     private boolean mousePressed = false;
+    private UserAction mouseEvent = UserAction.UNKNOWN;
     private Point previousMouseLocation;
 
     private boolean renderInProgress = false;
@@ -77,7 +78,7 @@ public class Panel extends JPanel implements ConsoleHandler {
         graphics.drawImage(frame, 0, 0, getWidth(), getHeight(), null);
 
         if (debugMenu.isEnabled()){
-            debugMenu.resetForNewFrame(graphics, getWidth());
+            debugMenu.resetForNewFrame(graphics, getWidth(), getHeight());
             showDebug();
         }
 
@@ -101,11 +102,7 @@ public class Panel extends JPanel implements ConsoleHandler {
                 " yaw:" + DoubleRounder.round(camera.getYaw(), 2) +
                 " pitch:" + DoubleRounder.round(camera.getPitch(), 2)
         );
-        String[] extraDebug = scene.getExtraDebug();
-        if (extraDebug == null) return;
-        for (String text : extraDebug) {
-            debugMenu.addTextToLeft(text);
-        }
+        scene.addExtraDebug(debugMenu);
     }
 
     public void nextFrame(){
@@ -143,20 +140,34 @@ public class Panel extends JPanel implements ConsoleHandler {
             case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
             case SET_CORES -> settings.cores = (int) args[0];
             case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
-            case SET_WINDOW_SIZE -> setPreferredSize((Integer) args[0], (Integer) args[1]);
+            case SET_WINDOW_SIZE -> setPreferredSize((int) args[0], (int) args[1]);
         }
     }
 
-    public void setPreferredSize(Integer width, Integer height) {
+    public void setPreferredSize(int width, int height) {
         setPreferredSize(new Dimension(width, height));
         frame.pack();
     }
 
-    public void setMousePressed(boolean pressed){;
-        this.mousePressed = pressed;
-        if (pressed){
-            previousMouseLocation = MouseInfo.getPointerInfo().getLocation();
+    public void setMousePressed(boolean pressed, UserAction userAction){
+        if (mousePressed == pressed) return;
+        // UN PRESS
+        if (mousePressed){
+            if (mouseEvent == userAction) {
+                this.mousePressed = pressed;
+                scene.handleMouseEvent(pressed, userAction);
+            }
         }
+        // PRESS
+        else {
+            mousePressed = pressed;
+            mouseEvent = userAction;
+            previousMouseLocation = MouseInfo.getPointerInfo().getLocation();
+            scene.handleMouseEvent(pressed, userAction);
+        }
+
+
+
     }
 
     public void mousePressedTick(){
@@ -164,7 +175,7 @@ public class Panel extends JPanel implements ConsoleHandler {
         int xDifference = newMouseLocation.x - previousMouseLocation.x;
         int yDifference = newMouseLocation.y - previousMouseLocation.y;
         previousMouseLocation = newMouseLocation;
-        scene.handleMousePressedDifference(xDifference, yDifference);
+        scene.handleMousePressedDifference(xDifference, yDifference, mouseEvent);
     }
 
     public void loop(){

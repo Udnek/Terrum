@@ -1,11 +1,14 @@
 package me.udnek.scene;
 
 
+import me.udnek.app.DebugMenu;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.ConsoleHandler;
 import me.udnek.object.SceneObject;
 import me.udnek.object.light.LightSource;
+import me.udnek.util.Triangle;
 import me.udnek.util.UserAction;
+import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
@@ -18,6 +21,8 @@ public abstract class Scene implements ConsoleHandler {
     protected List<? extends SceneObject> sceneObjects = new ArrayList<>();
     protected RayTracer rayTracer;
     protected LightSource lightSource;
+
+    protected SceneObject draggingObject = null;
 
     public Scene(){
 
@@ -35,7 +40,9 @@ public abstract class Scene implements ConsoleHandler {
     protected abstract LightSource initLightSource();
     public abstract void tick();
 
-    public String[] getExtraDebug(){return null;}
+    public void addExtraDebug(DebugMenu debugMenu){
+        debugMenu.addTextToLeft("draggingObject: "+draggingObject);
+    }
 
 
     public BufferedImage renderFrame(final int width, final int height, final int pixelScaling, int cores){
@@ -70,15 +77,61 @@ public abstract class Scene implements ConsoleHandler {
             case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
         }
     }
-    public void handleMousePressedDifference(int xDifference, int yDifference){
-        camera.rotateYaw(xDifference/10f);
-        camera.rotatePitch(yDifference/-10f);
+    public void handleMousePressedDifference(int xDifference, int yDifference, UserAction userAction){
+        if (userAction == UserAction.MOUSE_CAMERA_DRAG){
+            camera.rotateYaw(xDifference/10f);
+            camera.rotatePitch(yDifference/-10f);
+        }
+        else {
+            if (draggingObject == null) return;
+            Vector3d moveDirection = new Vector3d(xDifference / 50f, -yDifference / 50f, 0);
+            camera.rotateVector(moveDirection);
+            draggingObject.move(moveDirection);
+
+
+
+        }
+
     }
 
-    public Camera getCamera() {
-        return camera;
+    public void handleMouseEvent(boolean pressed, UserAction mouseAction){
+        if (mouseAction == UserAction.MOUSE_OBJECT_DRAG){
+            if (pressed) draggingObject = findObjectCursorLookingAt();
+            else draggingObject = null;
+        }
     }
 
+    public SceneObject findObjectCursorLookingAt(){
+        Vector3d cameraPosition = camera.getPosition();
+
+        /*Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
+        Vector3d cursorDirection = new Vector3d(mouseLocation.x, mouseLocation.y, 1);*/
+        Vector3d direction = camera.getDirection();
+
+
+        SceneObject nearestObject = null;
+        double nearestDistance = Double.POSITIVE_INFINITY;
+
+        for (SceneObject object : sceneObjects) {
+            Vector3d objectPosition = object.getPosition();
+            for (Triangle plane: object.getRenderTriangles()) {
+                plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
+
+                Vector3d intersection = VectorUtils.triangleRayIntersection(direction, plane);
+                if (intersection != null){
+                    if (intersection.lengthSquared() < nearestDistance){
+                        nearestObject = object;
+                        nearestDistance = intersection.lengthSquared();
+                    }
+                }
+            }
+        }
+        return nearestObject;
+    }
+
+
+
+    public Camera getCamera() { return camera;}
     @Override
     public void handleCommand(Command command, Object[] args) {}
 }

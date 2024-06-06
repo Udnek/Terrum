@@ -1,10 +1,11 @@
 package me.udnek.util;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public enum UserAction {
 
-    NOTHING(0),
+    UNKNOWN(0),
 
     MOVE_FORWARD(KeyEvent.VK_W),
     MOVE_BACKWARD(KeyEvent.VK_S),
@@ -19,7 +20,10 @@ public enum UserAction {
     CAMERA_RIGHT(KeyEvent.VK_RIGHT),
     CAMERA_LEFT(KeyEvent.VK_LEFT),
 
-    DEBUG_MENU(KeyEvent.VK_F3);
+    DEBUG_MENU(KeyEvent.VK_F3),
+
+    MOUSE_CAMERA_DRAG(MouseEvent.BUTTON1),
+    MOUSE_OBJECT_DRAG(MouseEvent.BUTTON3);
 
     public final int code;
     UserAction(int code){
@@ -30,6 +34,6 @@ public enum UserAction {
         for (UserAction value : UserAction.values()) {
             if (value.code == code) return value;
         }
-        return NOTHING;
+        return UNKNOWN;
     }
 }
