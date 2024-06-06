@@ -52,8 +52,6 @@ public class Panel extends JPanel implements ConsoleHandler {
 
     @Override
     public void paint(Graphics graphics) {
-        scene.tick();
-
         int renderWidth;
         int renderHeight;
         if (settings.recordVideo){
@@ -109,6 +107,8 @@ public class Panel extends JPanel implements ConsoleHandler {
     }
 
     public void nextFrame(){
+        scene.tick();
+
         if (mousePressed) mousePressedTick();
 
         renderInProgress = true;
@@ -140,6 +140,7 @@ public class Panel extends JPanel implements ConsoleHandler {
         switch (command){
             case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
             case SET_CORES -> settings.cores = (int) args[0];
+            case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
         }
     }
 

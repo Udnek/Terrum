@@ -24,7 +24,7 @@ public class Main{
 
     public static AppSettings initSettings(){
         if (thisMainWasRun){
-            return AppSettings.noRecording(2, 6, PolygonHolder.Type.DEFAULT, false);
+            return AppSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false);
         }
         return me.jupiter.Main.initSettings();
 
