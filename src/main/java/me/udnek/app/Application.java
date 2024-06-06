@@ -15,19 +15,16 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
     private Panel panel;
     public Application(Scene scene){
 
-
         panel = new Panel(this, scene);
+        this.add(panel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
-        this.pack();
         this.setVisible(true);
-        this.setSize(400, 400);
         this.setFocusable(true);
+        panel.setPreferredSize(new Dimension(400, 400));
 
         addKeyListener(this);
         addMouseListener(this);
-
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e) {
@@ -36,34 +33,33 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
             }
         });
 
+        this.pack();
+
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
 
         new Console(this).start();
-
         panel.loop();
-    }
-
-    @Override
-    public void setSize(int width, int height) {
-        super.setSize(width+14, height+37);
     }
 
     @Override
     public void handleCommand(Command command, Object[] args) {
         panel.handleCommand(command, args);
     }
-
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         panel.handleKeyInput(UserAction.getByCode(keyEvent.getKeyCode()));
     }
     @Override
-    public void mousePressed(MouseEvent e) {
-        panel.setMousePressed(true);
+    public void mousePressed(MouseEvent event) {
+        UserAction userAction = UserAction.getByCode(event.getButton());
+        if (userAction == UserAction.UNKNOWN) return;
+        panel.setMousePressed(true, userAction);
     }
     @Override
-    public void mouseReleased(MouseEvent e) {
-        panel.setMousePressed(false);
+    public void mouseReleased(MouseEvent event) {
+        UserAction userAction = UserAction.getByCode(event.getButton());
+        if (userAction == UserAction.UNKNOWN) return;
+        panel.setMousePressed(false, userAction);
     }
 
     // UNUSED

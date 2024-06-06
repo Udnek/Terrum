@@ -98,6 +98,9 @@ public class RayTracer {
 
         int cores = AppSettings.globalSettings.cores;
         if (cores != 1){
+
+            // TODO: 6/6/2024 JOIN THREADS
+
             RayTracerThread[] threads = new RayTracerThread[cores];
             int threadXStep = width / cores;
             for (int i = 0; i < cores; i++) {

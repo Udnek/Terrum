@@ -1,10 +1,11 @@
 package me.udnek;
 
 
+import me.jupiter.PhysicalScene;
+import me.jupiter.net.NetSettings;
 import me.udnek.app.AppSettings;
 import me.udnek.app.Application;
 import me.udnek.scene.Scene;
-import me.udnek.scene.instances.LightTestScene;
 import me.udnek.scene.polygonholder.PolygonHolder;
 import me.udnek.test.Tests;
 
@@ -13,11 +14,11 @@ public class Main{
     private static boolean thisMainWasRun;
     public static void main(String[] args) {
         thisMainWasRun = true;
-/*        PhysicalScene scene = new PhysicalScene();
+        PhysicalScene scene = new PhysicalScene();
         scene.setup(NetSettings.from("small_frame.png"));
-        scene.setInitialDeviation(2, 2, 2, 2, 2);*/
+        scene.setInitialDeviation(2, 2, 2, 2, 2);
         //appSettings = AppSettings.withRecording(512, 512, "testDir", 6, AppSettings.PolygonHolderType.SMART);
-        Scene scene = new LightTestScene();
+        //Scene scene = new LightTestScene();
         runApplication(scene);
         //test();
     }
