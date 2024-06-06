@@ -6,6 +6,7 @@ import me.udnek.object.light.LightSource;
 import me.udnek.scene.polygonholder.DefaultPolygonHolder;
 import me.udnek.scene.polygonholder.PolygonHolder;
 import me.udnek.scene.polygonholder.SmartPolygonHolder;
+import me.udnek.util.ColoredTriangle;
 import me.udnek.util.Triangle;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -184,6 +185,10 @@ public class RayTracer {
     }
 
     private int colorizeRayTrace(Vector3d hitPosition, Triangle plane){
+
+        if (plane instanceof ColoredTriangle coloredPlane){
+            return coloredPlane.getColor();
+        }
 
         double d0 = VectorUtils.distance(hitPosition, plane.getVertex0());
         double d1 = VectorUtils.distance(hitPosition, plane.getVertex1());
