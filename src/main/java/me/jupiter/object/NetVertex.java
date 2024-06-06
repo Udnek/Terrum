@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class NetVertex {
     public Vector3d position;
 
-    protected List<NetVertex> neighbours = new ArrayList<>();
+    protected List<NetVertex> neighbors = new ArrayList<>();
 
     public NetVertex(){}
     public NetVertex(Vector3d position, float springRelaxedLength, float springStiffness) {
@@ -23,21 +23,21 @@ public abstract class NetVertex {
 
     public void addNeighbours(List<NetVertex> toAddNeighbours){
         for (NetVertex neighbour : toAddNeighbours) {
-            if (neighbours.contains(neighbour)) continue;
-            neighbours.add(neighbour);
+            if (neighbors.contains(neighbour)) continue;
+            neighbors.add(neighbour);
             neighbour.addOneWayNeighbour(this);
         }
     }
 
     protected void addOneWayNeighbour(NetVertex neighbour){
-        if (neighbours.contains(neighbour)) return;
-        neighbours.add(neighbour);
+        if (neighbors.contains(neighbour)) return;
+        neighbors.add(neighbour);
     }
 
     public int getNeighboursAmount(){
-        return neighbours.size();
+        return neighbors.size();
     }
-    public List<NetVertex> getNeighbours(){
-        return this.neighbours;
+    public List<NetVertex> getNeighbors(){
+        return this.neighbors;
     }
 }

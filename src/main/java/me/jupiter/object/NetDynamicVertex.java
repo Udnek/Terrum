@@ -52,12 +52,16 @@ public class NetDynamicVertex extends NetVertex{
 
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         Vector3d appliedForce = new Vector3d(0, 0, 0);
-        for (NetVertex neighbour : neighbours) {
-            Vector3d normalizedDirection = getNormalizedDirection(position, neighbour.getPosition());
-            double distanceToNeighbour = VectorUtils.distance(position, neighbour.getPosition());
+        for (NetVertex neighbor : neighbors) {
+            Vector3d normalizedDirection = getNormalizedDirection(position, neighbor.getPosition());
+            double distanceToNeighbour = VectorUtils.distance(position, neighbor.getPosition());
             double distanceDifferential = distanceToNeighbour - springRelaxedLength;
             double elasticForce = springStiffness * distanceDifferential;
-            appliedForce.add(normalizedDirection.mul(elasticForce));
+            if (neighbor instanceof NetDynamicVertex){
+                appliedForce.add(normalizedDirection.mul(elasticForce));
+            } else {
+                appliedForce.add(normalizedDirection.mul(elasticForce));
+            }
         }
 
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
@@ -106,9 +110,9 @@ public class NetDynamicVertex extends NetVertex{
         return new Vector3d[]{positionDifferentialComponent, velocityDifferentialComponent};
     }
 
-    public Vector3d dumbCalculateAcceleration() {
+    public Vector3d EMethodCalculateAcceleration() {
         Vector3d appliedForce = new Vector3d(0, 0, 0);
-        for (NetVertex neighbour : neighbours) {
+        for (NetVertex neighbour : neighbors) {
             if (neighbour != null) {
                 Vector3d normalizedDirection = getNormalizedDirection(neighbour.getPosition(), this.getPosition());
                 double distanceToNeighbour = VectorUtils.distance(this.getPosition(), neighbour.getPosition());
@@ -123,8 +127,8 @@ public class NetDynamicVertex extends NetVertex{
         return acceleration;
     }
 
-    public void dumbCalculatePositionDifferential(){
-        acceleration = dumbCalculateAcceleration();
+    public void EMethodCalculatePositionDifferential(){
+        acceleration = EMethodCalculateAcceleration();
         velocity.add(acceleration.dup().mul(deltaTime));
         positionDifferential = velocity.dup().mul(deltaTime);
     }
@@ -142,7 +146,7 @@ public class NetDynamicVertex extends NetVertex{
     }
     public double getPotentialEnergy() {
         double potentialEnergy = 0;
-        for (NetVertex neighbour : neighbours) {
+        for (NetVertex neighbour : neighbors) {
             double distanceToNeighbour = VectorUtils.distance(position, neighbour.getPosition());
             double distanceDifferential = distanceToNeighbour - springRelaxedLength;
             if (neighbour instanceof NetStaticVertex) {
