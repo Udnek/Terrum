@@ -7,7 +7,8 @@ public enum Command{
     SET_DO_LIGHT("doLight", "sets doLight", "", ArgumentType.BOOLEAN),
     SET_CORES("cores", "sets render threads", "", ArgumentType.INTEGER),
     SET_PIXEL_SCALING("pixelScaling", "sets pixelScaling of rendering frame", "", ArgumentType.INTEGER),
-    SET_ITERATIONS_PER_TICK("ipt", "sets iterations per tick in physical simulation", "", ArgumentType.INTEGER);
+    SET_ITERATIONS_PER_TICK("ipt", "sets iterations per tick in physical simulation", "", ArgumentType.INTEGER),
+    SET_WINDOW_SIZE("size", "sets window size", new String[]{"x", "y"}, new ArgumentType[]{ArgumentType.INTEGER, ArgumentType.INTEGER});
 
     public final String name;
     public final String description;
