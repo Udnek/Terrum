@@ -27,6 +27,7 @@ public class PhysicalScene extends NetScene {
     }
 
     public void setup(NetSettings settings){
+        settings.iterationsPerTick = 2;
         this.settings = settings;
         net = new CellularNet(settings.imageFileName);
         net.initiateNet();

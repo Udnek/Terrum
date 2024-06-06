@@ -6,6 +6,11 @@ import org.realityforge.vecmath.Vector3d;
 public class NetDebugVertex extends NetDynamicVertex{
     private int internalCounter;
 
+    public NetDebugVertex(Vector3d position)
+    {
+        super(position);
+    }
+
     @Override
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         if (internalCounter <= 200) return super.RKMethodCalculateAcceleration(position, velocity);

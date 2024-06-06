@@ -16,7 +16,7 @@ public class NetDynamicVertex extends NetVertex{
     protected double deltaTime;
     protected double decayCoefficient;
 
-    public NetDynamicVertex(){}
+    protected NetDynamicVertex(){}
     public NetDynamicVertex(Vector3d position) {
         super(position);
         this.velocity = new Vector3d(0, 0, 0);
