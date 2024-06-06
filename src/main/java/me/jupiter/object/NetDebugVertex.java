@@ -11,10 +11,15 @@ public class NetDebugVertex extends NetDynamicVertex{
         super(position);
     }
 
+    private boolean isCurrentIterationObserved(){
+        if (internalCounter < 0) return true;
+        if (internalCounter > 2) return true;
+        return false;
+    }
+
     @Override
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
-        if (internalCounter < 200) {return super.RKMethodCalculateAcceleration(position, velocity);}
-        if (internalCounter > 205) {return super.RKMethodCalculateAcceleration(position, velocity);}
+        if (isCurrentIterationObserved()) return super.RKMethodCalculateAcceleration(position, velocity);
 
         System.out.println("Current tick: " + internalCounter + "\n");
 
@@ -30,12 +35,12 @@ public class NetDebugVertex extends NetDynamicVertex{
             System.out.println("Neighbor position: " + neighbor.getPosition().asString());
             Vector3d normalizedDirection = getNormalizedDirection(position, neighbor.getPosition());
             System.out.println("Normalized direction: " + normalizedDirection.asString());
-            double distanceToNeighbour = VectorUtils.distance(position, neighbor.getPosition());
-            System.out.println("Distance to neighbor: " + distanceToNeighbour);
-            double distanceDifferential = distanceToNeighbour - springRelaxedLength;
-            System.out.println("Distance differential: " + distanceDifferential);
+            double distanceToNeighbor = VectorUtils.distance(position, neighbor.getPosition());
+            System.out.println("Distance to neighbor: " + distanceToNeighbor);
+            double distanceDifferential = distanceToNeighbor - springRelaxedLength;
+            System.out.println("Distance differential:  " + distanceToNeighbor + " - " + springRelaxedLength + " = " + distanceDifferential);
             double elasticForce = springStiffness * distanceDifferential;
-            System.out.println("Elastic force: " + elasticForce);
+            System.out.println("Elastic force:  " + springStiffness + " * " + distanceDifferential + " = " + elasticForce);
             appliedForce.add(normalizedDirection.mul(elasticForce));
             System.out.println("Current applied force: " + appliedForce.asString() + "\n");
         }
@@ -46,14 +51,13 @@ public class NetDebugVertex extends NetDynamicVertex{
         Vector3d resultAcceleration = appliedForce.sub(decayValue);
         System.out.println("Raw acceleration: " + resultAcceleration.asString());
         resultAcceleration.div(mass);
-        System.out.println("Acceleration: " + resultAcceleration.asString() + "\n\n");
+        System.out.println("Acceleration: " + resultAcceleration.asString() + "\n\n\n\n\n\n\n");
         return resultAcceleration;
     }
     @Override
     public void RKMethodCalculatePositionDifferential(){
         internalCounter += 1;
-        if (internalCounter < 200) {super.RKMethodCalculatePositionDifferential();return;}
-        if (internalCounter > 205) {super.RKMethodCalculatePositionDifferential();return;}
+        if (isCurrentIterationObserved()) {super.RKMethodCalculatePositionDifferential();return;}
 
         Vector3d[] phaseDifferentialVector = RKMethodCalculatePhaseDifferentialVector();
         Vector3d velocity = phaseDifferentialVector[0];
@@ -61,7 +65,7 @@ public class NetDebugVertex extends NetDynamicVertex{
 
         System.out.println("Result velocity: " + velocity.asString());
         System.out.println("Result acceleration: " + acceleration.asString() + "\n");
-        System.out.println("----------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         velocityDifferential = acceleration.dup();
         positionDifferential = velocity.dup();
     }

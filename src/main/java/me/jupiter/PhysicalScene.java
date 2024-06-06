@@ -17,7 +17,9 @@ public class PhysicalScene extends NetScene {
 
     @Override
     public void handleCommand(Command command, Object[] args) {
-        super.handleCommand(command, args);
+        if (command == Command.SET_ITERATIONS_PER_TICK) {
+            settings.iterationsPerTick = (int) args[0];
+        }
     }
 
     @Override
@@ -27,7 +29,6 @@ public class PhysicalScene extends NetScene {
     }
 
     public void setup(NetSettings settings){
-        settings.iterationsPerTick = 2;
         this.settings = settings;
         net = new CellularNet(settings.imageFileName);
         net.initiateNet();
@@ -38,5 +39,6 @@ public class PhysicalScene extends NetScene {
     public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {
         net.getVertex(x, z).setPosition(new Vector3d(xNew, yNew, zNew));
     }
+
 
 }
