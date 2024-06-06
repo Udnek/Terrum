@@ -25,6 +25,6 @@ public class NetSettings {
 
     public static NetSettings from(String imageFileName){
         return new NetSettings(1000, 0.8, 10,
-                0.001, 0, imageFileName, 4);
+                0.001, 0.5, imageFileName, 4);
     }
 }

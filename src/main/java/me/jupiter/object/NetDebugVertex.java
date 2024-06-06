@@ -36,6 +36,7 @@ public class NetDebugVertex extends NetDynamicVertex{
             Vector3d normalizedDirection = getNormalizedDirection(position, neighbor.getPosition());
             System.out.println("Normalized direction: " + normalizedDirection.asString());
             double distanceToNeighbor = VectorUtils.distance(position, neighbor.getPosition());
+            System.out.println("Distance calculation: " + position.asString() + " " + neighbor.getPosition().asString());
             System.out.println("Distance to neighbor: " + distanceToNeighbor);
             double distanceDifferential = distanceToNeighbor - springRelaxedLength;
             System.out.println("Distance differential:  " + distanceToNeighbor + " - " + springRelaxedLength + " = " + distanceDifferential);
@@ -69,6 +70,8 @@ public class NetDebugVertex extends NetDynamicVertex{
         velocityDifferential = acceleration.dup();
         positionDifferential = velocity.dup();
     }
+
+
 //    @Override
 //    protected Vector3d[] RKMethodCalculatePhaseDifferentialVector(){
 //        Vector3d[] basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
@@ -98,6 +101,8 @@ public class NetDebugVertex extends NetDynamicVertex{
 //
 //        return new Vector3d[]{positionDifferentialComponent, velocityDifferentialComponent};
 //    }
+
+
 }
 
 
