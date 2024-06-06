@@ -1,7 +1,6 @@
 package me.udnek.scene;
 
 
-import me.udnek.app.AppSettings;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.ConsoleHandler;
 import me.udnek.object.SceneObject;
@@ -24,19 +23,17 @@ public abstract class Scene implements ConsoleHandler {
 
     }
 
-    public void init(AppSettings.PolygonHolderType polygonHolderType){
+    public void init(){
         camera = initCamera();
         lightSource = initLightSource();
         sceneObjects = initSceneObjects();
-        rayTracer = new RayTracer(camera, sceneObjects, lightSource, doLight(), polygonHolderType);
+        rayTracer = new RayTracer(camera, sceneObjects, lightSource);
     }
 
     protected abstract Camera initCamera();
     protected abstract List<? extends SceneObject> initSceneObjects();
     protected abstract LightSource initLightSource();
     public abstract void tick();
-
-    public boolean doLight(){return true;};
 
     public String[] getExtraDebug(){return null;}
 
@@ -48,7 +45,7 @@ public abstract class Scene implements ConsoleHandler {
 
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
-        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight, cores);
+        int[] frame = rayTracer.renderFrame(renderWidth, renderHeight);
 
         bufferedImage.setRGB(0, 0, renderWidth, renderHeight, frame, 0, renderWidth);
         return bufferedImage;
@@ -83,5 +80,5 @@ public abstract class Scene implements ConsoleHandler {
     }
 
     @Override
-    public void handleCommand(Command command, String[] args) {}
+    public void handleCommand(Command command, Object[] args) {}
 }

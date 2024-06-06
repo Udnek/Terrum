@@ -4,15 +4,31 @@ import java.util.Arrays;
 
 public enum Command{
     HELP("help", "outputs all commands"),
-    TEST("test", "tests???", "1", "2", "3");
+    SET_DO_LIGHT("doLight", "sets doLight", "", ArgumentType.BOOLEAN),
+    SET_CORES("cores", "sets cores", "", ArgumentType.INTEGER);
 
     public final String name;
     public final String description;
     private final String[] args;
-    Command(String name, String description, String ...args){
+    private final ArgumentType<?>[] argTypes;
+
+    Command(String name, String description){
+        this.name = name;
+        this.description = description;
+        this.args = new String[]{};
+        this.argTypes = new ArgumentType<?>[]{};
+    }
+    Command(String name, String description, String[] args, ArgumentType<?>[] types){
         this.name = name;
         this.description = description;
         this.args = args;
+        this.argTypes = types;
+    }
+    Command(String name, String description, String arg, ArgumentType<?> type){
+        this.name = name;
+        this.description = description;
+        this.args = new String[]{arg};
+        this.argTypes = new ArgumentType<?>[]{type};
     }
 
     private static Command getCommand(String fullCommand){
@@ -41,15 +57,39 @@ public enum Command{
             showHelp();
         }
         String[] args = getArgs(fullCommand);
-        consoleHandler.handleCommand(command, args);
+        ArgumentType<?>[] argTypes = command.argTypes;
+        if (args.length != argTypes.length){
+            System.out.println("Incorrect amount of argument");
+            return;
+        }
+        Object[] actualArgs = new Object[args.length];
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            ArgumentType<?> argumentType = argTypes[i];
+            Object value = argumentType.convert(arg);
+            if (value == null){
+                System.out.println("Incorrect argument: " + arg);
+                return;
+            }
+            actualArgs[i] = value;
+        }
+        consoleHandler.handleCommand(command, actualArgs);
     }
 
     private static void showHelp(){
         System.out.println("All commands:");
         for (Command command : Command.values()) {
             System.out.print(command.name);
-            for (String arg : command.args) {
-                System.out.print(" ["+arg+"]");
+            String[] strings = command.args;
+            for (int i = 0; i < strings.length; i++) {
+                String arg = strings[i];
+                ArgumentType<?> type = command.argTypes[i];
+                if (arg.isEmpty()){
+                    System.out.print(" ["+ type.getName() + "]");
+                }else {
+                    System.out.print(" [" + arg + " (" + type.getName() + ")]");
+                }
+
             }
             System.out.print(" ("+command.description+")");
             System.out.println();

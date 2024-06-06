@@ -14,7 +14,7 @@ public class PhysicalScene extends NetScene {
     }
 
     @Override
-    public void handleCommand(Command command, String[] args) {
+    public void handleCommand(Command command, Object[] args) {
         super.handleCommand(command, args);
     }
 

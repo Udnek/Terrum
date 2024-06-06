@@ -13,10 +13,10 @@ import java.awt.event.*;
 public class Application extends JFrame implements KeyListener, MouseListener, ConsoleHandler {
 
     private Panel panel;
-    public Application(Scene scene, AppSettings appSettings){
+    public Application(Scene scene){
 
 
-        panel = new Panel(this, scene, appSettings);
+        panel = new Panel(this, scene);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);
@@ -44,7 +44,7 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
     }
 
     @Override
-    public void handleCommand(Command command, String[] args) {
+    public void handleCommand(Command command, Object[] args) {
         panel.handleCommand(command, args);
     }
 

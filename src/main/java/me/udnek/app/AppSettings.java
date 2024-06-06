@@ -1,20 +1,22 @@
 package me.udnek.app;
 
+import me.udnek.Main;
+import me.udnek.scene.polygonholder.PolygonHolder;
+
 public class AppSettings {
 
     public final boolean recordVideo;
     public final String videoName;
     public final int videoWidth;
     public final int videoHeight;
-    public final int pixelScaling;
-    public final int cores;
-    public final PolygonHolderType polygonHolderType;
+    public int pixelScaling;
+    public int cores;
+    public boolean doLight;
+    public final PolygonHolder.Type polygonHolderType;
 
-    public static AppSettings DEFAULT_12_CORES = noRecording(2, 12, PolygonHolderType.SMART);
-    public static AppSettings DEFAULT_16_CORES = noRecording(2, 16, PolygonHolderType.SMART);
-    public static AppSettings THE_SLOWEST = noRecording(1, 1, PolygonHolderType.DEFAULT);
+    public static final AppSettings globalSettings = Main.initSettings();
 
-    private AppSettings(boolean recordVideo, int videoWidth, int videoHeight, String videoName, int pixelScaling, int cores, PolygonHolderType holderType){
+    private AppSettings(boolean recordVideo, int videoWidth, int videoHeight, String videoName, int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight){
         this.recordVideo = recordVideo;
         this.videoName = videoName;
         this.videoHeight = videoHeight;
@@ -22,18 +24,21 @@ public class AppSettings {
         this.pixelScaling = pixelScaling;
         this.cores = cores;
         this.polygonHolderType = holderType;
+        this.doLight = doLight;
     }
 
-    public static AppSettings noRecording(int pixelScaling, int cores, PolygonHolderType holderType){
-        return new AppSettings(false, 0, 0, "", pixelScaling, cores, holderType);
+    public static AppSettings noRecording(int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight){
+        return new AppSettings(false, 0, 0, "", pixelScaling, cores, holderType, doLight);
     }
-    public static AppSettings withRecording(int videoWidth, int videoHeight, String videoName, int cores, PolygonHolderType holderType){
-        return new AppSettings(true, videoWidth, videoHeight, videoName, 1, cores, holderType);
+    public static AppSettings withRecording(int videoWidth, int videoHeight, String videoName, int cores, PolygonHolder.Type holderType, boolean doLight){
+        return new AppSettings(true, videoWidth, videoHeight, videoName, 1, cores, holderType, doLight);
     }
 
-    public enum PolygonHolderType{
-        DEFAULT,
-        SMART
+    public static void setGlobalSettings(AppSettings newSettings) {
+        AppSettings settings = AppSettings.globalSettings;
+        settings.pixelScaling = newSettings.pixelScaling;
+        settings.cores = newSettings.cores;
+        settings.doLight = newSettings.doLight;
     }
 
 }

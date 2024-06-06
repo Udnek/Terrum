@@ -92,10 +92,5 @@ public abstract class NetScene extends Scene {
     protected LightSource initLightSource() {
         return new PointLight(new Vector3d(0, 2, 0));
     }
-
-    @Override
-    public boolean doLight() {
-        return false;
-    }
 }
 

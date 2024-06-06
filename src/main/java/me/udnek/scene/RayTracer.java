@@ -24,62 +24,22 @@ public class RayTracer {
 
     private int[] frame;
 
-/*    private List<? extends SceneObject> objectsToRender;
-    private List<Triangle> cachedPlanes;
-
-    private LightSource lightSource;
-    private Vector3d lastLightPosition;
-    private List<Triangle> lightCachedPlanes;*/
     private PolygonHolder polygonHolder;
 
+    private boolean doLight;
+    private LightSource lightSource;
+    private Vector3d lightPosition;
 
-    private final boolean doLight;
-
-    public RayTracer(Camera camera, List<? extends SceneObject> objectsToRender, LightSource lightSource, boolean doLight, AppSettings.PolygonHolderType polygonHolderType){
+    public RayTracer(Camera camera, List<? extends SceneObject> objectsToRender, LightSource lightSource){
         this.camera = camera;
-/*        this.objectsToRender = objectsToRender;
+        this.doLight = AppSettings.globalSettings.doLight;
         this.lightSource = lightSource;
-        this.lastLightPosition = null;*/
-        this.doLight = doLight;
-        if (polygonHolderType == AppSettings.PolygonHolderType.SMART)
+        if (AppSettings.globalSettings.polygonHolderType == PolygonHolder.Type.SMART)
             polygonHolder = new SmartPolygonHolder(objectsToRender, camera);
         else
-            polygonHolder = new DefaultPolygonHolder(objectsToRender, camera);
-
-
-        //polygonHolder = new DefaultPolygonHolder(objectsToRender, camera);
+            polygonHolder = new DefaultPolygonHolder(objectsToRender, camera, lightSource);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // CACHING
-    ///////////////////////////////////////////////////////////////////////////
-
-/*    private void recacheObjects(){
-        // camera cache
-        cachedPlanes = new ArrayList<>();
-        for (SceneObject object : objectsToRender) {
-            cacheObject(cachedPlanes, object, cameraPosition);
-        }
-
-        // light cache
-        if (!doLight) return;
-
-        Vector3d lightSourcePosition = lightSource.getPosition();
-        if (lastLightPosition != null && lightSourcePosition.isEqualTo(lastLightPosition)) return; //skipping light recache
-        lastLightPosition = lightSourcePosition;
-        lightCachedPlanes = new ArrayList<>();
-        for (SceneObject object : objectsToRender) {
-            cacheObject(lightCachedPlanes, object, lightSourcePosition);
-        }
-    }
-
-    private void cacheObject(List<Triangle> cache, SceneObject object, Vector3d position){
-        Vector3d objectPosition = object.getPosition();
-        for (Triangle plane: object.getRenderTriangles()) {
-            plane.addToAllVertexes(objectPosition).subFromAllVertexes(position);
-            cache.add(plane);
-        }
-    }*/
 
     ///////////////////////////////////////////////////////////////////////////
     // UTILS
@@ -122,7 +82,7 @@ public class RayTracer {
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
-    public int[] renderFrame(int width, int height, int cores){
+    public int[] renderFrame(int width, int height){
         frame = new int[width*height];
 
         this.width = width;
@@ -131,9 +91,12 @@ public class RayTracer {
         this.cameraYaw = Math.toRadians(camera.getYaw());
         this.cameraPitch = Math.toRadians(camera.getPitch());
         this.fovMultiplier = width/camera.getFov();
+        this.doLight = AppSettings.globalSettings.doLight;
+        if (doLight) lightPosition = lightSource.getPosition();
 
         polygonHolder.recacheObjects(width, height);
 
+        int cores = AppSettings.globalSettings.cores;
         if (cores != 1){
             RayTracerThread[] threads = new RayTracerThread[cores];
             int threadXStep = width / cores;
@@ -162,17 +125,16 @@ public class RayTracer {
 
     private double positionLighted(Vector3d position, Triangle plane){
 
-        return 1;
-/*        // to absolute position;
+        // to absolute position;
         position.add(cameraPosition);
         // to light relative position
-        position.sub(lastLightPosition);
+        position.sub(lightPosition);
         // from light to point direction
         Vector3d direction = position;
 
         final float EPSILON = 0.0001f;
 
-        for (Triangle triangle : lightCachedPlanes) {
+        for (Triangle triangle : polygonHolder.getLightCachedPlanes(direction)) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, triangle);
             if (hitPosition != null){
                 if (direction.lengthSquared() - EPSILON > hitPosition.lengthSquared()){
@@ -181,7 +143,7 @@ public class RayTracer {
             }
         }
         double perpendicularity = 1 - new Vector3d().cross(plane.getNormal().normalize(), direction.normalize()).length();
-        return perpendicularity;*/
+        return perpendicularity;
     }
 
     private int colorizeRayTrace(Vector3d hitPosition, Triangle plane){

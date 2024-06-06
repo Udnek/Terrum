@@ -23,6 +23,7 @@ public class SmartPolygonHolder implements PolygonHolder{
     private Triangle rightTriangle;
     private Triangle upTriangle;
 
+    private List<Triangle> lightCachedPlanes = new ArrayList<>();
 
     public SmartPolygonHolder(List<? extends SceneObject> objectsToRender, Camera camera){
         this.objectsToRender = objectsToRender;
@@ -126,4 +127,8 @@ public class SmartPolygonHolder implements PolygonHolder{
         return upCachedPlanes;
     }
 
+    @Override
+    public List<Triangle> getLightCachedPlanes(Vector3d direction) {
+        return lightCachedPlanes;
+    }
 }

@@ -1,28 +1,37 @@
 package me.udnek;
 
 
-import me.jupiter.PhysicalScene;
-import me.jupiter.net.NetSettings;
 import me.udnek.app.AppSettings;
 import me.udnek.app.Application;
 import me.udnek.scene.Scene;
+import me.udnek.scene.instances.LightTestScene;
+import me.udnek.scene.polygonholder.PolygonHolder;
 import me.udnek.test.Tests;
 
 public class Main{
+
+    private static boolean thisMainWasRun;
     public static void main(String[] args) {
-        PhysicalScene scene = new PhysicalScene();
+        thisMainWasRun = true;
+/*        PhysicalScene scene = new PhysicalScene();
         scene.setup(NetSettings.from("small_frame.png"));
-        scene.setInitialDeviation(2, 2, 2, 2, 2);
-        AppSettings appSettings;
-        appSettings = AppSettings.noRecording(2, 6, AppSettings.PolygonHolderType.SMART);
+        scene.setInitialDeviation(2, 2, 2, 2, 2);*/
         //appSettings = AppSettings.withRecording(512, 512, "testDir", 6, AppSettings.PolygonHolderType.SMART);
-        //Scene scene = new LightTestScene();
-        runApplication(scene, appSettings);
+        Scene scene = new LightTestScene();
+        runApplication(scene);
         //test();
     }
 
-    public static void runApplication(Scene scene, AppSettings appSettings){
-        new Application(scene, appSettings);
+    public static AppSettings initSettings(){
+        if (thisMainWasRun){
+            return AppSettings.noRecording(2, 6, PolygonHolder.Type.DEFAULT, false);
+        }
+        return me.jupiter.Main.initSettings();
+
+    }
+
+    public static void runApplication(Scene scene){
+        new Application(scene);
     }
     public static void test(){
         Tests.run();

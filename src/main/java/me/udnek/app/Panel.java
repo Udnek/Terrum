@@ -21,7 +21,6 @@ public class Panel extends JPanel implements ConsoleHandler {
     private Scene scene;
     private final Frame frame;
     private AWTSequenceEncoder videoEncoder;
-    private final AppSettings appSettings;
     private final DebugMenu debugMenu;
 
     private boolean mousePressed = false;
@@ -35,18 +34,18 @@ public class Panel extends JPanel implements ConsoleHandler {
     private double renderTime;
     private double averageFpsLastSecond;
 
+    private final AppSettings settings = AppSettings.globalSettings;
 
-    public Panel(Frame frame, Scene scene, AppSettings appSettings){
+    public Panel(Frame frame, Scene scene){
         setBackground(Color.GRAY);
         this.frame = frame;
         this.scene = scene;
-        this.appSettings = appSettings;
-        if (appSettings.recordVideo){
-            File file = FileManager.readFile(FileManager.Directory.VIDEO, appSettings.videoName+".mp4");
+        if (settings.recordVideo){
+            File file = FileManager.readFile(FileManager.Directory.VIDEO, settings.videoName+".mp4");
             try {videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, 25);
             } catch (IOException e) {throw new RuntimeException(e);}
         }
-        scene.init(appSettings.polygonHolderType);
+        scene.init();
         this.debugMenu = new DebugMenu(15);
 
     }
@@ -57,19 +56,19 @@ public class Panel extends JPanel implements ConsoleHandler {
 
         int renderWidth;
         int renderHeight;
-        if (appSettings.recordVideo){
-            renderWidth = appSettings.videoWidth;
-            renderHeight = appSettings.videoHeight;
+        if (settings.recordVideo){
+            renderWidth = settings.videoWidth;
+            renderHeight = settings.videoHeight;
         }
         else {
             renderWidth = getWidth();
             renderHeight = getHeight();
         }
 
-        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, appSettings.pixelScaling, appSettings.cores);
+        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling, settings.cores);
 
 
-        if (appSettings.recordVideo){
+        if (settings.recordVideo){
             try {
                 videoEncoder.encodeImage(frame);
             } catch (IOException e) {throw new RuntimeException(e);}
@@ -88,9 +87,12 @@ public class Panel extends JPanel implements ConsoleHandler {
     private void showDebug(){
         Camera camera = scene.getCamera();
         Vector3d position = camera.getPosition();
-        debugMenu.addTextToLeft(
+        debugMenu.addTextToRight(
                 "FPS: "+DoubleRounder.round(averageFpsLastSecond, 2) +
                 " SPF: "+DoubleRounder.round(renderTime, 4)
+        );
+        debugMenu.addTextToRight(
+                "Cores: " + settings.cores
         );
         debugMenu.addTextToRight(
                 "x:"+ DoubleRounder.round(position.x, 2) +
@@ -114,7 +116,7 @@ public class Panel extends JPanel implements ConsoleHandler {
     }
 
     public void onWindowClosed(){
-        if (appSettings.recordVideo){
+        if (settings.recordVideo){
             try {
                 videoEncoder.finish();
             } catch (IOException e) {
@@ -133,8 +135,12 @@ public class Panel extends JPanel implements ConsoleHandler {
         scene.handleUserInput(userAction);
     }
     @Override
-    public void handleCommand(Command command, String[] args) {
+    public void handleCommand(Command command, Object[] args) {
         scene.handleCommand(command, args);
+        switch (command){
+            case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
+            case SET_CORES -> settings.cores = (int) args[0];
+        }
     }
 
     public void setMousePressed(boolean pressed){;
