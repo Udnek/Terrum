@@ -164,7 +164,13 @@ public class CellularNet {
             }
         }
     }
-
+    public void syncVerticesRKMPhaseVectors(){
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                getVertex(j, i).currentRKMPhaseVector = new Vector3d[]{getVertex(j, i).getPosition(), getVertex(j, i).getVelocity()};
+            }
+        }
+    }
     public void updateNetKineticEnergy(){
         double kineticSum = 0;
         for (int i = 0; i < sizeZ; i++) {
@@ -196,6 +202,7 @@ public class CellularNet {
             updateNetPotentialEnergy();
             updateNetKineticEnergy();
             updateNetFullEnergy();
+            syncVerticesRKMPhaseVectors();
             updateVerticesCoefficients();
             updateVerticesPositionDifferentials();
             updateVerticesPositions();

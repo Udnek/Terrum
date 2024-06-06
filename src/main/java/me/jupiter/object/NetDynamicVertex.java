@@ -34,6 +34,7 @@ public class NetDynamicVertex extends NetVertex{
         this.decayCoefficient = 0;
     }
 
+    @Override
     public Vector3d getVelocity(){
         return this.velocity.dup();
     }
@@ -175,6 +176,5 @@ public class NetDynamicVertex extends NetVertex{
         velocity.add(velocityDifferential);
         position.add(positionDifferential);
         phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
-        currentRKMPhaseVector = new Vector3d[]{phaseVector[0].dup(), phaseVector[1].dup()};
     }
 }

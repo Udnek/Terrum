@@ -20,6 +20,10 @@ public abstract class NetVertex {
     public Vector3d getPosition() {return position.dup();}
     public void setPosition(Vector3d position) {this.position = position;}
 
+    public Vector3d getVelocity(){
+        return new Vector3d(0, 0, 0);
+    }
+
     public Vector3d getCurrentRKMPosition(){return currentRKMPhaseVector[0].dup();}
 
     public void addNeighbours(List<NetVertex> toAddNeighbours){

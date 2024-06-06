@@ -7,14 +7,13 @@ import me.udnek.scene.polygonholder.PolygonHolder;
 public class Main {
     public static void main(String[] args) {
         PhysicalScene scene = new PhysicalScene();
-        scene.setup(NetSettings.from("brick.png"));
-        scene.setInitialDeviation(0, 0, 0, 0, 0);
+        scene.setup(NetSettings.from("small_frame.png"));
+        scene.setInitialDeviation(1,1, 1, 0, 1);
         me.udnek.Main.runApplication(scene);
-        //me.udnek.Main.runWithScene(scene, Settings.withRecording(512, 512, "dimas", 12, Settings.PolygonHolderType.DEFAULT));
-
     }
 
     public static AppSettings initSettings(){
-        return AppSettings.noRecording(2, 2, PolygonHolder.Type.SMART, false);
+//        return AppSettings.noRecording(2, 2, PolygonHolder.Type.DEFAULT, false);
+        return AppSettings.withRecording(500, 500, "default", 12, PolygonHolder.Type.DEFAULT, false);
     }
 }
