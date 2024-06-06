@@ -5,6 +5,7 @@ import me.udnek.app.DebugMenu;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.ConsoleHandler;
 import me.udnek.object.SceneObject;
+import me.udnek.object.SpringObject;
 import me.udnek.object.light.LightSource;
 import me.udnek.util.Triangle;
 import me.udnek.util.UserAction;
@@ -87,9 +88,6 @@ public abstract class Scene implements ConsoleHandler {
             Vector3d moveDirection = new Vector3d(xDifference / 50f, -yDifference / 50f, 0);
             camera.rotateVector(moveDirection);
             draggingObject.move(moveDirection);
-
-
-
         }
 
     }
@@ -104,15 +102,13 @@ public abstract class Scene implements ConsoleHandler {
     public SceneObject findObjectCursorLookingAt(){
         Vector3d cameraPosition = camera.getPosition();
 
-        /*Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
-        Vector3d cursorDirection = new Vector3d(mouseLocation.x, mouseLocation.y, 1);*/
         Vector3d direction = camera.getDirection();
-
 
         SceneObject nearestObject = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
         for (SceneObject object : sceneObjects) {
+            if (object instanceof SpringObject) continue;
             Vector3d objectPosition = object.getPosition();
             for (Triangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);

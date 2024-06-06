@@ -50,13 +50,6 @@ public class RayTracer {
         VectorUtils.rotateYaw(direction, cameraYaw);
     }
 
-    private boolean allThreadsDone(RayTracerThread[] threads){
-        for (RayTracerThread thread : threads) {
-            if (!thread.done) return false;
-        }
-        return true;
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     // TRACING
     ///////////////////////////////////////////////////////////////////////////
@@ -99,24 +92,25 @@ public class RayTracer {
         int cores = AppSettings.globalSettings.cores;
         if (cores != 1){
 
-            // TODO: 6/6/2024 JOIN THREADS
-
-            RayTracerThread[] threads = new RayTracerThread[cores];
+            Thread[] threads = new Thread[cores];
             int threadXStep = width / cores;
             for (int i = 0; i < cores; i++) {
-                threads[i] = new RayTracerThread(threadXStep*i, threadXStep*(i+1), 0, height);
+                Thread thread = new Thread(new RayTracerRunnable(threadXStep * i, threadXStep * (i + 1), 0, height));
+                thread.start();
+                threads[i] = thread;
             }
-            for (RayTracerThread thread : threads) {
-                new Thread(thread).start();
+            try {
+                for (Thread thread : threads) {
+                    thread.join();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            while (!allThreadsDone(threads)) {
-                try {
-                    Thread.sleep(1, 0);
-                } catch (InterruptedException e) { throw new RuntimeException(e);}
-            }
+
+
         } else {
-            RayTracerThread thread = new RayTracerThread(0, width, 0, height);
-            thread.run();
+            RayTracerRunnable runnable = new RayTracerRunnable(0, width, 0, height);
+            runnable.run();
         }
 
         return frame;
@@ -187,10 +181,9 @@ public class RayTracer {
     // THREAD
     ///////////////////////////////////////////////////////////////////////////
 
-    public class RayTracerThread implements Runnable{
+    public class RayTracerRunnable implements Runnable{
         private final int xFrom, xTo, yFrom, yTo;
-        private boolean done = false;
-        public RayTracerThread(int xFrom, int xTo, int yFrom, int yTo){
+        public RayTracerRunnable(int xFrom, int xTo, int yFrom, int yTo){
             this.xFrom = xFrom;
             this.xTo = xTo;
             this.yFrom = yFrom;
@@ -217,7 +210,6 @@ public class RayTracer {
                     frame[(height-y-1)*width + x] = color;
                 }
             }
-            done = true;
         }
     }
 }
