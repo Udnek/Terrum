@@ -9,8 +9,8 @@ public abstract class NetVertex {
     public Vector3d position;
 
     protected List<NetVertex> neighbours = new ArrayList<>();
-    public NetVertex(){}
 
+    public NetVertex(){}
     public NetVertex(Vector3d position, float springRelaxedLength, float springStiffness) {
         this.position = position;
     }

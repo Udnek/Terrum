@@ -6,17 +6,17 @@ import org.realityforge.vecmath.Vector3d;
 
 @SuppressWarnings("FieldMayBeFinal")
 public class NetDynamicVertex extends NetVertex{
-    private Vector3d velocity;
-    private Vector3d acceleration;
-    private Vector3d positionDifferential;
-    private Vector3d velocityDifferential;
-    private double springStiffness;
-    private double springRelaxedLength;
-    private double mass;
-    private double deltaTime;
-    private double decayCoefficient;
+    protected Vector3d velocity;
+    protected Vector3d acceleration;
+    protected Vector3d positionDifferential;
+    protected Vector3d velocityDifferential;
+    protected double springStiffness;
+    protected double springRelaxedLength;
+    protected double mass;
+    protected double deltaTime;
+    protected double decayCoefficient;
 
-
+    public NetDynamicVertex(){}
     public NetDynamicVertex(Vector3d position) {
         super(position);
         this.velocity = new Vector3d(0, 0, 0);
@@ -43,14 +43,14 @@ public class NetDynamicVertex extends NetVertex{
         return positionEnd.sub(positionStart).normalize();
     }
 
-    private Vector3d[] RKMethodFunction(Vector3d[] inputComponents){
+    protected Vector3d[] RKMethodFunction(Vector3d[] inputComponents){
         Vector3d[] resultComponents = new Vector3d[2];
         resultComponents[0] = inputComponents[1];
         resultComponents[1] = RKMethodCalculateAcceleration(inputComponents[0], inputComponents[1]);
         return resultComponents;
     }
 
-    private Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
+    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         Vector3d appliedForce = new Vector3d(0, 0, 0);
         for (NetVertex neighbour : neighbours) {
             Vector3d normalizedDirection = getNormalizedDirection(position, neighbour.getPosition());
@@ -66,18 +66,18 @@ public class NetDynamicVertex extends NetVertex{
         return resultAcceleration;
     }
 
-    private Vector3d[] RKMethodCalculateNextPhaseVector(Vector3d[] basePhaseVector, Vector3d[] coefficient){
+    protected Vector3d[] RKMethodCalculateNextPhaseVector(Vector3d[] basePhaseVector, Vector3d[] coefficient){
         Vector3d resultPositionComponent = basePhaseVector[0].dup().add(coefficient[0].dup().mul(deltaTime/2));
         Vector3d resultVelocityComponent = basePhaseVector[1].dup().add(coefficient[1].dup().mul(deltaTime/2));
         return new Vector3d[]{resultPositionComponent, resultVelocityComponent};
     }
-    private Vector3d[] RKMethodCalculateFinalPhaseVector(Vector3d[] basePhaseVector, Vector3d[] coefficient){
+    protected Vector3d[] RKMethodCalculateFinalPhaseVector(Vector3d[] basePhaseVector, Vector3d[] coefficient){
         Vector3d resultPositionComponent = basePhaseVector[0].dup().add(coefficient[0].dup().mul(deltaTime));
         Vector3d resultVelocityComponent = basePhaseVector[1].dup().add(coefficient[1].dup().mul(deltaTime));
         return new Vector3d[]{resultPositionComponent, resultVelocityComponent};
     }
 
-    private Vector3d[] RKMethodCalculatePhaseDifferentialVector(){
+    protected Vector3d[] RKMethodCalculatePhaseDifferentialVector(){
         Vector3d[] basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
 
         Vector3d[] coefficient1 = RKMethodFunction(basePhaseVector);
