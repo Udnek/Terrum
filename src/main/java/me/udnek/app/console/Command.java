@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum Command{
     HELP("help", "outputs all commands"),
     SET_DO_LIGHT("doLight", "sets doLight", "", ArgumentType.BOOLEAN),
-    SET_CORES("cores", "sets cores", "", ArgumentType.INTEGER);
+    SET_CORES("cores", "sets render threads", "", ArgumentType.INTEGER),
+    SET_ITERATIONS_PER_TICK("ipt", "sets iterations per tick in physical simulation", "", ArgumentType.INTEGER);
 
     public final String name;
     public final String description;
