@@ -93,6 +93,57 @@ public class CellularNet {
             }
         }
     }
+    public void updateVerticesCoefficients() {
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient1();
+                }
+            }
+        }
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    ((NetDynamicVertex) getVertex(j, i)).updateRKMPhaseVector1();
+                }
+            }
+        }
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex){
+                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient2();
+                }
+            }
+        }
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    ((NetDynamicVertex) getVertex(j, i)).updateRKMPhaseVector2();
+                }
+            }
+        }
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient3();
+                }
+            }
+        }
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    ((NetDynamicVertex) getVertex(j, i)).updateRKMPhaseVector3();
+                }
+            }
+        }
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j, i) instanceof NetDynamicVertex) {
+                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient4();
+                }
+            }
+        }
+    }
 
     public void updateVerticesPositionDifferentials(){
         for (int i = 0; i < sizeZ; i++) {
@@ -113,7 +164,13 @@ public class CellularNet {
             }
         }
     }
-
+    public void syncVerticesRKMPhaseVectors(){
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                getVertex(j, i).currentRKMPhaseVector = new Vector3d[]{getVertex(j, i).getPosition(), getVertex(j, i).getVelocity()};
+            }
+        }
+    }
     public void updateNetKineticEnergy(){
         double kineticSum = 0;
         for (int i = 0; i < sizeZ; i++) {
@@ -145,6 +202,8 @@ public class CellularNet {
             updateNetPotentialEnergy();
             updateNetKineticEnergy();
             updateNetFullEnergy();
+            syncVerticesRKMPhaseVectors();
+            updateVerticesCoefficients();
             updateVerticesPositionDifferentials();
             updateVerticesPositions();
         }
