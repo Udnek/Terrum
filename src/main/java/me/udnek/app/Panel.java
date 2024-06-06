@@ -52,8 +52,6 @@ public class Panel extends JPanel implements ConsoleHandler {
 
     @Override
     public void paint(Graphics graphics) {
-        scene.tick();
-
         int renderWidth;
         int renderHeight;
         if (settings.recordVideo){
@@ -98,8 +96,8 @@ public class Panel extends JPanel implements ConsoleHandler {
                 "x:"+ DoubleRounder.round(position.x, 2) +
                 " y:" + DoubleRounder.round(position.y, 2) +
                 " z:" + DoubleRounder.round(position.z, 2) +
-                " yaw:" + camera.getYaw() +
-                " pitch:" + camera.getPitch()
+                " yaw:" + DoubleRounder.round(camera.getYaw(), 2) +
+                " pitch:" + DoubleRounder.round(camera.getPitch(), 2)
         );
         String[] extraDebug = scene.getExtraDebug();
         if (extraDebug == null) return;
@@ -109,6 +107,8 @@ public class Panel extends JPanel implements ConsoleHandler {
     }
 
     public void nextFrame(){
+        scene.tick();
+
         if (mousePressed) mousePressedTick();
 
         renderInProgress = true;
@@ -140,6 +140,8 @@ public class Panel extends JPanel implements ConsoleHandler {
         switch (command){
             case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
             case SET_CORES -> settings.cores = (int) args[0];
+            case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
+            case SET_WINDOW_SIZE -> frame.setSize((Integer) args[0], (Integer) args[1]);
         }
     }
 
