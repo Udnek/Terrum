@@ -7,9 +7,7 @@ public class NetSettings {
     public final double deltaTime;
     public final double decayCoefficient;
     public final String imageFileName;
-    public final int iterationsPerTick;
-
-    public static final NetSettings DEFAULT = NetSettings.from("small_frame.png");
+    public int iterationsPerTick;
 
     public NetSettings(double springStiffness, double springRelaxedLength, double vertexMass, double deltaTime, double decayCoefficient, String imageFileName, int iterationsPerTick) {
         this.springStiffness = springStiffness;
@@ -19,6 +17,10 @@ public class NetSettings {
         this.decayCoefficient = decayCoefficient;
         this.imageFileName = imageFileName;
         this.iterationsPerTick = iterationsPerTick;
+    }
+
+    public static NetSettings getDefault(){
+        return NetSettings.from("small_frame.png");
     }
 
     public static NetSettings from(String imageFileName){

@@ -52,7 +52,7 @@ public abstract class NetScene extends Scene {
 
                 // TODO: 5/31/2024 FIX AND OPTIMIZE
 
-                for (NetVertex neighbour : netVertex.getNeighbours()) {
+                for (NetVertex neighbour : netVertex.getNeighbors()) {
                     //if (addedNeighbourVertices.contains(neighbour)) continue;
                     if (addedNeighbours.containsKey(neighbour)) continue;
 

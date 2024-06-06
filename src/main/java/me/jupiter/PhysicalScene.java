@@ -10,7 +10,9 @@ public class PhysicalScene extends NetScene {
     private NetSettings settings;
     @Override
     public String[] getExtraDebug() {
-        return new String[]{"KE: " + net.kineticEnergy, "PE: " + net.potentialEnergy, "FE: " + net.fullEnergy};
+        return new String[]{"KE: " + net.kineticEnergy,
+                            "PE: " + net.potentialEnergy,
+                            "FE: " + net.fullEnergy};
     }
 
     @Override
@@ -25,6 +27,7 @@ public class PhysicalScene extends NetScene {
     }
 
     public void setup(NetSettings settings){
+        settings.iterationsPerTick = 2;
         this.settings = settings;
         net = new CellularNet(settings.imageFileName);
         net.initiateNet();

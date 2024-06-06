@@ -1,5 +1,6 @@
 package me.jupiter.net;
 
+import me.jupiter.object.NetDebugVertex;
 import me.jupiter.object.NetDynamicVertex;
 import me.jupiter.object.NetStaticVertex;
 import me.jupiter.object.NetVertex;
@@ -19,6 +20,12 @@ public enum VertexColor {
         @Override
         NetVertex getNewVertex() {
             return new NetStaticVertex(new Vector3d());
+        }
+    },
+    DEBUG(new Color(1f, 0f, 0f), NetDebugVertex.class){
+        @Override
+        NetVertex getNewVertex() {
+            return new NetDebugVertex(new Vector3d());
         }
     },
     UNKNOWN(new Color(1f, 0f, 1f), null){
