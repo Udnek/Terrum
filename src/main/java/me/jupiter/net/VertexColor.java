@@ -9,28 +9,28 @@ import java.awt.*;
 
 public enum VertexColor {
 
-    DYNAMIC(new Color(0f, 1f, 0f)) {
+    DYNAMIC(new Color(0f, 1f, 0f), NetDynamicVertex.class) {
         @Override
         NetVertex getNewVertex() {
             return new NetDynamicVertex(new Vector3d());
         }
     },
-    STATIC(new Color(0f, 0f, 1f)) {
+    STATIC(new Color(0f, 0f, 1f), NetStaticVertex.class) {
         @Override
         NetVertex getNewVertex() {
             return new NetStaticVertex(new Vector3d());
         }
     },
-    NULL(new Color(0f, 0f, 0f)) {
+    UNKNOWN(new Color(1f, 0f, 1f), null){
         @Override
-        NetVertex getNewVertex() {
-            return null;
-        }
+        NetVertex getNewVertex() {return null;}
     };
 
     public final Color color;
-    VertexColor(Color color){
+    public final Class<? extends NetVertex> clazz;
+    VertexColor(Color color, Class<? extends NetVertex> clazz){
         this.color = color;
+        this.clazz = clazz;
     }
     abstract NetVertex getNewVertex();
 
@@ -40,6 +40,16 @@ public enum VertexColor {
                 return vertex.getNewVertex();
             }
         }
-        return VertexColor.STATIC.getNewVertex();
+        return VertexColor.UNKNOWN.getNewVertex();
+    }
+
+    public static Color getColorFromVertex(NetVertex netVertex){
+        for (VertexColor vertex : VertexColor.values()) {
+            Class<? extends NetVertex> clazz = netVertex.getClass();
+            if (vertex.clazz == clazz){
+                return vertex.color;
+            }
+        }
+        return UNKNOWN.color;
     }
 }
