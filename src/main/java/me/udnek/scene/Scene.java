@@ -1,6 +1,7 @@
 package me.udnek.scene;
 
 
+import me.udnek.app.AppSettings;
 import me.udnek.app.DebugMenu;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.ConsoleHandler;
@@ -13,6 +14,7 @@ import me.udnek.util.Triangle;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,9 @@ public abstract class Scene implements ConsoleHandler, ControllerHandler {
     protected List<? extends SceneObject> sceneObjects = new ArrayList<>();
     protected RayTracer rayTracer;
     protected LightSource lightSource;
+
+    protected int width;
+    protected int height;
 
     protected SceneObject draggingObject = null;
 
@@ -43,14 +48,17 @@ public abstract class Scene implements ConsoleHandler, ControllerHandler {
     public abstract void tick();
 
     public void addExtraDebug(DebugMenu debugMenu){
-        debugMenu.addTextToLeft("draggingObject: "+draggingObject);
+        debugMenu.addTextToLeft("draggingObject: "+ draggingObject);
     }
 
+    public void updateSize(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
 
-    public BufferedImage renderFrame(final int width, final int height, final int pixelScaling, int cores){
-
-        int renderWidth = width/pixelScaling;
-        int renderHeight = height/pixelScaling;
+    public BufferedImage renderFrame(final int width, final int height){
+        int renderWidth = width/ AppSettings.globalSettings.pixelScaling;
+        int renderHeight = height/ AppSettings.globalSettings.pixelScaling;
 
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
@@ -62,13 +70,10 @@ public abstract class Scene implements ConsoleHandler, ControllerHandler {
 
 
     @Override
-    public void keyEvent(InputKey inputKey, boolean pressed) {
-        switch (inputKey) {
-            case MOUSE_OBJECT_DRAG -> {
-                if (pressed) draggingObject = findObjectCursorLookingAt();
-                else draggingObject = null;
-            }
-        }
+    public void keyEvent(InputKey inputKey, boolean pressed) {}
+    public void mouseDragClick(Point mousePosition, boolean pressed){
+        if (pressed) draggingObject = findObjectCursorLookingAt(mousePosition);
+        else draggingObject = null;
     }
 
     public void keyContinuouslyPressed(InputKey inputKey){
@@ -88,25 +93,35 @@ public abstract class Scene implements ConsoleHandler, ControllerHandler {
             case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
         }
     }
-    public void handleMousePressedDifference(int xDifference, int yDifference, InputKey key){
+    public void handleMousePressedDifference(Point mouseDifference, InputKey key){
         if (key == InputKey.MOUSE_CAMERA_DRAG){
-            camera.rotateYaw(xDifference/-10f);
-            camera.rotatePitch(yDifference/10f);
+            float sensitivity = 0.15f;
+            camera.rotateYaw(mouseDifference.x*-sensitivity);
+            camera.rotatePitch(mouseDifference.y*sensitivity);
         }
         else {
             if (draggingObject == null) return;
             float sensitivity = 0.01f;
-            Vector3d moveDirection = new Vector3d(xDifference*sensitivity, -yDifference*sensitivity, 0);
+            Vector3d moveDirection = new Vector3d(mouseDifference.x*sensitivity, -mouseDifference.y*sensitivity, 0);
             camera.rotateVector(moveDirection);
             draggingObject.move(moveDirection);
         }
 
     }
 
-    public SceneObject findObjectCursorLookingAt(){
+    public SceneObject findObjectCursorLookingAt(Point mousePosition){
+
         Vector3d cameraPosition = camera.getPosition();
 
-        Vector3d direction = camera.getDirection();
+
+        Vector3d direction = new Vector3d(
+                (mousePosition.x - width/2f),
+                ((height-mousePosition.y-1) - height/2f),
+                width/camera.getFov()
+        );
+
+
+        camera.rotateVector(direction);
 
         SceneObject nearestObject = null;
         double nearestDistance = Double.POSITIVE_INFINITY;

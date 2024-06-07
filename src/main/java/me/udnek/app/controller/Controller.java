@@ -10,8 +10,8 @@ public class Controller {
 
     private List<InputKey> pressedKeys = new ArrayList<>();
     private Point mousePreviousPosition;
-    private Point mouseCurrentPosition;
     private InputKey currentMouseKey;
+    private Point mouseRelativePosition;
 
     private ControllerHandler controllerHandler;
     public Controller(ControllerHandler controllerHandler){
@@ -42,8 +42,7 @@ public class Controller {
         // PRESSING
         if (pressed){
             currentMouseKey = key;
-            mouseCurrentPosition = event.getPoint();
-            mouseCurrentPosition = event.getPoint();
+            mousePreviousPosition = getMousePosition();
         }
         // UN PRESSING
         else {
@@ -60,8 +59,15 @@ public class Controller {
     }
 
     public void updateMouse(){
-        mousePreviousPosition = mouseCurrentPosition;
-        mouseCurrentPosition = getMousePosition();
+        mousePreviousPosition = getMousePosition();
+    }
+
+    public void setMouseRelativePosition(Point position){
+        mouseRelativePosition = position;
+    }
+
+    public Point getMouseRelativePosition() {
+        return mouseRelativePosition;
     }
 
     private Point getMousePosition(){
