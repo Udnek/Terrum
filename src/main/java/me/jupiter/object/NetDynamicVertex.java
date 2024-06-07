@@ -140,7 +140,6 @@ public class NetDynamicVertex extends NetVertex{
         acceleration.div(mass);
         return acceleration;
     }
-
     public void EMethodCalculatePositionDifferential(){
         acceleration = EMethodCalculateAcceleration();
         velocityDifferential = acceleration.dup().mul(deltaTime);

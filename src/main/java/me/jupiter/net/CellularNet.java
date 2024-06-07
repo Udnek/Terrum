@@ -27,27 +27,6 @@ public class CellularNet {
 
     public int getSizeX(){return this.sizeX;}
     public int getSizeZ(){return this.sizeZ;}
-
-    public void initiateNet() {
-        ImageWrapper reader = new ImageWrapper();
-        reader.readImage(imageName);
-
-        sizeX = reader.getWidth();
-        sizeZ = reader.getHeight();
-
-        netMap = new NetVertex[sizeZ][sizeX];
-
-        for (int z = 0; z < sizeZ; z++) {
-            for (int x = 0; x < sizeX; x++) {
-                Color color = reader.getColor(x, z);
-                NetVertex netVertex = VertexColor.getVertex(color);
-                if (netVertex == null) continue;
-                netVertex.setPosition(new Vector3d(x, 0, z));
-                setVertex(netVertex, x, z);
-            }
-        }
-    }
-
     public NetVertex getVertex(int x, int z){ return netMap[z][x];}
     public void setVertex(NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
     public boolean isInBounds(int x, int z) {return (x >= 0 && x < sizeX && z >= 0 && z < sizeZ);}
@@ -71,6 +50,25 @@ public class CellularNet {
         return vertices;
     }
 
+    public void initiateNet() {
+        ImageWrapper reader = new ImageWrapper();
+        reader.readImage(imageName);
+
+        sizeX = reader.getWidth();
+        sizeZ = reader.getHeight();
+
+        netMap = new NetVertex[sizeZ][sizeX];
+
+        for (int z = 0; z < sizeZ; z++) {
+            for (int x = 0; x < sizeX; x++) {
+                Color color = reader.getColor(x, z);
+                NetVertex netVertex = VertexColor.getVertex(color);
+                if (netVertex == null) continue;
+                netVertex.setPosition(new Vector3d(x, 0, z));
+                setVertex(netVertex, x, z);
+            }
+        }
+    }
     public void initiateNeighbours(){
         for (int z = 0; z < sizeZ; z++) {
             for (int x = 0; x < sizeX; x++) {
@@ -78,11 +76,10 @@ public class CellularNet {
                 if (netVertex == null) continue;
 
                 List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
-                netVertex.addNeighbours(neighbourVertices);
+                netVertex.addNeighbors(neighbourVertices);
             }
         }
     }
-
     public void setupVerticesVariables(NetSettings settings){
         this.settings = settings;
         for (int i = 0; i < sizeZ; i++) {
@@ -93,73 +90,72 @@ public class CellularNet {
             }
         }
     }
+
     public void updateVerticesCoefficients() {
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient1();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+                    dynamicVertex.calculateCoefficient1();
                 }
             }
         }
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    ((NetDynamicVertex) getVertex(j, i)).updateRKMPhaseVector1();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+                    dynamicVertex.updateRKMPhaseVector1();
                 }
             }
         }
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex){
-                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient2();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+                    dynamicVertex.calculateCoefficient2();
                 }
             }
         }
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    ((NetDynamicVertex) getVertex(j, i)).updateRKMPhaseVector2();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+                    dynamicVertex.updateRKMPhaseVector2();
                 }
             }
         }
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient3();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+                    dynamicVertex.calculateCoefficient3();
                 }
             }
         }
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    ((NetDynamicVertex) getVertex(j, i)).updateRKMPhaseVector3();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+                    dynamicVertex.updateRKMPhaseVector3();
                 }
             }
         }
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    ((NetDynamicVertex) getVertex(j, i)).calculateCoefficient4();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+                    dynamicVertex.calculateCoefficient4();
                 }
             }
         }
     }
-
     public void updateVerticesPositionDifferentials(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex){
-                    ((NetDynamicVertex) getVertex(j, i)).RKMethodCalculatePositionDifferential();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+                    dynamicVertex.RKMethodCalculatePositionDifferential();
                 }
             }
         }
     }
-
     public void updateVerticesPositions(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex){
-                    ((NetDynamicVertex) getVertex(j, i)).updatePosition();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+                    dynamicVertex.updatePosition();
                 }
             }
         }
@@ -175,8 +171,8 @@ public class CellularNet {
         double kineticSum = 0;
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex){
-                    kineticSum += ((NetDynamicVertex) getVertex(j, i)).getKineticEnergy();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+                    kineticSum += dynamicVertex.getKineticEnergy();
                 }
             }
         }
@@ -186,8 +182,8 @@ public class CellularNet {
         double potentialSum = 0;
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex){
-                    potentialSum += ((NetDynamicVertex) getVertex(j, i)).getPotentialEnergy();
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+                    potentialSum += dynamicVertex.getPotentialEnergy();
                 }
             }
         }
