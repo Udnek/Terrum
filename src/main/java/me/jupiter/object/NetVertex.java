@@ -19,27 +19,25 @@ public abstract class NetVertex {
 
     public Vector3d getPosition() {return position.dup();}
     public void setPosition(Vector3d position) {this.position = position;}
-
     public Vector3d getVelocity(){
         return new Vector3d(0, 0, 0);
     }
-
     public Vector3d getCurrentRKMPosition(){return currentRKMPhaseVector[0].dup();}
 
-    public void addNeighbours(List<NetVertex> toAddNeighbours){
-        for (NetVertex neighbour : toAddNeighbours) {
-            if (neighbors.contains(neighbour)) continue;
-            neighbors.add(neighbour);
-            neighbour.addOneWayNeighbour(this);
+    public void addNeighbors(List<NetVertex> toAddNeighbors){
+        for (NetVertex neighbor : toAddNeighbors) {
+            if (neighbors.contains(neighbor)) continue;
+            neighbors.add(neighbor);
+            neighbor.addOneWayNeighbour(this);
         }
     }
 
-    protected void addOneWayNeighbour(NetVertex neighbour){
-        if (neighbors.contains(neighbour)) return;
-        neighbors.add(neighbour);
+    protected void addOneWayNeighbour(NetVertex neighbor){
+        if (neighbors.contains(neighbor)) return;
+        neighbors.add(neighbor);
     }
 
-    public int getNeighboursAmount(){
+    public int getNeighborsAmount(){
         return neighbors.size();
     }
     public List<NetVertex> getNeighbors(){
