@@ -1,11 +1,9 @@
-package me.udnek.util;
+package me.udnek.app.controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public enum UserAction {
-
-    UNKNOWN(0),
+public enum InputKey {
 
     MOVE_FORWARD(KeyEvent.VK_W),
     MOVE_BACKWARD(KeyEvent.VK_S),
@@ -20,20 +18,27 @@ public enum UserAction {
     CAMERA_RIGHT(KeyEvent.VK_RIGHT),
     CAMERA_LEFT(KeyEvent.VK_LEFT),
 
-    DEBUG_MENU(KeyEvent.VK_F3),
+    DEBUG_MENU(KeyEvent.VK_F3, false),
 
     MOUSE_CAMERA_DRAG(MouseEvent.BUTTON1),
     MOUSE_OBJECT_DRAG(MouseEvent.BUTTON3);
 
     public final int code;
-    UserAction(int code){
-        this.code = code;
+    public final boolean longPress;
+
+    InputKey(int code){
+        this(code, true);
     }
 
-    public static UserAction getByCode(int code){
-        for (UserAction value : UserAction.values()) {
+    InputKey(int code, boolean longPress){
+        this.code = code;
+        this.longPress = longPress;
+    }
+
+    public static InputKey getByCode(int code){
+        for (InputKey value : InputKey.values()) {
             if (value.code == code) return value;
         }
-        return UNKNOWN;
+        return null;
     }
 }
