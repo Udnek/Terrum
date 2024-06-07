@@ -14,6 +14,9 @@ import org.realityforge.vecmath.Vector3d;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,8 +49,30 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
             } catch (IOException e) {throw new RuntimeException(e);}
         }
         scene.init();
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override public void mouseDragged(MouseEvent e) {}
+            @Override public void mouseMoved(MouseEvent event) {controller.setMouseRelativePosition(event.getPoint());}
+        });
+
+        addMouseListener(new MouseListener() {
+            @Override public void mouseClicked(MouseEvent e) {}
+            @Override public void mouseEntered(MouseEvent e) {}
+            @Override public void mouseExited(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+                controller.mouseChanges(mouseEvent, true);
+            }
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                controller.mouseChanges(mouseEvent, false);
+            }
+
+
+        });
+
         this.debugMenu = new DebugMenu(15);
         this.controller = new Controller(this);
+        scene.updateSize(getWidth(), getHeight());
     }
 
     @Override
@@ -63,7 +88,7 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
             renderHeight = getHeight();
         }
 
-        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight, settings.pixelScaling, settings.cores);
+        BufferedImage frame = scene.renderFrame(renderWidth, renderHeight);
 
 
         if (settings.recordVideo){
@@ -81,6 +106,7 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
 
         nextFrameInProgress = false;
     }
+
 
     private void showDebug(){
         Camera camera = scene.getCamera();
@@ -105,6 +131,7 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
     public void nextFrame(){
         nextFrameInProgress = true;
 
+        scene.updateSize(getWidth(), getHeight());
         pressedKeysTick();
         scene.tick();
 
@@ -140,6 +167,7 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
         if (inputKey == InputKey.DEBUG_MENU && pressed) debugMenu.toggle();
+        else if (inputKey == InputKey.MOUSE_OBJECT_DRAG) scene.mouseDragClick(controller.getMouseRelativePosition(), pressed);
         scene.keyEvent(inputKey, pressed);
     }
 
@@ -149,9 +177,9 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
             scene.keyContinuouslyPressed(pressedKey);
         }
         if (controller.mouseIsPressed()){
-            controller.updateMouse();
             Point mouseDifference = controller.getMouseDifference();
-            scene.handleMousePressedDifference(mouseDifference.x, mouseDifference.y, controller.getMouseKey());
+            controller.updateMouse();
+            scene.handleMousePressedDifference(mouseDifference, controller.getMouseKey());
         }
 
     }

@@ -7,11 +7,14 @@ import me.udnek.scene.Scene;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class Application extends JFrame implements KeyListener, MouseListener, ConsoleHandler {
+public class Application extends JFrame implements KeyListener, ConsoleHandler{
 
-    private Panel panel;
+    private final Panel panel;
     public Application(Scene scene){
 
         panel = new Panel(this, scene);
@@ -24,7 +27,6 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
         panel.setPreferredSize(new Dimension(200* pixelScaling, 200*pixelScaling));
 
         addKeyListener(this);
-        addMouseListener(this);
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e) {
@@ -53,22 +55,11 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
     public void keyReleased(KeyEvent keyEvent) {
         panel.controller.keyChanges(keyEvent, false);
     }
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-        panel.controller.mouseChanges(mouseEvent, true);
-    }
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-        panel.controller.mouseChanges(mouseEvent, false);
-    }
+
 
     // UNUSED
+
     @Override
     public void keyTyped(KeyEvent e) {}
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {}
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-    @Override
-    public void mouseExited(MouseEvent e) {}
+
 }
