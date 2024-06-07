@@ -15,8 +15,8 @@ public class Main{
     public static void main(String[] args) {
         thisMainWasRun = true;
         PhysicalScene scene = new PhysicalScene();
-        scene.setup(NetSettings.from("nano_frame.png"));
-        scene.setInitialDeviation(2, 2, 2, 2, 2);
+        scene.setup(NetSettings.from("frame.png"));
+        //scene.setInitialDeviation(2, 2, 2, 2, 2);
         //appSettings = AppSettings.withRecording(512, 512, "testDir", 6, AppSettings.PolygonHolderType.SMART);
         //Scene scene = new LightTestScene();
         runApplication(scene);
@@ -25,7 +25,7 @@ public class Main{
 
     public static AppSettings initSettings(){
         if (thisMainWasRun){
-            return AppSettings.noRecording(2, 1, PolygonHolder.Type.SMART, false);
+            return AppSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false);
         }
         return me.jupiter.Main.initSettings();
 

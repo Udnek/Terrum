@@ -1,20 +1,13 @@
 package me.jupiter.file_managment;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class ImageWrapper {
     private BufferedImage image;
     public ImageWrapper(){}
     public void readImage(String imageName){
-        try {
-            image = ImageIO.read(FileManager.readFile(FileManager.Directory.IMAGE, imageName));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        image = FileManager.readMap(imageName);
     }
 
     public Color getColor(int x, int y){

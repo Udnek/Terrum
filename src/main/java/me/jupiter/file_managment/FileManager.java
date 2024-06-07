@@ -1,6 +1,9 @@
 package me.jupiter.file_managment;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class FileManager {
     public static String getAssetsDirectory(){
@@ -15,8 +18,28 @@ public class FileManager {
         return file;
     }
 
+    private static BufferedImage readImage(Directory directory, String imageName){
+        BufferedImage image;
+        try {
+            image = ImageIO.read(FileManager.readFile(directory, imageName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return image;
+    }
+
+    public static BufferedImage readMap(String imageName){
+        return readImage(Directory.IMAGE_MAP, imageName);
+    }
+    public static BufferedImage readIcon(){
+        return readImage(Directory.IMAGE_ICON, "icon.png");
+    }
+
+
+
     public enum Directory{
-        IMAGE("image"),
+        IMAGE_MAP("image/map"),
+        IMAGE_ICON("image/icon"),
         VIDEO("video");
 
         public final String path;

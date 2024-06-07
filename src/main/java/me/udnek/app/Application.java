@@ -1,5 +1,6 @@
 package me.udnek.app;
 
+import me.jupiter.file_managment.FileManager;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.Console;
 import me.udnek.app.console.ConsoleHandler;
@@ -11,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 public class Application extends JFrame implements KeyListener, ConsoleHandler{
 
@@ -35,9 +37,13 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler{
             }
         });
 
-        this.pack();
 
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
+
+        BufferedImage image = FileManager.readIcon();
+        setIconImage(image);
+
+        this.pack();
 
         new Console(this).start();
         panel.loop();

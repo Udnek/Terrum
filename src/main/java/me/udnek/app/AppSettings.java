@@ -34,11 +34,11 @@ public class AppSettings {
         return new AppSettings(true, videoWidth, videoHeight, videoName, 1, cores, holderType, doLight);
     }
 
-    public static void setGlobalSettings(AppSettings newSettings) {
+/*    public static void setGlobalSettings(AppSettings newSettings) {
         AppSettings settings = AppSettings.globalSettings;
         settings.pixelScaling = newSettings.pixelScaling;
         settings.cores = newSettings.cores;
         settings.doLight = newSettings.doLight;
-    }
+    }*/
 
 }
