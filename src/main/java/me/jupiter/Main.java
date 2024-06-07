@@ -13,7 +13,7 @@ public class Main {
     }
 
     public static AppSettings initSettings(){
-        return AppSettings.noRecording(2, 12, PolygonHolder.Type.DEFAULT, false);
+        return AppSettings.noRecording(2, 12, PolygonHolder.Type.SMART, false);
 //        return AppSettings.withRecording(500, 500, "default", 12, PolygonHolder.Type.DEFAULT, false);
     }
 }

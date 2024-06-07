@@ -7,4 +7,6 @@ public class NetStaticVertex extends NetVertex {
     public NetStaticVertex(Vector3d position) {
         super(position);
     }
+
+
 }

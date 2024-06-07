@@ -163,7 +163,11 @@ public class CellularNet {
     public void syncVerticesRKMPhaseVectors(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                getVertex(j, i).currentRKMPhaseVector = new Vector3d[]{getVertex(j, i).getPosition(), getVertex(j, i).getVelocity()};
+                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+                    dynamicVertex.setCurrentRKMPhaseVector(new Vector3d[]{dynamicVertex.getPosition(), dynamicVertex.getVelocity()});
+                } else if (getVertex(j, i) instanceof NetStaticVertex staticVertex) {
+                    staticVertex.setCurrentRKMPhaseVector(new Vector3d[]{staticVertex.getPosition(), new Vector3d(0,0,0)});
+                }
             }
         }
     }
