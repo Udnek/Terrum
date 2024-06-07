@@ -3,9 +3,11 @@ package me.udnek.app;
 import me.jupiter.file_managment.FileManager;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.ConsoleHandler;
+import me.udnek.app.controller.Controller;
+import me.udnek.app.controller.ControllerHandler;
+import me.udnek.app.controller.InputKey;
 import me.udnek.scene.Camera;
 import me.udnek.scene.Scene;
-import me.udnek.util.UserAction;
 import org.decimal4j.util.DoubleRounder;
 import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.realityforge.vecmath.Vector3d;
@@ -16,18 +18,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Panel extends JPanel implements ConsoleHandler {
+public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
 
     private Scene scene;
     private final Frame frame;
     private AWTSequenceEncoder videoEncoder;
     private final DebugMenu debugMenu;
+    public final Controller controller;
 
-    private boolean mousePressed = false;
-    private UserAction mouseEvent = UserAction.UNKNOWN;
-    private Point previousMouseLocation;
-
-    private boolean renderInProgress = false;
+    private boolean nextFrameInProgress = false;
 
     // STATS
     private int framesAmount = 0;
@@ -48,9 +47,7 @@ public class Panel extends JPanel implements ConsoleHandler {
         }
         scene.init();
         this.debugMenu = new DebugMenu(15);
-
-        //setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
-
+        this.controller = new Controller(this);
     }
 
     @Override
@@ -82,7 +79,7 @@ public class Panel extends JPanel implements ConsoleHandler {
             showDebug();
         }
 
-        renderInProgress = false;
+        nextFrameInProgress = false;
     }
 
     private void showDebug(){
@@ -106,11 +103,11 @@ public class Panel extends JPanel implements ConsoleHandler {
     }
 
     public void nextFrame(){
+        nextFrameInProgress = true;
+
+        pressedKeysTick();
         scene.tick();
 
-        if (mousePressed) mousePressedTick();
-
-        renderInProgress = true;
         repaint();
     }
 
@@ -127,12 +124,7 @@ public class Panel extends JPanel implements ConsoleHandler {
         System.out.println("Avg FPS: "+ fpsSum/framesAmount);
 
     }
-    public void handleKeyInput(UserAction userAction) {
-        if (userAction == UserAction.DEBUG_MENU){
-            debugMenu.toggle();
-        }
-        scene.handleUserInput(userAction);
-    }
+
     @Override
     public void handleCommand(Command command, Object[] args) {
         scene.handleCommand(command, args);
@@ -144,38 +136,24 @@ public class Panel extends JPanel implements ConsoleHandler {
         }
     }
 
-    public void setPreferredSize(int width, int height) {
-        setPreferredSize(new Dimension(width, height));
-        frame.pack();
+
+    @Override
+    public void keyEvent(InputKey inputKey, boolean pressed) {
+        if (inputKey == InputKey.DEBUG_MENU && pressed) debugMenu.toggle();
+        scene.keyEvent(inputKey, pressed);
     }
 
-    public void setMousePressed(boolean pressed, UserAction userAction){
-        if (mousePressed == pressed) return;
-        // UN PRESS
-        if (mousePressed){
-            if (mouseEvent == userAction) {
-                this.mousePressed = pressed;
-                scene.handleMouseEvent(pressed, userAction);
-            }
+    public void pressedKeysTick(){
+
+        for (InputKey pressedKey : controller.getPressedKeys()) {
+            scene.keyContinuouslyPressed(pressedKey);
         }
-        // PRESS
-        else {
-            mousePressed = pressed;
-            mouseEvent = userAction;
-            previousMouseLocation = MouseInfo.getPointerInfo().getLocation();
-            scene.handleMouseEvent(pressed, userAction);
+        if (controller.mouseIsPressed()){
+            controller.updateMouse();
+            Point mouseDifference = controller.getMouseDifference();
+            scene.handleMousePressedDifference(mouseDifference.x, mouseDifference.y, controller.getMouseKey());
         }
 
-
-
-    }
-
-    public void mousePressedTick(){
-        Point newMouseLocation = MouseInfo.getPointerInfo().getLocation();
-        int xDifference = newMouseLocation.x - previousMouseLocation.x;
-        int yDifference = newMouseLocation.y - previousMouseLocation.y;
-        previousMouseLocation = newMouseLocation;
-        scene.handleMousePressedDifference(xDifference, yDifference, mouseEvent);
     }
 
     public void loop(){
@@ -186,7 +164,7 @@ public class Panel extends JPanel implements ConsoleHandler {
             long startTime = System.nanoTime();
             this.nextFrame();
 
-            while (renderInProgress) {
+            while (nextFrameInProgress) {
                 try {
                     Thread.sleep(1, 0);
                 } catch (InterruptedException e) {
@@ -214,4 +192,8 @@ public class Panel extends JPanel implements ConsoleHandler {
         }
     }
 
+    public void setPreferredSize(int width, int height) {
+        setPreferredSize(new Dimension(width, height));
+        frame.pack();
+    }
 }

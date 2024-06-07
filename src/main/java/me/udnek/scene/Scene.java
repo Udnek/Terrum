@@ -4,11 +4,12 @@ package me.udnek.scene;
 import me.udnek.app.DebugMenu;
 import me.udnek.app.console.Command;
 import me.udnek.app.console.ConsoleHandler;
+import me.udnek.app.controller.ControllerHandler;
+import me.udnek.app.controller.InputKey;
 import me.udnek.object.SceneObject;
 import me.udnek.object.SpringObject;
 import me.udnek.object.light.LightSource;
 import me.udnek.util.Triangle;
-import me.udnek.util.UserAction;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Scene implements ConsoleHandler {
+public abstract class Scene implements ConsoleHandler, ControllerHandler {
 
     protected Camera camera;
     protected List<? extends SceneObject> sceneObjects = new ArrayList<>();
@@ -60,11 +61,20 @@ public abstract class Scene implements ConsoleHandler {
     }
 
 
+    @Override
+    public void keyEvent(InputKey inputKey, boolean pressed) {
+        switch (inputKey) {
+            case MOUSE_OBJECT_DRAG -> {
+                if (pressed) draggingObject = findObjectCursorLookingAt();
+                else draggingObject = null;
+            }
+        }
+    }
 
-    public void handleUserInput(UserAction userAction){;
-        final float moveSpeed = 0.07f;
-        final float rotateSpeed = 2f;
-        switch (userAction){
+    public void keyContinuouslyPressed(InputKey inputKey){
+        final float moveSpeed = 0.04f;
+        final float rotateSpeed = 1f;
+        switch (inputKey){
             case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
             case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
             case MOVE_LEFT -> camera.moveAlongDirectionParallelXZ(new Vector3d(-moveSpeed, 0, 0));
@@ -78,25 +88,19 @@ public abstract class Scene implements ConsoleHandler {
             case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
         }
     }
-    public void handleMousePressedDifference(int xDifference, int yDifference, UserAction userAction){
-        if (userAction == UserAction.MOUSE_CAMERA_DRAG){
-            camera.rotateYaw(xDifference/10f);
-            camera.rotatePitch(yDifference/-10f);
+    public void handleMousePressedDifference(int xDifference, int yDifference, InputKey key){
+        if (key == InputKey.MOUSE_CAMERA_DRAG){
+            camera.rotateYaw(xDifference/-10f);
+            camera.rotatePitch(yDifference/10f);
         }
         else {
             if (draggingObject == null) return;
-            Vector3d moveDirection = new Vector3d(xDifference / 50f, -yDifference / 50f, 0);
+            float sensitivity = 0.01f;
+            Vector3d moveDirection = new Vector3d(xDifference*sensitivity, -yDifference*sensitivity, 0);
             camera.rotateVector(moveDirection);
             draggingObject.move(moveDirection);
         }
 
-    }
-
-    public void handleMouseEvent(boolean pressed, UserAction mouseAction){
-        if (mouseAction == UserAction.MOUSE_OBJECT_DRAG){
-            if (pressed) draggingObject = findObjectCursorLookingAt();
-            else draggingObject = null;
-        }
     }
 
     public SceneObject findObjectCursorLookingAt(){

@@ -4,7 +4,6 @@ import me.udnek.app.console.Command;
 import me.udnek.app.console.Console;
 import me.udnek.app.console.ConsoleHandler;
 import me.udnek.scene.Scene;
-import me.udnek.util.UserAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,8 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setFocusable(true);
-        panel.setPreferredSize(new Dimension(400, 400));
+        int pixelScaling = AppSettings.globalSettings.pixelScaling;
+        panel.setPreferredSize(new Dimension(200* pixelScaling, 200*pixelScaling));
 
         addKeyListener(this);
         addMouseListener(this);
@@ -47,26 +47,24 @@ public class Application extends JFrame implements KeyListener, MouseListener, C
     }
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        panel.handleKeyInput(UserAction.getByCode(keyEvent.getKeyCode()));
+        panel.controller.keyChanges(keyEvent, true);
     }
     @Override
-    public void mousePressed(MouseEvent event) {
-        UserAction userAction = UserAction.getByCode(event.getButton());
-        if (userAction == UserAction.UNKNOWN) return;
-        panel.setMousePressed(true, userAction);
+    public void keyReleased(KeyEvent keyEvent) {
+        panel.controller.keyChanges(keyEvent, false);
     }
     @Override
-    public void mouseReleased(MouseEvent event) {
-        UserAction userAction = UserAction.getByCode(event.getButton());
-        if (userAction == UserAction.UNKNOWN) return;
-        panel.setMousePressed(false, userAction);
+    public void mousePressed(MouseEvent mouseEvent) {
+        panel.controller.mouseChanges(mouseEvent, true);
+    }
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+        panel.controller.mouseChanges(mouseEvent, false);
     }
 
     // UNUSED
     @Override
     public void keyTyped(KeyEvent e) {}
-    @Override
-    public void keyReleased(KeyEvent e) {}
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {}
     @Override
