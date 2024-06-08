@@ -12,11 +12,12 @@ public class AppSettings {
     public int pixelScaling;
     public int cores;
     public boolean doLight;
+    public boolean debugColorizePlanes;
     public final PolygonHolder.Type polygonHolderType;
 
     public static final AppSettings globalSettings = Main.initSettings();
 
-    private AppSettings(boolean recordVideo, int videoWidth, int videoHeight, String videoName, int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight){
+    private AppSettings(boolean recordVideo, int videoWidth, int videoHeight, String videoName, int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight, boolean debugColorizePlanes){
         this.recordVideo = recordVideo;
         this.videoName = videoName;
         this.videoHeight = videoHeight;
@@ -25,20 +26,14 @@ public class AppSettings {
         this.cores = cores;
         this.polygonHolderType = holderType;
         this.doLight = doLight;
+        this.debugColorizePlanes = debugColorizePlanes;
     }
 
-    public static AppSettings noRecording(int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight){
-        return new AppSettings(false, 0, 0, "", pixelScaling, cores, holderType, doLight);
+    public static AppSettings noRecording(int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight, boolean debugColorizePlanes){
+        return new AppSettings(false, 0, 0, "", pixelScaling, cores, holderType, doLight, debugColorizePlanes);
     }
-    public static AppSettings withRecording(int videoWidth, int videoHeight, String videoName, int cores, PolygonHolder.Type holderType, boolean doLight){
-        return new AppSettings(true, videoWidth, videoHeight, videoName, 1, cores, holderType, doLight);
+    public static AppSettings withRecording(int videoWidth, int videoHeight, String videoName, int cores, PolygonHolder.Type holderType, boolean doLight, boolean debugColorizePlanes){
+        return new AppSettings(true, videoWidth, videoHeight, videoName, 1, cores, holderType, doLight, debugColorizePlanes);
     }
-
-/*    public static void setGlobalSettings(AppSettings newSettings) {
-        AppSettings settings = AppSettings.globalSettings;
-        settings.pixelScaling = newSettings.pixelScaling;
-        settings.cores = newSettings.cores;
-        settings.doLight = newSettings.doLight;
-    }*/
 
 }

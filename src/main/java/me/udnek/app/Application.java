@@ -25,8 +25,7 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setFocusable(true);
-        int pixelScaling = AppSettings.globalSettings.pixelScaling;
-        panel.setPreferredSize(new Dimension(200* pixelScaling, 200*pixelScaling));
+        panel.setPreferredSize(new Dimension(400, 400));
 
         addKeyListener(this);
 

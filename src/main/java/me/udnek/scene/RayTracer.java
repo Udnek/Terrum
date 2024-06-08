@@ -25,10 +25,11 @@ public class RayTracer {
     private int[] frame;
 
     private PolygonHolder polygonHolder;
-
-    private boolean doLight;
     private LightSource lightSource;
     private Vector3d lightPosition;
+
+    private boolean doLight;
+    private boolean debugColorizePlanes;
 
     public RayTracer(Camera camera, List<? extends SceneObject> objectsToRender, LightSource lightSource){
         this.camera = camera;
@@ -84,6 +85,7 @@ public class RayTracer {
         this.cameraYaw = Math.toRadians(camera.getYaw());
         this.cameraPitch = Math.toRadians(camera.getPitch());
         this.fovMultiplier = width/camera.getFov();
+        this.debugColorizePlanes = AppSettings.globalSettings.debugColorizePlanes;
         this.doLight = AppSettings.globalSettings.doLight;
         if (doLight) lightPosition = lightSource.getPosition();
 
@@ -145,7 +147,7 @@ public class RayTracer {
 
     private int colorizeRayTrace(Vector3d hitPosition, Triangle plane){
 
-        if (plane instanceof ColoredTriangle coloredPlane){
+        if (!debugColorizePlanes && plane instanceof ColoredTriangle coloredPlane){
             return coloredPlane.getColor();
         }
 

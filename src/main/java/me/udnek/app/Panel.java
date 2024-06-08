@@ -160,6 +160,7 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
             case SET_CORES -> settings.cores = (int) args[0];
             case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
             case SET_WINDOW_SIZE -> setPreferredSize((int) args[0], (int) args[1]);
+            case SET_DEBUG_COLORIZE_PLANES -> settings.debugColorizePlanes = (boolean) args[0];
         }
     }
 
