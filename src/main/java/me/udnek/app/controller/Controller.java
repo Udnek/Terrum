@@ -4,11 +4,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Controller {
 
-    private List<InputKey> pressedKeys = new ArrayList<>();
+    private List<InputKey> pressedKeys = Collections.synchronizedList(new ArrayList<>());
     private Point mousePreviousPosition;
     private InputKey currentMouseKey;
     private Point mouseRelativePosition;
