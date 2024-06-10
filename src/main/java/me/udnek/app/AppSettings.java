@@ -36,4 +36,12 @@ public class AppSettings {
         return new AppSettings(true, videoWidth, videoHeight, videoName, 1, cores, holderType, doLight, debugColorizePlanes);
     }
 
+    public static AppSettings defaultNoRecording(int pixelScaling, int cores, PolygonHolder.Type holderType){
+        return noRecording(pixelScaling, cores, holderType, false, false);
+    }
+
+    public static AppSettings defaultWithRecording(int videoWidth, int videoHeight, String videoName, int cores, PolygonHolder.Type holderType){
+        return withRecording(videoWidth, videoHeight, videoName, cores, holderType, false, false);
+    }
+
 }
