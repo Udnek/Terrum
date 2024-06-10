@@ -48,6 +48,7 @@ public class NetDynamicVertex extends NetVertex{
 
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         Vector3d resultAcceleration = appliedForce.dup().sub(decayValue);
+        resultAcceleration.y += -9.80665;
         resultAcceleration.div(mass);
         return resultAcceleration;
     }

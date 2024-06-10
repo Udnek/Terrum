@@ -23,9 +23,9 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler{
         this.add(panel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        panel.setPreferredSize(new Dimension(400, 400));
         this.setVisible(true);
         this.setFocusable(true);
-        panel.setPreferredSize(new Dimension(400, 400));
 
         addKeyListener(this);
 
@@ -41,6 +41,7 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler{
 
         BufferedImage image = FileManager.readIcon();
         setIconImage(image);
+        setTitle("WRLS");
 
         this.pack();
 
