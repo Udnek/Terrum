@@ -4,6 +4,7 @@ import me.jupiter.net.CellularNet;
 import me.jupiter.net.NetSettings;
 import me.udnek.app.DebugMenu;
 import me.udnek.app.console.Command;
+import me.udnek.scene.Camera;
 import me.udnek.scene.instances.NetScene;
 import org.realityforge.vecmath.Vector3d;
 
@@ -42,5 +43,10 @@ public class PhysicalScene extends NetScene {
         net.getVertex(x, z).setPosition(new Vector3d(xNew, yNew, zNew));
     }
 
-
+    @Override
+    public Camera initCamera() {
+        Camera camera = new Camera(new Vector3d(5, 4, -1.5));
+        camera.rotatePitch(40);
+        return camera;
+    }
 }

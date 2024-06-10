@@ -20,11 +20,15 @@ public class NetSettings {
     }
 
     public static NetSettings getDefault(){
-        return NetSettings.from("small_frame.png");
+        return NetSettings.defaultPreset("small_frame.png");
     }
 
-    public static NetSettings from(String imageFileName){
+    public static NetSettings defaultPreset(String imageFileName){
         return new NetSettings(1000, 0.8, 2,
+                0.001, 10, imageFileName, 4);
+    }
+    public static NetSettings highStiffnessPreset(String imageFileName){
+        return new NetSettings(5000, 2, 5,
                 0.001, 10, imageFileName, 4);
     }
 }

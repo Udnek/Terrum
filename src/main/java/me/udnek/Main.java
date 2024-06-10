@@ -15,7 +15,7 @@ public class Main{
     public static void main(String[] args) {
         thisMainWasRun = true;
         PhysicalScene scene = new PhysicalScene();
-        scene.setup(NetSettings.from("frame.png"));
+        scene.setup(NetSettings.defaultPreset("frame.png"));
         //scene.setInitialDeviation(2, 2, 2, 2, 2);
         //appSettings = AppSettings.withRecording(512, 512, "testDir", 6, AppSettings.PolygonHolderType.SMART);
         //Scene scene = new LightTestScene();
