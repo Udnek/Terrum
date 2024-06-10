@@ -88,6 +88,7 @@ public class Panel extends JPanel implements ConsoleHandler, ControllerHandler {
             renderHeight = getHeight();
         }
 
+
         BufferedImage frame = scene.renderFrame(renderWidth, renderHeight);
 
 

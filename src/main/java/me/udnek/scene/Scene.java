@@ -57,8 +57,8 @@ public abstract class Scene implements ConsoleHandler, ControllerHandler {
     }
 
     public BufferedImage renderFrame(final int width, final int height){
-        int renderWidth = width/ AppSettings.globalSettings.pixelScaling;
-        int renderHeight = height/ AppSettings.globalSettings.pixelScaling;
+        int renderWidth = Math.max(width / AppSettings.globalSettings.pixelScaling, 1);
+        int renderHeight = Math.max(height / AppSettings.globalSettings.pixelScaling, 1);
 
         BufferedImage bufferedImage = new BufferedImage(renderWidth, renderHeight, BufferedImage.TYPE_INT_RGB);
 
