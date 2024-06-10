@@ -16,14 +16,14 @@ public class Main{
         thisMainWasRun = true;
 
         PhysicalScene scene = new PhysicalScene();
-        scene.setup(NetSettings.highStiffnessPreset("medium_frame.png"));
-        scene.setInitialDeviation(5,5, 5, 2, 5);
+        scene.setup(NetSettings.highStiffnessPreset("small_frame.png"));
+        //scene.setInitialDeviation(1,1, 5, 2, 5);
         me.udnek.Main.runApplication(scene);
     }
 
     public static AppSettings initSettings(){
         if (thisMainWasRun){
-            return AppSettings.noRecording(2, 12, PolygonHolder.Type.SMART, false, false);
+            return AppSettings.noRecording(2, 12, PolygonHolder.Type.DEFAULT, false, false);
         }
         return me.jupiter.Main.initSettings();
 
