@@ -3,6 +3,7 @@ package me.udnek.scene.instances;
 import me.jupiter.net.CellularNet;
 import me.jupiter.object.NetStaticVertex;
 import me.jupiter.object.NetVertex;
+import me.udnek.object.DoubleSpringObject;
 import me.udnek.object.SceneObject;
 import me.udnek.object.SpringObject;
 import me.udnek.object.VertexObject;
@@ -60,7 +61,7 @@ public abstract class NetScene extends Scene {
 
                     VertexObject neighbourObject = new VertexObject(new Vector3d(neighbour.getPosition()), neighbour);
                     vertices.add(neighbourObject);
-                    springs.add(new SpringObject(new Vector3d(), vertexObject, neighbourObject));
+                    springs.add(new DoubleSpringObject(new Vector3d(), vertexObject, neighbourObject));
 
                 }
             }
