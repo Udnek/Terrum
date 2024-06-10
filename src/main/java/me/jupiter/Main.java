@@ -7,8 +7,8 @@ import me.udnek.scene.polygonholder.PolygonHolder;
 public class Main {
     public static void main(String[] args) {
         PhysicalScene scene = new PhysicalScene();
-            scene.setup(NetSettings.highStiffnessPreset("medium_frame.png"));
-        scene.setInitialDeviation(5,5, 5, 2, 5);
+            scene.setup(NetSettings.highStiffnessPreset("small_frame.png"));
+        scene.setInitialDeviation(2,2, 2, 2, 2);
         me.udnek.Main.runApplication(scene);
     }
 
