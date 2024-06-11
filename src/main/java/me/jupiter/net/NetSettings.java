@@ -28,7 +28,7 @@ public class NetSettings {
                 0.001, 10, imageFileName, 4);
     }
     public static NetSettings highStiffnessPreset(String imageFileName){
-        return new NetSettings(1000, 0.1, 5,
+        return new NetSettings(5000, 1, 5,
                 0.001, 10, imageFileName, 4);
     }
 }

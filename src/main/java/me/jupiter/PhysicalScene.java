@@ -40,6 +40,7 @@ public class PhysicalScene extends NetScene {
     }
 
     public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {
+        if (net.getVertex(x, z) == null) return;
         net.getVertex(x, z).setPosition(new Vector3d(xNew, yNew, zNew));
     }
 

@@ -23,7 +23,7 @@ public class Application extends JFrame implements KeyListener, ConsoleHandler{
         this.add(panel);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel.setPreferredSize(new Dimension(400, 400));
+        panel.setPreferredSize(new Dimension(800, 800));
         this.setVisible(true);
         this.setFocusable(true);
 
