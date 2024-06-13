@@ -1,4 +1,4 @@
-package me.jupiter.object;
+package me.jupiter.object.vertex;
 
 import org.realityforge.vecmath.Vector3d;
 

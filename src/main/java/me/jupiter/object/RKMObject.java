@@ -91,6 +91,20 @@ public class RKMObject extends SimulationObject{
         return new Vector3d[]{positionDifferentialComponent, velocityDifferentialComponent};
     }
 
+    public void RKMethodCalculatePositionDifferential(){
+        Vector3d[] phaseDifferentialVector = RKMethodCalculatePhaseDifferentialVector();
+        Vector3d velocity = phaseDifferentialVector[0];
+        Vector3d acceleration = phaseDifferentialVector[1];
+        velocityDifferential = acceleration.dup();
+        positionDifferential = velocity.dup();
+    }
+
+    public void updatePosition() {
+        setVelocity(getVelocity().add(velocityDifferential));
+        setPosition(getPosition().add(positionDifferential));
+        phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+    }
+
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         return null; //Should be overridden by extending classes
     }
