@@ -21,6 +21,9 @@ public class VectorUtils {
     public static double getAreaOfParallelogram(Vector3d edge0, Vector3d edge1){
         return getCrossProductLength(edge0, edge1);
     }
+    public static Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
+        return positionEnd.sub(positionStart).normalize();
+    }
 
     public static double getMax(Vector3d vector){
         double x = vector.x;

@@ -1,8 +1,9 @@
 package me.jupiter.object;
 
+import me.jupiter.object.RigidBody;
 import org.realityforge.vecmath.Vector3d;
 
-public class Cube extends RigidBody{
+public class Cube extends RigidBody {
     private double width;
     private double height;
     private double length;
