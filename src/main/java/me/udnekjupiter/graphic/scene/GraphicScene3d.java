@@ -1,0 +1,146 @@
+package me.udnekjupiter.graphic.scene;
+
+import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.controller.Controller;
+import me.udnekjupiter.app.controller.ControllerListener;
+import me.udnekjupiter.app.controller.InputKey;
+import me.udnekjupiter.graphic.Camera;
+import me.udnekjupiter.graphic.object.GraphicObject;
+import me.udnekjupiter.graphic.object.SpringObject;
+import me.udnekjupiter.graphic.object.light.LightSource;
+import me.udnekjupiter.util.Triangle;
+import me.udnekjupiter.util.VectorUtils;
+import org.realityforge.vecmath.Vector3d;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class GraphicScene3d implements GraphicScene, ControllerListener {
+
+    protected Camera camera;
+    protected List<GraphicObject> objects = new ArrayList<>();
+    protected LightSource lightSource;
+
+    protected int width;
+    protected int height;
+
+    protected GraphicObject draggingObject = null;
+
+    protected Controller controller;
+
+    @Override
+    public void initialize(){
+        camera = initializeCamera();
+        lightSource = initializeLightSource();
+        objects = initializeSceneObjects();
+        controller = Controller.getInstance();
+        controller.addListener(this);
+
+    }
+
+    protected abstract Camera initializeCamera();
+    protected abstract List<GraphicObject> initializeSceneObjects();
+    protected abstract LightSource initializeLightSource();
+
+    public Camera getCamera() { return camera;}
+    public LightSource getLightSource() {return lightSource;}
+    public List<GraphicObject> getObjects() {
+        return objects;
+    }
+
+
+    public void beforeFrameUpdate(int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        Application.debugMenu.addTextToLeft("draggingObject: " + draggingObject);
+
+        for (InputKey pressedKey : controller.getPressedKeys()) {
+            keyContinuouslyPressed(pressedKey);
+        }
+        if (controller.mouseIsPressed()){
+            Point mouseDifference = controller.getMouseDifference();
+            controller.updateMouse();
+            handleMousePressedDifference(mouseDifference, controller.getMouseKey());
+        }
+    }
+
+    @Override
+    public void keyEvent(InputKey inputKey, boolean pressed) {
+        if (inputKey != InputKey.MOUSE_OBJECT_DRAG) return;
+        if (pressed) draggingObject = findObjectCursorLookingAt(controller.getMouseRelativePosition());
+        else draggingObject = null;
+    }
+
+    public void keyContinuouslyPressed(InputKey inputKey){
+        final float deltaTime = (float) Application.getFrameDeltaTime();
+        final float moveSpeed = 5f * deltaTime;
+        final float rotateSpeed = 30f * deltaTime;
+        switch (inputKey){
+            case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
+            case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_LEFT -> camera.moveAlongDirectionParallelXZ(new Vector3d(-moveSpeed, 0, 0));
+            case MOVE_RIGHT -> camera.moveAlongDirectionParallelXZ(new Vector3d(moveSpeed, 0, 0));
+            case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
+            case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed*2, 0));
+
+            case CAMERA_UP -> camera.rotatePitch(-rotateSpeed);
+            case CAMERA_DOWN -> camera.rotatePitch(rotateSpeed);
+            case CAMERA_RIGHT -> camera.rotateYaw(-rotateSpeed);
+            case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
+        }
+    }
+    public void handleMousePressedDifference(Point mouseDifference, InputKey key){
+        if (key == InputKey.MOUSE_CAMERA_DRAG){
+            float sensitivity = (float) (7f * Application.getFrameDeltaTime());
+            camera.rotateYaw(mouseDifference.x*-sensitivity);
+            camera.rotatePitch(mouseDifference.y*sensitivity);
+        }
+        else if (key == InputKey.MOUSE_OBJECT_DRAG){
+            if (draggingObject == null) return;
+            float sensitivity = (float) (0.15f * Application.getFrameDeltaTime());
+            Vector3d moveDirection = new Vector3d(mouseDifference.x*sensitivity, -mouseDifference.y*sensitivity, 0);
+            camera.rotateVector(moveDirection);
+            System.out.println("MOVED");
+            draggingObject.move(moveDirection);
+        }
+
+    }
+
+    public GraphicObject findObjectCursorLookingAt(Point mousePosition){
+
+        Vector3d cameraPosition = camera.getPosition();
+
+
+        Vector3d direction = new Vector3d(
+                (mousePosition.x - width/2f),
+                ((height-mousePosition.y-1) - height/2f),
+                width/camera.getFov()
+        );
+
+
+        camera.rotateVector(direction);
+
+        GraphicObject nearestObject = null;
+        double nearestDistance = Double.POSITIVE_INFINITY;
+
+        for (GraphicObject object : objects) {
+            // TODO: 7/2/2024 SOMETHING ABOUT SPRINGS? MAYBE PROPERTY FOR ANY GRAOHICOBJECTS
+            if (object instanceof SpringObject) continue;
+            Vector3d objectPosition = object.getPosition();
+            for (Triangle plane: object.getRenderTriangles()) {
+                plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
+
+                Vector3d intersection = VectorUtils.triangleRayIntersection(direction, plane);
+                if (intersection != null){
+                    if (intersection.lengthSquared() < nearestDistance){
+                        nearestObject = object;
+                        nearestDistance = intersection.lengthSquared();
+                    }
+                }
+            }
+        }
+        return nearestObject;
+    }
+}
