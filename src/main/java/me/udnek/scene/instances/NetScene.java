@@ -1,8 +1,8 @@
 package me.udnek.scene.instances;
 
-import me.jupiter.net.CellularNet;
-import me.jupiter.object.NetStaticVertex;
-import me.jupiter.object.NetVertex;
+import me.jupiter.object.net.CellularNet;
+import me.jupiter.object.vertex.NetStaticVertex;
+import me.jupiter.object.vertex.NetVertex;
 import me.udnek.object.DoubleSpringObject;
 import me.udnek.object.SceneObject;
 import me.udnek.object.SpringObject;

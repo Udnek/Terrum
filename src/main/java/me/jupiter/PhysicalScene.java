@@ -1,7 +1,7 @@
 package me.jupiter;
 
-import me.jupiter.net.CellularNet;
-import me.jupiter.net.NetSettings;
+import me.jupiter.object.net.CellularNet;
+import me.jupiter.object.net.NetSettings;
 import me.udnek.app.DebugMenu;
 import me.udnek.app.console.Command;
 import me.udnek.scene.Camera;
@@ -10,6 +10,8 @@ import org.realityforge.vecmath.Vector3d;
 
 public class PhysicalScene extends NetScene {
     private NetSettings settings;
+    public TemporaryObjectHandler objectHandler;
+
     @Override
     public void addExtraDebug(DebugMenu debugMenu) {
         super.addExtraDebug(debugMenu);
@@ -28,6 +30,7 @@ public class PhysicalScene extends NetScene {
     @Override
     public void tick() {
         net.updateNet();
+        objectHandler.updateObjects();
         synchroniseObjects();
     }
 
@@ -37,6 +40,10 @@ public class PhysicalScene extends NetScene {
         net.initiateNet();
         net.initiateNeighbours();
         net.setupVerticesVariables(settings);
+
+        objectHandler = new TemporaryObjectHandler();
+        objectHandler.initializeObjectHandler();
+        objectHandler.addMassEssence(new Vector3d(2, 5, 2));
     }
 
     public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {

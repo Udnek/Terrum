@@ -1,9 +1,9 @@
-package me.jupiter.net;
+package me.jupiter.object.net;
 
-import me.jupiter.object.NetDebugVertex;
-import me.jupiter.object.NetDynamicVertex;
-import me.jupiter.object.NetStaticVertex;
-import me.jupiter.object.NetVertex;
+import me.jupiter.object.vertex.NetDebugVertex;
+import me.jupiter.object.vertex.NetDynamicVertex;
+import me.jupiter.object.vertex.NetStaticVertex;
+import me.jupiter.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;

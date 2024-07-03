@@ -1,6 +1,5 @@
 package me.jupiter.object;
 
-import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class RKMObject extends SimulationObject{
@@ -10,6 +9,8 @@ public class RKMObject extends SimulationObject{
     protected Vector3d positionDifferential;
     protected Vector3d velocityDifferential;
     protected double deltaTime;
+    protected double decayCoefficient;
+    protected double mass;
 
     protected Vector3d[] phaseVector;
     protected Vector3d[] coefficient1;
@@ -19,6 +20,9 @@ public class RKMObject extends SimulationObject{
 
     public RKMObject(Vector3d position) {
         super(position);
+        this.velocity = new Vector3d(0,0,0);
+        this.acceleration = new Vector3d(0,0,0);
+        this.setCurrentRKMPhaseVector(new Vector3d[]{position, new Vector3d(0, 0, 0)});
     }
 
     public Vector3d getVelocity(){
@@ -75,7 +79,7 @@ public class RKMObject extends SimulationObject{
         coefficient4 = RKMethodFunction(getCurrentRKMPhaseVector());
     }
 
-    protected Vector3d[] RKMethodCalculatePhaseDifferentialVector(){
+    protected Vector3d[] RKMCalculatePhaseDifferentialVector(){
         Vector3d positionDifferentialComponent = new Vector3d(coefficient1[0].dup().add(
                 coefficient2[0].dup().mul(2)).add(
                 coefficient3[0].dup().mul(2)).add(
@@ -91,7 +95,25 @@ public class RKMObject extends SimulationObject{
         return new Vector3d[]{positionDifferentialComponent, velocityDifferentialComponent};
     }
 
-    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
+    public void RKMCalculatePositionDifferential(){
+        Vector3d[] phaseDifferentialVector = RKMCalculatePhaseDifferentialVector();
+        Vector3d velocity = phaseDifferentialVector[0];
+        Vector3d acceleration = phaseDifferentialVector[1];
+        velocityDifferential = acceleration.dup();
+        positionDifferential = velocity.dup();
+    }
+
+    public void updatePosition() {
+        setVelocity(getVelocity().add(velocityDifferential));
+        setPosition(getPosition().add(positionDifferential));
+        phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+    }
+
+    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity) {
+        return null; //Should be overridden by extending classes
+    }
+
+    protected Vector3d getAppliedForce(Vector3d position){
         return null; //Should be overridden by extending classes
     }
 }

@@ -1,5 +1,5 @@
 package me.jupiter.object;
 
-public class NetSpring {
+public class FloorObject {
 
 }

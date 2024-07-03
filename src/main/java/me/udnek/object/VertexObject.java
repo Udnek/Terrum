@@ -1,7 +1,7 @@
 package me.udnek.object;
 
-import me.jupiter.net.VertexColor;
-import me.jupiter.object.NetVertex;
+import me.jupiter.object.net.VertexColor;
+import me.jupiter.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
 public class VertexObject extends PlaneObject {

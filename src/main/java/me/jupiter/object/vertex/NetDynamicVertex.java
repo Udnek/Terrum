@@ -1,15 +1,13 @@
-package me.jupiter.object;
+package me.jupiter.object.vertex;
 
-import me.jupiter.net.NetSettings;
+import me.jupiter.object.net.NetSettings;
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 @SuppressWarnings("FieldMayBeFinal")
-public class NetDynamicVertex extends NetVertex{
+public class NetDynamicVertex extends NetVertex {
     protected double springStiffness;
     protected double springRelaxedLength;
-    protected double mass;
-    protected double decayCoefficient;
 
     public NetDynamicVertex(Vector3d position) {
         super(position);
@@ -36,7 +34,7 @@ public class NetDynamicVertex extends NetVertex{
     }
 
     @Override
-    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
+    protected Vector3d getAppliedForce(Vector3d position){
         Vector3d appliedForce = new Vector3d(0, 0, 0);
         for (NetVertex neighbor : neighbors) {
             Vector3d normalizedDirection = getNormalizedDirection(position, neighbor.getCurrentRKMPosition());
@@ -46,13 +44,19 @@ public class NetDynamicVertex extends NetVertex{
             appliedForce.add(normalizedDirection.mul(elasticForce));
         }
 
+        appliedForce.y += (-9.80665)*mass;
+        return appliedForce;
+    }
+
+    @Override
+    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
+        Vector3d appliedForce = getAppliedForce(position);
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         Vector3d resultAcceleration = appliedForce.dup().sub(decayValue);
-        resultAcceleration.y += -9.80665;
         resultAcceleration.div(mass);
         return resultAcceleration;
     }
-
+    
     public Vector3d EMethodCalculateAcceleration() {
         Vector3d appliedForce = new Vector3d(0, 0, 0);
         for (NetVertex neighbor : neighbors) {
@@ -74,14 +78,6 @@ public class NetDynamicVertex extends NetVertex{
         positionDifferential = velocity.dup().mul(deltaTime);
     }
 
-    public void RKMethodCalculatePositionDifferential(){
-        Vector3d[] phaseDifferentialVector = RKMethodCalculatePhaseDifferentialVector();
-        Vector3d velocity = phaseDifferentialVector[0];
-        Vector3d acceleration = phaseDifferentialVector[1];
-        velocityDifferential = acceleration.dup();
-        positionDifferential = velocity.dup();
-    }
-
     public double getKineticEnergy(){
         return (Math.pow(velocity.dup().length(), 2)*mass) / 2;
     }
@@ -99,9 +95,5 @@ public class NetDynamicVertex extends NetVertex{
         return potentialEnergy;
     }
 
-    public void updatePosition() {
-        setVelocity(getVelocity().add(velocityDifferential));
-        setPosition(getPosition().add(positionDifferential));
-        phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
-    }
+
 }

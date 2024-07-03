@@ -1,9 +1,9 @@
-package me.jupiter.object;
+package me.jupiter.object.vertex;
 
 import me.udnek.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
-public class NetDebugVertex extends NetDynamicVertex{
+public class NetDebugVertex extends NetDynamicVertex {
     private int internalCounter;
 
     public NetDebugVertex(Vector3d position)
@@ -56,11 +56,11 @@ public class NetDebugVertex extends NetDynamicVertex{
         return resultAcceleration;
     }
     @Override
-    public void RKMethodCalculatePositionDifferential(){
+    public void RKMCalculatePositionDifferential(){
         internalCounter += 1;
-        if (isCurrentIterationObserved()) {super.RKMethodCalculatePositionDifferential();return;}
+        if (isCurrentIterationObserved()) {super.RKMCalculatePositionDifferential();return;}
 
-        Vector3d[] phaseDifferentialVector = RKMethodCalculatePhaseDifferentialVector();
+        Vector3d[] phaseDifferentialVector = RKMCalculatePhaseDifferentialVector();
         Vector3d velocity = phaseDifferentialVector[0];
         Vector3d acceleration = phaseDifferentialVector[1];
 

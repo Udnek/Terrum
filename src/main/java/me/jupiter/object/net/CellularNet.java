@@ -1,9 +1,9 @@
-package me.jupiter.net;
+package me.jupiter.object.net;
 
 import me.jupiter.file_managment.ImageWrapper;
-import me.jupiter.object.NetDynamicVertex;
-import me.jupiter.object.NetStaticVertex;
-import me.jupiter.object.NetVertex;
+import me.jupiter.object.vertex.NetDynamicVertex;
+import me.jupiter.object.vertex.NetStaticVertex;
+import me.jupiter.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -146,7 +146,7 @@ public class CellularNet {
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    dynamicVertex.RKMethodCalculatePositionDifferential();
+                    dynamicVertex.RKMCalculatePositionDifferential();
                 }
             }
         }
@@ -163,10 +163,8 @@ public class CellularNet {
     public void syncVerticesRKMPhaseVectors(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    dynamicVertex.setCurrentRKMPhaseVector(new Vector3d[]{dynamicVertex.getPosition(), dynamicVertex.getVelocity()});
-                } else if (getVertex(j, i) instanceof NetStaticVertex staticVertex) {
-                    staticVertex.setCurrentRKMPhaseVector(new Vector3d[]{staticVertex.getPosition(), new Vector3d(0,0,0)});
+                if (getVertex(j, i) != null) {
+                    getVertex(j, i).setCurrentRKMPhaseVector(new Vector3d[]{getVertex(j, i).getPosition(), getVertex(j, i).getVelocity()});
                 }
             }
         }

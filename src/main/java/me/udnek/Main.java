@@ -2,7 +2,7 @@ package me.udnek;
 
 
 import me.jupiter.PhysicalScene;
-import me.jupiter.net.NetSettings;
+import me.jupiter.object.net.NetSettings;
 import me.udnek.app.AppSettings;
 import me.udnek.app.Application;
 import me.udnek.scene.Scene;
