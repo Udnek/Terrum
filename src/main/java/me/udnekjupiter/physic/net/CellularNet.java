@@ -2,6 +2,7 @@
 package me.udnekjupiter.physic.net;
 
 import me.udnekjupiter.file.ImageWrapper;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CellularNet {
-    private NetSettings settings;
+    private final EnvironmentSettings settings;
     private int sizeX;
     private int sizeZ;
     public double potentialEnergy;
@@ -20,9 +21,10 @@ public class CellularNet {
     private final String imageName;
     private NetVertex[][] netMap;
 
-    public CellularNet(String imageName)
+    public CellularNet()
     {
-        this.imageName = imageName;
+        this.settings = EnvironmentSettings.ENVIRONMENT_SETTINGS;
+        this.imageName = settings.imageFileName;
     }
 
     public int getSizeX(){return this.sizeX;}
@@ -80,8 +82,7 @@ public class CellularNet {
             }
         }
     }
-    public void setupVerticesVariables(NetSettings settings){
-        this.settings = settings;
+    public void setupVerticesVariables(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (getVertex(j, i) instanceof NetDynamicVertex){
@@ -91,7 +92,7 @@ public class CellularNet {
         }
     }
 
-    // TODO: 7/2/2024 Pizdec
+    // TODO: 7/2/2024 Pi###c (cry about it)
     public void updateVerticesCoefficients() {
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {

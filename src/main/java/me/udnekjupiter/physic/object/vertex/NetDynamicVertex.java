@@ -1,7 +1,7 @@
 
 package me.udnekjupiter.physic.object.vertex;
 
-import me.udnekjupiter.physic.net.NetSettings;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -21,7 +21,7 @@ public class NetDynamicVertex extends NetVertex {
         this.decayCoefficient = 0;
     }
 
-    public void setVariables(NetSettings settings){
+    public void setVariables(EnvironmentSettings settings){
         this.springStiffness = settings.springStiffness;
         this.springRelaxedLength = settings.springRelaxedLength;
         this.mass = settings.vertexMass;
