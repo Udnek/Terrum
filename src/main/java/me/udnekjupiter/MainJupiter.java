@@ -6,7 +6,7 @@ import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
-import me.udnekjupiter.physic.scene.NetPhysicScene;
+import me.udnekjupiter.physic.scene.PhysicsScene;
 
 public class MainJupiter extends Main{
 
@@ -16,7 +16,7 @@ public class MainJupiter extends Main{
 
     @Override
     public void run() {
-        NetPhysicScene physicScene = new NetPhysicScene();
+        PhysicsScene physicScene = new PhysicsScene();
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);

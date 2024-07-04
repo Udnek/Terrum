@@ -3,7 +3,7 @@ package me.udnekjupiter.physic.scene;
 import me.udnekjupiter.physic.net.CellularNet;
 import org.realityforge.vecmath.Vector3d;
 
-public class NetPhysicScene implements PhysicScene {
+public class PhysicsScene implements PhysicScene {
 
     private CellularNet net;
     public void tick() {net.updateNet();}
