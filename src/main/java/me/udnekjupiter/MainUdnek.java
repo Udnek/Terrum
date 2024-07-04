@@ -9,7 +9,8 @@ import me.udnekjupiter.physic.scene.NetPhysicScene;
 
 public class MainUdnek extends Main{
 
-    public static void main(String ...args){
+    @Override
+    public void run() {
         NetPhysicScene physicScene = new NetPhysicScene();
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
@@ -26,6 +27,8 @@ public class MainUdnek extends Main{
         //return ApplicationSettings.withRecording(256, 256, "newTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);
     }
+
+
 
 
 }

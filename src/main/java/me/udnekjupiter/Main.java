@@ -12,13 +12,13 @@ public abstract class Main{
     private static Main main;
     public static void main(String ...args){
         if (MAIN_TO_RUN == MainType.UDNEK){
-            MainUdnek.main(args);
             main = new MainUdnek();
         }
         else {
-            MainJupiter.main(args);
             main = new MainJupiter();
         }
+
+        main.run();
     }
 
     public static Main getMain() {
@@ -26,6 +26,8 @@ public abstract class Main{
     }
 
     public abstract ApplicationSettings initSettings();
+
+    public abstract void run();
 
     public static void runApplication(GraphicEngine graphicEngine, PhysicEngine physicEngine){
         Application application = Application.getInstance();

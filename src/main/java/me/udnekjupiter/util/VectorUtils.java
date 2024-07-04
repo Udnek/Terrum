@@ -48,6 +48,11 @@ public class VectorUtils {
         vector.y = Math.min(vector.y, value);
         vector.z = Math.min(vector.z, value);
     }
+
+    public static Vector3d valueToVector(double value) {
+        return new Vector3d(value, value, value);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // FOR 3D CALCS
     ///////////////////////////////////////////////////////////////////////////
