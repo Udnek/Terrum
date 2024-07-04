@@ -15,7 +15,7 @@ public class ApplicationSettings {
     public boolean debugColorizePlanes;
     public final PolygonHolder.Type polygonHolderType;
 
-    public static final ApplicationSettings GLOBAL = Main.initSettings();
+    public static final ApplicationSettings GLOBAL = Main.getMain().initSettings();
 
     private ApplicationSettings(boolean recordVideo, int videoWidth, int videoHeight, String videoName, int pixelScaling, int cores, PolygonHolder.Type holderType, boolean doLight, boolean debugColorizePlanes){
         this.recordVideo = recordVideo;

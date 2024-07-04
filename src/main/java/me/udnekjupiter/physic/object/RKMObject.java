@@ -2,7 +2,7 @@ package me.udnekjupiter.physic.object;
 
 import org.realityforge.vecmath.Vector3d;
 
-public class RKMObject extends PhysicalObject {
+public class RKMObject extends PhysicObject {
     protected Vector3d[] currentRKMPhaseVector;
     protected Vector3d velocity;
     protected Vector3d acceleration;

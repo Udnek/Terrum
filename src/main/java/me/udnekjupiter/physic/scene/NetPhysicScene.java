@@ -1,7 +1,7 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.net.NetSettings;
+import me.udnekjupiter.physic.net.NetSettings;
 import org.realityforge.vecmath.Vector3d;
 
 public class NetPhysicScene implements PhysicScene {

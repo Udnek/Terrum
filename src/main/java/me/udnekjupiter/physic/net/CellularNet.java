@@ -2,7 +2,6 @@
 package me.udnekjupiter.physic.net;
 
 import me.udnekjupiter.file.ImageWrapper;
-import me.udnekjupiter.physic.object.net.NetSettings;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;

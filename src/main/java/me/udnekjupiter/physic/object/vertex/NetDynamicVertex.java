@@ -1,7 +1,7 @@
 
 package me.udnekjupiter.physic.object.vertex;
 
-import me.udnekjupiter.physic.object.net.NetSettings;
+import me.udnekjupiter.physic.net.NetSettings;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
