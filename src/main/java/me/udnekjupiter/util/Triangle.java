@@ -64,8 +64,7 @@ public class Triangle {
         );
     }
 
-    // TODO: 7/2/2024 MOVE NORMAL TO VECTOR UTILS
-    public Vector3d getNormal(){return new Vector3d().cross(getEdge0(), getEdge1());}
+    public Vector3d getNormal(){return VectorUtils.getNormal(getEdge0(), getEdge1());}
     public double getArea(){
         return VectorUtils.getAreaOfTriangle(getEdge0(), getEdge1());
     }

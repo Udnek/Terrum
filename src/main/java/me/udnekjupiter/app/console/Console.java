@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// TODO: 7/3/2024 ADD LISTENER TO PHYSICS AND WINDOW
 public class Console implements Runnable, Listenable<ConsoleListener> {
     private boolean shouldRun = false;
     private List<ConsoleListener> listeners = new ArrayList<>();

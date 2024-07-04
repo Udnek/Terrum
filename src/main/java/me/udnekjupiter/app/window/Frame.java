@@ -14,11 +14,10 @@ public class Frame extends JFrame implements KeyListener {
         controller = Controller.getInstance();
     }
 
-    // TODO: 7/3/2024 FUCKING BULLSHIT IDK FUCK MY ASS
-    @Override
-    public void paint(Graphics graphics) {
-        System.out.println("CALLED FRAME PAINT");
-    }
+
+    public void paint(Graphics graphics) {}
+    public void repaint() {}
+    public void update(Graphics g) {}
 
     @Override
     public void keyTyped(KeyEvent event) {}

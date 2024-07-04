@@ -102,7 +102,6 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
             float sensitivity = (float) (0.15f * Application.getFrameDeltaTime());
             Vector3d moveDirection = new Vector3d(mouseDifference.x*sensitivity, -mouseDifference.y*sensitivity, 0);
             camera.rotateVector(moveDirection);
-            System.out.println("MOVED");
             draggingObject.move(moveDirection);
         }
 
