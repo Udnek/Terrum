@@ -4,6 +4,7 @@ import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.scene.NetPhysicScene;
 
@@ -22,13 +23,16 @@ public class MainUdnek extends Main{
     }
 
     @Override
-    public ApplicationSettings initSettings() {
+    public ApplicationSettings initializeGraphicsSettings() {
         return ApplicationSettings.defaultNoRecording(2, 6, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(256, 256, "newTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);
     }
 
-
+    @Override
+    public EnvironmentSettings initializePhysicsSettings() {
+        return null;
+    }
 
 
 }

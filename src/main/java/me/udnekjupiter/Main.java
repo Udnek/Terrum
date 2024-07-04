@@ -4,11 +4,12 @@ package me.udnekjupiter;
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 
 public abstract class Main{
 
-    public static final MainType MAIN_TO_RUN = MainType.UDNEK;
+    public static final MainType MAIN_TO_RUN = MainType.JUPITER;
     private static Main main;
     public static void main(String ...args){
         if (MAIN_TO_RUN == MainType.UDNEK){
@@ -25,7 +26,8 @@ public abstract class Main{
         return main;
     }
 
-    public abstract ApplicationSettings initSettings();
+    public abstract ApplicationSettings initializeGraphicsSettings();
+    public abstract EnvironmentSettings initializePhysicsSettings();
 
     public abstract void run();
 
