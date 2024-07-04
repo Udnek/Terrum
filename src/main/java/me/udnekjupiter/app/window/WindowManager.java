@@ -77,8 +77,4 @@ public class WindowManager extends WindowAdapter implements Initializable {
         panel.setPreferredSize(new Dimension(width, height));
         frame.pack();
     }
-
-    public Graphics getGraphics(){
-        return panel.getGraphics();
-    }
 }

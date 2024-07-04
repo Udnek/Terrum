@@ -15,16 +15,12 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener 
         addMouseMotionListener(this);
         controller = Controller.getInstance();
     }
-    public void paint(Graphics g) {
-        System.out.println("PAINT CALLED");
-    }
+    public void paint(Graphics g) {}
     public void paintComponent(Graphics g) {}
-    public void repaint() {
-        System.out.println("REPAINT CALLED");
-        super.repaint();
-    }
+    public void repaint() {}
     public void update(Graphics g) {}
     public void updateUI()  {}
+
 
     @Override
     public void mousePressed(MouseEvent event) {

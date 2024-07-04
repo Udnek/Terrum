@@ -9,29 +9,28 @@ import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine;
-import org.decimal4j.util.DoubleRounder;
+import me.udnekjupiter.util.Utils;
 
 import java.awt.image.BufferedImage;
 
 public class Application implements ConsoleListener, ControllerListener {
 
+    public static final int PHYSIC_TICKS_PER_SECOND = 40;
     private PhysicEngine physicEngine;
     private GraphicEngine graphicEngine;
     private WindowManager windowManager;
     private Console console;
-    private DebugData debugData;
+    private ApplicationData applicationData;
     private ApplicationSettings settings;
     private VideoRecorder videoRecorder;
-    // TODO: 7/3/2024 TEXT SIZE DEPENDS ON PIXEL SCALING
-    public static final DebugMenu debugMenu = new DebugMenu(13);
-    private boolean running = false;
+    public static final DebugMenu debugMenu = new DebugMenu(15);
 
     private static Application instance;
 
     private Application(){}
 
     public static double getFrameDeltaTime(){
-        return getInstance().debugData.renderTime;
+        return getInstance().applicationData.frameRenderTime;
     }
 
     public static Application getInstance() {
@@ -47,7 +46,7 @@ public class Application implements ConsoleListener, ControllerListener {
         this.graphicEngine = graphicEngine;
         this.physicEngine = physicEngine;
         this.console = Console.getInstance();
-        this.debugData = new DebugData();
+        this.applicationData = new ApplicationData();
         this.settings = ApplicationSettings.GLOBAL;
         console.addListener(this);
         Controller.getInstance().addListener(this);
@@ -55,42 +54,48 @@ public class Application implements ConsoleListener, ControllerListener {
         videoRecorder.start(settings);
     }
 
-    private void loop(){
+    private void physicLoop(){
+        while (true){
+            applicationData.physicTickStarted();
+
+            physicEngine.tick();
+
+            applicationData.physicTickPerformed();
+
+            while (System.nanoTime() < applicationData.estimatedNextTickTime){
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ignored) {}
+            }
+
+
+
+        }
+    }
+
+    private void graphicLoop(){
         while (true){
             debugMenu.reset();
             addDebugInformation();
-            physicEngine.tick();
 
-            // TODO: 7/3/2024 DRAW DEBUG MENU ON SCREEN, NOT FRAME
-
-            BufferedImage frame;
+            int width;
+            int height;
             if (settings.recordVideo){
-                frame = graphicEngine.renderFrame(
-                        settings.videoWidth,
-                        settings.videoHeight);
-                debugMenu.draw(frame);
-                windowManager.setFrame(frame);
+                width = settings.videoWidth;
+                height = settings.videoHeight;
             }
             else {
-                frame = graphicEngine.renderFrame(
-                        windowManager.getWidth(),
-                        windowManager.getHeight());
-                debugMenu.draw(frame);
-                windowManager.setFrame(frame);
-               //windowManager.setFrame(frame);
-                //debugMenu.draw(windowManager.getGraphics(), windowManager.getWidth(), windowManager.getHeight());
+                width = windowManager.getWidth();
+                height = windowManager.getHeight();
             }
 
-
+            BufferedImage frame = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            BufferedImage rendered = graphicEngine.renderFrame(width, height);
+            frame.getGraphics().drawImage(rendered, 0, 0, width, height, null);
+            debugMenu.draw(frame);
+            windowManager.setFrame(frame);
             videoRecorder.addFrame(frame);
-            debugData.framePerformed();
-
-/*
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }*/
+            applicationData.framePerformed();
         }
     }
 
@@ -100,27 +105,31 @@ public class Application implements ConsoleListener, ControllerListener {
         graphicEngine.initialize();
         console.start();
 
-        running = true;
-        Thread thread = new Thread(new Runnable() {
-
+        Thread physicThread = new Thread(new Runnable() {
             @Override
-            public void run() {
-                loop();
-            }
+            public void run() {physicLoop();}
         });
-        thread.setName("MainLoop");
-        thread.start();
+        physicThread.setName("PhysicLoop");
+        Thread graphicThread = new Thread(new Runnable() {
+            @Override
+            public void run() {graphicLoop();}
+        });
+        graphicThread.setName("GraphicLoop");
+
+
+        physicThread.start();
+        graphicThread.start();
+
     }
 
     public void stop(){
-        running = false;
         videoRecorder.save();
     }
 
     public void addDebugInformation(){
         if (!debugMenu.isEnabled()) return;
-        debugMenu.addTextToRight("FPS: " + DoubleRounder.round(debugData.averageFpsForLastTimes, 3));
-        debugMenu.addTextToRight("RenderTime: " + DoubleRounder.round(debugData.renderTime, 5));
+        debugMenu.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
+        debugMenu.addTextToRight("RenderTime: " + Utils.roundToPrecision(applicationData.frameRenderTime, 5));
         debugMenu.addTextToRight(
                 "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );
@@ -128,6 +137,22 @@ public class Application implements ConsoleListener, ControllerListener {
                 "Size: " + windowManager.getWidth() + "x" + windowManager.getHeight()
         );
         debugMenu.addTextToRight("PixelScaling: " + settings.pixelScaling);
+
+        debugMenu.addTextToRight("");
+
+        double workingTime = (System.nanoTime() - applicationData.applicationStartTime) / Math.pow(10, 9);
+        double physicTime = applicationData.physicTicks / (double)PHYSIC_TICKS_PER_SECOND;
+
+        debugMenu.addTextToRight(
+                "ApplicationWorkingTime: " +
+                Utils.roundToPrecision(workingTime, 3)
+        );
+
+        debugMenu.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicTime, 3));
+        debugMenu.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicTime, 3));
+        debugMenu.addTextToRight("PhysicTicks: " + applicationData.physicTicks);
+
+
     }
 
     @Override

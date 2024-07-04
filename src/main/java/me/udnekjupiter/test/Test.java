@@ -13,16 +13,6 @@ public class Test {
         Vector3d vector = new Vector3d(0, 0, 1);
 
 
-        //in(vector, left, right, down, up);
     }
 
-
-/*    public static boolean in(Vector3d vector, Vector3d left, Vector3d right, Vector3d down, Vector3d up){
-        System.out.println(Math.toDegrees(VectorUtils.angleY(vector, left)));
-        System.out.println(Math.toDegrees(VectorUtils.angleY(vector, right)));
-        System.out.println(Math.toDegrees(VectorUtils.angleX(vector, down)));
-        System.out.println(Math.toDegrees(VectorUtils.angleX(vector, up)));
-
-        return true;*/
-        //if (VectorUtils.angleY(vector, left),)
 }

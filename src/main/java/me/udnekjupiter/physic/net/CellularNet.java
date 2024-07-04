@@ -4,7 +4,6 @@ package me.udnekjupiter.physic.net;
 import me.udnekjupiter.file.ImageWrapper;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
-import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
@@ -207,21 +206,6 @@ public class CellularNet {
             updateVerticesCoefficients();
             updateVerticesPositionDifferentials();
             updateVerticesPositions();
-        }
-    }
-
-    public void printMap(){
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetStaticVertex){
-                    System.out.print("[ ]");
-                } else if (getVertex(j, i) instanceof NetDynamicVertex) {
-                    System.out.print(" - ");
-                } else {
-                    System.out.print("   ");
-                }
-            }
-            System.out.println();
         }
     }
 }

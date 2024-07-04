@@ -25,6 +25,10 @@ public class VectorUtils {
         return positionEnd.sub(positionStart).normalize();
     }
 
+    public static Vector3d getNormal(Vector3d edge0, Vector3d edge1){
+        return new Vector3d().cross(edge0, edge1);
+    }
+
     public static double getMax(Vector3d vector){
         double x = vector.x;
         double y = vector.y;
@@ -119,25 +123,6 @@ public class VectorUtils {
         double z = vector.z;
         vector.y = y*Math.cos(angle) + -z*Math.sin(angle);
         vector.z = y*Math.sin(angle) + z*Math.cos(angle);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // ANGLES
-    ///////////////////////////////////////////////////////////////////////////
-    public static double length2d(double a, double b){
-        return Math.sqrt(a*a + b*b);
-    }
-
-
-    // TODO: 7/2/2024 REMOVAL???
-    public static double angleX(Vector3d a, Vector3d b){
-        return Math.acos(a.y * b.y + a.z * b.z / length2d(a.y, a.z) / length2d(b.y, b.z));
-    }
-    public static double angleY(Vector3d a, Vector3d b){
-        return Math.acos(a.x * b.x + a.z * b.z / length2d(a.x, a.z) / length2d(b.x, b.z));
-    }
-    public static double angleZ(Vector3d a, Vector3d b){
-        return Math.acos(a.x * b.x + a.y * b.y / length2d(a.x, a.y) / length2d(b.x, b.y));
     }
 
 }
