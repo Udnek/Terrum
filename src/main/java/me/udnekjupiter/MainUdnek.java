@@ -24,14 +24,15 @@ public class MainUdnek extends Main{
 
     @Override
     public ApplicationSettings initializeGraphicsSettings() {
-        return ApplicationSettings.defaultNoRecording(2, 6, PolygonHolder.Type.SMART);
+        return ApplicationSettings.defaultNoRecording(2, 2, PolygonHolder.Type.SMART);
+        //return ApplicationSettings.defaultWithRecording(256, 256, "evenMoreNewTest", 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(256, 256, "newTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);
     }
 
     @Override
     public EnvironmentSettings initializePhysicsSettings() {
-        return null;
+        return EnvironmentSettings.defaultPreset();
     }
 
 

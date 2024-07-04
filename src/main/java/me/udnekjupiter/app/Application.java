@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 
 public class Application implements ConsoleListener, ControllerListener {
 
+    // TODO: 7/4/2024 SOMETHING ABOUT TPS, IPT, DELTA TIME
     public static final int PHYSIC_TICKS_PER_SECOND = 40;
     private PhysicEngine physicEngine;
     private GraphicEngine graphicEngine;
@@ -23,7 +24,7 @@ public class Application implements ConsoleListener, ControllerListener {
     private ApplicationData applicationData;
     private ApplicationSettings settings;
     private VideoRecorder videoRecorder;
-    public static final DebugMenu debugMenu = new DebugMenu(15);
+    public static final DebugMenu debugMenu = new DebugMenu();
 
     private static Application instance;
 
@@ -75,26 +76,33 @@ public class Application implements ConsoleListener, ControllerListener {
 
     private void graphicLoop(){
         while (true){
+            windowManager.tick();
             debugMenu.reset();
             addDebugInformation();
 
-            int width;
-            int height;
+            int renderWidth;
+            int renderHeight;
+            int textSize = 15;
             if (settings.recordVideo){
-                width = settings.videoWidth;
-                height = settings.videoHeight;
+                renderWidth = settings.videoWidth;
+                renderHeight = settings.videoHeight;
             }
             else {
-                width = windowManager.getWidth();
-                height = windowManager.getHeight();
+                renderWidth = windowManager.getWidth();
+                renderHeight = windowManager.getHeight();
             }
 
-            BufferedImage frame = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-            BufferedImage rendered = graphicEngine.renderFrame(width, height);
-            frame.getGraphics().drawImage(rendered, 0, 0, width, height, null);
-            debugMenu.draw(frame);
+
+            BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
+            videoRecorder.addFrame(rendered);
+
+            int windowWidth = windowManager.getWidth();
+            int windowHeight = windowManager.getHeight();
+            BufferedImage frame = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB);
+            frame.getGraphics().drawImage(rendered, 0, 0, windowWidth, windowHeight, null);
+            debugMenu.draw(frame, textSize);
             windowManager.setFrame(frame);
-            videoRecorder.addFrame(frame);
+
             applicationData.framePerformed();
         }
     }
