@@ -1,6 +1,7 @@
 package me.udnekjupiter.graphic;
 
 import me.udnekjupiter.util.PositionedObject;
+import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -8,7 +9,7 @@ public class Camera extends PositionedObject {
 
     private float yaw;
     private float pitch;
-    private double fov = 2f;
+    private double fov = 1f;
 
     public Camera(Vector3d position, float yaw, float pitch) {
         super(position);
@@ -39,25 +40,24 @@ public class Camera extends PositionedObject {
     }
 
     public float getPitch() {return pitch;}
-    public void setPitch(float angle) {
-        if (angle > 90) {pitch = 90; return;}
-        if (angle < -90) {pitch = -90; return;}
-        pitch = angle;
-    }
+    public void setPitch(float angle) {pitch = Utils.normalizePitch(angle);}
     public void rotatePitch(float angle) {setPitch(pitch + angle);}
 
     public float getYaw() {return yaw;}
-    public void setYaw(float angle) {
-        angle = angle % 360f;
-        if (angle < 0) angle = 360f + angle;
-        yaw = angle;
-    }
+    public void setYaw(float angle) {yaw = Utils.normalizeYaw(angle);}
     public void rotateYaw(float angle) {setYaw(yaw + angle);}
 
     public void rotateVector(Vector3d vector3d){
         VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));
         VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));
+
     }
+    public void rotateBackVector(Vector3d vector3d){
+        VectorUtils.rotateYaw(vector3d, Math.toRadians(Utils.normalizeYaw(-yaw)));
+        VectorUtils.rotatePitch(vector3d, Math.toRadians(Utils.normalizePitch(-pitch)));
+
+    }
+
     public void rotateVectorYaw(Vector3d vector3d){VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));}
     public void rotateVectorPitch(Vector3d vector3d){VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));}
 

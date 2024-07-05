@@ -1,9 +1,9 @@
-package me.udnekjupiter.graphic.object;
+package me.udnekjupiter.graphic.object.traceable;
 
 import me.udnekjupiter.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class AxisCrosshairObject extends GraphicObject {
+public class AxisCrosshairObject extends TraceableObject {
 
     private final Triangle planeX;
     private final Triangle planeY;

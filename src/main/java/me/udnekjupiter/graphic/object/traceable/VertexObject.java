@@ -1,4 +1,4 @@
-package me.udnekjupiter.graphic.object;
+package me.udnekjupiter.graphic.object.traceable;
 
 import me.udnekjupiter.physic.net.VertexColor;
 import me.udnekjupiter.physic.object.vertex.NetVertex;

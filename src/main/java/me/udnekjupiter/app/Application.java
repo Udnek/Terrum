@@ -17,6 +17,7 @@ public class Application implements ConsoleListener, ControllerListener {
 
     // TODO: 7/4/2024 SOMETHING ABOUT TPS, IPT, DELTA TIME
     public static final int PHYSIC_TICKS_PER_SECOND = 40;
+    public static final DebugMenu DEBUG_MENU = new DebugMenu();
     private PhysicEngine physicEngine;
     private GraphicEngine graphicEngine;
     private WindowManager windowManager;
@@ -24,7 +25,6 @@ public class Application implements ConsoleListener, ControllerListener {
     private ApplicationData applicationData;
     private ApplicationSettings settings;
     private VideoRecorder videoRecorder;
-    public static final DebugMenu debugMenu = new DebugMenu();
 
     private static Application instance;
 
@@ -105,7 +105,7 @@ public class Application implements ConsoleListener, ControllerListener {
             for (int i = 0; i < graphicTicks; i++) {
 
                 windowManager.tick();
-                debugMenu.reset();
+                DEBUG_MENU.reset();
                 addDebugInformation();
 
                 BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
@@ -113,7 +113,7 @@ public class Application implements ConsoleListener, ControllerListener {
 
                 BufferedImage frame = Utils.resizeImage(rendered, windowManager.getWidth(), windowManager.getHeight());
 
-                debugMenu.draw(frame, 15);
+                DEBUG_MENU.draw(frame, 15);
                 windowManager.setFrame(frame);
 
 
@@ -126,7 +126,7 @@ public class Application implements ConsoleListener, ControllerListener {
     private void liveGraphicLoop(){
         while (true){
             windowManager.tick();
-            debugMenu.reset();
+            DEBUG_MENU.reset();
             addDebugInformation();
 
             int width = windowManager.getWidth();
@@ -134,7 +134,7 @@ public class Application implements ConsoleListener, ControllerListener {
 
             BufferedImage rendered = graphicEngine.renderFrame(width, height);
             BufferedImage frame = Utils.resizeImage(rendered, width, height);
-            debugMenu.draw(frame, 15);
+            DEBUG_MENU.draw(frame, 15);
             windowManager.setFrame(frame);
 
             applicationData.framePerformed();
@@ -179,31 +179,31 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     public void addDebugInformation(){
-        if (!debugMenu.isEnabled()) return;
-        debugMenu.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
-        debugMenu.addTextToRight("RenderTime: " + Utils.roundToPrecision(applicationData.frameRenderTime, 5));
-        debugMenu.addTextToRight("FramesRendered: " + applicationData.framesAmount);
-        debugMenu.addTextToRight(
+        if (!DEBUG_MENU.isEnabled()) return;
+        DEBUG_MENU.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
+        DEBUG_MENU.addTextToRight("RenderTime: " + Utils.roundToPrecision(applicationData.frameRenderTime, 5));
+        DEBUG_MENU.addTextToRight("FramesRendered: " + applicationData.framesAmount);
+        DEBUG_MENU.addTextToRight(
                 "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );
-        debugMenu.addTextToRight(
+        DEBUG_MENU.addTextToRight(
                 "Size: " + windowManager.getWidth() + "x" + windowManager.getHeight()
         );
-        debugMenu.addTextToRight("PixelScaling: " + settings.pixelScaling);
+        DEBUG_MENU.addTextToRight("PixelScaling: " + settings.pixelScaling);
 
-        debugMenu.addTextToRight("");
+        DEBUG_MENU.addTextToRight("");
 
         double workingTime = (System.nanoTime() - applicationData.applicationStartTime) / Math.pow(10, 9);
         double physicTime = applicationData.physicTicks / (double)PHYSIC_TICKS_PER_SECOND;
 
-        debugMenu.addTextToRight(
+        DEBUG_MENU.addTextToRight(
                 "ApplicationWorkingTime: " +
                 Utils.roundToPrecision(workingTime, 3)
         );
 
-        debugMenu.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicTime, 3));
-        debugMenu.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicTime, 3));
-        debugMenu.addTextToRight("PhysicTicks: " + applicationData.physicTicks);
+        DEBUG_MENU.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicTime, 3));
+        DEBUG_MENU.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicTime, 3));
+        DEBUG_MENU.addTextToRight("PhysicTicks: " + applicationData.physicTicks);
 
 
     }
@@ -222,6 +222,6 @@ public class Application implements ConsoleListener, ControllerListener {
 
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
-        if (inputKey == InputKey.DEBUG_MENU && pressed) debugMenu.toggle();
+        if (inputKey == InputKey.DEBUG_MENU && pressed) DEBUG_MENU.toggle();
     }
 }

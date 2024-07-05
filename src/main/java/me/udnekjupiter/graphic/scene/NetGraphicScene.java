@@ -2,12 +2,13 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.DoubleSpringObject;
-import me.udnekjupiter.graphic.object.GraphicObject;
-import me.udnekjupiter.graphic.object.SpringObject;
-import me.udnekjupiter.graphic.object.VertexObject;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
+import me.udnekjupiter.graphic.object.traceable.DoubleSpringObject;
+import me.udnekjupiter.graphic.object.traceable.SpringObject;
+import me.udnekjupiter.graphic.object.traceable.TraceableObject;
+import me.udnekjupiter.graphic.object.traceable.VertexObject;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
@@ -29,7 +30,7 @@ public class NetGraphicScene extends GraphicScene3d {
 
 
     @Override
-    protected List<GraphicObject> initializeSceneObjects() {
+    protected List<TraceableObject> initializeSceneObjects() {
         vertices = new ArrayList<>();
         springs = new ArrayList<>();
 
@@ -69,7 +70,7 @@ public class NetGraphicScene extends GraphicScene3d {
             }
         }
 
-        List<GraphicObject> graphicObjects = new ArrayList<>();
+        List<TraceableObject> graphicObjects = new ArrayList<>();
         graphicObjects.addAll(vertices);
         graphicObjects.addAll(springs);
         return graphicObjects;
@@ -94,6 +95,11 @@ public class NetGraphicScene extends GraphicScene3d {
     @Override
     protected LightSource initializeLightSource() {
         return new PointLight(new Vector3d(0, 2, 0));
+    }
+
+    @Override
+    protected List<FixedSizeObject> initializeFixedSizeObjects() {
+        return null;
     }
 
     @Override

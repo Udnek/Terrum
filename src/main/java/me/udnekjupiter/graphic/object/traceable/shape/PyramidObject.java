@@ -1,10 +1,10 @@
-package me.udnekjupiter.graphic.object.shape;
+package me.udnekjupiter.graphic.object.traceable.shape;
 
-import me.udnekjupiter.graphic.object.GraphicObject;
+import me.udnekjupiter.graphic.object.traceable.TraceableObject;
 import me.udnekjupiter.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class PyramidObject extends GraphicObject {
+public class PyramidObject extends TraceableObject {
     private Triangle plane0;
     private Triangle plane1;
     private Triangle plane2;
