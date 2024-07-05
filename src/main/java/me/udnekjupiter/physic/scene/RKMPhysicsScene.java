@@ -24,6 +24,8 @@ public abstract class RKMPhysicsScene implements PhysicScene {
             object.calculateNextPhaseVector();
         }
     }
+
+    // TODO Should try optimising it
     public void updateColliders(){
         for (RKMObject object : RKMObjects) {
             object.clearCollidingObjects();

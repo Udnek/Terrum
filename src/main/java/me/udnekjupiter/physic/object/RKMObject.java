@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.object;
 
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collider.Collidable;
 import me.udnekjupiter.physic.collider.Collider;
 import org.realityforge.vecmath.Vector3d;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RKMObject extends PhysicObject implements Freezable, Collidable {
+    protected EnvironmentSettings settings;
     protected List<RKMObject> collidingObjects;
     protected Vector3d[] currentRKMPhaseVector;
     protected Vector3d[] basePhaseVector;
@@ -28,6 +30,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
 
     public RKMObject(Vector3d position) {
         super(position);
+        settings = EnvironmentSettings.ENVIRONMENT_SETTINGS;
         this.velocity = new Vector3d(0,0,0);
         this.acceleration = new Vector3d(0,0,0);
         this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
@@ -158,5 +161,5 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     @Override
     public boolean isFrozen() {return frozen;}
 
-    // TODO Create PhaseVector inner class
+    // TODO Maybe create PhaseVector inner class? No use rn, but maybe in future...
 }

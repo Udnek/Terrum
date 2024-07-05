@@ -33,6 +33,6 @@ public class EnvironmentSettings {
                 0.001,
                 5,
                 "small_frame.png",
-                1);
+                5);
     }
 }
