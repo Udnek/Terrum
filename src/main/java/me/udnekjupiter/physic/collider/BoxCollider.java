@@ -22,8 +22,8 @@ public class BoxCollider extends Collider {
     }
 
     @Override
-    public List<RKMObject> findIntersections(List<RKMObject> objects) {
-        return null;
+    public boolean isCollidingWith(Collider collider) {
+        return false;
     }
 
 //    public checkIntersection(Vector3d point){

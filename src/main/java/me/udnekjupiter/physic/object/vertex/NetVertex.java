@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.object.vertex;
 
+import me.udnekjupiter.physic.collider.SphereCollider;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 
@@ -14,6 +15,7 @@ public abstract class NetVertex extends RKMObject {
 
     public NetVertex(Vector3d position) {
         super(position);
+        collider = new SphereCollider(0.1, this);
     }
 
     public Vector3d getPosition() {return position.dup();}

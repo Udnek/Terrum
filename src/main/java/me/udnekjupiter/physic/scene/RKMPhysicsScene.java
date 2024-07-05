@@ -24,6 +24,21 @@ public abstract class RKMPhysicsScene implements PhysicScene {
             object.calculateNextPhaseVector();
         }
     }
+    public void updateColliders(){
+        for (RKMObject object : RKMObjects) {
+            object.clearCollidingObjects();
+        }
+        for (RKMObject targetObject : RKMObjects) {
+            for (RKMObject anotherObject : RKMObjects) {
+                if (targetObject == anotherObject) continue;
+                if (!targetObject.getCollider().isCollidingWith(anotherObject.getCollider())) continue;
+                if (targetObject.collidingObjectIsAlreadyListed(anotherObject)) continue;
+
+                targetObject.addCollidingObject(anotherObject);
+                anotherObject.addCollidingObject(targetObject);
+            }
+        }
+    }
 
     public void updateObjectsPositionDifferentials(){
         for (RKMObject object : RKMObjects) {
@@ -43,11 +58,10 @@ public abstract class RKMPhysicsScene implements PhysicScene {
 
     public void updateObjects(){
         syncObjectsRKMPhaseVectors();
-
-        updateNextObjectsCoefficients(); //coefficient1
-        for (int i = 0; i < 3; i++) {
-            updateNextObjectsPhaseVectors(); //step1-2-3
-            updateNextObjectsCoefficients(); //coefficient2-3-4
+        for (int i = 0; i < 4; i++) {
+            updateColliders();
+            updateNextObjectsCoefficients(); //coefficient1-2-3-4
+            updateNextObjectsPhaseVectors(); //step1-2-3, last one is not executed
         }
 
         updateObjectsPositionDifferentials();

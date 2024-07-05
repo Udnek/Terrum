@@ -1,10 +1,14 @@
 package me.udnekjupiter.physic.object;
 
+import me.udnekjupiter.physic.collider.Collidable;
 import me.udnekjupiter.physic.collider.Collider;
-import me.udnekjupiter.physic.collider.SphereCollider;
 import org.realityforge.vecmath.Vector3d;
 
-public abstract class RKMObject extends PhysicObject implements Freezable {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class RKMObject extends PhysicObject implements Freezable, Collidable {
+    protected List<RKMObject> collidingObjects;
     protected Vector3d[] currentRKMPhaseVector;
     protected Vector3d[] basePhaseVector;
     protected Vector3d[] coefficient1;
@@ -32,6 +36,15 @@ public abstract class RKMObject extends PhysicObject implements Freezable {
 
     public Collider getCollider(){
         return collider;
+    }
+    public void addCollidingObject(RKMObject object){
+        collidingObjects.add(object);
+    }
+    public void clearCollidingObjects(){
+        collidingObjects = new ArrayList<>();
+    }
+    public boolean collidingObjectIsAlreadyListed(RKMObject object){
+        return collidingObjects.contains(object);
     }
 
     public Vector3d getVelocity(){
@@ -83,6 +96,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable {
                 setCurrentRKMPhaseVector(RKMethodCalculateFinalPhaseVector(basePhaseVector, coefficient3));
                 coefficientCounter = 4;
             }
+            case 4 -> {}
             default -> System.out.println("RKMCounter error in calculateNextPhaseVector");
         }
     }

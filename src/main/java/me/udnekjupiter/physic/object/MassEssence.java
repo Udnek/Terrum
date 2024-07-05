@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.object;
 
+import me.udnekjupiter.physic.collider.SphereCollider;
 import org.realityforge.vecmath.Vector3d;
 
 public class MassEssence extends RKMObject{
@@ -10,11 +11,17 @@ public class MassEssence extends RKMObject{
         this.mass = 1;
         this.decayCoefficient = 0;
         this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
+        collider = new SphereCollider(1, this);
     }
 
     @Override
     protected Vector3d getAppliedForce(Vector3d position){
         return new Vector3d(0, -9.80665, 0).mul(mass);
+    }
+
+    @Override
+    protected Vector3d getCollisionForce() {
+        return null;
     }
 
     @Override

@@ -29,7 +29,6 @@ public class NetDynamicVertex extends NetVertex {
         this.deltaTime = settings.deltaTime;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
-        collider = new SphereCollider(1);
     }
 
     public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
