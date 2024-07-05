@@ -8,16 +8,25 @@ public class Triangle {
     private Vector3d vertex1;
     private Vector3d vertex2;
 
+    private Vector3d edge0;
+    private Vector3d edge1;
+    private Vector3d edge2;
+
     public Triangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
         this.vertex0 = vertex0;
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
+        recalculateEdges();
     }
 
     public Triangle(Triangle triangle) {
-        this.vertex0 = triangle.getVertex0();
-        this.vertex1 = triangle.getVertex1();
-        this.vertex2 = triangle.getVertex2();
+        this(triangle.getVertex0(), triangle.getVertex1(), triangle.getVertex2());
+    }
+
+    public void recalculateEdges(){
+        edge0 = getVertex1().sub(getVertex0());
+        edge1 = getVertex2().sub(getVertex1());
+        edge2 = getVertex0().sub(getVertex2());
     }
 
     public void setVertex0(Vector3d vertex) {
@@ -46,15 +55,9 @@ public class Triangle {
         return this.vertex2.dup();
     }
 
-    public Vector3d getEdge0(){
-        return getVertex1().sub(getVertex0());
-    }
-    public Vector3d getEdge1(){
-        return getVertex2().sub(getVertex1());
-    }
-    public Vector3d getEdge2(){
-        return getVertex0().sub(getVertex2());
-    }
+    public Vector3d getEdge0(){return edge0;}
+    public Vector3d getEdge1(){return edge1;}
+    public Vector3d getEdge2(){return edge2;}
 
     public Vector3d getCenter(){
         return new Vector3d(
@@ -64,9 +67,11 @@ public class Triangle {
         );
     }
 
-    public Vector3d getNormal(){return VectorUtils.getNormal(getEdge0(), getEdge1());}
+    public Vector3d getNormal(){
+        return VectorUtils.getNormal(edge0, edge1);
+    }
     public double getArea(){
-        return VectorUtils.getAreaOfTriangle(getEdge0(), getEdge1());
+        return VectorUtils.getAreaOfTriangle(edge0, edge1);
     }
 
     public Triangle copy(){

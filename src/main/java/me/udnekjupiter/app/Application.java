@@ -31,7 +31,7 @@ public class Application implements ConsoleListener, ControllerListener {
     private Application(){}
 
     public static double getFrameDeltaTime(){
-        return getInstance().applicationData.frameRenderTime;
+        return (double) getInstance().applicationData.frameRenderTime / Utils.NANOS_IN_SECOND;
     }
 
     public static Application getInstance() {
@@ -180,29 +180,30 @@ public class Application implements ConsoleListener, ControllerListener {
 
     public void addDebugInformation(){
         if (!DEBUG_MENU.isEnabled()) return;
+
         DEBUG_MENU.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
-        DEBUG_MENU.addTextToRight("RenderTime: " + Utils.roundToPrecision(applicationData.frameRenderTime, 5));
-        DEBUG_MENU.addTextToRight("FramesRendered: " + applicationData.framesAmount);
         DEBUG_MENU.addTextToRight(
                 "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );
         DEBUG_MENU.addTextToRight(
                 "Size: " + windowManager.getWidth() + "x" + windowManager.getHeight()
         );
+        DEBUG_MENU.addTextToRight("RenderTime: " + Utils.roundToPrecision((double) applicationData.frameRenderTime / Utils.NANOS_IN_SECOND, 5));
+        DEBUG_MENU.addTextToRight("FramesRendered: " + applicationData.framesAmount);
         DEBUG_MENU.addTextToRight("PixelScaling: " + settings.pixelScaling);
 
         DEBUG_MENU.addTextToRight("");
 
-        double workingTime = (System.nanoTime() - applicationData.applicationStartTime) / Math.pow(10, 9);
-        double physicTime = applicationData.physicTicks / (double)PHYSIC_TICKS_PER_SECOND;
+        double workingTime = (double) (System.nanoTime() - applicationData.applicationStartTime) / Utils.NANOS_IN_SECOND;
+        double physicSeconds = (double) applicationData.physicTicks /PHYSIC_TICKS_PER_SECOND;
 
         DEBUG_MENU.addTextToRight(
                 "ApplicationWorkingTime: " +
                 Utils.roundToPrecision(workingTime, 3)
         );
-
-        DEBUG_MENU.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicTime, 3));
-        DEBUG_MENU.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicTime, 3));
+        DEBUG_MENU.addTextToRight("PhysicTickTime: " + Utils.roundToPrecision((double) applicationData.physicTickTime /Utils.NANOS_IN_SECOND, 5));
+        DEBUG_MENU.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicSeconds, 3));
+        DEBUG_MENU.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicSeconds, 3));
         DEBUG_MENU.addTextToRight("PhysicTicks: " + applicationData.physicTicks);
 
 

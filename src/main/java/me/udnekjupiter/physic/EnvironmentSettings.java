@@ -26,13 +26,18 @@ public class EnvironmentSettings {
         this.iterationsPerTick = iterationsPerTick;
     }
 
-    public static EnvironmentSettings defaultPreset(){
+
+    public static EnvironmentSettings defaultWithImage(String imageFileName){
         return new EnvironmentSettings(5000,
                 1,
                 5,
                 0.001,
                 5,
-                "small_frame.png",
-                5);
+                imageFileName,
+                1);
+    }
+
+    public static EnvironmentSettings defaultPreset(){
+        return defaultWithImage("small_frame.png");
     }
 }
