@@ -11,7 +11,7 @@ import me.udnekjupiter.physic.scene.NetPhysicsScene;
 public class MainJupiter extends Main{
 
     @Override
-    public ApplicationSettings initializeGraphicsSettings(){return ApplicationSettings.defaultNoRecording(4, 12, PolygonHolder.Type.SMART);}
+    public ApplicationSettings initializeGraphicsSettings(){return ApplicationSettings.defaultNoRecording(2, 12, PolygonHolder.Type.SMART);}
     public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
@@ -22,7 +22,5 @@ public class MainJupiter extends Main{
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
-
-        //physicScene.setInitialDeviation(1, 1, 1, 0.5, 0);
     }
 }

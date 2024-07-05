@@ -26,16 +26,11 @@ public class NetPhysicsScene extends RKMPhysicsScene {
         net.setupVerticesVariables();
         List<NetVertex> vertices = net.getVerticesObjects();
         for (NetVertex vertex : vertices) {
-            if (vertex instanceof NetDynamicVertex) {
+            if (vertex != null) {
                 addObject(vertex);
             }
         }
     }
-
-//    public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {
-//        if (net.getVertex(x, z) == null) return;
-//        net.getVertex(x, z).setPosition(new Vector3d(xNew, yNew, zNew));
-//    }
 
     public void addMassEssence(Vector3d position){
         RKMObjects.add(new MassEssence(position));

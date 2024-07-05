@@ -58,27 +58,6 @@ public class NetDynamicVertex extends NetVertex {
 
         return resultAcceleration;
     }
-    
-    public Vector3d EMethodCalculateAcceleration() {
-        Vector3d appliedForce = new Vector3d(0, 0, 0);
-        for (NetVertex neighbor : neighbors) {
-            Vector3d normalizedDirection = getNormalizedDirection(this.getPosition(), neighbor.getPosition());
-            double distanceToNeighbour = VectorUtils.distance(this.getPosition(), neighbor.getPosition());
-            double distanceDifferential = distanceToNeighbour - springRelaxedLength;
-            double elasticForce = springStiffness * distanceDifferential;
-            appliedForce.add(normalizedDirection.mul(elasticForce));
-        }
-
-        Vector3d decayValue = velocity.dup().mul(decayCoefficient);
-        Vector3d acceleration = appliedForce.dup().sub(decayValue);
-        acceleration.div(mass);
-        return acceleration;
-    }
-    public void EMethodCalculatePositionDifferential(){
-        acceleration = EMethodCalculateAcceleration();
-        velocityDifferential = acceleration.dup().mul(deltaTime);
-        positionDifferential = velocity.dup().mul(deltaTime);
-    }
 
     public double getKineticEnergy(){
         return (Math.pow(velocity.dup().length(), 2)*mass) / 2;

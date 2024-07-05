@@ -59,40 +59,15 @@ public class RKMObject extends PhysicObject implements Freezable {
         return new Vector3d[]{resultPositionComponent, resultVelocityComponent};
     }
 
-    public void calculateCoefficient1(){
-        coefficient1 = RKMethodFunction(getCurrentRKMPhaseVector());
-    }
-    public void updateRKMPhaseVector1(){
-        setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient1));
-    }
-    public void calculateCoefficient2(){
-        coefficient2 = RKMethodFunction(getCurrentRKMPhaseVector());
-    }
-    public void updateRKMPhaseVector2(){
-        setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient2));
-    }
-    public void calculateCoefficient3(){
-        coefficient3 = RKMethodFunction(getCurrentRKMPhaseVector());
-    }
-    public void updateRKMPhaseVector3(){
-        setCurrentRKMPhaseVector(RKMethodCalculateFinalPhaseVector(basePhaseVector, coefficient3));
-    }
-    public void calculateCoefficient4(){
-        coefficient4 = RKMethodFunction(getCurrentRKMPhaseVector());
-    }
-
     public void calculateNextPhaseVector(){
         if (!this.isFrozen()){
             if (coefficientCounter == 1){
-                System.out.print("-- PV1 SYNC_CHECK\n");
                 setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient1));
                 coefficientCounter = 2;
             } else if (coefficientCounter == 2){
-                System.out.print("-- PV2 SYNC_CHECK\n");
                 setCurrentRKMPhaseVector((RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient2)));
                 coefficientCounter = 3;
             } else if (coefficientCounter == 3){
-                System.out.print("-- PV3 SYNC_CHECK\n");
                 setCurrentRKMPhaseVector(RKMethodCalculateFinalPhaseVector(basePhaseVector, coefficient3));
                 coefficientCounter = 4;
             } else {
@@ -103,16 +78,12 @@ public class RKMObject extends PhysicObject implements Freezable {
     public void calculateNextCoefficient(){
         if (!this.isFrozen()){
             if (coefficientCounter == 1){
-                System.out.print("-- CF1 SYNC_CHECK\n");
                 coefficient1 = RKMethodFunction(getCurrentRKMPhaseVector());
             } else if (coefficientCounter == 2) {
-                System.out.print("-- CF2 SYNC_CHECK\n");
                 coefficient2 = RKMethodFunction(getCurrentRKMPhaseVector());
             } else if (coefficientCounter == 3) {
-                System.out.print("-- CF3 SYNC_CHECK\n");
                 coefficient3 = RKMethodFunction(getCurrentRKMPhaseVector());
             } else if (coefficientCounter == 4) {
-                System.out.print("-- CF4 SYNC_CHECK\n");
                 coefficient4 = RKMethodFunction(getCurrentRKMPhaseVector());
                 coefficientCounter = 1;
             } else {
