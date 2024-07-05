@@ -9,7 +9,7 @@ public class MassEssence extends RKMObject{
         this.deltaTime = 0.001;
         this.mass = 1;
         this.decayCoefficient = 0;
-        this.phaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
+        this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MassEssence extends RKMObject{
         System.out.println("VD and PD: " + velocityDifferential.asString() + " -- " + positionDifferential.asString());
         setVelocity(getVelocity().add(velocityDifferential));
         setPosition(getPosition().add(positionDifferential));
-        phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+        basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
 
     @Override

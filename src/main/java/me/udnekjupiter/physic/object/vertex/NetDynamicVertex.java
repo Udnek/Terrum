@@ -27,7 +27,7 @@ public class NetDynamicVertex extends NetVertex {
         this.mass = settings.vertexMass;
         this.deltaTime = settings.deltaTime;
         this.decayCoefficient = settings.decayCoefficient;
-        this.phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+        this.basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
 
     public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
@@ -55,6 +55,7 @@ public class NetDynamicVertex extends NetVertex {
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         Vector3d resultAcceleration = appliedForce.dup().sub(decayValue);
         resultAcceleration.div(mass);
+
         return resultAcceleration;
     }
     

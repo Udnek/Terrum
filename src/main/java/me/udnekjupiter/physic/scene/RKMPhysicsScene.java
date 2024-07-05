@@ -1,41 +1,27 @@
 package me.udnekjupiter.physic.scene;
 
-import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhysicsScene implements PhysicScene {
-
-    private CellularNet net;
-    public void tick() {net.updateNet();}
-    public CellularNet getNet() {return net;}
-    public void initialize(){
-        net = new CellularNet();
-        net.initiateNet();
-        net.initiateNeighbours();
-        net.setupVerticesVariables();
-    }
-
-    public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {
-        if (net.getVertex(x, z) == null) return;
-        net.getVertex(x, z).setPosition(new Vector3d(xNew, yNew, zNew));
-    }
-
-    public List<RKMObject> RKMObjects;
-
-    public void initializeObjectHandler(){
-        RKMObjects = new ArrayList<>();
-    }
-    public void addMassEssence(Vector3d position){
-        RKMObjects.add(new MassEssence(position));
-    }
+public abstract class RKMPhysicsScene implements PhysicScene {
+    protected List<RKMObject> RKMObjects;
 
     public void addObject(RKMObject object){
         RKMObjects.add(object);
+    }
+
+    public void updateNextObjectsCoefficients() {
+        for (RKMObject object : RKMObjects) {
+            object.calculateNextCoefficient();
+        }
+    }
+    public void updateNextObjectsPhaseVectors(){
+        for (RKMObject object : RKMObjects) {
+            object.calculateNextPhaseVector();
+        }
     }
 
     public void updateObjectsCoefficients() {
@@ -79,8 +65,18 @@ public class PhysicsScene implements PhysicScene {
 
     public void updateObjects(){
         syncObjectsRKMPhaseVectors();
-        updateObjectsCoefficients();
+
+        updateNextObjectsCoefficients(); //coefficient1
+        updateNextObjectsPhaseVectors(); //
+        updateNextObjectsCoefficients(); //coefficient2
+        updateNextObjectsPhaseVectors(); //
+        updateNextObjectsCoefficients(); //coefficient3
+        updateNextObjectsPhaseVectors(); //
+        updateNextObjectsCoefficients(); //coefficient4
+
         updateObjectsPositionDifferentials();
         updateObjectsPositions();
     }
+
+    public void tick() {updateObjects();}
 }

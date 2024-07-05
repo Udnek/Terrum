@@ -6,9 +6,7 @@ public class NetStaticVertex extends NetVertex {
 
     public NetStaticVertex(Vector3d position) {
         super(position);
+        this.frozen = true;
     }
 
-    @Override
-    public void RKMCalculatePositionDifferential(){}
-    public void updatePosition(){}
 }

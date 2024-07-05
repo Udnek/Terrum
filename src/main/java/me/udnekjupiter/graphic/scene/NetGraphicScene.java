@@ -11,7 +11,7 @@ import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import me.udnekjupiter.physic.scene.PhysicsScene;
+import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ import java.util.List;
 public class NetGraphicScene extends GraphicScene3d {
     private List<VertexObject> vertices;
     private List<SpringObject> springs;
-    private PhysicsScene physicsScene;
-    public NetGraphicScene(PhysicsScene physicsScene){
-        this.physicsScene = physicsScene;
+    private NetPhysicsScene netPhysicsScene;
+    public NetGraphicScene(NetPhysicsScene netPhysicsScene){
+        this.netPhysicsScene = netPhysicsScene;
     }
 
 
@@ -35,7 +35,7 @@ public class NetGraphicScene extends GraphicScene3d {
 
         HashMap<NetVertex, List<NetVertex>> addedNeighbours = new HashMap<>();
 
-        CellularNet net = physicsScene.getNet();
+        CellularNet net = netPhysicsScene.getNet();
 
         for (int x = 0; x < net.getSizeX(); x++) {
             for (int z = 0; z < net.getSizeZ(); z++) {

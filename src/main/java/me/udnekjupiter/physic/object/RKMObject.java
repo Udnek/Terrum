@@ -2,27 +2,29 @@ package me.udnekjupiter.physic.object;
 
 import org.realityforge.vecmath.Vector3d;
 
-public class RKMObject extends PhysicObject {
+public class RKMObject extends PhysicObject implements Freezable {
     protected Vector3d[] currentRKMPhaseVector;
-    protected Vector3d velocity;
-    protected Vector3d acceleration;
-    protected Vector3d positionDifferential;
-    protected Vector3d velocityDifferential;
-    protected double deltaTime;
-    protected double decayCoefficient;
-    protected double mass;
-
-    protected Vector3d[] phaseVector;
+    protected Vector3d[] basePhaseVector;
     protected Vector3d[] coefficient1;
     protected Vector3d[] coefficient2;
     protected Vector3d[] coefficient3;
     protected Vector3d[] coefficient4;
+    protected Vector3d velocity;
+    protected Vector3d acceleration;
+    protected Vector3d positionDifferential;
+    protected Vector3d velocityDifferential;
+    protected boolean frozen;
+    protected double deltaTime;
+    protected double decayCoefficient;
+    protected double mass;
+    protected int coefficientCounter = 1;
 
     public RKMObject(Vector3d position) {
         super(position);
         this.velocity = new Vector3d(0,0,0);
         this.acceleration = new Vector3d(0,0,0);
-        this.setCurrentRKMPhaseVector(new Vector3d[]{position, new Vector3d(0, 0, 0)});
+        this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
+        setCurrentRKMPhaseVector(basePhaseVector);
     }
 
     public Vector3d getVelocity(){
@@ -61,25 +63,61 @@ public class RKMObject extends PhysicObject {
         coefficient1 = RKMethodFunction(getCurrentRKMPhaseVector());
     }
     public void updateRKMPhaseVector1(){
-        setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(phaseVector, coefficient1));
+        setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient1));
     }
     public void calculateCoefficient2(){
         coefficient2 = RKMethodFunction(getCurrentRKMPhaseVector());
     }
     public void updateRKMPhaseVector2(){
-        setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(phaseVector, coefficient2));
+        setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient2));
     }
     public void calculateCoefficient3(){
         coefficient3 = RKMethodFunction(getCurrentRKMPhaseVector());
     }
     public void updateRKMPhaseVector3(){
-        setCurrentRKMPhaseVector(RKMethodCalculateFinalPhaseVector(phaseVector, coefficient3));
+        setCurrentRKMPhaseVector(RKMethodCalculateFinalPhaseVector(basePhaseVector, coefficient3));
     }
     public void calculateCoefficient4(){
         coefficient4 = RKMethodFunction(getCurrentRKMPhaseVector());
     }
 
+    public void calculateNextPhaseVector(){
+        if (!this.isFrozen()){
+            if (coefficientCounter == 1){
+                setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient1));
+                coefficientCounter = 2;
+            } else if (coefficientCounter == 2){
+                setCurrentRKMPhaseVector((RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient2)));
+                coefficientCounter = 3;
+            } else if (coefficientCounter == 3){
+                setCurrentRKMPhaseVector(RKMethodCalculateFinalPhaseVector(basePhaseVector, coefficient3));
+                coefficientCounter = 4;
+            } else {
+                System.out.println("RKMCounter error in calculateNextPhaseVector");
+            }
+        }
+    }
+    public void calculateNextCoefficient(){
+        if (!this.isFrozen()){
+            if (coefficientCounter == 1){
+                coefficient1 = RKMethodFunction(getCurrentRKMPhaseVector());
+            } else if (coefficientCounter == 2) {
+                coefficient2 = RKMethodFunction(getCurrentRKMPhaseVector());
+            } else if (coefficientCounter == 3) {
+                coefficient3 = RKMethodFunction(getCurrentRKMPhaseVector());
+            } else if (coefficientCounter == 4) {
+                coefficient4 = RKMethodFunction(getCurrentRKMPhaseVector());
+                coefficientCounter = 1;
+            } else {
+                System.out.println("RKMCounter error in calculateNextCoefficient");
+            }
+        }
+    }
+
     protected Vector3d[] RKMCalculatePhaseDifferentialVector(){
+        if (this.isFrozen()){
+            return new Vector3d[]{new Vector3d(0,0,0), new Vector3d(0,0,0)};
+        }
         Vector3d positionDifferentialComponent = new Vector3d(coefficient1[0].dup().add(
                 coefficient2[0].dup().mul(2)).add(
                 coefficient3[0].dup().mul(2)).add(
@@ -106,14 +144,23 @@ public class RKMObject extends PhysicObject {
     public void updatePosition() {
         setVelocity(getVelocity().add(velocityDifferential));
         setPosition(getPosition().add(positionDifferential));
-        phaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+        basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
 
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity) {
+        if (this.isFrozen()){
+            return new Vector3d(0,0,0);
+        } else {
+            System.out.println("Attempted to get acceleration for RKMObject, which is supposed to be static");
+        }
         return null; //Should be overridden by extending classes
     }
 
     protected Vector3d getAppliedForce(Vector3d position){
         return null; //Should be overridden by extending classes
     }
+
+    public void freeze(){frozen = true;}
+    public void unfreeze(){frozen = false;}
+    public boolean isFrozen(){return frozen;}
 }

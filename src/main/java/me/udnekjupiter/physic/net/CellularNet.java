@@ -51,6 +51,15 @@ public class CellularNet {
         }
         return vertices;
     }
+    public List<NetVertex> getVerticesObjects(){
+        List<NetVertex> vertices = new ArrayList<>();
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                vertices.add(getVertex(j, i));
+            }
+        }
+        return vertices;
+    }
 
     public void initiateNet() {
         ImageWrapper reader = new ImageWrapper();

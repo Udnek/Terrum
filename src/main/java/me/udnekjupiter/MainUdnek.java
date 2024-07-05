@@ -6,20 +6,18 @@ import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
-import me.udnekjupiter.physic.scene.PhysicsScene;
+import me.udnekjupiter.physic.scene.NetPhysicsScene;
 
 public class MainUdnek extends Main{
 
     @Override
     public void run() {
-        PhysicsScene physicScene = new PhysicsScene();
+        NetPhysicsScene physicScene = new NetPhysicsScene();
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
-
-        physicScene.setInitialDeviation(1, 1, 1, 0.5, 0);
     }
 
     @Override

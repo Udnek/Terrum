@@ -8,5 +8,4 @@ public class Utils {
         numberFormat.setMinimumFractionDigits(precision);
         return numberFormat.format(number);
     }
-
 }

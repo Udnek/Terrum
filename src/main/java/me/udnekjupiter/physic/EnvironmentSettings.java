@@ -15,6 +15,7 @@ public class EnvironmentSettings {
     public double vertexMass;
 
     public static final EnvironmentSettings ENVIRONMENT_SETTINGS = Main.getMain().initializePhysicsSettings();
+
     public EnvironmentSettings(double springStiffness, double springRelaxedLength, double vertexMass, double deltaTime, double decayCoefficient, String imageFileName, int iterationsPerTick) {
         this.springStiffness = springStiffness;
         this.springRelaxedLength = springRelaxedLength;

@@ -6,17 +6,17 @@ import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
-import me.udnekjupiter.physic.scene.PhysicsScene;
+import me.udnekjupiter.physic.scene.NetPhysicsScene;
 
 public class MainJupiter extends Main{
 
     @Override
-    public ApplicationSettings initializeGraphicsSettings(){return ApplicationSettings.defaultNoRecording(2, 6, PolygonHolder.Type.SMART);}
+    public ApplicationSettings initializeGraphicsSettings(){return ApplicationSettings.defaultNoRecording(4, 12, PolygonHolder.Type.SMART);}
     public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
     public void run() {
-        PhysicsScene physicScene = new PhysicsScene();
+        NetPhysicsScene physicScene = new NetPhysicsScene();
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
