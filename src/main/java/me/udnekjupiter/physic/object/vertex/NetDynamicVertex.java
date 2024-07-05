@@ -2,6 +2,7 @@
 package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.collider.SphereCollider;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -28,6 +29,7 @@ public class NetDynamicVertex extends NetVertex {
         this.deltaTime = settings.deltaTime;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+        collider = new SphereCollider(1);
     }
 
     public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
@@ -50,6 +52,11 @@ public class NetDynamicVertex extends NetVertex {
     }
 
     @Override
+    protected Vector3d getCollisionForce() {
+        return null;
+    }
+
+    @Override
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         Vector3d appliedForce = getAppliedForce(position);
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
@@ -57,27 +64,6 @@ public class NetDynamicVertex extends NetVertex {
         resultAcceleration.div(mass);
 
         return resultAcceleration;
-    }
-    
-    public Vector3d EMethodCalculateAcceleration() {
-        Vector3d appliedForce = new Vector3d(0, 0, 0);
-        for (NetVertex neighbor : neighbors) {
-            Vector3d normalizedDirection = getNormalizedDirection(this.getPosition(), neighbor.getPosition());
-            double distanceToNeighbour = VectorUtils.distance(this.getPosition(), neighbor.getPosition());
-            double distanceDifferential = distanceToNeighbour - springRelaxedLength;
-            double elasticForce = springStiffness * distanceDifferential;
-            appliedForce.add(normalizedDirection.mul(elasticForce));
-        }
-
-        Vector3d decayValue = velocity.dup().mul(decayCoefficient);
-        Vector3d acceleration = appliedForce.dup().sub(decayValue);
-        acceleration.div(mass);
-        return acceleration;
-    }
-    public void EMethodCalculatePositionDifferential(){
-        acceleration = EMethodCalculateAcceleration();
-        velocityDifferential = acceleration.dup().mul(deltaTime);
-        positionDifferential = velocity.dup().mul(deltaTime);
     }
 
     public double getKineticEnergy(){

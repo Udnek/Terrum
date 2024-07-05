@@ -28,11 +28,11 @@ public class EnvironmentSettings {
 
     public static EnvironmentSettings defaultPreset(){
         return new EnvironmentSettings(5000,
-                0.5,
+                1,
                 5,
                 0.001,
                 5,
                 "small_frame.png",
-                4);
+                5);
     }
 }

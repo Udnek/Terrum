@@ -1,6 +1,9 @@
 package me.udnekjupiter.physic.collider;
 
+import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
+
+import java.util.List;
 
 public class BoxCollider extends Collider {
     private double width;
@@ -16,6 +19,11 @@ public class BoxCollider extends Collider {
         this.length = length;
         this.parent = parent;
         this.center = parent.getPosition();
+    }
+
+    @Override
+    public List<RKMObject> findIntersections(List<RKMObject> objects) {
+        return null;
     }
 
 //    public checkIntersection(Vector3d point){

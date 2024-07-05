@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.scene;
 
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 
@@ -24,29 +25,6 @@ public abstract class RKMPhysicsScene implements PhysicScene {
         }
     }
 
-    public void updateObjectsCoefficients() {
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient1();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.updateRKMPhaseVector1();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient2();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.updateRKMPhaseVector2();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient3();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.updateRKMPhaseVector3();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient4();
-        }
-    }
     public void updateObjectsPositionDifferentials(){
         for (RKMObject object : RKMObjects) {
             object.RKMCalculatePositionDifferential();
@@ -67,16 +45,18 @@ public abstract class RKMPhysicsScene implements PhysicScene {
         syncObjectsRKMPhaseVectors();
 
         updateNextObjectsCoefficients(); //coefficient1
-        updateNextObjectsPhaseVectors(); //
-        updateNextObjectsCoefficients(); //coefficient2
-        updateNextObjectsPhaseVectors(); //
-        updateNextObjectsCoefficients(); //coefficient3
-        updateNextObjectsPhaseVectors(); //
-        updateNextObjectsCoefficients(); //coefficient4
+        for (int i = 0; i < 3; i++) {
+            updateNextObjectsPhaseVectors(); //step1-2-3
+            updateNextObjectsCoefficients(); //coefficient2-3-4
+        }
 
         updateObjectsPositionDifferentials();
         updateObjectsPositions();
     }
 
-    public void tick() {updateObjects();}
+    public void tick() {
+        for (int i = 0; i < EnvironmentSettings.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
+            updateObjects();
+        }
+    }
 }
