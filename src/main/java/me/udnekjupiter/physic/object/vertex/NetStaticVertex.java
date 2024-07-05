@@ -9,4 +9,19 @@ public class NetStaticVertex extends NetVertex {
         this.frozen = true;
     }
 
+    @Override
+    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity) {
+        return null;
+    }
+
+    @Override
+    protected Vector3d getAppliedForce(Vector3d position) {
+        return null;
+    }
+
+    @Override
+    protected Vector3d getCollisionForce() {
+        return null;
+    }
+
 }

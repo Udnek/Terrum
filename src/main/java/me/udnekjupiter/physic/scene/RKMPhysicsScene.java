@@ -45,12 +45,10 @@ public abstract class RKMPhysicsScene implements PhysicScene {
         syncObjectsRKMPhaseVectors();
 
         updateNextObjectsCoefficients(); //coefficient1
-        updateNextObjectsPhaseVectors(); //step1
-        updateNextObjectsCoefficients(); //coefficient2
-        updateNextObjectsPhaseVectors(); //step2
-        updateNextObjectsCoefficients(); //coefficient3
-        updateNextObjectsPhaseVectors(); //step3
-        updateNextObjectsCoefficients(); //coefficient4
+        for (int i = 0; i < 3; i++) {
+            updateNextObjectsPhaseVectors(); //step1-2-3
+            updateNextObjectsCoefficients(); //coefficient2-3-4
+        }
 
         updateObjectsPositionDifferentials();
         updateObjectsPositions();

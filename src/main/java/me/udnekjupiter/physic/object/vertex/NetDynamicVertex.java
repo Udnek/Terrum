@@ -2,6 +2,7 @@
 package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.collider.SphereCollider;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -28,6 +29,7 @@ public class NetDynamicVertex extends NetVertex {
         this.deltaTime = settings.deltaTime;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
+        collider = new SphereCollider(1);
     }
 
     public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
@@ -47,6 +49,11 @@ public class NetDynamicVertex extends NetVertex {
 
         appliedForce.y += (-9.80665)*mass;
         return appliedForce;
+    }
+
+    @Override
+    protected Vector3d getCollisionForce() {
+        return null;
     }
 
     @Override
