@@ -1,4 +1,4 @@
-package me.udnekjupiter.graphic.object;
+package me.udnekjupiter.graphic.object.traceable;
 
 import me.udnekjupiter.util.ColoredTriangle;
 import me.udnekjupiter.util.PositionedObject;
@@ -8,7 +8,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class SpringObject extends GraphicObject {
+public class SpringObject extends TraceableObject {
 
     protected PositionedObject tipA;
     protected PositionedObject tipB;

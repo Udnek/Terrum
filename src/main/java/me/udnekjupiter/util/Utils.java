@@ -17,6 +17,10 @@ public class Utils {
         return newImage;
     }
 
+    public static boolean roughlyEquals(double a, double b, double maxDistance){
+        return Math.abs(a + b) <= maxDistance;
+    }
+
 
     public static <T> void iterate(T[][] array, Consumer<T> consumer){
         for (int i = 0; i < array.length; i++) {
@@ -24,6 +28,20 @@ public class Utils {
                 consumer.accept(array[i][j]);
             }
         }
+    }
+
+    public static float normalizeYaw(float angle){
+        angle = angle % 360f;
+        if (angle > 180) angle = -360 + angle;
+        else if (angle < -180) angle = 360 + angle;
+        return angle;
+    }
+
+
+    public static float normalizePitch(float angle){
+        if (angle > 90) {return 90;}
+        if (angle < -90) {return -90;}
+        return angle;
     }
 
 }

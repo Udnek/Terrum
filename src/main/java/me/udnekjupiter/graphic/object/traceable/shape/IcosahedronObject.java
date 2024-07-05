@@ -1,10 +1,10 @@
-package me.udnekjupiter.graphic.object.shape;
+package me.udnekjupiter.graphic.object.traceable.shape;
 
-import me.udnekjupiter.graphic.object.GraphicObject;
+import me.udnekjupiter.graphic.object.traceable.TraceableObject;
 import me.udnekjupiter.util.Triangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class IcosahedronObject extends GraphicObject {
+public class IcosahedronObject extends TraceableObject {
 
     public static final float FI = (float) ((1.0f + Math.sqrt(5.0f))/2.0f);
     private Triangle[] polygons;

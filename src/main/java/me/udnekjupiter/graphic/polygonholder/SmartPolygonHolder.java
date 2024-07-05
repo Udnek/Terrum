@@ -1,7 +1,7 @@
 package me.udnekjupiter.graphic.polygonholder;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.GraphicObject;
+import me.udnekjupiter.graphic.object.traceable.TraceableObject;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmartPolygonHolder implements PolygonHolder{
-    private List<? extends GraphicObject> objectsToRender;
+    private List<TraceableObject> objectsToRender;
     private Camera camera;
 
     private List<Triangle> leftCachedPlanes;
@@ -25,7 +25,7 @@ public class SmartPolygonHolder implements PolygonHolder{
 
     private List<Triangle> lightCachedPlanes = new ArrayList<>();
 
-    public SmartPolygonHolder(List<? extends GraphicObject> objectsToRender, Camera camera){
+    public SmartPolygonHolder(List<TraceableObject> objectsToRender, Camera camera){
         this.objectsToRender = objectsToRender;
         this.camera = camera;
     }
@@ -57,7 +57,7 @@ public class SmartPolygonHolder implements PolygonHolder{
 
         Vector3d cameraPosition = camera.getPosition();
 
-        for (GraphicObject object : objectsToRender) {
+        for (TraceableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
             for (Triangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);

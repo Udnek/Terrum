@@ -1,18 +1,14 @@
 package me.udnekjupiter.graphic;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.object.GraphicObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.polygonholder.DefaultPolygonHolder;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
-import me.udnekjupiter.graphic.polygonholder.SmartPolygonHolder;
 import me.udnekjupiter.util.ColoredTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
-import java.util.List;
 
 public class RayTracer {
 
@@ -22,7 +18,7 @@ public class RayTracer {
     private int width, height;
     private double fovMultiplier;
 
-    private int[] frame;
+    private GraphicFrame frame;
 
     private PolygonHolder polygonHolder;
     private LightSource lightSource;
@@ -31,21 +27,14 @@ public class RayTracer {
     private boolean doLight;
     private boolean debugColorizePlanes;
 
-    public RayTracer(Camera camera, List<GraphicObject> objectsToRender, LightSource lightSource){
-        this.camera = camera;
+    public RayTracer(LightSource lightSource){
         this.doLight = ApplicationSettings.GLOBAL.doLight;
         this.lightSource = lightSource;
-        if (ApplicationSettings.GLOBAL.polygonHolderType == PolygonHolder.Type.SMART)
-            polygonHolder = new SmartPolygonHolder(objectsToRender, camera);
-        else
-            polygonHolder = new DefaultPolygonHolder(objectsToRender, camera, lightSource);
     }
-
 
     ///////////////////////////////////////////////////////////////////////////
     // UTILS
     ///////////////////////////////////////////////////////////////////////////
-
     public void rotateDirectionAsCamera(Vector3d direction){
         VectorUtils.rotatePitch(direction, cameraPitch);
         VectorUtils.rotateYaw(direction, cameraYaw);
@@ -76,11 +65,13 @@ public class RayTracer {
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
-    public int[] renderFrame(int width, int height){
-        frame = new int[width*height];
+    public void renderFrame(GraphicFrame frame, PolygonHolder polygonHolder, Camera camera){;
+        this.frame = frame;
+        this.width = frame.getWidth();
+        this.height = frame.getHeight();
 
-        this.width = width;
-        this.height = height;
+        this.camera = camera;
+        this.polygonHolder = polygonHolder;
         this.cameraPosition = camera.getPosition();
         this.cameraYaw = Math.toRadians(camera.getYaw());
         this.cameraPitch = Math.toRadians(camera.getPitch());
@@ -88,8 +79,6 @@ public class RayTracer {
         this.debugColorizePlanes = ApplicationSettings.GLOBAL.debugColorizePlanes;
         this.doLight = ApplicationSettings.GLOBAL.doLight;
         if (doLight) lightPosition = lightSource.getPosition();
-
-        polygonHolder.recacheObjects(width, height);
 
         int cores = ApplicationSettings.GLOBAL.cores;
         if (cores != 1){
@@ -112,8 +101,6 @@ public class RayTracer {
             RayTracerRunnable runnable = new RayTracerRunnable(0, width, 0, height);
             runnable.run();
         }
-
-        return frame;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -207,7 +194,7 @@ public class RayTracer {
                     rotateDirectionAsCamera(direction);
 
                     int color = rayTrace(direction);
-                    frame[(height-y-1)*width + x] = color;
+                    frame.setPixel(x, y, color);
                 }
             }
         }

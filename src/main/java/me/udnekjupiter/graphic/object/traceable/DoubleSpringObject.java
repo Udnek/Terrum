@@ -1,4 +1,4 @@
-package me.udnekjupiter.graphic.object;
+package me.udnekjupiter.graphic.object.traceable;
 
 import me.udnekjupiter.util.ColoredTriangle;
 import me.udnekjupiter.util.PositionedObject;

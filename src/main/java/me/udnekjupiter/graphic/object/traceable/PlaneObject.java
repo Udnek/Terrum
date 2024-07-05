@@ -1,4 +1,4 @@
-package me.udnekjupiter.graphic.object;
+package me.udnekjupiter.graphic.object.traceable;
 
 import me.udnekjupiter.util.ColoredTriangle;
 import me.udnekjupiter.util.Triangle;
@@ -6,7 +6,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class PlaneObject extends GraphicObject {
+public class PlaneObject extends TraceableObject {
 
     protected Triangle plane0;
     protected Triangle plane1;
