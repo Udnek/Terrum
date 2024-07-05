@@ -32,13 +32,6 @@ public class RayTracer {
         this.lightSource = lightSource;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // UTILS
-    ///////////////////////////////////////////////////////////////////////////
-    public void rotateDirectionAsCamera(Vector3d direction){
-        VectorUtils.rotatePitch(direction, cameraPitch);
-        VectorUtils.rotateYaw(direction, cameraYaw);
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     // TRACING
@@ -142,7 +135,7 @@ public class RayTracer {
         Vector3d distances = new Vector3d(d0, d1, d2);
         double minDistance = VectorUtils.getMin(distances);
         Vector3d color;
-        if (minDistance <= 0.01){
+        if (minDistance <= 0.08){
             color = new Vector3d(1f, 1f, 1f);
         } else {
             color = new Vector3d(1/d0, 1/d1 ,1/d2);
@@ -191,7 +184,7 @@ public class RayTracer {
                             fovMultiplier
                     );
 
-                    rotateDirectionAsCamera(direction);
+                    camera.rotateVector(direction);
 
                     int color = rayTrace(direction);
                     frame.setPixel(x, y, color);

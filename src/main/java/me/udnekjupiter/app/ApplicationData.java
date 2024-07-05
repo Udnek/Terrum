@@ -1,5 +1,7 @@
 package me.udnekjupiter.app;
 
+import me.udnekjupiter.util.Utils;
+
 public class ApplicationData {
 
     public long applicationStartTime = System.nanoTime();
@@ -9,7 +11,7 @@ public class ApplicationData {
     ///////////////////////////////////////////////////////////////////////////
     public int framesAmount = 0;
     public double fpsSum = 0;
-    public double frameRenderTime;
+    public long frameRenderTime;
     public long frameStartTime;
 
     public double averageFpsForLastTimes;
@@ -25,26 +27,28 @@ public class ApplicationData {
     public long physicStart = 0;
     public long physicFinish = 0;
     public long estimatedNextTickTime = System.nanoTime();
+    public long physicTickTime;
     public ApplicationData(){}
 
     public void frameStarted(){
         frameStartTime = System.nanoTime();
     }
     public void framePerformed(){
-        frameRenderTime = (System.nanoTime() - frameStartTime)/Math.pow(10, 9);
+        frameRenderTime = System.nanoTime() - frameStartTime;
+        double currentFps =  1 / ((double) frameRenderTime / Utils.NANOS_IN_SECOND);
 
         timeSinceAverageFpsUpdate += frameRenderTime;
-        fpsSumLastTime += 1/ frameRenderTime;
+        fpsSumLastTime += currentFps;
         framesSinceAverageFpsUpdate++;
 
-        if (timeSinceAverageFpsUpdate >= 0.5){
+        if (timeSinceAverageFpsUpdate >= 0.5 * Utils.NANOS_IN_SECOND){
             averageFpsForLastTimes = fpsSumLastTime/framesSinceAverageFpsUpdate;
             timeSinceAverageFpsUpdate = 0;
             fpsSumLastTime = 0;
             framesSinceAverageFpsUpdate = 0;
         }
 
-        fpsSum += 1/ frameRenderTime;
+        fpsSum += currentFps;
         framesAmount++;
 
         frameStartTime = System.nanoTime();
@@ -58,5 +62,6 @@ public class ApplicationData {
     }
     public void physicTickPerformed(){
         physicFinish = System.nanoTime();
+        physicTickTime = physicFinish - physicStart;
     }
 }

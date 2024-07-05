@@ -5,6 +5,9 @@ import java.text.NumberFormat;
 import java.util.function.Consumer;
 
 public class Utils {
+
+    public static int NANOS_IN_SECOND = (int) Math.pow(10, 9);
+
     public static String roundToPrecision(double number, int precision){
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(precision);
@@ -15,6 +18,9 @@ public class Utils {
         BufferedImage newImage = new BufferedImage(newWidth, newHeight, image.getType());
         newImage.getGraphics().drawImage(image, 0, 0, newWidth, newHeight, null);
         return newImage;
+    }
+    public static void resizeImage(BufferedImage image, int newWidth, int newHeight, BufferedImage output){
+        output.getGraphics().drawImage(image, 0, 0, newWidth, newHeight, null);
     }
 
     public static boolean roughlyEquals(double a, double b, double maxDistance){

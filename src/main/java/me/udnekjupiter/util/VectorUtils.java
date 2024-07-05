@@ -3,6 +3,9 @@ package me.udnekjupiter.util;
 import org.realityforge.vecmath.Vector3d;
 
 public class VectorUtils {
+    public static double vectorLength(double x, double y, double z){
+        return Math.sqrt(x*x + y*y + z*z);
+    }
     public static double distanceSquared(Vector3d vector0, Vector3d vector1){
         return Math.pow((vector0.x-vector1.x), 2) + Math.pow((vector0.y-vector1.y), 2) + Math.pow((vector0.z-vector1.z), 2);
     }
@@ -10,16 +13,20 @@ public class VectorUtils {
         return Math.sqrt(distanceSquared(vector0, vector1));
     }
 
-    public static double getAreaOfTriangle(Vector3d edge0, Vector3d edge1){
-        return getAreaOfParallelogram(edge0, edge1) / 2.0;
+/*    public static double getCrossProductLength(Vector3d vector0, Vector3d vector1){
+        double newX = vector0.y * vector1.z - vector0.z * vector1.y;
+        double newY = vector1.x * vector0.z - vector1.z * vector0.x;
+        double newZ = vector0.x * vector1.y - vector0.y * vector1.x;
+        return vectorLength(newX, newY, newZ);
     }
-
-    public static double getCrossProductLength(Vector3d vector0, Vector3d vector1){
-        return new Vector3d().cross(vector0, vector1).length();
-    }
-
     public static double getAreaOfParallelogram(Vector3d edge0, Vector3d edge1){
         return getCrossProductLength(edge0, edge1);
+    }*/
+    public static double getAreaOfTriangle(Vector3d edge0, Vector3d edge1){
+        double newX = edge0.y * edge1.z - edge0.z * edge1.y;
+        double newY = edge1.x * edge0.z - edge1.z * edge0.x;
+        double newZ = edge0.x * edge1.y - edge0.y * edge1.x;
+        return vectorLength(newX, newY, newZ) / 2.0;
     }
     public static Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
         return positionEnd.sub(positionStart).normalize();
@@ -78,8 +85,10 @@ public class VectorUtils {
 
         double distanceToPlane = normal.dot(vertex0);
         double directionCoefficient = distanceToPlane / normal.dot(direction);
+        // facing back
         if (directionCoefficient < 0) return null;
-        Vector3d onPlanePosition = direction.dup().mul(directionCoefficient);
+
+        Vector3d onPlanePosition = direction.mul(directionCoefficient);
         double actualArea = triangle.getArea();
 
         // points to vertices
@@ -88,6 +97,10 @@ public class VectorUtils {
         vertex2.sub(onPlanePosition);
 
         double area0 = getAreaOfTriangle(vertex0, vertex1);
+
+        // premature
+        if (area0 > actualArea) return null;
+
         double area1 = getAreaOfTriangle(vertex1, vertex2);
         double area2 = getAreaOfTriangle(vertex2, vertex0);
 
