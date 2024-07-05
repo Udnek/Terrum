@@ -101,120 +101,121 @@ public class CellularNet {
         }
     }
 
-    // TODO: 7/2/2024 Pi###c (cry about it)
-    public void updateVerticesCoefficients() {
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
-                    dynamicVertex.calculateCoefficient1();
-                }
-            }
-        }
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
-                    dynamicVertex.updateRKMPhaseVector1();
-                }
-            }
-        }
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    dynamicVertex.calculateCoefficient2();
-                }
-            }
-        }
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
-                    dynamicVertex.updateRKMPhaseVector2();
-                }
-            }
-        }
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
-                    dynamicVertex.calculateCoefficient3();
-                }
-            }
-        }
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
-                    dynamicVertex.updateRKMPhaseVector3();
-                }
-            }
-        }
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
-                    dynamicVertex.calculateCoefficient4();
-                }
-            }
-        }
-    }
-    public void updateVerticesPositionDifferentials(){
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    dynamicVertex.RKMCalculatePositionDifferential();
-                }
-            }
-        }
-    }
-    public void updateVerticesPositions(){
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    dynamicVertex.updatePosition();
-                }
-            }
-        }
-    }
-    public void syncVerticesRKMPhaseVectors(){
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) != null) {
-                    getVertex(j, i).setCurrentRKMPhaseVector(new Vector3d[]{getVertex(j, i).getPosition(), getVertex(j, i).getVelocity()});
-                }
-            }
-        }
-    }
-    public void updateNetKineticEnergy(){
-        double kineticSum = 0;
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    kineticSum += dynamicVertex.getKineticEnergy();
-                }
-            }
-        }
-        this.kineticEnergy = kineticSum;
-    }
-    public void updateNetPotentialEnergy(){
-        double potentialSum = 0;
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
-                    potentialSum += dynamicVertex.getPotentialEnergy();
-                }
-            }
-        }
-        this.potentialEnergy = potentialSum;
-    }
-    public void updateNetFullEnergy(){
-        this.fullEnergy = kineticEnergy+potentialEnergy;
-    }
+//    // TODO: 7/2/2024 Pi###c (cry about it)
+//    public void updateVerticesCoefficients() {
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+//                    dynamicVertex.calculateCoefficient1();
+//                }
+//            }
+//        }
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+//                    dynamicVertex.updateRKMPhaseVector1();
+//                }
+//            }
+//        }
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+//                    dynamicVertex.calculateCoefficient2();
+//                }
+//            }
+//        }
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+//                    dynamicVertex.updateRKMPhaseVector2();
+//                }
+//            }
+//        }
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+//                    dynamicVertex.calculateCoefficient3();
+//                }
+//            }
+//        }
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+//                    dynamicVertex.updateRKMPhaseVector3();
+//                }
+//            }
+//        }
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex) {
+//                    dynamicVertex.calculateCoefficient4();
+//                }
+//            }
+//        }
+//    }
+//    public void updateVerticesPositionDifferentials(){
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+//                    dynamicVertex.RKMCalculatePositionDifferential();
+//                }
+//            }
+//        }
+//    }
+//    public void updateVerticesPositions(){
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+//                    dynamicVertex.updatePosition();
+//                }
+//            }
+//        }
+//    }
+//    public void syncVerticesRKMPhaseVectors(){
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) != null) {
+//                    getVertex(j, i).setCurrentRKMPhaseVector(new Vector3d[]{getVertex(j, i).getPosition(), getVertex(j, i).getVelocity()});
+//                }
+//            }
+//        }
+//    }
+//    public void updateNetKineticEnergy(){
+//        double kineticSum = 0;
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+//                    kineticSum += dynamicVertex.getKineticEnergy();
+//                }
+//            }
+//        }
+//        this.kineticEnergy = kineticSum;
+//    }
+//    public void updateNetPotentialEnergy(){
+//        double potentialSum = 0;
+//        for (int i = 0; i < sizeZ; i++) {
+//            for (int j = 0; j < sizeX; j++) {
+//                if (getVertex(j, i) instanceof NetDynamicVertex dynamicVertex){
+//                    potentialSum += dynamicVertex.getPotentialEnergy();
+//                }
+//            }
+//        }
+//        this.potentialEnergy = potentialSum;
+//    }
+//    public void updateNetFullEnergy(){
+//        this.fullEnergy = kineticEnergy+potentialEnergy;
+//    }
 
-    public void updateNet(){
-        for (int i = 0; i < settings.iterationsPerTick; i++) {
-            updateNetPotentialEnergy();
-            updateNetKineticEnergy();
-            updateNetFullEnergy();
-            syncVerticesRKMPhaseVectors();
-            updateVerticesCoefficients();
-            updateVerticesPositionDifferentials();
-            updateVerticesPositions();
-        }
-    }
+//    public void updateNet(){
+//        for (int i = 0; i < settings.iterationsPerTick; i++) {
+//            updateNetPotentialEnergy();
+//            updateNetKineticEnergy();
+//            updateNetFullEnergy();
+//            syncVerticesRKMPhaseVectors();
+//            updateVerticesCoefficients();
+//            updateVerticesPositionDifferentials();
+//            updateVerticesPositions();
+//        }
+//    }
+
 }

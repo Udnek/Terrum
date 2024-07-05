@@ -24,29 +24,30 @@ public abstract class RKMPhysicsScene implements PhysicScene {
         }
     }
 
-    public void updateObjectsCoefficients() {
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient1();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.updateRKMPhaseVector1();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient2();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.updateRKMPhaseVector2();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient3();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.updateRKMPhaseVector3();
-        }
-        for (RKMObject object : RKMObjects) {
-            object.calculateCoefficient4();
-        }
-    }
+//    public void updateObjectsCoefficients() {
+//        for (RKMObject object : RKMObjects) {
+//            object.calculateCoefficient1();
+//        }
+//        for (RKMObject object : RKMObjects) {
+//            object.updateRKMPhaseVector1();
+//        }
+//        for (RKMObject object : RKMObjects) {
+//            object.calculateCoefficient2();
+//        }
+//        for (RKMObject object : RKMObjects) {
+//            object.updateRKMPhaseVector2();
+//        }
+//        for (RKMObject object : RKMObjects) {
+//            object.calculateCoefficient3();
+//        }
+//        for (RKMObject object : RKMObjects) {
+//            object.updateRKMPhaseVector3();
+//        }
+//        for (RKMObject object : RKMObjects) {
+//            object.calculateCoefficient4();
+//        }
+//    }
+
     public void updateObjectsPositionDifferentials(){
         for (RKMObject object : RKMObjects) {
             object.RKMCalculatePositionDifferential();
@@ -66,12 +67,19 @@ public abstract class RKMPhysicsScene implements PhysicScene {
     public void updateObjects(){
         syncObjectsRKMPhaseVectors();
 
+        System.out.print("Calculated 1st coefficient --");
         updateNextObjectsCoefficients(); //coefficient1
-        updateNextObjectsPhaseVectors(); //
+        System.out.print("Calculated 1st step --");
+        updateNextObjectsPhaseVectors(); //step1
+        System.out.print("Calculated 2nd coefficient --");
         updateNextObjectsCoefficients(); //coefficient2
-        updateNextObjectsPhaseVectors(); //
+        System.out.print("Calculated 2nd step --");
+        updateNextObjectsPhaseVectors(); //step2
+        System.out.print("Calculated 3rd coefficient --");
         updateNextObjectsCoefficients(); //coefficient3
-        updateNextObjectsPhaseVectors(); //
+        System.out.print("Calculated 3rd step --");
+        updateNextObjectsPhaseVectors(); //step3
+        System.out.print("Calculated 4th coefficient --");
         updateNextObjectsCoefficients(); //coefficient4
 
         updateObjectsPositionDifferentials();

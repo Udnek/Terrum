@@ -3,6 +3,7 @@ package me.udnekjupiter.physic.scene;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.RKMObject;
+import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
@@ -25,11 +26,10 @@ public class NetPhysicsScene extends RKMPhysicsScene {
         net.setupVerticesVariables();
         List<NetVertex> vertices = net.getVerticesObjects();
         for (NetVertex vertex : vertices) {
-            if (vertex != null){
+            if (vertex instanceof NetDynamicVertex) {
                 addObject(vertex);
             }
         }
-        System.out.println(RKMObjects.size());
     }
 
 //    public void setInitialDeviation(int x, int z, double xNew, double yNew, double zNew) {

@@ -32,7 +32,7 @@ public class EnvironmentSettings {
                 5,
                 0.001,
                 5,
-                "small_frame.png",
+                "singular_vertex.png",
                 4);
     }
 }
