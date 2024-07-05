@@ -55,52 +55,86 @@ public class Application implements ConsoleListener, ControllerListener {
         videoRecorder.start(settings);
     }
 
-    private void physicLoop(){
+    ///////////////////////////////////////////////////////////////////////////
+    // LOOPS
+    ///////////////////////////////////////////////////////////////////////////
+
+    private void physicTick(){
+        applicationData.physicTickStarted();
+        physicEngine.tick();
+        applicationData.physicTickPerformed();
+    }
+
+    private void livePhysicLoop(){
         while (true){
-            applicationData.physicTickStarted();
 
-            physicEngine.tick();
-
-            applicationData.physicTickPerformed();
+            physicTick();
 
             while (System.nanoTime() < applicationData.estimatedNextTickTime){
-                try {
-                    Thread.sleep(1);
+                try {Thread.sleep(1);
                 } catch (InterruptedException ignored) {}
             }
+        }
+    }
+
+    private void videoRenderLoop(){
+
+        final int FPS = VideoRecorder.VIDEO_FPS;
+        final int TPS = PHYSIC_TICKS_PER_SECOND;
+
+        int physicTicks;
+        int graphicTicks;
+
+        if (TPS < FPS){
+            physicTicks = 1;
+            graphicTicks = Math.max(FPS / TPS, 1);
+        } else {
+            physicTicks = Math.max(TPS / FPS, 1);
+            graphicTicks = 1;
+        }
+
+        int renderWidth = settings.videoWidth;
+        int renderHeight = settings.videoHeight;
+
+        while (true){
+
+            for (int i = 0; i < physicTicks; i++) {
+                physicTick();
+            }
+
+            for (int i = 0; i < graphicTicks; i++) {
+
+                windowManager.tick();
+                debugMenu.reset();
+                addDebugInformation();
+
+                BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
+                videoRecorder.addFrame(rendered);
+
+                BufferedImage frame = Utils.resizeImage(rendered, windowManager.getWidth(), windowManager.getHeight());
+
+                debugMenu.draw(frame, 15);
+                windowManager.setFrame(frame);
 
 
+                applicationData.framePerformed();
+            }
 
         }
     }
 
-    private void graphicLoop(){
+    private void liveGraphicLoop(){
         while (true){
             windowManager.tick();
             debugMenu.reset();
             addDebugInformation();
 
-            int renderWidth;
-            int renderHeight;
-            int textSize = 15;
-            if (settings.recordVideo){
-                renderWidth = settings.videoWidth;
-                renderHeight = settings.videoHeight;
-            }
-            else {
-                renderWidth = windowManager.getWidth();
-                renderHeight = windowManager.getHeight();
-            }
+            int width = windowManager.getWidth();
+            int height = windowManager.getHeight();
 
-
-            BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
-            videoRecorder.addFrame(rendered);
-
-            int windowWidth = windowManager.getWidth();
-            int windowHeight = windowManager.getHeight();
-            BufferedImage frame = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB);
-            frame.getGraphics().drawImage(rendered, 0, 0, windowWidth, windowHeight, null);
-            debugMenu.draw(frame, textSize);
+            BufferedImage rendered = graphicEngine.renderFrame(width, height);
+            BufferedImage frame = Utils.resizeImage(rendered, width, height);
+            debugMenu.draw(frame, 15);
             windowManager.setFrame(frame);
 
             applicationData.framePerformed();
@@ -113,20 +147,30 @@ public class Application implements ConsoleListener, ControllerListener {
         graphicEngine.initialize();
         console.start();
 
-        Thread physicThread = new Thread(new Runnable() {
-            @Override
-            public void run() {physicLoop();}
-        });
-        physicThread.setName("PhysicLoop");
-        Thread graphicThread = new Thread(new Runnable() {
-            @Override
-            public void run() {graphicLoop();}
-        });
-        graphicThread.setName("GraphicLoop");
+        if (settings.recordVideo){
+            Thread renderThread = new Thread(new Runnable() {
+                @Override
+                public void run() {videoRenderLoop();}
+            });
+            renderThread.setName("RenderThread");
+            renderThread.start();
 
+        } else {
+            Thread physicThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    livePhysicLoop();}
+            });
+            physicThread.setName("PhysicLoop");
+            Thread graphicThread = new Thread(new Runnable() {
+                @Override
+                public void run() {liveGraphicLoop();}
+            });
+            graphicThread.setName("GraphicLoop");
 
-        physicThread.start();
-        graphicThread.start();
+            physicThread.start();
+            graphicThread.start();
+        }
 
     }
 
@@ -138,6 +182,7 @@ public class Application implements ConsoleListener, ControllerListener {
         if (!debugMenu.isEnabled()) return;
         debugMenu.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
         debugMenu.addTextToRight("RenderTime: " + Utils.roundToPrecision(applicationData.frameRenderTime, 5));
+        debugMenu.addTextToRight("FramesRendered: " + applicationData.framesAmount);
         debugMenu.addTextToRight(
                 "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );

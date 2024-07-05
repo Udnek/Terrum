@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class VideoRecorder {
 
+    public static final int VIDEO_FPS = Application.PHYSIC_TICKS_PER_SECOND;
     private AWTSequenceEncoder videoEncoder;
     private ApplicationSettings settings;
 
@@ -19,7 +20,7 @@ public class VideoRecorder {
 
         File file = FileManager.readFile(FileManager.Directory.VIDEO, settings.videoName+".mp4");
         try {
-            videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, 25);
+            videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, VIDEO_FPS);
         } catch (IOException e) {throw new RuntimeException(e);}
     }
 
