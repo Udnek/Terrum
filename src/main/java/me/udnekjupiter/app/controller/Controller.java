@@ -50,7 +50,9 @@ public class Controller implements Listenable<ControllerListener>{
         }
     }
 
-    public List<InputKey> getPressedKeys(){return pressedKeys;}
+    public List<InputKey> getPressedKeys(){
+        return new ArrayList<>(pressedKeys);
+    }
     public void mouseChanges(MouseEvent event, boolean pressed){
         if (!mouseIsPressed() && !pressed) return;
         if (mouseIsPressed() && pressed) return;

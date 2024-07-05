@@ -93,7 +93,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void handleMousePressedDifference(){
         InputKey mouseKey = controller.getMouseKey();
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
-            float sensitivity = (float) (3f * Application.getFrameDeltaTime());
+            float sensitivity = (float) (10f * Application.getFrameDeltaTime());
             Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);
