@@ -1,6 +1,7 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 
@@ -31,6 +32,7 @@ public abstract class RKMPhysicsScene implements PhysicScene {
             object.clearCollidingObjects();
         }
         for (RKMObject targetObject : RKMObjects) {
+            if (targetObject instanceof MassEssence) System.out.println(targetObject.getPosition().asString());
             for (RKMObject anotherObject : RKMObjects) {
                 if (targetObject == anotherObject) continue;
                 if (!targetObject.getCollider().isCollidingWith(anotherObject.getCollider())) continue;
@@ -60,6 +62,7 @@ public abstract class RKMPhysicsScene implements PhysicScene {
 
     public void updateObjects(){
         syncObjectsRKMPhaseVectors();
+
         for (int i = 0; i < 4; i++) {
             updateColliders();
             updateNextObjectsCoefficients(); //coefficient1-2-3-4

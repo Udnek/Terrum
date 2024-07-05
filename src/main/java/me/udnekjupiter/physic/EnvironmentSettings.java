@@ -34,7 +34,7 @@ public class EnvironmentSettings {
                 0.001,
                 5,
                 imageFileName,
-                1);
+                10);
     }
 
     public static EnvironmentSettings defaultPreset(){

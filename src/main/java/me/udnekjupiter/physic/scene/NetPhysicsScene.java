@@ -30,10 +30,11 @@ public class NetPhysicsScene extends RKMPhysicsScene {
                 addObject(vertex);
             }
         }
+        addMassEssence(new Vector3d(2, 1, 2));
     }
 
     public void addMassEssence(Vector3d position){
-        RKMObjects.add(new MassEssence(position));
+        addObject(new MassEssence(position));
     }
     public void setVertexPosition(int posX, int posZ, Vector3d newPos){
         net.getVertex(posX, posZ).setPosition(newPos);

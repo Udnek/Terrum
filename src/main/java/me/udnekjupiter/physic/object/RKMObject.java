@@ -3,6 +3,8 @@ package me.udnekjupiter.physic.object;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collider.Collidable;
 import me.udnekjupiter.physic.collider.Collider;
+import me.udnekjupiter.physic.collider.SphereCollider;
+import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -152,7 +154,22 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
 
     protected abstract Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity);
     protected abstract Vector3d getAppliedForce(Vector3d position);
-    protected abstract Vector3d getCollisionForce();
+    protected Vector3d getCollisionForce(Vector3d thisPosition) {
+        Vector3d collisionForce = new Vector3d();
+        System.out.println(collidingObjects.size());
+        for (RKMObject collidingObject : collidingObjects) {
+            if (collidingObject.getCollider() instanceof SphereCollider) {
+                Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
+                Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
+                double distance = VectorUtils.distance(thisPosition, otherPosition);
+                double maxDistance = ((SphereCollider) collidingObject.getCollider()).radius +
+                        ((SphereCollider) this.getCollider()).radius;
+                double normalizedDistance = distance/maxDistance;
+                collisionForce.add(normalizedDirection.mul(1 / (Math.pow(normalizedDistance, 2))).div(collidingObjects.size()));
+            }
+        }
+        return collisionForce;
+    }
 
     @Override
     public void freeze(){frozen = true;}

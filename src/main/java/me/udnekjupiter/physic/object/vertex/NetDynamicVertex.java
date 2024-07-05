@@ -31,28 +31,20 @@ public class NetDynamicVertex extends NetVertex {
         this.basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
 
-    public Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
-        return positionEnd.sub(positionStart).normalize();
-    }
-
     @Override
     protected Vector3d getAppliedForce(Vector3d position){
         Vector3d appliedForce = new Vector3d(0, 0, 0);
         for (NetVertex neighbor : neighbors) {
-            Vector3d normalizedDirection = getNormalizedDirection(position, neighbor.getCurrentRKMPosition());
+            Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(position, neighbor.getCurrentRKMPosition());
             double distanceToNeighbour = VectorUtils.distance(position, neighbor.getCurrentRKMPosition());
             double distanceDifferential = distanceToNeighbour - springRelaxedLength;
             double elasticForce = springStiffness * distanceDifferential;
             appliedForce.add(normalizedDirection.mul(elasticForce));
         }
 
-        appliedForce.y += (-9.80665)*mass;
+        //appliedForce.y += (-9.80665)*mass;
+        appliedForce.add(getCollisionForce(position));
         return appliedForce;
-    }
-
-    @Override
-    protected Vector3d getCollisionForce() {
-        return null;
     }
 
     @Override

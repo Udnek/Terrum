@@ -19,9 +19,4 @@ public class NetStaticVertex extends NetVertex {
         return null;
     }
 
-    @Override
-    protected Vector3d getCollisionForce() {
-        return null;
-    }
-
 }
