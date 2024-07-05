@@ -1,6 +1,7 @@
 package me.udnekjupiter.graphic.engine;
 
 import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.RayTracer;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 
@@ -26,7 +27,7 @@ public class GraphicEngine3d implements GraphicEngine{
 
     @Override
     public BufferedImage renderFrame(final int width, final int height){
-        graphicScene.beforeFrameUpdate(width, height);
+        graphicScene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
         int renderWidth = Math.max(width / ApplicationSettings.GLOBAL.pixelScaling, 1);
         int renderHeight = Math.max(height / ApplicationSettings.GLOBAL.pixelScaling, 1);

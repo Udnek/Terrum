@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Controller implements Listenable<ControllerListener> {
+public class Controller implements Listenable<ControllerListener>{
 
-    private List<InputKey> pressedKeys = Collections.synchronizedList(new ArrayList<>());
+    private final List<InputKey> pressedKeys = Collections.synchronizedList(new ArrayList<>());
     private Point mousePreviousPosition;
+    private Point mouseCurrentPosition;
     private InputKey currentMouseKey;
-    private Point mouseRelativePosition;
 
     private final List<ControllerListener> listeners = new ArrayList<>();
     private static Controller instance;
@@ -41,6 +41,7 @@ public class Controller implements Listenable<ControllerListener> {
         InputKey key = InputKey.getByCode(event.getKeyCode());
         if (key == null) return;
         keyEventForEveryListener(key, nowPressed);
+
         if (key.longPress){
             boolean pressed = pressedKeys.contains(key);
             if (pressed == nowPressed) return;
@@ -61,7 +62,6 @@ public class Controller implements Listenable<ControllerListener> {
         // PRESSING
         if (pressed){
             currentMouseKey = key;
-            mousePreviousPosition = getMousePosition();
         }
         // UN PRESSING
         else {
@@ -72,32 +72,22 @@ public class Controller implements Listenable<ControllerListener> {
     public boolean mouseIsPressed(){
         return currentMouseKey != null;
     }
-
     public InputKey getMouseKey() {
         return currentMouseKey;
     }
-
-    public void updateMouse(){
-        mousePreviousPosition = getMousePosition();
+    public void setMouseCurrentPosition(Point position){
+        if (position == null) return;
+        mousePreviousPosition = mouseCurrentPosition;
+        mouseCurrentPosition = position;
     }
-
-    public void setMouseRelativePosition(Point position){
-        mouseRelativePosition = position;
-    }
-
-    public Point getMouseRelativePosition() {
-        return mouseRelativePosition;
-    }
-
-    private Point getMousePosition(){
-        return MouseInfo.getPointerInfo().getLocation();
+    public Point getMouseCurrentPosition() {
+        return mouseCurrentPosition;
     }
 
     public Point getMouseDifference(){
-        Point newLocation = getMousePosition();
         return new Point(
-                newLocation.x - mousePreviousPosition.x,
-                newLocation.y - mousePreviousPosition.y
+                mouseCurrentPosition.x - mousePreviousPosition.x,
+                mouseCurrentPosition.y - mousePreviousPosition.y
         );
     }
 }

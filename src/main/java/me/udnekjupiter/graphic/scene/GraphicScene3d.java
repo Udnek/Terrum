@@ -54,22 +54,21 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         this.width = width;
         this.height = height;
 
-        Application.debugMenu.addTextToLeft("draggingObject: " + draggingObject);
+        Application.debugMenu.addTextToLeft("DraggingObject: " + draggingObject);
+        Application.debugMenu.addTextToLeft("MouseCurrentPosition: " + controller.getMouseCurrentPosition());
 
         for (InputKey pressedKey : controller.getPressedKeys()) {
             keyContinuouslyPressed(pressedKey);
         }
         if (controller.mouseIsPressed()){
-            Point mouseDifference = controller.getMouseDifference();
-            controller.updateMouse();
-            handleMousePressedDifference(mouseDifference, controller.getMouseKey());
+            handleMousePressedDifference();
         }
     }
 
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
         if (inputKey != InputKey.MOUSE_OBJECT_DRAG) return;
-        if (pressed) draggingObject = findObjectCursorLookingAt(controller.getMouseRelativePosition());
+        if (pressed) draggingObject = findObjectCursorLookingAt(controller.getMouseCurrentPosition());
         else draggingObject = null;
     }
 
@@ -91,35 +90,51 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
             case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
         }
     }
-    public void handleMousePressedDifference(Point mouseDifference, InputKey key){
-        if (key == InputKey.MOUSE_CAMERA_DRAG){
-            float sensitivity = (float) (7f * Application.getFrameDeltaTime());
+    public void handleMousePressedDifference(){
+        InputKey mouseKey = controller.getMouseKey();
+        if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
+            float sensitivity = (float) (3f * Application.getFrameDeltaTime());
+            Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);
         }
-        else if (key == InputKey.MOUSE_OBJECT_DRAG){
+        else if (mouseKey == InputKey.MOUSE_OBJECT_DRAG){
             if (draggingObject == null) return;
-            float sensitivity = (float) (0.15f * Application.getFrameDeltaTime());
+
+            Point mousePosition = Controller.getInstance().getMouseCurrentPosition();
+            Vector3d mouseDirection = getMouseDirection(mousePosition);
+
+            double distance = VectorUtils.distance(draggingObject.getPosition(), camera.getPosition());
+            mouseDirection.normalize().mul(distance);
+
+            draggingObject.setPosition(camera.getPosition().add(mouseDirection));
+
+/*            float sensitivity = (float) (0.15f * Application.getFrameDeltaTime());
             Vector3d moveDirection = new Vector3d(mouseDifference.x*sensitivity, -mouseDifference.y*sensitivity, 0);
             camera.rotateVector(moveDirection);
-            draggingObject.move(moveDirection);
+            draggingObject.move(moveDirection);*/
+
+
         }
 
+    }
+
+    public Vector3d getMouseDirection(Point mousePosition){
+        Vector3d direction = new Vector3d(
+                (mousePosition.x - width/2f),
+                ((height-mousePosition.y-1) - height/2f),
+                width/camera.getFov()
+        );
+        camera.rotateVector(direction);
+        return direction;
     }
 
     public GraphicObject findObjectCursorLookingAt(Point mousePosition){
 
         Vector3d cameraPosition = camera.getPosition();
 
+        Vector3d direction = getMouseDirection(mousePosition);
 
-        Vector3d direction = new Vector3d(
-                (mousePosition.x - width/2f),
-                ((height-mousePosition.y-1) - height/2f),
-                width/camera.getFov()
-        );
-
-
-        camera.rotateVector(direction);
 
         GraphicObject nearestObject = null;
         double nearestDistance = Double.POSITIVE_INFINITY;

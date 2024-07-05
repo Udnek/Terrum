@@ -4,6 +4,7 @@ import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.file.FileManager;
 import me.udnekjupiter.util.Initializable;
+import me.udnekjupiter.util.Tickable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +12,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
-public class WindowManager extends WindowAdapter implements Initializable {
+public class WindowManager extends WindowAdapter implements Initializable, Tickable {
 
     private Frame frame;
     private Panel panel;
 
-    public static final Controller CONTROLLER;
+    private final Controller controller = Controller.getInstance();
 
     private static WindowManager instance;
-
-    static {
-        CONTROLLER = new Controller();
-    }
 
     private WindowManager(){}
 
@@ -76,5 +73,10 @@ public class WindowManager extends WindowAdapter implements Initializable {
     public void setSize(int width, int height){
         panel.setPreferredSize(new Dimension(width, height));
         frame.pack();
+    }
+
+    @Override
+    public void tick() {
+        controller.setMouseCurrentPosition(panel.getMousePosition());
     }
 }

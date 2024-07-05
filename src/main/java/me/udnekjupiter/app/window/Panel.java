@@ -21,7 +21,6 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener 
     public void update(Graphics g) {}
     public void updateUI()  {}
 
-
     @Override
     public void mousePressed(MouseEvent event) {
         controller.mouseChanges(event, true);
@@ -32,7 +31,7 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener 
     }
     @Override
     public void mouseMoved(MouseEvent event) {
-        controller.setMouseRelativePosition(event.getPoint());
+        controller.setMouseCurrentPosition(event.getPoint());
     }
 
     @Override

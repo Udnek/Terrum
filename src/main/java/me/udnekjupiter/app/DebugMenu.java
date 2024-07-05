@@ -7,21 +7,20 @@ import java.util.List;
 
 public class DebugMenu {
 
+    public static final String FONT_NAME = "Arial";
+
     private int textYLeft = 0;
     private int textYRight = 0;
     private Graphics graphics;
     private int width;
     private int height;
-    private final int textSize;
-    private final Font font;
+    private Font font;
+    private int textSize;
     private boolean enabled = false;
     private final List<String> leftText = new ArrayList<>();
     private final List<String> rightText = new ArrayList<>();
 
-    public DebugMenu(int textSize){
-        this.textSize = textSize;
-        font = new Font("Arial", Font.PLAIN, this.textSize);
-    }
+    public DebugMenu(){}
 
     public void reset(){
         textYLeft = 0;
@@ -30,10 +29,10 @@ public class DebugMenu {
         rightText.clear();
     }
 
-    public void draw(BufferedImage image){
-        draw(image.getGraphics(), image.getWidth(), image.getHeight());
+    public void draw(BufferedImage image, int textSize){
+        draw(image.getGraphics(), textSize, image.getWidth(), image.getHeight());
     }
-    public void draw(Graphics graphics, int width, int height){
+    public void draw(Graphics graphics, int textSize, int width, int height){
         if (!enabled) return;
         this.graphics = graphics;
         this.width = width;
@@ -41,6 +40,9 @@ public class DebugMenu {
         graphics.setFont(font);
         graphics.setColor(Color.WHITE);
         addCenterCrosshair();
+
+        this.textSize = textSize;
+        font = new Font(FONT_NAME, Font.PLAIN, textSize);
 
         leftText.forEach(s -> drawText(TextPosition.LEFT, s));
         rightText.forEach(s -> drawText(TextPosition.RIGHT, s));
