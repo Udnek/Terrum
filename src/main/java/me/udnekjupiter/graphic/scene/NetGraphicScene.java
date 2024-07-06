@@ -9,7 +9,6 @@ import me.udnekjupiter.graphic.object.traceable.*;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.RKMObject;
-import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import org.realityforge.vecmath.Vector3d;
@@ -17,11 +16,26 @@ import org.realityforge.vecmath.Vector3d;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NetGraphicScene extends GraphicScene3d {
     private final NetPhysicsScene netPhysicsScene;
     public NetGraphicScene(NetPhysicsScene netPhysicsScene){
         this.netPhysicsScene = netPhysicsScene;
+    }
+
+    private boolean containsAnywhere(Map<NetVertex, List<NetVertex>> map, NetVertex netVertex){
+        if (map.containsKey(netVertex)) return true;
+        return containsInKeys(map, netVertex);
+    }
+
+    private boolean containsInKeys(Map<NetVertex, List<NetVertex>> map, NetVertex netVertex){
+        for (List<NetVertex> value : map.values()) {
+            for (NetVertex vertex : value) {
+                if (vertex == netVertex) return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -30,7 +44,8 @@ public class NetGraphicScene extends GraphicScene3d {
         List<SpringObject> springs = new ArrayList<>();
 
         CellularNet net = netPhysicsScene.getNet();
-        HashMap<NetVertex, List<NetVertex>> addedNeighbours = new HashMap<>();
+        Map<NetVertex, List<NetVertex>> addedNeighbours = new HashMap<>();
+        Map<NetVertex, VertexObject> graphicRepresentation = new HashMap<>();
 
         for (int x = 0; x < net.getSizeX(); x++) {
             for (int z = 0; z < net.getSizeZ(); z++) {
@@ -38,27 +53,42 @@ public class NetGraphicScene extends GraphicScene3d {
                 NetVertex netVertex = net.getVertex(x, z);
 
                 if (netVertex == null) continue;
-                if (netVertex instanceof NetStaticVertex) continue;
-
                 if (addedNeighbours.containsKey(netVertex)) continue;
 
 
-                VertexObject vertexObject = new VertexObject(new Vector3d(netVertex.getPosition()), netVertex);
-                vertices.add(vertexObject);
-                List<NetVertex> addedNeighbourVertices = addedNeighbours.getOrDefault(netVertex, null);
-                if (addedNeighbourVertices == null) {
-                    addedNeighbourVertices = new ArrayList<>();
-                    addedNeighbours.put(netVertex, addedNeighbourVertices);
+                VertexObject vertexObject;
+                if (!graphicRepresentation.containsKey(netVertex)){
+                    vertexObject = new VertexObject(new Vector3d(netVertex.getPosition()), netVertex);
+                    vertices.add(vertexObject);
+                    graphicRepresentation.put(netVertex, vertexObject);
+                }else {
+                    vertexObject = graphicRepresentation.get(netVertex);
                 }
 
+
+                List<NetVertex> neighbors = new ArrayList<>();
+                addedNeighbours.put(netVertex, neighbors);
+
                 // TODO: 5/31/2024 FIX AND OPTIMIZE
+                // 7/7/2024 was kinda fixed
 
-                for (NetVertex neighbour : netVertex.getNeighbors()) {
-                    if (addedNeighbours.containsKey(neighbour)) continue;
+                for (NetVertex neighbor : netVertex.getNeighbors()) {
+                    if (neighbors.contains(neighbor)) continue;
 
-                    VertexObject neighbourObject = new VertexObject(new Vector3d(neighbour.getPosition()), neighbour);
-                    vertices.add(neighbourObject);
-                    springs.add(new DoubleSpringObject(new Vector3d(), vertexObject, neighbourObject));
+                    neighbors.add(neighbor);
+
+                    if (addedNeighbours.getOrDefault(neighbor, new ArrayList<>()).contains(netVertex)) continue;
+
+                    VertexObject neighbourObject;
+                    if (!graphicRepresentation.containsKey(neighbor)){
+                        neighbourObject = new VertexObject(new Vector3d(neighbor.getPosition()), neighbor);
+                        graphicRepresentation.put(neighbor, neighbourObject);
+                        vertices.add(neighbourObject);
+                    } else {
+                        neighbourObject = graphicRepresentation.get(neighbor);
+                    }
+                    springs.add(new DoubleSpringObject(vertexObject, neighbourObject));
+
 
                 }
             }
