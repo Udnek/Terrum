@@ -2,7 +2,6 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.PhysicSynchronizable;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
@@ -21,7 +20,6 @@ import java.util.List;
 
 public class NetGraphicScene extends GraphicScene3d {
     private final NetPhysicsScene netPhysicsScene;
-    private MassEssenceObject massEssenceObject;
     public NetGraphicScene(NetPhysicsScene netPhysicsScene){
         this.netPhysicsScene = netPhysicsScene;
     }
@@ -81,13 +79,6 @@ public class NetGraphicScene extends GraphicScene3d {
         return graphicObjects;
     }
 
-    public void synchroniseObjects(){
-        for (TraceableObject object : traceableObjects) {
-            if (object instanceof PhysicSynchronizable physicSynchronizable){
-                physicSynchronizable.synchronizeWithPhysic();
-            }
-        }
-    }
 
     @Override
     protected Camera initializeCamera() {
@@ -104,12 +95,6 @@ public class NetGraphicScene extends GraphicScene3d {
     @Override
     protected List<FixedSizeObject> initializeFixedSizeObjects() {
         return null;
-    }
-
-    @Override
-    public void beforeFrameUpdate(int width, int height) {
-        super.beforeFrameUpdate(width, height);
-        synchroniseObjects();
     }
 }
 

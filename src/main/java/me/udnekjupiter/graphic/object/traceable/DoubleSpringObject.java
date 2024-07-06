@@ -16,7 +16,7 @@ public class DoubleSpringObject extends SpringObject{
     }
 
     @Override
-    public void synchronizeWithPhysic() {
+    public void tick() {
         Vector3d posA1 = tipA.getPosition().sub(0, 0.01, 0);
         Vector3d posB1 = tipB.getPosition().sub(0, 0.01, 0);
 

@@ -1,15 +1,11 @@
 package me.udnekjupiter.graphic.object.traceable;
 
-import me.udnekjupiter.graphic.object.PhysicSynchronizable;
-import me.udnekjupiter.util.ColoredTriangle;
-import me.udnekjupiter.util.PositionedObject;
-import me.udnekjupiter.util.Triangle;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.*;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class SpringObject extends TraceableObject implements PhysicSynchronizable {
+public class SpringObject extends TraceableObject implements Tickable {
 
     protected PositionedObject tipA;
     protected PositionedObject tipB;
@@ -25,7 +21,7 @@ public class SpringObject extends TraceableObject implements PhysicSynchronizabl
     }
 
     @Override
-    public void synchronizeWithPhysic() {
+    public void tick() {
         Vector3d pos1 = tipA.getPosition().sub(0, 0.01, 0);
         Vector3d pos2 = tipB.getPosition().sub(0, 0.01, 0);
         Vector3d direction = pos2.dup().sub(pos1).normalize().mul(0.1f);
