@@ -4,13 +4,13 @@ import org.realityforge.vecmath.Vector3d;
 
 public class Triangle {
 
-    private Vector3d vertex0;
-    private Vector3d vertex1;
-    private Vector3d vertex2;
+    protected Vector3d vertex0;
+    protected Vector3d vertex1;
+    protected Vector3d vertex2;
 
-    private Vector3d edge0;
-    private Vector3d edge1;
-    private Vector3d edge2;
+    protected Vector3d edge0;
+    protected Vector3d edge1;
+    protected Vector3d edge2;
 
     public Triangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
         this.vertex0 = vertex0;
@@ -69,10 +69,6 @@ public class Triangle {
         return VectorUtils.getAreaOfTriangle(edge0, edge1);
     }
 
-    public Triangle copy(){
-        return new Triangle(this);
-    }
-
     public Triangle addToAllVertexes(Vector3d vector){
         this.vertex0.add(vector);
         this.vertex1.add(vector);
@@ -87,7 +83,12 @@ public class Triangle {
         return this;
     }
 
+    public Triangle copy(){
+        return new Triangle(this);
+    }
+
     public String asString() {
         return vertex0.asString() + vertex1.asString() + vertex2.asString();
     }
+
 }

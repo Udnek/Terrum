@@ -1,12 +1,11 @@
-package me.udnekjupiter.util;
+package me.udnekjupiter.graphic.triangle;
 
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class ColoredTriangle extends Triangle{
-
-    private int color;
+public class ColoredTriangle extends TraceableTriangle{
+    private final int color;
     public ColoredTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, int color) {
         super(vertex0, vertex1, vertex2);
         this.color = color;
@@ -21,12 +20,13 @@ public class ColoredTriangle extends Triangle{
         this.color = triangle.color;
     }
 
-    public int getColor() {
+    @Override
+    public int getColorWhenTraced(Vector3d hitPosition) {
         return color;
     }
 
     @Override
-    public Triangle copy() {
+    public ColoredTriangle copy() {
         return new ColoredTriangle(this);
     }
 }

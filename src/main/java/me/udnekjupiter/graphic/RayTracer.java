@@ -3,17 +3,17 @@ package me.udnekjupiter.graphic;
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
-import me.udnekjupiter.util.ColoredTriangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import me.udnekjupiter.util.Triangle;
+import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
-
-import java.awt.*;
 
 public class RayTracer {
 
     private Camera camera;
     private Vector3d cameraPosition;
+    // TODO: 7/6/2024 FIX FIND USAGES
     private double cameraYaw, cameraPitch;
     private int width, height;
     private double fovMultiplier;
@@ -39,10 +39,10 @@ public class RayTracer {
 
     public int rayTrace(Vector3d direction){
         Vector3d nearestHitPosition = null;
-        Triangle nearestPlane = null;
+        TraceableTriangle nearestPlane = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
-        for (Triangle plane : polygonHolder.getCachedPlanes(direction)) {
+        for (TraceableTriangle plane : polygonHolder.getCachedPlanes(direction)) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
 
             if (hitPosition == null) continue;
@@ -99,7 +99,7 @@ public class RayTracer {
     // COLORIZING
     ///////////////////////////////////////////////////////////////////////////
 
-    private double positionLighted(Vector3d position, Triangle plane){
+    private double positionLighted(Vector3d position, TraceableTriangle plane){
 
         // to absolute position;
         position.add(cameraPosition);
@@ -110,8 +110,8 @@ public class RayTracer {
 
         final float EPSILON = 0.0001f;
 
-        for (Triangle triangle : polygonHolder.getLightCachedPlanes(direction)) {
-            Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, triangle);
+        for (Triangle TraceableTriangle : polygonHolder.getLightCachedPlanes(direction)) {
+            Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, TraceableTriangle);
             if (hitPosition != null){
                 if (direction.lengthSquared() - EPSILON > hitPosition.lengthSquared()){
                     return 0;
@@ -122,26 +122,9 @@ public class RayTracer {
         return perpendicularity;
     }
 
-    private int colorizeRayTrace(Vector3d hitPosition, Triangle plane){
+    private int colorizeRayTrace(Vector3d hitPosition, TraceableTriangle plane){
 
-        if (!debugColorizePlanes && plane instanceof ColoredTriangle coloredPlane){
-            return coloredPlane.getColor();
-        }
-
-        double d0 = VectorUtils.distance(hitPosition, plane.getVertex0());
-        double d1 = VectorUtils.distance(hitPosition, plane.getVertex1());
-        double d2 = VectorUtils.distance(hitPosition, plane.getVertex2());
-
-        Vector3d distances = new Vector3d(d0, d1, d2);
-        double minDistance = VectorUtils.getMin(distances);
-        Vector3d color;
-        if (minDistance <= 0){
-            color = new Vector3d(1f, 1f, 1f);
-        } else {
-            color = new Vector3d(1/d0, 1/d1 ,1/d2);
-            color.div(VectorUtils.getMax(color));
-            VectorUtils.cutTo(color, 1f);
-        }
+        int color =  plane.getColorWhenTraced(hitPosition);
 
         if (doLight){
             float light = (float) positionLighted(hitPosition, plane);
@@ -149,12 +132,10 @@ public class RayTracer {
             if (light < 0.15) light = 0.15f;
             else if (light > 1) light = 1;
 
-            color.mul(light);
+            color = Utils.multiplyColor(color, light);
         }
 
-
-        return new Color((float) color.x, (float) color.y, (float) color.z).getRGB();
-
+        return color;
     }
 
     ///////////////////////////////////////////////////////////////////////////

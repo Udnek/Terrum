@@ -1,24 +1,24 @@
 package me.udnekjupiter.graphic.object.traceable.shape;
 
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.util.Triangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
 public class PolygonObject extends TraceableObject {
 
-    private Triangle plane;
+    private TraceableTriangle plane;
 
 
-    public PolygonObject(Vector3d position, Triangle plane) {
+    public PolygonObject(Vector3d position, TraceableTriangle plane) {
         super(position);
         this.plane = plane;
     }
 
-    public void setPlane(Triangle plane) {
+    public void setPlane(TraceableTriangle plane) {
         this.plane = plane;
     }
 
-    public Triangle getPlane(){
+    public TraceableTriangle getPlane(){
         return plane.copy();
     }
 
@@ -31,7 +31,7 @@ public class PolygonObject extends TraceableObject {
     }
 
     @Override
-    public Triangle[] getRenderTriangles() {
-        return new Triangle[]{getPlane()};
+    public TraceableTriangle[] getRenderTriangles() {
+        return new TraceableTriangle[]{getPlane()};
     }
 }

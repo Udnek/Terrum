@@ -2,6 +2,7 @@ package me.udnekjupiter.graphic.polygonholder;
 
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -13,17 +14,17 @@ public class SmartPolygonHolder implements PolygonHolder{
     private List<TraceableObject> objectsToRender;
     private Camera camera;
 
-    private List<Triangle> leftCachedPlanes;
-    private List<Triangle> downCachedPlanes;
-    private List<Triangle> rightCachedPlanes;
-    private List<Triangle> upCachedPlanes;
+    private List<TraceableTriangle> leftCachedPlanes;
+    private List<TraceableTriangle> downCachedPlanes;
+    private List<TraceableTriangle> rightCachedPlanes;
+    private List<TraceableTriangle> upCachedPlanes;
 
     private Triangle leftTriangle;
     private Triangle downTriangle;
     private Triangle rightTriangle;
     private Triangle upTriangle;
 
-    private List<Triangle> lightCachedPlanes = new ArrayList<>();
+    private List<TraceableTriangle> lightCachedPlanes = new ArrayList<>();
 
     public SmartPolygonHolder(List<TraceableObject> objectsToRender, Camera camera){
         this.objectsToRender = objectsToRender;
@@ -59,7 +60,7 @@ public class SmartPolygonHolder implements PolygonHolder{
 
         for (TraceableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
-            for (Triangle plane: object.getRenderTriangles()) {
+            for (TraceableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
 
                 Vector3d vertex0 = plane.getVertex0();
@@ -120,7 +121,7 @@ public class SmartPolygonHolder implements PolygonHolder{
         return VectorUtils.triangleRayIntersection(vector, triangle) != null;
     }
 
-    public List<Triangle> getCachedPlanes(Vector3d direction) {
+    public List<TraceableTriangle> getCachedPlanes(Vector3d direction) {
         if (isVectorInTriangle(direction, downTriangle)) return downCachedPlanes;
         if (isVectorInTriangle(direction, leftTriangle)) return leftCachedPlanes;
         if (isVectorInTriangle(direction, rightTriangle)) return rightCachedPlanes;
@@ -128,7 +129,7 @@ public class SmartPolygonHolder implements PolygonHolder{
     }
 
     @Override
-    public List<Triangle> getLightCachedPlanes(Vector3d direction) {
+    public List<TraceableTriangle> getLightCachedPlanes(Vector3d direction) {
         return lightCachedPlanes;
     }
 }

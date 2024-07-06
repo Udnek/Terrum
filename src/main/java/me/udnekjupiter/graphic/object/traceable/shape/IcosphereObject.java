@@ -1,24 +1,24 @@
 package me.udnekjupiter.graphic.object.traceable.shape;
 
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.util.Triangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
 public class IcosphereObject extends TraceableObject {
 
     private final double radius;
-    private Triangle[] polygons;
+    private TraceableTriangle[] polygons;
     private final int subdivideIterations;
-    public IcosphereObject(Vector3d position, double radius, int subdivideIterations) {
+    public IcosphereObject(Vector3d position, double radius, int subdivideIterations, TraceableTriangle example) {
         super(position);
         this.radius = radius;
         this.subdivideIterations = subdivideIterations;
-        generatePolygons();
+        generatePolygons(example);
     }
 
-    protected void generatePolygons(){
+    protected void generatePolygons(TraceableTriangle example){
         double icoSize =  radius/2/IcosahedronObject.calculateCircumradius(1);
-        IcosahedronObject icosahedronObject = new IcosahedronObject(new Vector3d(), icoSize);
+        IcosahedronObject icosahedronObject = new IcosahedronObject(new Vector3d(), icoSize, example);
 
         polygons = icosahedronObject.getRenderTriangles();
         if (subdivideIterations < 1) return;
@@ -27,10 +27,10 @@ public class IcosphereObject extends TraceableObject {
         }
     }
 
-    protected Triangle[] generatePolygons(Triangle[] polygons){
-        Triangle[] newPolygons = new Triangle[polygons.length * 4];
+    protected TraceableTriangle[] generatePolygons(TraceableTriangle[] polygons){
+        TraceableTriangle[] newPolygons = new TraceableTriangle[polygons.length * 4];
         for (int i = 0; i < polygons.length; i++) {
-            Triangle[] subdividedFaces = subdivideFace(polygons[i]);
+            TraceableTriangle[] subdividedFaces = subdivideFace(polygons[i]);
             for (int j = 0; j < subdividedFaces.length; j++) {
                 newPolygons[i*4 + j] = subdividedFaces[j];
             }
@@ -40,7 +40,7 @@ public class IcosphereObject extends TraceableObject {
 
 
 
-    protected Triangle[] subdivideFace(Triangle face){
+    protected TraceableTriangle[] subdivideFace(TraceableTriangle face){
         Vector3d newVertex01 = face.getVertex0().add(face.getVertex1()).div(2);
         Vector3d newVertex12 = face.getVertex1().add(face.getVertex2()).div(2);
         Vector3d newVertex02 = face.getVertex2().add(face.getVertex0()).div(2);
@@ -53,17 +53,17 @@ public class IcosphereObject extends TraceableObject {
         newVertex12.div(distance1).mul(radius);
         newVertex02.div(distance2).mul(radius);
 
-        Triangle face0 = new Triangle(face.getVertex0(), newVertex01, newVertex02);
-        Triangle face1 = new Triangle(face.getVertex1(), newVertex01, newVertex12);
-        Triangle face2 = new Triangle(face.getVertex2(), newVertex12, newVertex02);
-        Triangle faceCenter = new Triangle(newVertex01, newVertex12, newVertex02);
+        TraceableTriangle face0 = face.copyWithVertices(face.getVertex0(), newVertex01, newVertex02);
+        TraceableTriangle face1 = face.copyWithVertices(face.getVertex1(), newVertex01, newVertex12);
+        TraceableTriangle face2 = face.copyWithVertices(face.getVertex2(), newVertex12, newVertex02);
+        TraceableTriangle faceCenter = face.copyWithVertices(newVertex01, newVertex12, newVertex02);
 
-        return new Triangle[]{face0, face1, face2, faceCenter};
+        return new TraceableTriangle[]{face0, face1, face2, faceCenter};
     }
 
     @Override
-    public Triangle[] getRenderTriangles() {
-        Triangle[] copy = new Triangle[polygons.length];
+    public TraceableTriangle[] getRenderTriangles() {
+        TraceableTriangle[] copy = new TraceableTriangle[polygons.length];
         for (int i = 0; i < polygons.length; i++) {
             copy[i] = polygons[i].copy();
         }

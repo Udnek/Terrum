@@ -1,14 +1,14 @@
 package me.udnekjupiter.graphic.object.traceable;
 
-import me.udnekjupiter.util.ColoredTriangle;
+import me.udnekjupiter.graphic.triangle.ColoredTriangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import me.udnekjupiter.util.PositionedObject;
-import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class DoubleSpringObject extends SpringObject{
 
-    private Triangle plane1;
+    private TraceableTriangle plane1;
 
     public DoubleSpringObject(Vector3d position, PositionedObject tipFirst, PositionedObject tipSecond) {
         super(position, tipFirst, tipSecond);
@@ -38,7 +38,7 @@ public class DoubleSpringObject extends SpringObject{
     }
 
     @Override
-    public Triangle[] getRenderTriangles() {
-        return new Triangle[]{plane.copy(), plane1.copy()};
+    public TraceableTriangle[] getRenderTriangles() {
+        return new TraceableTriangle[]{plane.copy(), plane1.copy()};
     }
 }
