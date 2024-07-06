@@ -45,7 +45,6 @@ public class ScreenTracer {
 
         Vector3d defaultCameraDirection = new Vector3d(0, 0, 1).mul(camera.getFov());
         double angle = defaultCameraDirection.dot(vertex);
-        System.out.println(angle);
         if (angle < 0) return null;
 
         vertex.div(angle);
