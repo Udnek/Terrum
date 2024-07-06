@@ -30,11 +30,11 @@ public class DynamicGraphicScene extends GraphicScene3d {
 
     @Override
     public void beforeFrameUpdate(int width, int height) {
+        super.beforeFrameUpdate(width, height);
         tick++;
 
         vertex0.move(0, Math.sin(tick/20.0)/20.0, 0);
         vertex1.move(0, Math.cos(tick/30.0)/30.0, 0);
-        spring.synchronizeWithPhysic();
     }
     @Override
     protected LightSource initializeLightSource() {

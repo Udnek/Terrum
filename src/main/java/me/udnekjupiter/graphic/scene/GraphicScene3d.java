@@ -7,14 +7,12 @@ import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.GraphicObject;
+import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.traceable.SpringObject;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.util.Triangle;
-import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.*;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -31,7 +29,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected int width;
     protected int height;
 
-    protected GraphicObject draggingObject = null;
+    protected TraceableObject draggingObject = null;
 
     protected Controller controller;
     protected DebugMenu debugMenu;
@@ -71,7 +69,23 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         this.width = width;
         this.height = height;
 
+        for (TraceableObject traceableObject : traceableObjects) {
+            if (traceableObject instanceof Tickable tickable) tickable.tick();
+            if (traceableObject instanceof PhysicLinked physicLinked) physicLinked.synchronizeWithPhysic();
+        }
+
+        for (InputKey pressedKey : controller.getPressedKeys()) {
+            keyContinuouslyPressed(pressedKey);
+        }
+        if (controller.mouseIsPressed()){
+            handleMousePressedDifference();
+        }
+
+        if (!debugMenu.isEnabled()) return;
+
         debugMenu.addTextToLeft("DraggingObject: " + draggingObject);
+        debugMenu.addTextToLeft("DraggingObjectPhysicalFrozen: " + isObjectPhysicFrozen(draggingObject));
+
         debugMenu.addTextToLeft("MouseCurrentPosition: " + controller.getMouseCurrentPosition());
         Vector3d position = camera.getPosition();
         debugMenu.addTextToLeft(
@@ -85,22 +99,33 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
                         Utils.roundToPrecision(camera.getYaw(), 2) + ", " +
                         Utils.roundToPrecision(camera.getPitch(), 2)
         );
-
-
-        for (InputKey pressedKey : controller.getPressedKeys()) {
-            keyContinuouslyPressed(pressedKey);
-        }
-        if (controller.mouseIsPressed()){
-            handleMousePressedDifference();
-        }
     }
 
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
         if (inputKey != InputKey.MOUSE_OBJECT_DRAG) return;
-        if (pressed) draggingObject = findObjectCursorLookingAt(controller.getMouseCurrentPosition());
-        else draggingObject = null;
+        if (pressed) {
+            TraceableObject objectCursorLookingAt = findObjectCursorLookingAt(controller.getMouseCurrentPosition());
+            setObjectPhysicFrozen(objectCursorLookingAt, true);
+            draggingObject = objectCursorLookingAt;
+        }
+        else {
+            setObjectPhysicFrozen(draggingObject, false);
+            draggingObject = null;
+        }
     }
+
+    public void setObjectPhysicFrozen(TraceableObject object, boolean frozen){
+        if (!(object instanceof PhysicLinked physicLinked)) return;
+        if (!(physicLinked.getPhysicRepresentation() instanceof Freezable freezable)) return;
+        freezable.setFrozen(frozen);
+    }
+    public boolean isObjectPhysicFrozen(TraceableObject object){
+        if (!(object instanceof PhysicLinked physicLinked)) return false;
+        if (!(physicLinked.getPhysicRepresentation() instanceof Freezable freezable)) return false;
+        return freezable.isFrozen();
+    }
+
 
     public void keyContinuouslyPressed(InputKey inputKey){
         final float deltaTime = (float) Application.getFrameDeltaTime();
@@ -137,14 +162,8 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
             double distance = VectorUtils.distance(draggingObject.getPosition(), camera.getPosition());
             mouseDirection.normalize().mul(distance);
 
+            // TODO: 7/6/2024 THINK ABOUT PHYSICAL LINK
             draggingObject.setPosition(camera.getPosition().add(mouseDirection));
-
-/*            float sensitivity = (float) (0.15f * Application.getFrameDeltaTime());
-            Vector3d moveDirection = new Vector3d(mouseDifference.x*sensitivity, -mouseDifference.y*sensitivity, 0);
-            camera.rotateVector(moveDirection);
-            draggingObject.move(moveDirection);*/
-
-
         }
 
     }

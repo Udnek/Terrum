@@ -4,7 +4,7 @@ import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
-import me.udnekjupiter.graphic.scene.SmallGraphicScene;
+import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
@@ -16,8 +16,8 @@ public class MainUdnek extends Main{
         NetPhysicsScene physicScene = new NetPhysicsScene();
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
-        GraphicScene3d graphicScene = new SmallGraphicScene();
-        //GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
+        //GraphicScene3d graphicScene = new SmallGraphicScene();
+        GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
 
         //Test.run();
