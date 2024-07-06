@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic;
 
-import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.util.ColoredTriangle;
@@ -28,7 +28,7 @@ public class RayTracer {
     private boolean debugColorizePlanes;
 
     public RayTracer(LightSource lightSource){
-        this.doLight = ApplicationSettings.GLOBAL.doLight;
+        this.doLight = Application.APPLICATION_SETTINGS.doLight;
         this.lightSource = lightSource;
     }
 
@@ -45,12 +45,11 @@ public class RayTracer {
         for (Triangle plane : polygonHolder.getCachedPlanes(direction)) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
 
-            if (hitPosition != null) {
-                if (hitPosition.lengthSquared() < nearestDistance) {
-                    nearestHitPosition = hitPosition;
-                    nearestPlane = plane;
-                    nearestDistance = hitPosition.lengthSquared();
-                }
+            if (hitPosition == null) continue;
+            if (hitPosition.lengthSquared() < nearestDistance) {
+                nearestHitPosition = hitPosition;
+                nearestPlane = plane;
+                nearestDistance = hitPosition.lengthSquared();
             }
         }
 
@@ -69,11 +68,11 @@ public class RayTracer {
         this.cameraYaw = Math.toRadians(camera.getYaw());
         this.cameraPitch = Math.toRadians(camera.getPitch());
         this.fovMultiplier = width/camera.getFov();
-        this.debugColorizePlanes = ApplicationSettings.GLOBAL.debugColorizePlanes;
-        this.doLight = ApplicationSettings.GLOBAL.doLight;
+        this.debugColorizePlanes = Application.APPLICATION_SETTINGS.debugColorizePlanes;
+        this.doLight = Application.APPLICATION_SETTINGS.doLight;
         if (doLight) lightPosition = lightSource.getPosition();
 
-        int cores = ApplicationSettings.GLOBAL.cores;
+        int cores = Application.APPLICATION_SETTINGS.cores;
         if (cores != 1){
 
             Thread[] threads = new Thread[cores];
@@ -132,6 +131,7 @@ public class RayTracer {
         double d0 = VectorUtils.distance(hitPosition, plane.getVertex0());
         double d1 = VectorUtils.distance(hitPosition, plane.getVertex1());
         double d2 = VectorUtils.distance(hitPosition, plane.getVertex2());
+
         Vector3d distances = new Vector3d(d0, d1, d2);
         double minDistance = VectorUtils.getMin(distances);
         Vector3d color;

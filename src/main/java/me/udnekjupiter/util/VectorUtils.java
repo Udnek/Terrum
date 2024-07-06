@@ -30,7 +30,7 @@ public class VectorUtils {
         return vectorLength(newX, newY, newZ) / 2.0;
     }
     public static Vector3d getNormalizedDirection(Vector3d positionStart, Vector3d positionEnd){
-        return positionEnd.dup().sub(positionStart.dup()).normalize();
+        return positionEnd.dup().sub(positionStart).normalize();
     }
 
     public static Vector3d getNormal(Vector3d edge0, Vector3d edge1){
@@ -89,7 +89,7 @@ public class VectorUtils {
         // facing back
         if (directionCoefficient < 0) return null;
 
-        Vector3d onPlanePosition = direction.mul(directionCoefficient);
+        Vector3d onPlanePosition = direction.dup().mul(directionCoefficient);
         double actualArea = triangle.getArea();
 
         // points to vertices

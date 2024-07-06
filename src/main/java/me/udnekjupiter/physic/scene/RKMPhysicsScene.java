@@ -1,13 +1,14 @@
 package me.udnekjupiter.physic.scene;
 
-import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RKMPhysicsScene implements PhysicScene {
-    protected List<RKMObject> RKMObjects;
+    protected List<RKMObject> RKMObjects  = new ArrayList<>();
 
     public void addObject(RKMObject object){RKMObjects.add(object);}
     public List<RKMObject> getRKMObjects(){
@@ -72,7 +73,7 @@ public abstract class RKMPhysicsScene implements PhysicScene {
     }
 
     public void tick() {
-        for (int i = 0; i < EnvironmentSettings.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
+        for (int i = 0; i < Application.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
             updateObjects();
         }
     }

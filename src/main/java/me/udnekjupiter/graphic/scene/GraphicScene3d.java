@@ -1,7 +1,6 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.DebugMenu;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
@@ -148,7 +147,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void handleMousePressedDifference(){
         InputKey mouseKey = controller.getMouseKey();
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
-            float sensitivity = (float) (10f * Application.getFrameDeltaTime() * ApplicationSettings.GLOBAL.pixelScaling);
+            float sensitivity = (float) (10f * Application.getFrameDeltaTime() * Application.APPLICATION_SETTINGS.pixelScaling);
             Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);

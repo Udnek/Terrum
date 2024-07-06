@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.object;
 
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collider.Collidable;
 import me.udnekjupiter.physic.collider.Collider;
@@ -33,7 +34,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
 
     public RKMObject(Vector3d position) {
         super(position);
-        settings = EnvironmentSettings.ENVIRONMENT_SETTINGS;
+        settings = Application.ENVIRONMENT_SETTINGS;
         this.velocity = new Vector3d(0,0,0);
         this.acceleration = new Vector3d(0,0,0);
         this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
