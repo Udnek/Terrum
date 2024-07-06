@@ -168,7 +168,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
                 double normalizedDistance = (distance/maxDistance);
                 Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(normalizedDistance, 2)));
                 collisionForceCache.div(collidingObjects.size());
-                collisionForceCache.mul(0.25);
+                collisionForceCache.mul(1);
 
                 collisionForce.add(collisionForceCache);
             }
