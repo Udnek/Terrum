@@ -15,8 +15,8 @@ import java.awt.image.BufferedImage;
 
 public class Application implements ConsoleListener, ControllerListener {
 
-    // TODO: 7/4/2024 SOMETHING ABOUT TPS, IPT, DELTA TIME
-    public static final int PHYSIC_TICKS_PER_SECOND = 40;
+    // sdTODO: 7/4/2024 SOMETHING ABOUT TPS, IPT, DELTA TIME
+    public static final int PHYSIC_TICKS_PER_SECOND = 50;
     public static final DebugMenu DEBUG_MENU = new DebugMenu();
     private PhysicEngine physicEngine;
     private GraphicEngine graphicEngine;

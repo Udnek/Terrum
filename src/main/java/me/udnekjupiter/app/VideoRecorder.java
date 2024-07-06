@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class VideoRecorder {
 
-    public static final int VIDEO_FPS = Application.PHYSIC_TICKS_PER_SECOND;
+    public static final int VIDEO_FPS = Application.PHYSIC_TICKS_PER_SECOND/2;
     private AWTSequenceEncoder videoEncoder;
     private ApplicationSettings settings;
 

@@ -135,7 +135,7 @@ public class RayTracer {
         Vector3d distances = new Vector3d(d0, d1, d2);
         double minDistance = VectorUtils.getMin(distances);
         Vector3d color;
-        if (minDistance <= 0.08){
+        if (minDistance <= 0){
             color = new Vector3d(1f, 1f, 1f);
         } else {
             color = new Vector3d(1/d0, 1/d1 ,1/d2);

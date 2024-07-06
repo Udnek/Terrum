@@ -1,19 +1,15 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RKMPhysicsScene implements PhysicScene {
     protected List<RKMObject> RKMObjects;
 
-    public void addObject(RKMObject object){
-        RKMObjects.add(object);
-    }
+    public void addObject(RKMObject object){RKMObjects.add(object);}
 
     public void updateNextObjectsCoefficients() {
         for (RKMObject object : RKMObjects) {

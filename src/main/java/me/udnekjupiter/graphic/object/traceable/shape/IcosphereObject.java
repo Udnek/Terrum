@@ -8,10 +8,11 @@ public class IcosphereObject extends TraceableObject {
 
     private final double radius;
     private Triangle[] polygons;
-    public static final int SUBDIVIDE_ITERATIONS = 2;
-    public IcosphereObject(Vector3d position, double radius) {
+    private final int subdivideIterations;
+    public IcosphereObject(Vector3d position, double radius, int subdivideIterations) {
         super(position);
         this.radius = radius;
+        this.subdivideIterations = subdivideIterations;
         generatePolygons();
     }
 
@@ -20,8 +21,8 @@ public class IcosphereObject extends TraceableObject {
         IcosahedronObject icosahedronObject = new IcosahedronObject(new Vector3d(), icoSize);
 
         polygons = icosahedronObject.getRenderTriangles();
-        if (SUBDIVIDE_ITERATIONS < 1) return;
-        for (int i = 0; i < SUBDIVIDE_ITERATIONS; i++) {
+        if (subdivideIterations < 1) return;
+        for (int i = 0; i < subdivideIterations; i++) {
             polygons = generatePolygons(polygons);
         }
     }

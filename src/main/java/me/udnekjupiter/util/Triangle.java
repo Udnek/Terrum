@@ -24,9 +24,9 @@ public class Triangle {
     }
 
     public void recalculateEdges(){
-        edge0 = getVertex1().sub(getVertex0());
-        edge1 = getVertex2().sub(getVertex1());
-        edge2 = getVertex0().sub(getVertex2());
+        edge0 = getVertex1().sub(vertex0);
+        edge1 = getVertex2().sub(vertex1);
+        edge2 = getVertex0().sub(vertex2);
     }
 
     public void setVertex0(Vector3d vertex) {
@@ -43,21 +43,16 @@ public class Triangle {
         setVertex0(vertex0);
         setVertex1(vertex1);
         setVertex2(vertex2);
+        recalculateEdges();
     }
 
-    public Vector3d getVertex0() {
-        return this.vertex0.dup();
-    }
-    public Vector3d getVertex1() {
-        return this.vertex1.dup();
-    }
-    public Vector3d getVertex2() {
-        return this.vertex2.dup();
-    }
+    public Vector3d getVertex0() {return vertex0.dup();}
+    public Vector3d getVertex1() {return vertex1.dup();}
+    public Vector3d getVertex2() {return vertex2.dup();}
 
-    public Vector3d getEdge0(){return edge0;}
-    public Vector3d getEdge1(){return edge1;}
-    public Vector3d getEdge2(){return edge2;}
+    public Vector3d getEdge0() {return edge0;}
+    public Vector3d getEdge1() {return edge1;}
+    public Vector3d getEdge2() {return edge2;}
 
     public Vector3d getCenter(){
         return new Vector3d(

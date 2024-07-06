@@ -21,7 +21,7 @@ public class LightTestGraphicScene extends GraphicScene3d {
     @Override
     protected List<TraceableObject> initializeSceneObjects() {
         List<TraceableObject> graphicObjects = new ArrayList<>();
-        graphicObjects.add(new IcosphereObject(new Vector3d(0, 0, 2), 1));
+        graphicObjects.add(new IcosphereObject(new Vector3d(0, 0, 2), 1, 2));
         graphicObjects.add(lightSource);
 
         return graphicObjects;
