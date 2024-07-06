@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.polygonholder;
 
-import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
@@ -38,7 +38,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
             }
         }
 
-        if (!ApplicationSettings.GLOBAL.doLight) return;
+        if (!Application.APPLICATION_SETTINGS.doLight) return;
 
         lightCachedPlanes = new ArrayList<>();
         Vector3d lightPosition = lightSource.getPosition();

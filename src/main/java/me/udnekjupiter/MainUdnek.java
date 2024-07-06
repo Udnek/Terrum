@@ -13,7 +13,7 @@ public class MainUdnek extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene();
+        NetPhysicsScene physicScene = new NetPhysicsScene("frame.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
         //GraphicScene3d graphicScene = new SmallGraphicScene();
@@ -26,7 +26,7 @@ public class MainUdnek extends Main{
 
     @Override
     public ApplicationSettings initializeGraphicsSettings() {
-        return ApplicationSettings.defaultNoRecording(4, 4, PolygonHolder.Type.DEFAULT);
+        return ApplicationSettings.defaultNoRecording(4, 6, PolygonHolder.Type.SMART);
         //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(256, 256, "newTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);
@@ -34,7 +34,7 @@ public class MainUdnek extends Main{
 
     @Override
     public EnvironmentSettings initializePhysicsSettings() {
-        return EnvironmentSettings.defaultWithImage("small_frame.png");
+        return EnvironmentSettings.defaultPreset();
     }
 
 

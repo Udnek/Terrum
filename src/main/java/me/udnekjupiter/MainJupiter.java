@@ -23,7 +23,7 @@ public class MainJupiter extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene();
+        NetPhysicsScene physicScene = new NetPhysicsScene("frame.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);

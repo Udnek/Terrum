@@ -21,7 +21,9 @@ public enum InputKey {
     DEBUG_MENU(KeyEvent.VK_F3, false),
 
     MOUSE_CAMERA_DRAG(MouseEvent.BUTTON1),
-    MOUSE_OBJECT_DRAG(MouseEvent.BUTTON3);
+    MOUSE_OBJECT_DRAG(MouseEvent.BUTTON3),
+
+    PAUSE(KeyEvent.VK_ESCAPE, false);
 
     public final int code;
     public final boolean longPress;

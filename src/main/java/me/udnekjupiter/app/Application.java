@@ -1,5 +1,6 @@
 package me.udnekjupiter.app;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
@@ -8,6 +9,7 @@ import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import me.udnekjupiter.util.Utils;
 
@@ -18,12 +20,14 @@ public class Application implements ConsoleListener, ControllerListener {
     // sdTODO: 7/4/2024 SOMETHING ABOUT TPS, IPT, DELTA TIME
     public static final int PHYSIC_TICKS_PER_SECOND = 50;
     public static final DebugMenu DEBUG_MENU = new DebugMenu();
+    public static final ApplicationSettings APPLICATION_SETTINGS = Main.getMain().initializeGraphicsSettings();
+    public static final EnvironmentSettings ENVIRONMENT_SETTINGS = Main.getMain().initializePhysicsSettings();
+
     private PhysicEngine physicEngine;
     private GraphicEngine graphicEngine;
     private WindowManager windowManager;
     private Console console;
     private ApplicationData applicationData;
-    private ApplicationSettings settings;
     private VideoRecorder videoRecorder;
 
     private static Application instance;
@@ -48,11 +52,10 @@ public class Application implements ConsoleListener, ControllerListener {
         this.physicEngine = physicEngine;
         this.console = Console.getInstance();
         this.applicationData = new ApplicationData();
-        this.settings = ApplicationSettings.GLOBAL;
         console.addListener(this);
         Controller.getInstance().addListener(this);
         videoRecorder = new VideoRecorder();
-        videoRecorder.start(settings);
+        videoRecorder.start(APPLICATION_SETTINGS);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -93,8 +96,8 @@ public class Application implements ConsoleListener, ControllerListener {
             graphicTicks = 1;
         }
 
-        int renderWidth = settings.videoWidth;
-        int renderHeight = settings.videoHeight;
+        int renderWidth = APPLICATION_SETTINGS.videoWidth;
+        int renderHeight = APPLICATION_SETTINGS.videoHeight;
 
         while (true){
 
@@ -147,7 +150,7 @@ public class Application implements ConsoleListener, ControllerListener {
         graphicEngine.initialize();
         console.start();
 
-        if (settings.recordVideo){
+        if (APPLICATION_SETTINGS.recordVideo){
             Thread renderThread = new Thread(new Runnable() {
                 @Override
                 public void run() {videoRenderLoop();}
@@ -183,14 +186,14 @@ public class Application implements ConsoleListener, ControllerListener {
 
         DEBUG_MENU.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
         DEBUG_MENU.addTextToRight(
-                "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
+                "Cores: " + APPLICATION_SETTINGS.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );
         DEBUG_MENU.addTextToRight(
                 "Size: " + windowManager.getWidth() + "x" + windowManager.getHeight()
         );
         DEBUG_MENU.addTextToRight("RenderTime: " + Utils.roundToPrecision((double) applicationData.frameRenderTime / Utils.NANOS_IN_SECOND, 5));
         DEBUG_MENU.addTextToRight("FramesRendered: " + applicationData.framesAmount);
-        DEBUG_MENU.addTextToRight("PixelScaling: " + settings.pixelScaling);
+        DEBUG_MENU.addTextToRight("PixelScaling: " + APPLICATION_SETTINGS.pixelScaling);
 
         DEBUG_MENU.addTextToRight("");
 
@@ -211,12 +214,11 @@ public class Application implements ConsoleListener, ControllerListener {
 
     @Override
     public void handleCommand(Command command, Object[] args) {
-        ApplicationSettings settings = ApplicationSettings.GLOBAL;
         switch (command){
-            case SET_CORES -> settings.cores = (int) args[0];
-            case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
-            case SET_DEBUG_COLORIZE_PLANES -> settings.debugColorizePlanes = (boolean) args[0];
-            case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
+            case SET_CORES -> APPLICATION_SETTINGS.cores = (int) args[0];
+            case SET_DO_LIGHT -> APPLICATION_SETTINGS.doLight = (boolean) args[0];
+            case SET_DEBUG_COLORIZE_PLANES -> APPLICATION_SETTINGS.debugColorizePlanes = (boolean) args[0];
+            case SET_PIXEL_SCALING -> APPLICATION_SETTINGS.pixelScaling = (int) args[0];
             case SET_WINDOW_SIZE -> windowManager.setSize((int) args[0], (int) args[1]);
         }
     }

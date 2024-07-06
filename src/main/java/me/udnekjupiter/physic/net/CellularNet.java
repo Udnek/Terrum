@@ -1,30 +1,32 @@
 
 package me.udnekjupiter.physic.net;
 
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.file.ImageWrapper;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
+import me.udnekjupiter.util.Initializable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CellularNet {
+public class CellularNet implements Initializable {
     private final EnvironmentSettings settings;
     private int sizeX;
     private int sizeZ;
     public double potentialEnergy;
     public double kineticEnergy;
     public double fullEnergy;
-    private final String imageName;
+    private final String mapImageName;
     private NetVertex[][] netMap;
 
-    public CellularNet()
+    public CellularNet(String mapImageName)
     {
-        this.settings = EnvironmentSettings.ENVIRONMENT_SETTINGS;
-        this.imageName = settings.imageFileName;
+        this.settings = Application.ENVIRONMENT_SETTINGS;
+        this.mapImageName = mapImageName;
     }
 
     public int getSizeX(){return this.sizeX;}
@@ -61,9 +63,16 @@ public class CellularNet {
         return vertices;
     }
 
-    public void initiateNet() {
+    @Override
+    public void initialize() {
+        initializeNet();
+        initializeNeighbours();
+        initializeVerticesVariables();
+    }
+
+    private void initializeNet() {
         ImageWrapper reader = new ImageWrapper();
-        reader.readImage(imageName);
+        reader.readImage(mapImageName);
 
         sizeX = reader.getWidth();
         sizeZ = reader.getHeight();
@@ -80,7 +89,7 @@ public class CellularNet {
             }
         }
     }
-    public void initiateNeighbours(){
+    private void initializeNeighbours(){
         for (int z = 0; z < sizeZ; z++) {
             for (int x = 0; x < sizeX; x++) {
                 NetVertex netVertex = getVertex(x, z);
@@ -91,7 +100,7 @@ public class CellularNet {
             }
         }
     }
-    public void setupVerticesVariables(){
+    private void initializeVerticesVariables(){
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 if (getVertex(j, i) instanceof NetDynamicVertex){

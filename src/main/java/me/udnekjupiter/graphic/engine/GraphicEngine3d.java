@@ -1,7 +1,6 @@
 package me.udnekjupiter.graphic.engine;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
@@ -38,7 +37,7 @@ public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
     public void initialize() {
         scene.initialize();
         rayTracer = new RayTracer(scene.getLightSource());
-        if (ApplicationSettings.GLOBAL.polygonHolderType == PolygonHolder.Type.SMART){
+        if (Application.APPLICATION_SETTINGS.polygonHolderType == PolygonHolder.Type.SMART){
             polygonHolder = new SmartPolygonHolder(scene.getTraceableObjects(), scene.getCamera());
         } else {
             polygonHolder = new DefaultPolygonHolder(scene.getTraceableObjects(), scene.getCamera(), scene.getLightSource());
@@ -51,8 +50,8 @@ public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
 
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
-        int renderWidth = Math.max(width / ApplicationSettings.GLOBAL.pixelScaling, 1);
-        int renderHeight = Math.max(height / ApplicationSettings.GLOBAL.pixelScaling, 1);
+        int renderWidth = Math.max(width / Application.APPLICATION_SETTINGS.pixelScaling, 1);
+        int renderHeight = Math.max(height / Application.APPLICATION_SETTINGS.pixelScaling, 1);
 
         frame.reset(renderWidth, renderHeight);
         polygonHolder.recacheObjects(width, height);

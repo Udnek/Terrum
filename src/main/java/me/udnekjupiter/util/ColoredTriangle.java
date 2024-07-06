@@ -13,8 +13,7 @@ public class ColoredTriangle extends Triangle{
     }
 
     public ColoredTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, Color color) {
-        super(vertex0, vertex1, vertex2);
-        this.color = color.getRGB();
+        this(vertex0, vertex1, vertex2, color.getRGB());
     }
 
     public ColoredTriangle(ColoredTriangle triangle) {
