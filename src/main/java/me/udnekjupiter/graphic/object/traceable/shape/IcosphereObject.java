@@ -6,9 +6,9 @@ import org.realityforge.vecmath.Vector3d;
 
 public class IcosphereObject extends TraceableObject {
 
-    private final double radius;
-    private TraceableTriangle[] polygons;
-    private final int subdivideIterations;
+    protected final double radius;
+    protected TraceableTriangle[] polygons;
+    public final int subdivideIterations;
     public IcosphereObject(Vector3d position, double radius, int subdivideIterations, TraceableTriangle example) {
         super(position);
         this.radius = radius;
