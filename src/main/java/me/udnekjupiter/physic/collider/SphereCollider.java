@@ -10,6 +10,8 @@ import java.util.List;
 
 public class SphereCollider extends Collider{
     public final double radius;
+    public final double maxDepth = 0.1;
+
     public SphereCollider(double radius, RKMObject parent)
     {
         this.radius = radius;
