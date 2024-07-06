@@ -1,5 +1,6 @@
 package me.udnekjupiter.graphic.object.traceable;
 
+import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.traceable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
@@ -7,7 +8,7 @@ import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.PhysicObject;
 import org.realityforge.vecmath.Vector3d;
 
-public class MassEssenceObject extends IcosphereObject implements PhysicLinked {
+public class MassEssenceObject extends IcosphereObject implements PhysicLinked, Draggable {
 
     private final MassEssence massEssence;
 
@@ -31,5 +32,15 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked {
     @Override
     public PhysicObject getPhysicRepresentation() {
         return massEssence;
+    }
+
+    @Override
+    public void select() {
+
+    }
+
+    @Override
+    public void unselect() {
+
     }
 }

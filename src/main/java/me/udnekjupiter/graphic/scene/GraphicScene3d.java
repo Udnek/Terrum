@@ -6,10 +6,10 @@ import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.graphic.Camera;
+import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.traceable.SpringObject;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
 import me.udnekjupiter.util.*;
 import org.realityforge.vecmath.Vector3d;
@@ -28,7 +28,8 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected int width;
     protected int height;
 
-    protected TraceableObject draggingObject = null;
+    protected Draggable draggingObject = null;
+    protected Selectable selectedObject = null;
 
     protected Controller controller;
     protected DebugMenu debugMenu;
@@ -63,6 +64,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public LightSource getLightSource() {return lightSource;}
     public List<TraceableObject> getTraceableObjects() {return traceableObjects;}
     public List<FixedSizeObject> getFixedSizeObjects() {return fixedSizeObjects;}
+    public Selectable getSelectedObject() {return selectedObject;}
 
     public void beforeFrameUpdate(int width, int height) {
         this.width = width;
@@ -83,7 +85,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         if (!debugMenu.isEnabled()) return;
 
         debugMenu.addTextToLeft("DraggingObject: " + draggingObject);
-        debugMenu.addTextToLeft("DraggingObjectPhysicalFrozen: " + isObjectPhysicFrozen(draggingObject));
+        debugMenu.addTextToLeft("SelectedObject:" + selectedObject);
 
         debugMenu.addTextToLeft("MouseCurrentPosition: " + controller.getMouseCurrentPosition());
         Vector3d position = camera.getPosition();
@@ -104,9 +106,15 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void keyEvent(InputKey inputKey, boolean pressed) {
         if (inputKey != InputKey.MOUSE_OBJECT_DRAG) return;
         if (pressed) {
-            TraceableObject objectCursorLookingAt = findObjectCursorLookingAt(controller.getMouseCurrentPosition());
-            setObjectPhysicFrozen(objectCursorLookingAt, true);
-            draggingObject = objectCursorLookingAt;
+            Selectable objectCursorLookingAt = findObjectCursorLookingAt(controller.getMouseCurrentPosition());
+            if (objectCursorLookingAt == null) return;
+            if (selectedObject != null) selectedObject.unselect();
+            selectedObject = objectCursorLookingAt;
+            selectedObject.select();
+            if (objectCursorLookingAt instanceof Draggable draggable){
+                setObjectPhysicFrozen(objectCursorLookingAt, true);
+                draggingObject = draggable;
+            }
         }
         else {
             setObjectPhysicFrozen(draggingObject, false);
@@ -114,12 +122,12 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         }
     }
 
-    public void setObjectPhysicFrozen(TraceableObject object, boolean frozen){
+    public void setObjectPhysicFrozen(Object object, boolean frozen){
         if (!(object instanceof PhysicLinked physicLinked)) return;
         if (!(physicLinked.getPhysicRepresentation() instanceof Freezable freezable)) return;
         freezable.setFrozen(frozen);
     }
-    public boolean isObjectPhysicFrozen(TraceableObject object){
+    public boolean isObjectPhysicFrozen(Object object){
         if (!(object instanceof PhysicLinked physicLinked)) return false;
         if (!(physicLinked.getPhysicRepresentation() instanceof Freezable freezable)) return false;
         return freezable.isFrozen();
@@ -177,29 +185,28 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         return direction;
     }
 
-    public TraceableObject findObjectCursorLookingAt(Point mousePosition){
+    public Selectable findObjectCursorLookingAt(Point mousePosition){
 
         Vector3d cameraPosition = camera.getPosition();
 
         Vector3d direction = getMouseDirection(mousePosition);
 
 
-        TraceableObject nearestObject = null;
+        Selectable nearestObject = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
         for (TraceableObject object : traceableObjects) {
-            // TODO: 7/2/2024 SOMETHING ABOUT SPRINGS? MAYBE PROPERTY FOR ANY GRAOHICOBJECTS
-            if (object instanceof SpringObject) continue;
+            if (!(object instanceof Selectable selectable)) continue;
             Vector3d objectPosition = object.getPosition();
+
             for (Triangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
 
                 Vector3d intersection = VectorUtils.triangleRayIntersection(direction, plane);
-                if (intersection != null){
-                    if (intersection.lengthSquared() < nearestDistance){
-                        nearestObject = object;
-                        nearestDistance = intersection.lengthSquared();
-                    }
+                if (intersection == null) continue;
+                if (intersection.lengthSquared() < nearestDistance){
+                    nearestObject = selectable;
+                    nearestDistance = intersection.lengthSquared();
                 }
             }
         }

@@ -10,8 +10,8 @@ public class DoubleSpringObject extends SpringObject{
 
     private TraceableTriangle plane1;
 
-    public DoubleSpringObject(Vector3d position, PositionedObject tipFirst, PositionedObject tipSecond) {
-        super(position, tipFirst, tipSecond);
+    public DoubleSpringObject(PositionedObject tipFirst, PositionedObject tipSecond) {
+        super(tipFirst, tipSecond);
         plane1 = new ColoredTriangle(new Vector3d(), new Vector3d(), new Vector3d(), color);
     }
 

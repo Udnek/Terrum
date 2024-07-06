@@ -52,7 +52,7 @@ public class DynamicGraphicScene extends GraphicScene3d {
 
         vertex0 = new VertexObject(new Vector3d(-1, 0, 3), null);
         vertex1 = new VertexObject(new Vector3d(1, 0, 3), null);
-        spring = new SpringObject(new Vector3d(), vertex0, vertex1);
+        spring = new SpringObject(vertex0, vertex1);
 
         graphicObjects.add(vertex0);
         graphicObjects.add(vertex1);

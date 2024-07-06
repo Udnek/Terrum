@@ -5,7 +5,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 
 public class ColoredTriangle extends TraceableTriangle{
-    private final int color;
+    private int color;
     public ColoredTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, int color) {
         super(vertex0, vertex1, vertex2);
         this.color = color;
@@ -19,6 +19,9 @@ public class ColoredTriangle extends TraceableTriangle{
         super(triangle);
         this.color = triangle.color;
     }
+
+    public void setColor(int color) {this.color = color;}
+    public int getColor() {return color;}
 
     @Override
     public int getColorWhenTraced(Vector3d hitPosition) {

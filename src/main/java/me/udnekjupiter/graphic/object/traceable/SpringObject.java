@@ -17,8 +17,8 @@ public class SpringObject extends TraceableObject implements Tickable {
 
     protected final int color = Color.WHITE.getRGB();
 
-    public SpringObject(Vector3d position, PositionedObject tipA, PositionedObject tipSecond) {
-        super(position);
+    public SpringObject(PositionedObject tipA, PositionedObject tipSecond) {
+        super(new Vector3d());
         this.tipA = tipA;
         this.tipB = tipSecond;
         this.plane = new ColoredTriangle(new Vector3d(), new Vector3d(), new Vector3d(), color);

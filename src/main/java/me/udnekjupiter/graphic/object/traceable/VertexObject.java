@@ -1,12 +1,16 @@
 package me.udnekjupiter.graphic.object.traceable;
 
+import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
+import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.physic.net.VertexColor;
 import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
-public class VertexObject extends PlaneObject implements PhysicLinked {
+import java.awt.*;
+
+public class VertexObject extends PlaneObject implements PhysicLinked, Draggable {
 
     private static final double SCALE_MULTIPLIER = 0.2;
     private final NetVertex netVertex;
@@ -37,5 +41,19 @@ public class VertexObject extends PlaneObject implements PhysicLinked {
     @Override
     public PhysicObject getPhysicRepresentation() {
         return netVertex;
+    }
+
+    @Override
+    public void select() {
+        System.out.println("Selected");
+        ((ColoredTriangle) plane0).setColor(Color.RED.getRGB());
+        ((ColoredTriangle) plane1).setColor(Color.RED.getRGB());
+    }
+
+    @Override
+    public void unselect() {
+        System.out.println("unselected");
+        ((ColoredTriangle) plane0).setColor(VertexColor.getColorFromVertex(netVertex).getRGB());
+        ((ColoredTriangle) plane1).setColor(VertexColor.getColorFromVertex(netVertex).getRGB());
     }
 }
