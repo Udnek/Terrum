@@ -4,6 +4,7 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collider.Collidable;
 import me.udnekjupiter.physic.collider.Collider;
 import me.udnekjupiter.physic.collider.SphereCollider;
+import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -167,6 +168,8 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
                 Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(normalizedDistance, 2)));
                 collisionForceCache.div(collidingObjects.size());
                 collisionForceCache.mul(0.25);
+
+                collisionForce.add(collisionForceCache);
             }
         }
         return collisionForce;

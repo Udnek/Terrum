@@ -7,14 +7,13 @@ import org.realityforge.vecmath.Vector3d;
 
 public class MassEssence extends RKMObject{
     public MassEssence(Vector3d position) {
-        // TEMPORARY CODE
         super(position);
 
         this.deltaTime = settings.deltaTime;
         this.mass = 10;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{position, new Vector3d()};
-        collider = new SphereCollider(0.1, this);
+        collider = new SphereCollider(0.5, this);
     }
 
     @Override

@@ -15,7 +15,7 @@ public abstract class NetVertex extends RKMObject {
 
     public NetVertex(Vector3d position) {
         super(position);
-        collider = new SphereCollider(0.1, this);
+        collider = new SphereCollider(0.5, this);
     }
 
     public Vector3d getPosition() {return position.dup();}

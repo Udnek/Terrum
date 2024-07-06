@@ -31,13 +31,13 @@ public class EnvironmentSettings {
         return new EnvironmentSettings(5000,
                 1,
                 5,
-                0.001,
+                0.0001,
                 5,
                 imageFileName,
-                10);
+                100);
     }
 
     public static EnvironmentSettings defaultPreset(){
-        return defaultWithImage("small_frame.png");
+        return defaultWithImage("static_small_square.png");
     }
 }

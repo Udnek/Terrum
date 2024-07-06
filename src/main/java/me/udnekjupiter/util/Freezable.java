@@ -1,4 +1,4 @@
-package me.udnekjupiter.physic.object;
+package me.udnekjupiter.util;
 
 public interface Freezable {
     void freeze();

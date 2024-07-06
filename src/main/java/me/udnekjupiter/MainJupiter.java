@@ -11,7 +11,14 @@ import me.udnekjupiter.physic.scene.NetPhysicsScene;
 public class MainJupiter extends Main{
 
     @Override
-    public ApplicationSettings initializeGraphicsSettings(){return ApplicationSettings.defaultNoRecording(2, 12, PolygonHolder.Type.SMART);}
+    public ApplicationSettings initializeGraphicsSettings() {
+//        return ApplicationSettings.defaultWithRecording(512,
+//                512,
+//                "Default",
+//                12,
+//                PolygonHolder.Type.SMART);
+        return ApplicationSettings.defaultNoRecording(2, 12, PolygonHolder.Type.SMART);
+    }
     public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
