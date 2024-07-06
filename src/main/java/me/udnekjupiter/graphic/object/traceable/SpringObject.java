@@ -1,6 +1,10 @@
 package me.udnekjupiter.graphic.object.traceable;
 
-import me.udnekjupiter.util.*;
+import me.udnekjupiter.graphic.triangle.ColoredTriangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
+import me.udnekjupiter.util.PositionedObject;
+import me.udnekjupiter.util.Tickable;
+import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -9,7 +13,7 @@ public class SpringObject extends TraceableObject implements Tickable {
 
     protected PositionedObject tipA;
     protected PositionedObject tipB;
-    protected Triangle plane;
+    protected TraceableTriangle plane;
 
     protected final int color = Color.WHITE.getRGB();
 
@@ -34,7 +38,7 @@ public class SpringObject extends TraceableObject implements Tickable {
     }
 
     @Override
-    public Triangle[] getRenderTriangles() {
-        return new Triangle[]{plane.copy()};
+    public TraceableTriangle[] getRenderTriangles() {
+        return new TraceableTriangle[]{plane.copy()};
     }
 }

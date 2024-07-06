@@ -4,7 +4,7 @@ import me.udnekjupiter.app.Application;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.util.Triangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ public class DefaultPolygonHolder implements PolygonHolder{
 
     private Camera camera;
     private List<? extends TraceableObject> objectsToRender;
-    private List<Triangle> cachedPlanes;
-    private List<Triangle> lightCachedPlanes;
+    private List<TraceableTriangle> cachedPlanes;
+    private List<TraceableTriangle> lightCachedPlanes;
     private LightSource lightSource;
 
     public DefaultPolygonHolder(List<TraceableObject> objectsToRender, Camera camera, LightSource lightSource){
@@ -32,7 +32,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
 
         for (TraceableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
-            for (Triangle plane: object.getRenderTriangles()) {
+            for (TraceableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
                 cachedPlanes.add(plane);
             }
@@ -44,7 +44,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
         Vector3d lightPosition = lightSource.getPosition();
         for (TraceableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
-            for (Triangle plane: object.getRenderTriangles()) {
+            for (TraceableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(lightPosition);
                 lightCachedPlanes.add(plane);
             }
@@ -53,7 +53,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
     }
 
     @Override
-    public List<Triangle> getCachedPlanes(Vector3d direction) { return cachedPlanes;}
+    public List<TraceableTriangle> getCachedPlanes(Vector3d direction) { return cachedPlanes;}
     @Override
-    public List<Triangle> getLightCachedPlanes(Vector3d direction) {return lightCachedPlanes;}
+    public List<TraceableTriangle> getLightCachedPlanes(Vector3d direction) {return lightCachedPlanes;}
 }

@@ -6,6 +6,7 @@ import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
 import me.udnekjupiter.graphic.object.traceable.shape.IcosphereObject;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -21,7 +22,14 @@ public class LightTestGraphicScene extends GraphicScene3d {
     @Override
     protected List<TraceableObject> initializeSceneObjects() {
         List<TraceableObject> graphicObjects = new ArrayList<>();
-        graphicObjects.add(new IcosphereObject(new Vector3d(0, 0, 2), 1, 2));
+        graphicObjects.add(
+                new IcosphereObject(
+                        new Vector3d(0, 0, 2),
+                        1,
+                        2,
+                        TraceableTriangle.empty()
+                        )
+                );
         graphicObjects.add(lightSource);
 
         return graphicObjects;
