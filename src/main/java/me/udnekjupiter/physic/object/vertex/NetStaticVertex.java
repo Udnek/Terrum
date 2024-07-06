@@ -19,4 +19,7 @@ public class NetStaticVertex extends NetVertex {
         return null;
     }
 
+    @Override
+    public void unfreeze(){}
+
 }
