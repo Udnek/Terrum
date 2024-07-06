@@ -2,14 +2,14 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
+import me.udnekjupiter.graphic.object.PhysicSynchronizable;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
-import me.udnekjupiter.graphic.object.traceable.DoubleSpringObject;
-import me.udnekjupiter.graphic.object.traceable.SpringObject;
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.graphic.object.traceable.VertexObject;
+import me.udnekjupiter.graphic.object.traceable.*;
 import me.udnekjupiter.physic.net.CellularNet;
+import me.udnekjupiter.physic.object.MassEssence;
+import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
@@ -20,23 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class NetGraphicScene extends GraphicScene3d {
-    private List<VertexObject> vertices;
-    private List<SpringObject> springs;
-    private NetPhysicsScene netPhysicsScene;
+    private final NetPhysicsScene netPhysicsScene;
+    private MassEssenceObject massEssenceObject;
     public NetGraphicScene(NetPhysicsScene netPhysicsScene){
         this.netPhysicsScene = netPhysicsScene;
     }
 
-
-
     @Override
     protected List<TraceableObject> initializeSceneObjects() {
-        vertices = new ArrayList<>();
-        springs = new ArrayList<>();
-
-        HashMap<NetVertex, List<NetVertex>> addedNeighbours = new HashMap<>();
+        List<VertexObject> vertices = new ArrayList<>();
+        List<SpringObject> springs = new ArrayList<>();
 
         CellularNet net = netPhysicsScene.getNet();
+        HashMap<NetVertex, List<NetVertex>> addedNeighbours = new HashMap<>();
 
         for (int x = 0; x < net.getSizeX(); x++) {
             for (int z = 0; z < net.getSizeZ(); z++) {
@@ -71,17 +67,25 @@ public class NetGraphicScene extends GraphicScene3d {
         }
 
         List<TraceableObject> graphicObjects = new ArrayList<>();
+;
+        List<RKMObject> rkmObjects = netPhysicsScene.getRKMObjects();
+        for (RKMObject object : rkmObjects) {
+            if (!(object instanceof MassEssence massEssence)) continue;
+            graphicObjects.add(new MassEssenceObject(massEssence));
+        }
+
+        
         graphicObjects.addAll(vertices);
         graphicObjects.addAll(springs);
+
         return graphicObjects;
     }
 
     public void synchroniseObjects(){
-        for (VertexObject vertex : vertices) {
-            vertex.update();
-        }
-        for (SpringObject springObject : springs) {
-            springObject.update();
+        for (TraceableObject object : traceableObjects) {
+            if (object instanceof PhysicSynchronizable physicSynchronizable){
+                physicSynchronizable.synchronizeWithPhysic();
+            }
         }
     }
 

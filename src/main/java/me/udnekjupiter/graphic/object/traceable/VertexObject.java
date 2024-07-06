@@ -1,10 +1,11 @@
 package me.udnekjupiter.graphic.object.traceable;
 
+import me.udnekjupiter.graphic.object.PhysicSynchronizable;
 import me.udnekjupiter.physic.net.VertexColor;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
 
-public class VertexObject extends PlaneObject {
+public class VertexObject extends PlaneObject implements PhysicSynchronizable {
 
     private static final double SCALE_MULTIPLIER = 0.2;
     private final NetVertex netVertex;
@@ -27,7 +28,8 @@ public class VertexObject extends PlaneObject {
         netVertex.setPosition(position);
     }
 
-    public void update(){
+    @Override
+    public void synchronizeWithPhysic() {
         setPosition(netVertex.getPosition());
     }
 }

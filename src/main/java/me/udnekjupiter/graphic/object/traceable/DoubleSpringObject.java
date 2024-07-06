@@ -15,7 +15,8 @@ public class DoubleSpringObject extends SpringObject{
         plane1 = new ColoredTriangle(new Vector3d(), new Vector3d(), new Vector3d(), color);
     }
 
-    public void update(){
+    @Override
+    public void synchronizeWithPhysic() {
         Vector3d posA1 = tipA.getPosition().sub(0, 0.01, 0);
         Vector3d posB1 = tipB.getPosition().sub(0, 0.01, 0);
 

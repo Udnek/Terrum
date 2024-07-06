@@ -10,6 +10,9 @@ public abstract class RKMPhysicsScene implements PhysicScene {
     protected List<RKMObject> RKMObjects;
 
     public void addObject(RKMObject object){RKMObjects.add(object);}
+    public List<RKMObject> getRKMObjects(){
+        return RKMObjects;
+    }
 
     public void updateNextObjectsCoefficients() {
         for (RKMObject object : RKMObjects) {

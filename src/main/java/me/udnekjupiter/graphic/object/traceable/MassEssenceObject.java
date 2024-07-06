@@ -1,11 +1,20 @@
 package me.udnekjupiter.graphic.object.traceable;
 
+import me.udnekjupiter.graphic.object.PhysicSynchronizable;
 import me.udnekjupiter.graphic.object.traceable.shape.IcosphereObject;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.physic.object.MassEssence;
 
-public class MassEssenceObject extends IcosphereObject {
+public class MassEssenceObject extends IcosphereObject implements PhysicSynchronizable {
 
-    public MassEssenceObject(Vector3d position) {
-        super(position, 0.5, 1);
+    private final MassEssence massEssence;
+
+    public MassEssenceObject(MassEssence massEssence) {
+        super(massEssence.getPosition(), 0.5, 1);
+        this.massEssence = massEssence;
+    }
+
+    @Override
+    public void synchronizeWithPhysic() {
+        setPosition(massEssence.getPosition());
     }
 }
