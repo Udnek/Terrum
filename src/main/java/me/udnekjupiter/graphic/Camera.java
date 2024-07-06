@@ -9,8 +9,7 @@ public class Camera extends PositionedObject {
 
     private float yaw;
     private float pitch;
-    // TODO: 7/5/2024 FIX FOV IN SCREEN RENDER
-    private double fov = 1f;
+    private double fov = 2f;
 
     public Camera(Vector3d position, float yaw, float pitch) {
         super(position);
@@ -65,4 +64,5 @@ public class Camera extends PositionedObject {
     public double getFov() {
         return fov;
     }
+    public void setFov(double fov){this.fov = fov;}
 }

@@ -22,6 +22,7 @@ public class VectorUtils {
     public static double getAreaOfParallelogram(Vector3d edge0, Vector3d edge1){
         return getCrossProductLength(edge0, edge1);
     }*/
+
     public static double getAreaOfTriangle(Vector3d edge0, Vector3d edge1){
         double newX = edge0.y * edge1.z - edge0.z * edge1.y;
         double newY = edge1.x * edge0.z - edge1.z * edge0.x;
@@ -65,7 +66,7 @@ public class VectorUtils {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // FOR 3D CALCS
+    // FOR 3D CALCULATIONS
     ///////////////////////////////////////////////////////////////////////////
 
     public static Vector3d triangleRayIntersection(Vector3d direction, Triangle triangle) {

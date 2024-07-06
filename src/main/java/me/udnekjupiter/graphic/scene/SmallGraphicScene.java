@@ -1,6 +1,7 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeLine;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.traceable.PlaneObject;
@@ -19,7 +20,7 @@ public class SmallGraphicScene extends GraphicScene3d{
     @Override
     protected List<TraceableObject> initializeSceneObjects() {
         List<TraceableObject> objects = new ArrayList<>();
-        PlaneObject planeObject = new PlaneObject(new Vector3d(), -1, -1, 1, 1, -1);
+        PlaneObject planeObject = new PlaneObject(new Vector3d(), -1, -1, 1, 1, 0);
         objects.add(planeObject);
         return objects;
     }
@@ -31,12 +32,12 @@ public class SmallGraphicScene extends GraphicScene3d{
 
     @Override
     protected List<FixedSizeObject> initializeFixedSizeObjects() {
-        return null;
-/*        List<FixedSizeObject> fixedSizeObjects = new ArrayList<>();
+        //return null;
+        List<FixedSizeObject> fixedSizeObjects = new ArrayList<>();
         FixedSizeLine fixedSizeLine = new FixedSizeLine(
                 new Vector3d(0, 0, 0),
                 new Vector3d(0, 0, 1));
         fixedSizeObjects.add(fixedSizeLine);
-        return fixedSizeObjects;*/
+        return fixedSizeObjects;
     }
 }
