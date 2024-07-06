@@ -32,7 +32,6 @@ public abstract class RKMPhysicsScene implements PhysicScene {
             object.clearCollidingObjects();
         }
         for (RKMObject targetObject : RKMObjects) {
-            if (targetObject instanceof MassEssence) System.out.println(targetObject.getPosition().asString());
             for (RKMObject anotherObject : RKMObjects) {
                 if (targetObject == anotherObject) continue;
                 if (!targetObject.getCollider().isCollidingWith(anotherObject.getCollider())) continue;

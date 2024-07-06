@@ -14,7 +14,7 @@ public class MassEssence extends RKMObject{
         this.mass = 10;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{position, new Vector3d()};
-        collider = new SphereCollider(0.4, this);
+        collider = new SphereCollider(0.1, this);
     }
 
     @Override
@@ -31,7 +31,6 @@ public class MassEssence extends RKMObject{
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         resultAcceleration.sub(decayValue);
         resultAcceleration.div(mass);
-        System.out.println(resultAcceleration.asString());
         return resultAcceleration;
     }
 }

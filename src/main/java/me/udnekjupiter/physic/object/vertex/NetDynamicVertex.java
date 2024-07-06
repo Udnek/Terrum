@@ -42,7 +42,7 @@ public class NetDynamicVertex extends NetVertex {
             appliedForce.add(normalizedDirection.mul(elasticForce));
         }
 
-        //appliedForce.y += (-9.80665)*mass;
+        appliedForce.y += (-9.80665)*mass;
         appliedForce.add(getCollisionForce(position));
         return appliedForce;
     }

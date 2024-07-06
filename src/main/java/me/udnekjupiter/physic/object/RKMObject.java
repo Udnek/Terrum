@@ -156,7 +156,6 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     protected abstract Vector3d getAppliedForce(Vector3d position);
     protected Vector3d getCollisionForce(Vector3d thisPosition) {
         Vector3d collisionForce = new Vector3d();
-        System.out.println(collidingObjects.size());
         for (RKMObject collidingObject : collidingObjects) {
             if (collidingObject.getCollider() instanceof SphereCollider) {
                 Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
@@ -164,8 +163,10 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
                 double distance = VectorUtils.distance(thisPosition, otherPosition);
                 double maxDistance = ((SphereCollider) collidingObject.getCollider()).radius +
                         ((SphereCollider) this.getCollider()).radius;
-                double normalizedDistance = distance/maxDistance;
-                collisionForce.add(normalizedDirection.mul(1 / (Math.pow(normalizedDistance, 2))).div(collidingObjects.size()));
+                double normalizedDistance = (distance/maxDistance);
+                Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(normalizedDistance, 2)));
+                collisionForceCache.div(collidingObjects.size());
+                collisionForceCache.mul(0.25);
             }
         }
         return collisionForce;
