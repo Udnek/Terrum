@@ -34,8 +34,9 @@ public abstract class RKMPhysicsScene implements PhysicScene {
         for (RKMObject targetObject : RKMObjects) {
             for (RKMObject anotherObject : RKMObjects) {
                 if (targetObject == anotherObject) continue;
-                if (!targetObject.getCollider().isCollidingWith(anotherObject.getCollider())) continue;
+                if (targetObject.isCollisionIgnored(anotherObject)) continue;
                 if (targetObject.collidingObjectIsAlreadyListed(anotherObject)) continue;
+                if (!targetObject.getCollider().isCollidingWith(anotherObject.getCollider())) continue;
 
                 targetObject.addCollidingObject(anotherObject);
                 anotherObject.addCollidingObject(targetObject);

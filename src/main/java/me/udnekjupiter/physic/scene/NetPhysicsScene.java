@@ -22,12 +22,12 @@ public class NetPhysicsScene extends RKMPhysicsScene {
                 addObject(vertex);
             }
         }
-        addMassEssence(new Vector3d(1, 5, 1));
+        addMassEssence(new Vector3d(2, 10, 2), 2, 75);
 
     }
 
-    public void addMassEssence(Vector3d position){
-        addObject(new MassEssence(position));
+    public void addMassEssence(Vector3d position, double colliderRadius, double mass){
+        addObject(new MassEssence(position, colliderRadius, mass));
     }
     public void setVertexPosition(int posX, int posZ, Vector3d newPos){
         net.getVertex(posX, posZ).setPosition(newPos);

@@ -40,4 +40,8 @@ public abstract class NetVertex extends RKMObject {
     public List<NetVertex> getNeighbors(){
         return this.neighbors;
     }
+    @Override
+    public boolean isCollisionIgnored(RKMObject object){
+        return object instanceof NetVertex;
+    }
 }
