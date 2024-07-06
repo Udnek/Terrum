@@ -3,22 +3,23 @@ package me.udnekjupiter.physic.object;
 import me.udnekjupiter.physic.collider.SphereCollider;
 import org.realityforge.vecmath.Vector3d;
 
+import static me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine.gravitationalAcceleration;
+
 public class MassEssence extends RKMObject{
-    public MassEssence(Vector3d position) {
+    public MassEssence(Vector3d position, double colliderRadius, double mass) {
         super(position);
 
         this.deltaTime = settings.deltaTime;
-        this.mass = 1;
+        this.mass = mass;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{position, new Vector3d()};
-        collider = new SphereCollider(1.5, this);
+        collider = new SphereCollider(colliderRadius, this);
     }
 
     @Override
     protected Vector3d getAppliedForce(Vector3d position){
         Vector3d appliedForce = new Vector3d();
-        // TODO: 7/6/2024 MOVE -9.8066 TO STATIC PHYSIC ENGINE
-        appliedForce.y += -9.80665 * mass;
+        appliedForce.y += gravitationalAcceleration * mass;
         appliedForce.add(getCollisionForce(position));
         return appliedForce;
     }
@@ -36,4 +37,7 @@ public class MassEssence extends RKMObject{
     public SphereCollider getCollider() {
         return (SphereCollider) collider;
     }
+
+    @Override
+    public boolean isCollisionIgnored(RKMObject object) {return false;}
 }

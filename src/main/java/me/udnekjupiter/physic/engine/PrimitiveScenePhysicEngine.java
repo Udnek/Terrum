@@ -12,6 +12,7 @@ import me.udnekjupiter.physic.scene.PhysicScene;
 
 public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener, ControllerListener {
     private final PhysicScene physicScene;
+    public static double gravitationalAcceleration = -9.80665;
     private int beforePauseIPT = Application.ENVIRONMENT_SETTINGS.iterationsPerTick;
 
     public PrimitiveScenePhysicEngine(PhysicScene physicScene){

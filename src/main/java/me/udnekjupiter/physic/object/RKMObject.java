@@ -164,14 +164,11 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
                 Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
                 Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
                 double distance = VectorUtils.distance(thisPosition, otherPosition);
-                double thisRadius = ((SphereCollider) this.getCollider()).radius;
-                double otherRadius = otherSphereCollider.radius;
-                double maxDistance = thisRadius + otherRadius;
-                double depth = Math.max(distance - otherRadius, Application.ENVIRONMENT_SETTINGS.maxDepth);
-                Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(depth, 3)));
-                collisionForceCache.mul(5);
-                //collisionForceCache.div(collidingObjects.size());
-                //collisionForceCache.mul(1);
+                double maxDepth = Application.ENVIRONMENT_SETTINGS.maxDepth;
+                double thisCriticalRadius = ((SphereCollider) this.getCollider()).radius - maxDepth;
+                double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
+                double criticalDepth = thisCriticalRadius + otherCriticalRadius;
+                Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(distance - criticalDepth, 3)));
                 collisionForce.add(collisionForceCache);
             }
         }

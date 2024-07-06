@@ -17,13 +17,13 @@ public class MainJupiter extends Main{
 //                "Default",
 //                12,
 //                PolygonHolder.Type.SMART);
-        return ApplicationSettings.defaultNoRecording(2, 12, PolygonHolder.Type.SMART);
+      return ApplicationSettings.defaultNoRecording(4, 16, PolygonHolder.Type.SMART);
     }
     public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("nano_frame.png");
+        NetPhysicsScene physicScene = new NetPhysicsScene("medium_frame.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
