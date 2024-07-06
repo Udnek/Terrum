@@ -20,10 +20,7 @@ public class FixedSizeLine extends FixedSizeObject{
 
     @Override
     public void foundOnFrameAt(List<Point> points, GraphicFrame frame) {
-        if (points.size() != 2) {
-            System.out.println("WTF");
-            return;
-        }
+        if (points.size() != 2) return;
         drawLine(points.get(0), points.get(1), Color.GREEN.getRGB(), frame);
     }
 

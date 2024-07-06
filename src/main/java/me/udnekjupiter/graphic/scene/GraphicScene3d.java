@@ -1,6 +1,7 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.DebugMenu;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
@@ -104,7 +105,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void keyContinuouslyPressed(InputKey inputKey){
         final float deltaTime = (float) Application.getFrameDeltaTime();
         final float moveSpeed = 5f * deltaTime;
-        final float rotateSpeed = 45f * deltaTime;
+        final float rotateSpeed = 60f * deltaTime;
         switch (inputKey){
             case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
             case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
@@ -122,8 +123,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void handleMousePressedDifference(){
         InputKey mouseKey = controller.getMouseKey();
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
-            // TODO: 7/5/2024 FIX SENSITIVITY DEPENDS ON PIXELSCALING
-            float sensitivity = (float) (10f * Application.getFrameDeltaTime());
+            float sensitivity = (float) (10f * Application.getFrameDeltaTime() * ApplicationSettings.GLOBAL.pixelScaling);
             Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);

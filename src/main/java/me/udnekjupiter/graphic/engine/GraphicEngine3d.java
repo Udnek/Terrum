@@ -2,6 +2,9 @@ package me.udnekjupiter.graphic.engine;
 
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.console.Command;
+import me.udnekjupiter.app.console.Console;
+import me.udnekjupiter.app.console.ConsoleListener;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.GraphicFrame;
@@ -16,7 +19,7 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
-public class GraphicEngine3d implements GraphicEngine{
+public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
 
     private final GraphicScene3d scene;
     private RayTracer rayTracer;
@@ -40,6 +43,7 @@ public class GraphicEngine3d implements GraphicEngine{
         } else {
             polygonHolder = new DefaultPolygonHolder(scene.getTraceableObjects(), scene.getCamera(), scene.getLightSource());
         }
+        Console.getInstance().addListener(this);
     }
 
     @Override
@@ -63,5 +67,11 @@ public class GraphicEngine3d implements GraphicEngine{
         }
 
         return frame.toImage();
+    }
+
+    @Override
+    public void handleCommand(Command command, Object[] args) {
+        if (command != Command.SET_FOV) return;
+        scene.getCamera().setFov((double) args[0]);
     }
 }

@@ -33,6 +33,7 @@ public class ScreenTracer {
             pointPosition.add(position).sub(cameraPosition);
 
             Point foundPoint = pointPositionOnFrame(pointPosition);
+            if (foundPoint == null) continue;
             foundPoints.add(foundPoint);
         }
 
@@ -42,8 +43,9 @@ public class ScreenTracer {
     public Point pointPositionOnFrame(Vector3d vertex){
         camera.rotateBackVector(vertex.normalize());
 
-        Vector3d defaultCameraDirection = new Vector3d(0, 0, 1);
+        Vector3d defaultCameraDirection = new Vector3d(0, 0, 1).mul(camera.getFov());
         double angle = defaultCameraDirection.dot(vertex);
+        if (angle < 0) return null;
 
         vertex.div(angle);
 
