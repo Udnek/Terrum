@@ -1,6 +1,7 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collider.Collidable;
 import me.udnekjupiter.physic.collider.Collider;
@@ -159,17 +160,18 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     protected Vector3d getCollisionForce(Vector3d thisPosition) {
         Vector3d collisionForce = new Vector3d();
         for (RKMObject collidingObject : collidingObjects) {
-            if (collidingObject.getCollider() instanceof SphereCollider) {
+            if (collidingObject.getCollider() instanceof SphereCollider otherSphereCollider) {
                 Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
                 Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
                 double distance = VectorUtils.distance(thisPosition, otherPosition);
-                double maxDistance = ((SphereCollider) collidingObject.getCollider()).radius +
-                        ((SphereCollider) this.getCollider()).radius;
-                double normalizedDistance = (distance/maxDistance);
-                Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(normalizedDistance, 2)));
-                collisionForceCache.div(collidingObjects.size());
-                collisionForceCache.mul(1);
-
+                double thisRadius = ((SphereCollider) this.getCollider()).radius;
+                double otherRadius = otherSphereCollider.radius;
+                double maxDistance = thisRadius + otherRadius;
+                double depth = Math.max(distance - otherRadius, Application.ENVIRONMENT_SETTINGS.maxDepth);
+                Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(depth, 3)));
+                collisionForceCache.mul(5);
+                //collisionForceCache.div(collidingObjects.size());
+                //collisionForceCache.mul(1);
                 collisionForce.add(collisionForceCache);
             }
         }
