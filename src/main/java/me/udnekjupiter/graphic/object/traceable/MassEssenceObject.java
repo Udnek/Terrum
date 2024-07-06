@@ -4,6 +4,7 @@ import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.traceable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
+import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import me.udnekjupiter.physic.object.MassEssence;
 import me.udnekjupiter.physic.object.PhysicObject;
 import org.realityforge.vecmath.Vector3d;
@@ -36,11 +37,17 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
 
     @Override
     public void select() {
-
+        for (TraceableTriangle polygon : polygons) {
+            MassEssenceTriangle triangle = (MassEssenceTriangle) polygon;
+            triangle.setColor(MassEssenceTriangle.HIGHLIGHTED_COLOR);
+        }
     }
 
     @Override
     public void unselect() {
-
+        for (TraceableTriangle polygon : polygons) {
+            MassEssenceTriangle triangle = (MassEssenceTriangle) polygon;
+            triangle.setColor(MassEssenceTriangle.DEFAULT_COLOR);
+        }
     }
 }

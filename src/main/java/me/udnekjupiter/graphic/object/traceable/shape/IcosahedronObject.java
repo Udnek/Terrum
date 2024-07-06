@@ -7,8 +7,8 @@ import org.realityforge.vecmath.Vector3d;
 public class IcosahedronObject extends TraceableObject {
 
     public static final float FI = (float) ((1.0f + Math.sqrt(5.0f))/2.0f);
-    private TraceableTriangle[] polygons;
-    private final double size;
+    protected TraceableTriangle[] polygons;
+    public final double size;
     public IcosahedronObject(Vector3d position, double size, TraceableTriangle example) {
         super(position);
         this.size = size;
