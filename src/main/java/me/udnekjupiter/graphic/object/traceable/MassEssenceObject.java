@@ -12,7 +12,7 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked {
     private final MassEssence massEssence;
 
     public MassEssenceObject(MassEssence massEssence) {
-        super(massEssence.getPosition(), 0.5, 1,
+        super(massEssence.getPosition(), massEssence.getCollider().radius, 1,
                 new MassEssenceTriangle(new Vector3d(), new Vector3d(), new Vector3d()));
         this.massEssence = massEssence;
     }

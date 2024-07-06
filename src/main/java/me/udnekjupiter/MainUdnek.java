@@ -13,7 +13,7 @@ public class MainUdnek extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("frame.png");
+        NetPhysicsScene physicScene = new NetPhysicsScene("small_frame.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
         //GraphicScene3d graphicScene = new SmallGraphicScene();
