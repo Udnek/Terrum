@@ -6,6 +6,7 @@ import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.realityforge.vecmath.Vector3d;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class NetPhysicsScene extends RKMPhysicsScene {
                 addObject(vertex);
             }
         }
-        addSphereObject(new Vector3d(5, 40, 5), 4, 50);
 
         for (RKMObject object : getAllObjects()) {
             if (!(object instanceof NetVertex)){
@@ -35,6 +35,7 @@ public class NetPhysicsScene extends RKMPhysicsScene {
     }
 
     public void addSphereObject(Vector3d position, double colliderRadius, double mass){
+        System.out.println(getAllObjects());
         addObject(new SphereObject(position, colliderRadius, mass));
     }
     public void setVertexPosition(int posX, int posZ, Vector3d newPos){

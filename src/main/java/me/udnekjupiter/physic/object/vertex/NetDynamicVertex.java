@@ -5,6 +5,8 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
+import static me.udnekjupiter.physic.engine.PhysicEngine.GRAVITATIONAL_ACCELERATION;
+
 @SuppressWarnings("FieldMayBeFinal")
 public class NetDynamicVertex extends NetVertex {
     protected double springStiffness;
@@ -40,8 +42,6 @@ public class NetDynamicVertex extends NetVertex {
             double elasticForce = springStiffness * distanceDifferential;
             appliedForce.add(normalizedDirection.mul(elasticForce));
         }
-
-        appliedForce.y += (-9.80665)*mass;
         appliedForce.add(getCollisionForce());
         return appliedForce;
     }
@@ -52,6 +52,7 @@ public class NetDynamicVertex extends NetVertex {
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         Vector3d resultAcceleration = appliedForce.dup().sub(decayValue);
         resultAcceleration.div(mass);
+        resultAcceleration.y += GRAVITATIONAL_ACCELERATION;
 
         return resultAcceleration;
     }

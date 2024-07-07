@@ -21,7 +21,7 @@ public abstract class CollisionCalculator {
                 double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - maxDepth;
                 double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
                 double criticalDistance = thisCriticalRadius + otherCriticalRadius;
-                double subCriticalDistance = criticalDistance + (maxDepth*2)*0.0625;
+                double subCriticalDistance = criticalDistance + (maxDepth*0.0625)*2;
                 double depth = Math.max(Math.abs(distance - criticalDistance), Math.abs(subCriticalDistance - criticalDistance));
                 Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(depth, 3)));
                 collisionForce.add(collisionForceCache);
@@ -38,15 +38,15 @@ public abstract class CollisionCalculator {
                 Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
                 double distance = VectorUtils.distance(thisPosition, otherPosition);
                 double maxDistance = ((SphereCollider) thisObject.getCollider()).radius + otherSphereCollider.radius;
-                double maxDepth = MAX_DEPTH;
-                double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - maxDepth;
-                double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
+                double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - MAX_DEPTH;
+                double otherCriticalRadius = otherSphereCollider.radius - MAX_DEPTH;
                 double minCriticalRadiiDistance = thisCriticalRadius + otherCriticalRadius;
                 double stableDistance = maxDistance - minCriticalRadiiDistance;
                 double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
                 double depth = stableDistance - criticalRadiiDistance;
+                double depthPercentage = depth/stableDistance;
                 Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth)*10000000);
+                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth)*(depthPercentage*10000));
                 collisionForce.add(collisionForceCache);
             }
         }

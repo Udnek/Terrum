@@ -112,8 +112,8 @@ public class NetGraphicScene extends GraphicScene3d {
 
     @Override
     protected Camera initializeCamera() {
-        Camera camera = new Camera(new Vector3d(5, -4, -4));
-        camera.rotatePitch(-30);
+        Camera camera = new Camera(new Vector3d(5, 8, -9));
+        camera.rotatePitch(40);
         return camera;
     }
 
