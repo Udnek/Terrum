@@ -38,7 +38,7 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
 
         frame.add(panel);
 
-        panel.setPreferredSize(new Dimension(700, 700));
+        panel.setPreferredSize(new Dimension(Application.APPLICATION_SETTINGS.startWindowWidth, Application.APPLICATION_SETTINGS.startWindowHeight));
 
         frame.setIgnoreRepaint(true);
         frame.setFocusable(true);
