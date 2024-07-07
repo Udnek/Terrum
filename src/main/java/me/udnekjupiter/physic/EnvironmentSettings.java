@@ -29,7 +29,7 @@ public class EnvironmentSettings {
                 1,
                 0.0001,
                 5,
-                0.2,
+                0.1,
                 200);
     }
 }

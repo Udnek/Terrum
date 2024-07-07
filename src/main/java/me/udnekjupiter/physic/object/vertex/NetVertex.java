@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.object.vertex;
 
-import me.udnekjupiter.physic.collider.SphereCollider;
+import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.physic.object.RKMObject;
 import org.realityforge.vecmath.Vector3d;
 

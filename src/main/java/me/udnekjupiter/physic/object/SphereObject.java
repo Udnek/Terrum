@@ -1,12 +1,12 @@
 package me.udnekjupiter.physic.object;
 
-import me.udnekjupiter.physic.collider.SphereCollider;
+import me.udnekjupiter.physic.collision.SphereCollider;
 import org.realityforge.vecmath.Vector3d;
 
-import static me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine.gravitationalAcceleration;
+import static me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine.GRAVITATIONAL_ACCELERATION;
 
-public class MassEssence extends RKMObject{
-    public MassEssence(Vector3d position, double colliderRadius, double mass) {
+public class SphereObject extends RKMObject{
+    public SphereObject(Vector3d position, double colliderRadius, double mass) {
         super(position);
 
         this.deltaTime = settings.deltaTime;
@@ -19,8 +19,8 @@ public class MassEssence extends RKMObject{
     @Override
     protected Vector3d getAppliedForce(Vector3d position){
         Vector3d appliedForce = new Vector3d();
-        appliedForce.y += gravitationalAcceleration * mass;
-        appliedForce.add(getCollisionForce(position));
+        appliedForce.y += GRAVITATIONAL_ACCELERATION * mass;
+        appliedForce.add(getCollisionForce());
         return appliedForce;
     }
 
@@ -28,7 +28,7 @@ public class MassEssence extends RKMObject{
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
         Vector3d resultAcceleration = getAppliedForce(position);
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
-        resultAcceleration.sub(decayValue);
+        //resultAcceleration.sub(decayValue);
         resultAcceleration.div(mass);
         return resultAcceleration;
     }

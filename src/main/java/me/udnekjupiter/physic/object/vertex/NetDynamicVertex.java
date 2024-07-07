@@ -2,7 +2,6 @@
 package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collider.SphereCollider;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -43,7 +42,7 @@ public class NetDynamicVertex extends NetVertex {
         }
 
         appliedForce.y += (-9.80665)*mass;
-        appliedForce.add(getCollisionForce(position));
+        appliedForce.add(getCollisionForce());
         return appliedForce;
     }
 
