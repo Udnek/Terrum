@@ -40,7 +40,8 @@ public class FileManager {
     public enum Directory{
         IMAGE_MAP("image/map"),
         IMAGE_ICON("image/icon"),
-        VIDEO("video");
+        VIDEO("video"),
+        SHADER("shader");
 
         public final String path;
         Directory(String dir){

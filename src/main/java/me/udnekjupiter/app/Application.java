@@ -1,5 +1,6 @@
 package me.udnekjupiter.app;
 
+import me.udnekjupiter.GPUGraphicEngine;
 import me.udnekjupiter.Main;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
@@ -178,6 +179,9 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     public void stop(){
+        if (graphicEngine instanceof GPUGraphicEngine graphicEngine){
+            graphicEngine.stop();
+        }
         videoRecorder.save();
     }
 
