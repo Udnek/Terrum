@@ -5,12 +5,13 @@ import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
+import me.udnekjupiter.util.Resettable;
 import org.realityforge.vecmath.Vector3d;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
 
-public class NetPhysicsScene extends RKMPhysicsScene {
+public class NetPhysicsScene extends RKMPhysicsScene implements Resettable {
     private final CellularNet net;
     public NetPhysicsScene(String mapImageName){
         this.net = new CellularNet(mapImageName);
@@ -32,6 +33,10 @@ public class NetPhysicsScene extends RKMPhysicsScene {
             }
         }
 
+    }
+
+    public void reset(){
+        net.reset();
     }
 
     public void addSphereObject(Vector3d position, double colliderRadius, double mass){

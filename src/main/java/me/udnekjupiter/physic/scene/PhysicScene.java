@@ -4,4 +4,5 @@ import me.udnekjupiter.util.Initializable;
 import me.udnekjupiter.util.Tickable;
 
 public interface PhysicScene extends Initializable, Tickable {
+    void reset();
 }

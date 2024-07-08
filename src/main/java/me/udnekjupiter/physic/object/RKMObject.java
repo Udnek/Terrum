@@ -5,15 +5,14 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.collision.CollisionCalculator;
-import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.util.Freezable;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.Resettable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RKMObject extends PhysicObject implements Freezable, Collidable {
+public abstract class RKMObject extends PhysicObject implements Freezable, Collidable, Resettable {
     protected EnvironmentSettings settings;
     protected List<RKMObject> collidingObjects;
     protected Vector3d[] currentRKMPhaseVector;
@@ -55,6 +54,10 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     public boolean collidingObjectIsAlreadyListed(RKMObject object){
         return collidingObjects.contains(object);
     }
+    public void reset(){
+        setPosition(new Vector3d());
+        setVelocity(new Vector3d());
+    }
 
     public Vector3d getVelocity(){
         return velocity.dup();
@@ -90,8 +93,6 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
 
     // TODO [mess around] WITH SWITCH
     public void calculateNextPhaseVector(){
-        if (isFrozen()) return;
-
         switch (coefficientCounter) {
             case 1 -> {
                 setCurrentRKMPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient1));
@@ -110,7 +111,6 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
         }
     }
     public void calculateNextCoefficient(){
-        if (isFrozen()) return;
         switch (coefficientCounter) {
             case 1 -> coefficient1 = RKMethodFunction(getCurrentRKMPhaseVector());
             case 2 -> coefficient2 = RKMethodFunction(getCurrentRKMPhaseVector());
@@ -161,6 +161,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     protected Vector3d getCollisionForce() {
         return CollisionCalculator.getHookeCollisionForce(this);
     }
+
 
     @Override
     public void freeze(){

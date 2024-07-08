@@ -9,10 +9,12 @@ import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.scene.PhysicScene;
+import me.udnekjupiter.util.Resettable;
 
-public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener, ControllerListener {
+public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener, ControllerListener, Resettable {
     private final PhysicScene physicScene;
     private int beforePauseIPT = Application.ENVIRONMENT_SETTINGS.iterationsPerTick;
+//    private int internalCounter = 0;
 
     public PrimitiveScenePhysicEngine(PhysicScene physicScene){
         this.physicScene = physicScene;
@@ -29,6 +31,10 @@ public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener
         Controller.getInstance().addListener(this);
     }
 
+    public void reset(){
+        physicScene.reset();
+    }
+
     @Override
     public void handleCommand(Command command, Object[] args) {
         if (command != Command.SET_ITERATIONS_PER_TICK) return;
@@ -37,15 +43,21 @@ public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener
 
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
-        if (inputKey != InputKey.PAUSE) return;
         if (!pressed) return;
 
         EnvironmentSettings settings = Application.ENVIRONMENT_SETTINGS;
-        if (settings.iterationsPerTick == 0){
-            settings.iterationsPerTick = beforePauseIPT;
+
+        if (inputKey == InputKey.PAUSE) {
+            if (settings.iterationsPerTick == 0){
+                settings.iterationsPerTick = beforePauseIPT;
+            } else {
+                beforePauseIPT = settings.iterationsPerTick;
+                settings.iterationsPerTick = 0;
+            }
+        } else if (inputKey == InputKey.RESET){
+            reset();
         } else {
-            beforePauseIPT = settings.iterationsPerTick;
-            settings.iterationsPerTick = 0;
+            return;
         }
     }
 }

@@ -23,7 +23,7 @@ public class NetStaticVertex extends NetVertex {
 
     @Override
     protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity) {
-        return null;
+        return new Vector3d();
     }
 
     @Override

@@ -6,15 +6,18 @@ import me.udnekjupiter.file.ImageWrapper;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
+import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Initializable;
+import me.udnekjupiter.util.Resettable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CellularNet implements Initializable {
+public class CellularNet implements Initializable, Freezable, Resettable {
     private final EnvironmentSettings settings;
+    private boolean frozen;
     private int sizeX;
     private int sizeZ;
     public double potentialEnergy;
@@ -70,6 +73,16 @@ public class CellularNet implements Initializable {
         initializeVerticesVariables();
     }
 
+    public void reset(){
+        for (int z = 0; z < sizeZ; z++) {
+            for (int x = 0; x < sizeX; x++) {
+                if (getVertex(x, z) == null) continue;
+                getVertex(x, z).reset();
+                getVertex(x, z).setPosition(new Vector3d(x, 0, z));
+            }
+        }
+    }
+
     private void initializeNet() {
         ImageWrapper reader = new ImageWrapper();
         reader.readImage(mapImageName);
@@ -108,5 +121,30 @@ public class CellularNet implements Initializable {
                 }
             }
         }
+    }
+
+    @Override
+    public void freeze() {
+        for (NetVertex[] netRow : netMap) {
+            for (NetVertex netVertex : netRow) {
+                netVertex.freeze();
+            }
+        }
+        this.frozen = true;
+    }
+
+    @Override
+    public void unfreeze() {
+        for (NetVertex[] netRow : netMap) {
+            for (NetVertex netVertex : netRow) {
+                netVertex.unfreeze();
+            }
+        }
+        this.frozen = false;
+    }
+
+    @Override
+    public boolean isFrozen() {
+        return frozen;
     }
 }
