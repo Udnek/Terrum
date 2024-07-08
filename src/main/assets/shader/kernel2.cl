@@ -3,14 +3,12 @@ struct Plane{
     double3 v1;
     double3 v2;
 };
-
-void debugVertex(double3 v){printf("%f %f %f \n", v.x, v.y, v.z);};
 int rgbToInt(int r, int g, int b){
     return (r * 256*256) + (g * 256) + b;
-};
+}
 
 double3 getNormal(struct Plane plane){
-    return cross(plane.v0 - plane.v1, plane.v0 - plane.v2);
+    cross(plane.v0 - plane.v1, plane.v2 - plane.v1);
 };
 double getAreaOfPlane(struct Plane plane){
     return length(cross(plane.v0 - plane.v1, plane.v0 - plane.v2))/2.0f;
@@ -19,9 +17,7 @@ double getAreaOfEdges(double3 edge0, double3 edge1){
     return length(cross(edge0, edge1))/2.0f;
 };
 double3 getVertex(double const *poses, int number){
-    double3 v = (double3)(poses[number*3], poses[number*3+1], poses[number*3+2]);
-    //debugVertex(v);
-    return v;
+    return (double3)(poses[number*3], poses[number*3+1], poses[number*3+2]);
 };
 struct Plane getPlane(double const *poses, int number){
     return (struct Plane){
@@ -33,6 +29,8 @@ struct Plane getPlane(double const *poses, int number){
 void rotateVectorAlongCamera(float2 cameraRotation, double3 vector){// TODO realise
 };
 
+void debugVertex(double3 v){printf("%d %d %d \n", v.x, v.y, v.z);}
+
 double4 planeRayIntersection(double3 direction, struct Plane plane){
     const double EPSILON = 0.00001;
 
@@ -41,14 +39,19 @@ double4 planeRayIntersection(double3 direction, struct Plane plane){
     double3 v2 = plane.v2;
 
     double3 normal = getNormal(plane);
-    double parallelityWithNormal = 1.0f - length(cross(normal, direction));
+    // printf("\n");
+    // debugVertex(v0);
+    // debugVertex(v1);
+    // debugVertex(v2);
+    // printf("\n");
+    //printf("%d %d %d \n", normal.x, normal.y, normal.z);
+    double parallelityWithNormal = 1.0f - length(cross(normal, direction)); 
     
     if (-EPSILON <= parallelityWithNormal && parallelityWithNormal <= EPSILON){
         return (double4)(0, 0, 0, 0);
     }
 
     double distanceToPlane = dot(normal, v0);
-
     double directionCoefficient = distanceToPlane / dot(normal, direction);
     // facing back
     if (directionCoefficient < 0) return (double4)(0, 0, 0, -1);
@@ -78,20 +81,25 @@ int rayTrace(double const *poses, double3 direction, int planesAmount){
         struct Plane plane = getPlane(poses, i);
         double4 hit = planeRayIntersection(direction, plane);
         if (hit.w == 1) return rgbToInt(255, 255, 255);
+
+        if (hit.w == 0) return rgbToInt(255, 0, 0);
+        if (hit.w == -1) return rgbToInt(0, 255, 0);
+        if (hit.w == -2) return rgbToInt(0, 0, 255);
+        if (hit.w == -3) return rgbToInt(128, 128, 128);
     }
     return 0;
 };
 
 __kernel void rayTracer
     (
-    __global double *hits,
-    __global int *pixelPlane,
     __global const double *poses,
-    __global const int *planesAmount
-
+    __global const int *planesAmount,
+    __global double *hits,
+    __global int *pixelPlane
     ) 
     {
     // TODO make params
+    printf("%d ", poses[0]);
 
     const int width = 700;
     const int height = 700;
@@ -105,19 +113,15 @@ __kernel void rayTracer
 
     const int id = get_global_id(0);
     
-    //printf("%d ", poses[0]);
 
     //rotateVectorAlongCamera(cameraRotation, direction);
     int y = id / width;
     int x = id - y*width;
 
-    //double3 v = (double3)(poses[0*3], poses[0*3+1], poses[0*3+2]);
-    //debugVertex(v);
-
     //printf("id:%d x:%d y:%d \n", id, x, y);
 
     double3 direction = (double3) (x+xOffset, y+yOffset, fovMultiplier);
 
-    //pixelPlane[id] = 2383783;
-    pixelPlane[id] = rayTrace(poses, direction, planesAmount[0]);
+
+    //pixelPlane[id] = rayTrace(poses, direction, planesAmount[0]);
 }

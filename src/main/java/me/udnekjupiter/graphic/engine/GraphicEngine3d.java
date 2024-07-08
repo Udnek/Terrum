@@ -20,12 +20,12 @@ import java.util.Collections;
 
 public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
 
-    private final GraphicScene3d scene;
-    private RayTracer rayTracer;
-    private final GraphicFrame frame;
-    private PolygonHolder polygonHolder;
-    private final ScreenTracer screenTracer;
-    private final AxisCrosshair axisCrosshair = new AxisCrosshair();
+    protected final GraphicScene3d scene;
+    protected RayTracer rayTracer;
+    protected final GraphicFrame frame;
+    protected PolygonHolder polygonHolder;
+    protected final ScreenTracer screenTracer;
+    protected final AxisCrosshair axisCrosshair = new AxisCrosshair();
 
     public GraphicEngine3d(GraphicScene3d graphicScene){
         this.scene = graphicScene;

@@ -50,6 +50,10 @@ public class Triangle {
     public Vector3d getVertex1() {return vertex1.dup();}
     public Vector3d getVertex2() {return vertex2.dup();}
 
+    public Vector3d[] getVertices() {
+        return new Vector3d[]{getVertex0(), getVertex1(), getVertex2()};
+    }
+
     public Vector3d getEdge0() {return edge0;}
     public Vector3d getEdge1() {return edge1;}
     public Vector3d getEdge2() {return edge2;}
