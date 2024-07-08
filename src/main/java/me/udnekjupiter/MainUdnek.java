@@ -7,21 +7,28 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
+import org.realityforge.vecmath.Vector3d;
 
 public class MainUdnek extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("small_frame.png");
+        NetPhysicsScene physicScene = new NetPhysicsScene("frame.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
         //GraphicScene3d graphicScene = new SmallGraphicScene();
         GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
 
+        SphereObject sphere = new SphereObject(new Vector3d(7, 6, 7), 5, 100);
+        physicScene.addObject(sphere);
+
         //Test.run();
         Main.runApplication(graphicEngine, physicEngine);
+
+
     }
 
     @Override
