@@ -27,7 +27,7 @@ public class MainJupiter extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("cloth.png");
+        NetPhysicsScene physicScene = new NetPhysicsScene("big_square.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         SphereObject sphere = new SphereObject(new Vector3d(7, -6, 7), 5, 100);
         sphere.freeze();
