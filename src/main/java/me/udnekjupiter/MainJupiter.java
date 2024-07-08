@@ -27,16 +27,16 @@ public class MainJupiter extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("basket.png");
+        NetPhysicsScene physicScene = new NetPhysicsScene("medium_frame.png");
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        SphereObject sphere = new SphereObject(new Vector3d(7, 7, 7), 6.5, 1000);
+        SphereObject sphere = new SphereObject(new Vector3d(7, 30, 7), 3, 100);
         physicScene.addObject(sphere);
-//        physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
+        //physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
         Main.runApplication(graphicEngine, physicEngine);
-        graphicScene.getCamera().setPosition(new Vector3d(7, 8, -7.5));
-        graphicScene.getCamera().setPitch(40);
+        graphicScene.getCamera().setPosition(new Vector3d(7, -4, -7.5));
+        graphicScene.getCamera().setPitch(0);
     }
 }

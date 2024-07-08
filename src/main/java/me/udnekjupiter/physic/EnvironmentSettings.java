@@ -24,7 +24,7 @@ public class EnvironmentSettings {
 
 
     public static EnvironmentSettings defaultPreset(){
-        return new EnvironmentSettings(1000,
+        return new EnvironmentSettings(5000,
                 1,
                 5,
                 0.0001,
