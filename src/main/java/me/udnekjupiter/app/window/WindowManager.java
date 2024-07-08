@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 
 public class WindowManager extends WindowAdapter implements Initializable, Tickable {
 
+    public static final String TITLE = "Terrum";
+
     private Frame frame;
     private Panel panel;
 
@@ -49,7 +51,7 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
 
         frame.setIconImage(FileManager.readIcon());
-        frame.setTitle("WRLS");
+        frame.setTitle(TITLE);
         frame.addWindowListener(this);
 
         frame.pack();
