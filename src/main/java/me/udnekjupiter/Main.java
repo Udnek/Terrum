@@ -9,13 +9,14 @@ import me.udnekjupiter.physic.engine.PhysicEngine;
 
 public abstract class Main{
 
-    public static final Main.Type MAIN_TO_RUN = Type.JUPITER;
+    public static final Main.Type MAIN_TO_RUN = Type.BASKETBALL;
     private static Main main;
     public static void main(String ...args){
-        if (MAIN_TO_RUN == Main.Type.UDNEK)
-            main = new MainUdnek();
-        else
-            main = new MainJupiter();
+        main = switch (MAIN_TO_RUN) {
+            case UDNEK -> new MainUdnek();
+            case JUPITER -> new MainJupiter();
+            case BASKETBALL -> new MainBasketball();
+        };
 
         main.run();
     }
@@ -37,6 +38,7 @@ public abstract class Main{
 
     public enum Type {
         UDNEK,
-        JUPITER
+        JUPITER,
+        BASKETBALL
     }
 }
