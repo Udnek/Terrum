@@ -1,8 +1,6 @@
-package me.udnekjupiter.physic.collider;
+package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.physic.object.RKMObject;
-
-import java.util.List;
 
 public abstract class Collider {
     protected RKMObject parent;

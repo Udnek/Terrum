@@ -1,11 +1,11 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collider.Collidable;
-import me.udnekjupiter.physic.collider.Collider;
-import me.udnekjupiter.physic.collider.SphereCollider;
+import me.udnekjupiter.physic.collision.Collidable;
+import me.udnekjupiter.physic.collision.Collider;
+import me.udnekjupiter.physic.collision.CollisionCalculator;
+import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -48,6 +48,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     public void addCollidingObject(RKMObject object){
         collidingObjects.add(object);
     }
+    public List<RKMObject> getCollidingObjects(){return collidingObjects;}
     public void clearCollidingObjects(){
         collidingObjects = new ArrayList<>();
     }
@@ -61,8 +62,8 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     public void setVelocity(Vector3d velocity) {
         this.velocity = velocity.dup();
     }
-    public void setCurrentRKMPhaseVector(Vector3d[] currentRKMPhaseVector) {
-        this.currentRKMPhaseVector = currentRKMPhaseVector;
+    public void setCurrentRKMPhaseVector(Vector3d[] newRKMPhaseVector) {
+        this.currentRKMPhaseVector = newRKMPhaseVector;
     }
     public Vector3d[] getCurrentRKMPhaseVector() {
         return new Vector3d[]{currentRKMPhaseVector[0].dup(), currentRKMPhaseVector[1].dup()};
@@ -157,30 +158,17 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
 
     protected abstract Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity);
     protected abstract Vector3d getAppliedForce(Vector3d position);
-    protected Vector3d getCollisionForce(Vector3d thisPosition) {
-        Vector3d collisionForce = new Vector3d();
-        for (RKMObject collidingObject : collidingObjects) {
-            if (collidingObject.getCollider() instanceof SphereCollider otherSphereCollider) {
-                Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
-                Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-                double distance = VectorUtils.distance(thisPosition, otherPosition);
-                double maxDepth = Application.ENVIRONMENT_SETTINGS.maxDepth;
-                double thisCriticalRadius = ((SphereCollider) this.getCollider()).radius - maxDepth;
-                double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
-                double criticalDepth = thisCriticalRadius + otherCriticalRadius;
-                Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(distance - criticalDepth, 3)));
-                collisionForce.add(collisionForceCache);
-            }
-        }
-        return collisionForce;
+    protected Vector3d getCollisionForce() {
+        return CollisionCalculator.getHookeCollisionForce(this);
     }
 
     @Override
-    public void freeze(){frozen = true;}
+    public void freeze(){
+        frozen = true;
+        setVelocity(new Vector3d());
+    }
     @Override
     public void unfreeze(){frozen = false;}
     @Override
     public boolean isFrozen() {return frozen;}
-
-    // TODO Maybe create PhaseVector inner class? No use rn, but maybe in future...
 }

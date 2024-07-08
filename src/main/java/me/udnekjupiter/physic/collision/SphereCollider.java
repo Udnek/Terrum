@@ -1,12 +1,8 @@
-package me.udnekjupiter.physic.collider;
+package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
-
-import javax.swing.text.html.HTMLDocument;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SphereCollider extends Collider{
     public final double radius;

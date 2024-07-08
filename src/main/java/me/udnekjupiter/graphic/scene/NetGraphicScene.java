@@ -7,7 +7,7 @@ import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.traceable.*;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.MassEssence;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
@@ -96,10 +96,10 @@ public class NetGraphicScene extends GraphicScene3d {
 
         List<TraceableObject> graphicObjects = new ArrayList<>();
 ;
-        List<RKMObject> rkmObjects = netPhysicsScene.getRKMObjects();
+        List<RKMObject> rkmObjects = netPhysicsScene.getAllObjects();
         for (RKMObject object : rkmObjects) {
-            if (!(object instanceof MassEssence massEssence)) continue;
-            graphicObjects.add(new MassEssenceObject(massEssence));
+            if (!(object instanceof SphereObject sphereObject)) continue;
+            graphicObjects.add(new MassEssenceObject(sphereObject));
         }
 
         
@@ -112,8 +112,8 @@ public class NetGraphicScene extends GraphicScene3d {
 
     @Override
     protected Camera initializeCamera() {
-        Camera camera = new Camera(new Vector3d(5, 4.5, -2.5));
-        camera.rotatePitch(35);
+        Camera camera = new Camera(new Vector3d(5, 8, -9));
+        camera.rotatePitch(40);
         return camera;
     }
 
