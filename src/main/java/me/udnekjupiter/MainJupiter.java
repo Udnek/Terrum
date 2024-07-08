@@ -6,11 +6,11 @@ import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
+import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
+import me.udnekjupiter.util.Vector3x3;
 import org.realityforge.vecmath.Vector3d;
-
-import java.security.spec.RSAOtherPrimeInfo;
 
 public class MainJupiter extends Main{
 
@@ -27,15 +27,26 @@ public class MainJupiter extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("basket.png");
+
+        Vector3x3 offset = new Vector3x3(
+                new Vector3d(0, 1, 0),
+                new Vector3d(),
+                new Vector3d(0, 0, 1)
+        );
+        CellularNet net0 = new CellularNet("basket.png", new Vector3d(), offset);
+        //CellularNet net1 = new CellularNet("basket.png", new Vector3d(0, 10, 0));
+
+        NetPhysicsScene physicScene = new NetPhysicsScene(net0);
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        SphereObject sphere = new SphereObject(new Vector3d(7, 7, 7), 6.5, 1000);
+        SphereObject sphere = new SphereObject(new Vector3d(7, 7, 7), 1, 1000);
         physicScene.addObject(sphere);
 //        physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
+
         Main.runApplication(graphicEngine, physicEngine);
+
         graphicScene.getCamera().setPosition(new Vector3d(7, 8, -7.5));
         graphicScene.getCamera().setPitch(40);
     }

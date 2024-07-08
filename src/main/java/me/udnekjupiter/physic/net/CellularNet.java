@@ -9,6 +9,7 @@ import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Initializable;
 import me.udnekjupiter.util.Resettable;
+import me.udnekjupiter.util.Vector3x3;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CellularNet implements Initializable, Freezable, Resettable {
+    private Vector3d globalOffset;
+    private Vector3x3 perPositionMultiplier;
+
     private final EnvironmentSettings settings;
     private boolean frozen;
     private int sizeX;
@@ -26,16 +30,35 @@ public class CellularNet implements Initializable, Freezable, Resettable {
     private final String mapImageName;
     private NetVertex[][] netMap;
 
-    public CellularNet(String mapImageName)
-    {
+    public CellularNet(String mapImageName, Vector3d globalOffset, Vector3x3 perPositionMultiplier) {
         this.settings = Application.ENVIRONMENT_SETTINGS;
         this.mapImageName = mapImageName;
+        this.globalOffset = globalOffset;
+        this.perPositionMultiplier = perPositionMultiplier;
+    }
+    public CellularNet(String mapImageName, Vector3d globalOffset) {
+        this(mapImageName, globalOffset, new Vector3x3(
+                new Vector3d(1, 0, 0),
+                new Vector3d(),
+                new Vector3d(0, 0, 1)
+        ));
+    }
+    public CellularNet(String mapImageName) {
+        this(mapImageName, new Vector3d());
     }
 
     public int getSizeX(){return this.sizeX;}
     public int getSizeZ(){return this.sizeZ;}
     public NetVertex getVertex(int x, int z){ return netMap[z][x];}
     public void setVertex(NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
+
+    public void resetVertexPosition(int x, int z){
+        Vector3d multiplier = new Vector3d();
+        multiplier.add(perPositionMultiplier.x.dup().mul(x));
+        multiplier.add(perPositionMultiplier.z.dup().mul(z));
+
+        getVertex(x, z).setPosition(multiplier.add(globalOffset));
+    }
     public boolean isInBounds(int x, int z) {return (x >= 0 && x < sizeX && z >= 0 && z < sizeZ);}
     public List<NetVertex> getNeighbourVertices(int posX, int posZ) {
         List<NetVertex> vertices = new ArrayList<>();
@@ -78,7 +101,7 @@ public class CellularNet implements Initializable, Freezable, Resettable {
             for (int x = 0; x < sizeX; x++) {
                 if (getVertex(x, z) == null) continue;
                 getVertex(x, z).reset();
-                getVertex(x, z).setPosition(new Vector3d(x, 0, z));
+                resetVertexPosition(x, z);
             }
         }
     }
@@ -97,8 +120,8 @@ public class CellularNet implements Initializable, Freezable, Resettable {
                 Color color = reader.getColor(x, z);
                 NetVertex netVertex = VertexColor.getVertex(color);
                 if (netVertex == null) continue;
-                netVertex.setPosition(new Vector3d(x, 0, z));
                 setVertex(netVertex, x, z);
+                resetVertexPosition(x, z);
             }
         }
     }
