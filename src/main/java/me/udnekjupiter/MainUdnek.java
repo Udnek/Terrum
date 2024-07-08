@@ -7,6 +7,7 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
+import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import org.realityforge.vecmath.Vector3d;
@@ -15,7 +16,7 @@ public class MainUdnek extends Main{
 
     @Override
     public void run() {
-        NetPhysicsScene physicScene = new NetPhysicsScene("frame.png");
+        NetPhysicsScene physicScene = new NetPhysicsScene(new CellularNet("frame.png"));
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
         //GraphicScene3d graphicScene = new SmallGraphicScene();
@@ -34,8 +35,8 @@ public class MainUdnek extends Main{
     @Override
     public ApplicationSettings initializeGraphicsSettings() {
         ApplicationSettings applicationSettings;
-        applicationSettings = ApplicationSettings.defaultNoRecording(4, 6, PolygonHolder.Type.SMART);
-        applicationSettings.startWindowWidth = 700;
+        applicationSettings = ApplicationSettings.defaultNoRecording(2, 4, PolygonHolder.Type.SMART);
+        applicationSettings.startWindowWidth = 500;
         applicationSettings.startWindowHeight = 500;
         //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(256, 256, "newTest", 1, PolygonHolder.Type.SMART, false, false);
@@ -46,7 +47,9 @@ public class MainUdnek extends Main{
 
     @Override
     public EnvironmentSettings initializePhysicsSettings() {
-        return EnvironmentSettings.defaultPreset();
+        EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
+        environmentSettings.iterationsPerTick = 0;
+        return environmentSettings;
     }
 
 
