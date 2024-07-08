@@ -40,3 +40,4 @@ build/
 ### Misc ###
 src/main/assets/video/
 out/artifacts/PhysicalSimulationGraphicEngine_jar/
+/out/

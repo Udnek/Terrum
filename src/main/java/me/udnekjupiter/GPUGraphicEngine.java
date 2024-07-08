@@ -3,6 +3,7 @@ package me.udnekjupiter;
 import me.udnekjupiter.file.FileManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.object.traceable.TraceableObject;
+import me.udnekjupiter.graphic.object.traceable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.TraceableTriangle;
 import org.jocl.*;
@@ -10,6 +11,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 
 public class GPUGraphicEngine implements GraphicEngine {
@@ -25,6 +27,16 @@ public class GPUGraphicEngine implements GraphicEngine {
     int[] pixelToPlane;
 
     private GraphicScene3d scene;
+
+    private final TraceableObject object =
+            new PolygonObject(
+                    new Vector3d(),
+                    new TraceableTriangle(
+                            new Vector3d(-1, -1, 1),
+                            new Vector3d(1, -1, 1),
+                            new Vector3d(0, 1, 1)
+                    )
+            );
 
     public GPUGraphicEngine(GraphicScene3d scene){
         this.scene = scene;
@@ -109,22 +121,18 @@ public class GPUGraphicEngine implements GraphicEngine {
     public BufferedImage renderFrame(int width, int height) {
         scene.beforeFrameUpdate(width, height);
 
+        int w = 350;
+        int h = 350;
+
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        generate(scene.getTraceableObjects(), 700, 700);
+        generate(Collections.singletonList(scene.getTraceableObjects().get(0)), w, h);
 
-        int sum = 0;
-/*        for (int i : pixelToPlane) {
-            sum += i;
-        }
-        System.out.println(sum);*/
-
-        bufferedImage.setRGB(0, 0, width, height, pixelToPlane, 0 , width);
+        bufferedImage.setRGB(0, 0, w, h, pixelToPlane, 0 , w);
 
         return bufferedImage;
     }
     public void generate(List<TraceableObject> traceableObjects, int width, int height){
-
         int planesAmount = getPlanesAmount(traceableObjects);
 
         planeHits = new double[planesAmount];
@@ -133,7 +141,6 @@ public class GPUGraphicEngine implements GraphicEngine {
         int[] planesAmountArray = new int[]{planesAmount};
         ;
         // Set the arguments for the kernel
-        //System.out.println(Arrays.toString(poses));
 
         Pointer planeHitsPointer = Pointer.to(planeHits);
         Pointer pixelsPointer = Pointer.to(pixelToPlane);
@@ -197,6 +204,7 @@ public class GPUGraphicEngine implements GraphicEngine {
             TraceableTriangle[] renderTriangles =  object.getRenderTriangles();
             for (int i = 0, renderTrianglesLength = renderTriangles.length; i < renderTrianglesLength; i++) {
                 TraceableTriangle renderTriangle = renderTriangles[i];
+                renderTriangle.addToAllVertexes(object.getPosition().add(0, 0, 0));
                 for (Vector3d vertex : renderTriangle.getVertices()) {
                     result[index++] = vertex.x;
                     result[index++] = vertex.y;
