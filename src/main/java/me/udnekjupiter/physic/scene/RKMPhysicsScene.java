@@ -84,4 +84,11 @@ public abstract class RKMPhysicsScene implements PhysicScene {
             updateObjects();
         }
     }
+
+    @Override
+    public void reset() {
+        for (RKMObject object : allObjects) {
+            object.reset();
+        }
+    }
 }

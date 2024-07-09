@@ -55,7 +55,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
         return collidingObjects.contains(object);
     }
     public void reset(){
-        setPosition(new Vector3d());
+        setPosition(getInitialPosition());
         setVelocity(new Vector3d());
     }
 

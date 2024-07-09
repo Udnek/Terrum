@@ -34,6 +34,7 @@ public class NetPhysicsScene extends RKMPhysicsScene implements Resettable {
     }
 
     public void reset(){
+        super.reset();
         for (CellularNet net : nets) {
             net.reset();
         }
