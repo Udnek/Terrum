@@ -1,33 +1,42 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.MassEssence;
+import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Resettable;
 
 import java.util.List;
 
-public class NetPhysicsScene extends RKMPhysicsScene {
-    private final CellularNet net;
-    public NetPhysicsScene(String mapImageName){
-        this.net = new CellularNet(mapImageName);
+public class NetPhysicsScene extends RKMPhysicsScene implements Resettable {
+    private final CellularNet[] nets;
+    public NetPhysicsScene(CellularNet ...nets){
+        this.nets = nets;
     }
-    public CellularNet getNet(){return net;}
+    public CellularNet getNet(int id){return nets[id];}
+    public CellularNet[] getNets(){return nets;}
 
     public void initialize(){
-        net.initialize();
-        List<NetVertex> vertices = net.getVerticesObjects();
-        for (NetVertex vertex : vertices) {
-            if (vertex != null) {
-                addObject(vertex);
+        for (CellularNet net : nets) {
+            net.initialize();
+            List<NetVertex> vertices = net.getVerticesObjects();
+            for (NetVertex vertex : vertices) {
+                if (vertex != null) {
+                    addObject(vertex);
+                }
+            }
+
+            for (RKMObject object : getAllObjects()) {
+                if (!(object instanceof NetVertex)){
+                    addCollisionInitiator(object);
+                }
             }
         }
     }
 
-    public void addMassEssence(Vector3d position, double colliderRadius, double mass){
-        addObject(new MassEssence(position, colliderRadius, mass));
-    }
-    public void setVertexPosition(int posX, int posZ, Vector3d newPos){
-        net.getVertex(posX, posZ).setPosition(newPos);
+    public void reset(){
+        super.reset();
+        for (CellularNet net : nets) {
+            net.reset();
+        }
     }
 }

@@ -12,6 +12,10 @@ public class VectorUtils {
     public static double distance(Vector3d vector0, Vector3d vector1){
         return Math.sqrt(distanceSquared(vector0, vector1));
     }
+    public static Vector3d getMin(Vector3d vector1, Vector3d vector2){
+        if (vector1.length() > vector2.length()) return vector2;
+        return vector1;
+    }
 
 /*    public static double getCrossProductLength(Vector3d vector0, Vector3d vector1){
         double newX = vector0.y * vector1.z - vector0.z * vector1.y;
@@ -61,8 +65,10 @@ public class VectorUtils {
         vector.z = Math.min(vector.z, value);
     }
 
-    public static Vector3d valueToVector(double value) {
-        return new Vector3d(value, value, value);
+    public void multiply(Vector3d v0, Vector3d v1){
+        v0.x *= v1.x;
+        v0.y *= v1.y;
+        v0.z *= v1.z;
     }
 
     ///////////////////////////////////////////////////////////////////////////

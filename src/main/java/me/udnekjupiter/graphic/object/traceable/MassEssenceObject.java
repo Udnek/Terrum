@@ -5,34 +5,34 @@ import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.traceable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
 import me.udnekjupiter.graphic.triangle.TraceableTriangle;
-import me.udnekjupiter.physic.object.MassEssence;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.object.PhysicObject;
 import org.realityforge.vecmath.Vector3d;
 
 public class MassEssenceObject extends IcosphereObject implements PhysicLinked, Draggable {
 
-    private final MassEssence massEssence;
+    private final SphereObject sphereObject;
 
-    public MassEssenceObject(MassEssence massEssence) {
-        super(massEssence.getPosition(), massEssence.getCollider().radius, 1,
+    public MassEssenceObject(SphereObject sphereObject) {
+        super(sphereObject.getPosition(), sphereObject.getCollider().radius, 1,
                 new MassEssenceTriangle(new Vector3d(), new Vector3d(), new Vector3d()));
-        this.massEssence = massEssence;
+        this.sphereObject = sphereObject;
     }
 
     @Override
     public void synchronizeWithPhysic() {
-        setPosition(massEssence.getPosition());
+        setPosition(sphereObject.getPosition());
     }
 
     @Override
     public void setPosition(Vector3d position) {
         super.setPosition(position);
-        massEssence.setPosition(position);
+        sphereObject.setPosition(position);
     }
 
     @Override
     public PhysicObject getPhysicRepresentation() {
-        return massEssence;
+        return sphereObject;
     }
 
     @Override

@@ -45,14 +45,12 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
 
     @Override
     public void select() {
-        System.out.println("Selected");
         ((ColoredTriangle) plane0).setColor(Color.RED.getRGB());
         ((ColoredTriangle) plane1).setColor(Color.RED.getRGB());
     }
 
     @Override
     public void unselect() {
-        System.out.println("unselected");
         ((ColoredTriangle) plane0).setColor(VertexColor.getColorFromVertex(netVertex).getRGB());
         ((ColoredTriangle) plane1).setColor(VertexColor.getColorFromVertex(netVertex).getRGB());
     }

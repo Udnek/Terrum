@@ -1,12 +1,43 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="PhysicalSimulationGraphicEngine:jar">
+  <artifact type="jar" name="PhysicalSimulationGraphicEngine:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/PhysicalSimulationGraphicEngine_jar</output-path>
     <root id="archive" name="PhysicalSimulationGraphicEngine.jar">
       <element id="module-output" name="PhysicalSimulationGraphicEngine" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/grim/grim-annotations/0.06/grim-annotations-0.06.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/javax/annotation/javax.annotation/1.0.1/javax.annotation-1.0.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/vecmath/vecmath/0.13/vecmath-0.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all-main/2.3.1/jogl-all-main-2.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jcodec/jcodec-javase/0.2.3/jcodec-javase-0.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-linux-armv6hf.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jocl/jocl/2.0.4/jocl-2.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt-main/2.3.1/gluegen-rt-main-2.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-android-aarch64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-windows-amd64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-android-armv6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-linux-amd64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-windows-i586.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/javax/annotation/javax.annotation/1.0.1/javax.annotation-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jocl/jocl-blast/1.5.0/jocl-blast-1.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-linux-i586.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-solaris-i586.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-windows-amd64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/realityforge/grim/grim-annotations/0.06/grim-annotations-0.06.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-macosx-universal.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-windows-i586.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-linux-armv6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-solaris-amd64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-solaris-amd64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-android-armv6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-linux-i586.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-android-aarch64.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-solaris-i586.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jcodec/jcodec/0.2.3/jcodec-0.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/jogl/jogl-all/2.3.1/jogl-all-2.3.1-natives-linux-amd64.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/jsinterop/jsinterop-annotations/2.0.0/jsinterop-annotations-2.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-macosx-universal.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-linux-armv6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-natives-linux-armv6hf.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

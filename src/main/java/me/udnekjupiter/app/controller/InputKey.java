@@ -2,6 +2,7 @@ package me.udnekjupiter.app.controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.security.Key;
 
 public enum InputKey {
 
@@ -23,7 +24,9 @@ public enum InputKey {
     MOUSE_CAMERA_DRAG(MouseEvent.BUTTON1),
     MOUSE_OBJECT_DRAG(MouseEvent.BUTTON3),
 
-    PAUSE(KeyEvent.VK_ESCAPE, false);
+    PAUSE(KeyEvent.VK_ESCAPE, false),
+
+    RESET(KeyEvent.VK_R, false);
 
     public final int code;
     public final boolean longPress;

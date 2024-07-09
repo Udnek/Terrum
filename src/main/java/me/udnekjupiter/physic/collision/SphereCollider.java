@@ -1,20 +1,16 @@
-package me.udnekjupiter.physic.collider;
+package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
-import javax.swing.text.html.HTMLDocument;
-import java.util.ArrayList;
-import java.util.List;
-
 public class SphereCollider extends Collider{
     public final double radius;
-    public final double maxDepth = 0.1;
+    public final double stiffness;
 
-    public SphereCollider(double radius, RKMObject parent)
-    {
+    public SphereCollider(double radius, double stiffness, RKMObject parent) {
         this.radius = radius;
+        this.stiffness = stiffness;
         this.parent = parent;
     }
 
