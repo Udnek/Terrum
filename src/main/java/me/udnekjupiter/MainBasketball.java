@@ -43,7 +43,7 @@ public class MainBasketball extends Main{
 
         NetPhysicsScene physicScene = new NetPhysicsScene(basketNet, launcherNet);
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        SphereObject sphere = new SphereObject(new Vector3d(16, 7, 3), 2.5, 500);
+        SphereObject sphere = new SphereObject(new Vector3d(16, 7, 3), 2.5, 10_000, 500);
         physicScene.addObject(sphere);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);

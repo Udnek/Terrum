@@ -6,10 +6,11 @@ import org.realityforge.vecmath.Vector3d;
 
 public class SphereCollider extends Collider{
     public final double radius;
+    public final double stiffness;
 
-    public SphereCollider(double radius, RKMObject parent)
-    {
+    public SphereCollider(double radius, double stiffness, RKMObject parent) {
         this.radius = radius;
+        this.stiffness = stiffness;
         this.parent = parent;
     }
 

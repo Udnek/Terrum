@@ -37,15 +37,16 @@ public abstract class CollisionCalculator {
                 Vector3d thisPosition = thisObject.getCurrentRKMPosition();
                 Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
                 double distance = VectorUtils.distance(thisPosition, otherPosition);
-                double maxDistance = ((SphereCollider) thisObject.getCollider()).radius + otherSphereCollider.radius;
-                double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - MAX_DEPTH;
+                SphereCollider thisCollider = (SphereCollider) thisObject.getCollider();
+                double maxDistance = thisCollider.radius + otherSphereCollider.radius;
+                double thisCriticalRadius = thisCollider.radius - MAX_DEPTH;
                 double otherCriticalRadius = otherSphereCollider.radius - MAX_DEPTH;
                 double minCriticalRadiiDistance = thisCriticalRadius + otherCriticalRadius;
                 double stableDistance = maxDistance - minCriticalRadiiDistance;
                 double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
                 double depth = stableDistance - criticalRadiiDistance;
                 Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth)*100000);
+                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * thisCollider.stiffness); // TODO: 7/9/2024 STIFFNESS????
                 collisionForce.add(collisionForceCache);
             }
         }

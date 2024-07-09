@@ -6,14 +6,17 @@ import org.realityforge.vecmath.Vector3d;
 import static me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine.GRAVITATIONAL_ACCELERATION;
 
 public class SphereObject extends RKMObject{
-    public SphereObject(Vector3d position, double colliderRadius, double mass) {
+    public SphereObject(Vector3d position, double colliderRadius, double stiffness, double mass) {
         super(position);
-
         this.deltaTime = settings.deltaTime;
         this.mass = mass;
         this.decayCoefficient = settings.decayCoefficient;
         this.basePhaseVector = new Vector3d[]{position, new Vector3d()};
-        collider = new SphereCollider(colliderRadius, this);
+        collider = new SphereCollider(colliderRadius, stiffness, this);
+    }
+
+    public SphereObject(Vector3d position, double colliderRadius, double mass){
+        this(position, colliderRadius, 10_000, mass);
     }
 
     @Override
