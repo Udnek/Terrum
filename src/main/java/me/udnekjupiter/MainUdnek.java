@@ -16,6 +16,7 @@ public class MainUdnek extends Main{
 
     @Override
     public void run() {
+        //System.out.println(this.getClass().getClassLoader().getResource("assets/image/icon/icon.png"));
         NetPhysicsScene physicScene = new NetPhysicsScene(new CellularNet("frame.png"));
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
@@ -42,7 +43,7 @@ public class MainUdnek extends Main{
         applicationSettings.startWindowWidth = 700;
         applicationSettings.startWindowHeight = 700;
         //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
-        //return ApplicationSettings.withRecording(256, 256, "newTest", 1, PolygonHolder.Type.SMART, false, false);
+        //applicationSettings =  ApplicationSettings.withRecording(256, 256, "fileTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);
 
         return applicationSettings;

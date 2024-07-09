@@ -1,6 +1,5 @@
 package me.udnekjupiter.app;
 
-import me.udnekjupiter.file.FileManager;
 import org.jcodec.api.awt.AWTSequenceEncoder;
 
 import java.awt.image.BufferedImage;
@@ -18,7 +17,12 @@ public class VideoRecorder {
 
         if (!settings.recordVideo) return;
 
-        File file = FileManager.readFile(FileManager.Directory.VIDEO, settings.videoName+".mp4");
+
+        File fullDirectory = new File(System.getProperty("user.dir") + "/out/");
+        if (!fullDirectory.exists()) fullDirectory.mkdir();
+        File file = new File(System.getProperty("user.dir") + "/out/video/" + settings.videoName + ".mp4");
+
+
         try {
             videoEncoder = AWTSequenceEncoder.createSequenceEncoder(file, VIDEO_FPS);
         } catch (IOException e) {throw new RuntimeException(e);}
