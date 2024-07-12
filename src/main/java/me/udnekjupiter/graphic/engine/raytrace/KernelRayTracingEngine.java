@@ -1,23 +1,23 @@
-package me.udnekjupiter;
+package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.file.FileManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.graphic.object.traceable.shape.PolygonObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
-import me.udnekjupiter.graphic.triangle.TraceableTriangle;
+import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jocl.*;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.Collections;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
-public class GPUGraphicEngine implements GraphicEngine {
+public class KernelRayTracingEngine implements GraphicEngine {
     private final String kernelCode = readKernelCodeFile();
 
-    private final String kernelName = "rayTracer";
+    private static final String kernelName = "rayTracer";
     private cl_kernel kernel;
     private cl_context context;
     private cl_command_queue commandQueue;
@@ -28,17 +28,17 @@ public class GPUGraphicEngine implements GraphicEngine {
 
     private GraphicScene3d scene;
 
-    private final TraceableObject object =
+    private final RenderableObject object =
             new PolygonObject(
                     new Vector3d(),
-                    new TraceableTriangle(
+                    new RenderableTriangle(
                             new Vector3d(-1, -1, 1),
                             new Vector3d(1, -1, 1),
                             new Vector3d(0, 1, 1)
                     )
             );
 
-    public GPUGraphicEngine(GraphicScene3d scene){
+    public KernelRayTracingEngine(GraphicScene3d scene){
         this.scene = scene;
     }
     @Override
@@ -95,49 +95,46 @@ public class GPUGraphicEngine implements GraphicEngine {
 
     }
     private String readKernelCodeFile(){
-        File file = FileManager.readFile(FileManager.Directory.SHADER, "kernel.cl");
-
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-        } catch (FileNotFoundException e) { throw new RuntimeException(e);}
+        BufferedReader reader = FileManager.readKernel(FileManager.Directory.KERNEL, "kernel.cl");
 
         String line;
         StringBuilder stringBuilder = new StringBuilder();
-        String ls = System.getProperty("line.separator");
+        String lineSeparator = System.getProperty("line.separator");
 
         try {
-            while((line = reader.readLine()) != null) {
+            while(true) {
+                line = reader.readLine();
+                if (line == null) break;
                 stringBuilder.append(line);
-                stringBuilder.append(ls);
+                stringBuilder.append(lineSeparator);
             }
-
             reader.close();
-            return stringBuilder.toString();
 
         } catch (IOException e) {throw new RuntimeException(e);}
+
+        return stringBuilder.toString();
     }
     @Override
     public BufferedImage renderFrame(int width, int height) {
         scene.beforeFrameUpdate(width, height);
 
-        int w = 350;
-        int h = 350;
+        int w = width/1;
+        int h = height/1;
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        generate(Collections.singletonList(scene.getTraceableObjects().get(0)), w, h);
+        generate(scene.getTraceableObjects(), w, h);
 
         bufferedImage.setRGB(0, 0, w, h, pixelToPlane, 0 , w);
 
         return bufferedImage;
     }
-    public void generate(List<TraceableObject> traceableObjects, int width, int height){
-        int planesAmount = getPlanesAmount(traceableObjects);
+    public void generate(List<RenderableObject> renderableObjects, int width, int height){
+        int planesAmount = getPlanesAmount(renderableObjects);
 
         planeHits = new double[planesAmount];
         pixelToPlane = new int[width * height];
-        double[] poses = objectsToVerticesPositions(traceableObjects, planesAmount);
+        double[] poses = objectsToVerticesPositions(renderableObjects, planesAmount);
         int[] planesAmountArray = new int[]{planesAmount};
         ;
         // Set the arguments for the kernel
@@ -189,21 +186,21 @@ public class GPUGraphicEngine implements GraphicEngine {
 
     }
 
-    public int getPlanesAmount(List<TraceableObject> objects){
+    public int getPlanesAmount(List<RenderableObject> objects){
         int planesAmount = 0;
-        for (TraceableObject traceableObject : objects) {
-            planesAmount += traceableObject.getRenderTriangles().length;
+        for (RenderableObject renderableObject : objects) {
+            planesAmount += renderableObject.getRenderTriangles().length;
         }
         return planesAmount;
     }
 
-    public double[] objectsToVerticesPositions(List<TraceableObject> traceableObjects, int planesAmount){
+    public double[] objectsToVerticesPositions(List<RenderableObject> renderableObjects, int planesAmount){
         int index = 0;
         double[] result = new double[planesAmount * 3 * 3];
-        for (TraceableObject object : traceableObjects) {
-            TraceableTriangle[] renderTriangles =  object.getRenderTriangles();
+        for (RenderableObject object : renderableObjects) {
+            RenderableTriangle[] renderTriangles =  object.getRenderTriangles();
             for (int i = 0, renderTrianglesLength = renderTriangles.length; i < renderTrianglesLength; i++) {
-                TraceableTriangle renderTriangle = renderTriangles[i];
+                RenderableTriangle renderTriangle = renderTriangles[i];
                 renderTriangle.addToAllVertexes(object.getPosition().add(0, 0, 0));
                 for (Vector3d vertex : renderTriangle.getVertices()) {
                     result[index++] = vertex.x;

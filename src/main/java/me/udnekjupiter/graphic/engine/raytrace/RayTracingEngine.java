@@ -1,4 +1,4 @@
-package me.udnekjupiter.graphic.engine;
+package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.console.Command;
@@ -6,9 +6,10 @@ import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.GraphicFrame;
-import me.udnekjupiter.graphic.RayTracer;
 import me.udnekjupiter.graphic.ScreenTracer;
+import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
+import me.udnekjupiter.graphic.frame.GraphicFrame;
+import me.udnekjupiter.graphic.frame.LeftUpFrame;
 import me.udnekjupiter.graphic.object.fixedsize.AxisCrosshair;
 import me.udnekjupiter.graphic.polygonholder.DefaultPolygonHolder;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
@@ -18,18 +19,17 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
-public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
+public class RayTracingEngine extends GraphicScene3dEngine implements ConsoleListener {
 
-    protected final GraphicScene3d scene;
     protected RayTracer rayTracer;
     protected final GraphicFrame frame;
     protected PolygonHolder polygonHolder;
     protected final ScreenTracer screenTracer;
     protected final AxisCrosshair axisCrosshair = new AxisCrosshair();
 
-    public GraphicEngine3d(GraphicScene3d graphicScene){
-        this.scene = graphicScene;
-        this.frame = new GraphicFrame();
+    public RayTracingEngine(GraphicScene3d graphicScene){
+        super(graphicScene);
+        this.frame = new LeftUpFrame();
         this.screenTracer = new ScreenTracer();
     }
 
@@ -54,7 +54,7 @@ public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
         int renderHeight = Math.max(height / Application.APPLICATION_SETTINGS.pixelScaling, 1);
 
         frame.reset(renderWidth, renderHeight);
-        polygonHolder.recacheObjects(width, height);
+        polygonHolder.recacheObjects(renderWidth, renderHeight);
 
         Camera camera = scene.getCamera();
         rayTracer.renderFrame(frame, polygonHolder, camera);
@@ -68,6 +68,7 @@ public class GraphicEngine3d implements GraphicEngine, ConsoleListener {
         return frame.toImage();
     }
 
+    // TODO: 7/12/2024 MOVE TO ABSTRACT
     @Override
     public void handleCommand(Command command, Object[] args) {
         if (command != Command.SET_FOV) return;

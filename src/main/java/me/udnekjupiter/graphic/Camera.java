@@ -47,15 +47,15 @@ public class Camera extends PositionedObject {
     public void setYaw(float angle) {yaw = Utils.normalizeYaw(angle);}
     public void rotateYaw(float angle) {setYaw(yaw + angle);}
 
-    public void rotateVector(Vector3d vector3d){
-        VectorUtils.rotatePitch(vector3d, Math.toRadians(pitch));
-        VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));
-
+    public Vector3d rotateVector(Vector3d vector){
+        VectorUtils.rotatePitch(vector, Math.toRadians(pitch));
+        VectorUtils.rotateYaw(vector, Math.toRadians(yaw));
+        return vector;
     }
-    public void rotateBackVector(Vector3d vector3d){
-        VectorUtils.rotateYaw(vector3d, Math.toRadians(Utils.normalizeYaw(-yaw)));
-        VectorUtils.rotatePitch(vector3d, Math.toRadians(Utils.normalizePitch(-pitch)));
-
+    public Vector3d rotateBackVector(Vector3d vector){
+        VectorUtils.rotateYaw(vector, Math.toRadians(Utils.normalizeYaw(-yaw)));
+        VectorUtils.rotatePitch(vector, Math.toRadians(Utils.normalizePitch(-pitch)));
+        return vector;
     }
 
     public void rotateVectorYaw(Vector3d vector3d){VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));}

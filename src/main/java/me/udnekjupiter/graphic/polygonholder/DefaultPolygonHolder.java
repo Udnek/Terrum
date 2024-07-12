@@ -3,8 +3,8 @@ package me.udnekjupiter.graphic.polygonholder;
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.graphic.triangle.TraceableTriangle;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -13,12 +13,12 @@ import java.util.List;
 public class DefaultPolygonHolder implements PolygonHolder{
 
     private Camera camera;
-    private List<? extends TraceableObject> objectsToRender;
-    private List<TraceableTriangle> cachedPlanes;
-    private List<TraceableTriangle> lightCachedPlanes;
+    private List<? extends RenderableObject> objectsToRender;
+    private List<RenderableTriangle> cachedPlanes;
+    private List<RenderableTriangle> lightCachedPlanes;
     private LightSource lightSource;
 
-    public DefaultPolygonHolder(List<TraceableObject> objectsToRender, Camera camera, LightSource lightSource){
+    public DefaultPolygonHolder(List<RenderableObject> objectsToRender, Camera camera, LightSource lightSource){
         this.camera = camera;
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
@@ -30,9 +30,9 @@ public class DefaultPolygonHolder implements PolygonHolder{
         Vector3d cameraPosition = camera.getPosition();
         cachedPlanes = new ArrayList<>();
 
-        for (TraceableObject object : objectsToRender) {
+        for (RenderableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
-            for (TraceableTriangle plane: object.getRenderTriangles()) {
+            for (RenderableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
                 cachedPlanes.add(plane);
             }
@@ -42,9 +42,9 @@ public class DefaultPolygonHolder implements PolygonHolder{
 
         lightCachedPlanes = new ArrayList<>();
         Vector3d lightPosition = lightSource.getPosition();
-        for (TraceableObject object : objectsToRender) {
+        for (RenderableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
-            for (TraceableTriangle plane: object.getRenderTriangles()) {
+            for (RenderableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(lightPosition);
                 lightCachedPlanes.add(plane);
             }
@@ -53,7 +53,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
     }
 
     @Override
-    public List<TraceableTriangle> getCachedPlanes(Vector3d direction) { return cachedPlanes;}
+    public List<RenderableTriangle> getCachedPlanes(Vector3d direction) { return cachedPlanes;}
     @Override
-    public List<TraceableTriangle> getLightCachedPlanes(Vector3d direction) {return lightCachedPlanes;}
+    public List<RenderableTriangle> getLightCachedPlanes(Vector3d direction) {return lightCachedPlanes;}
 }

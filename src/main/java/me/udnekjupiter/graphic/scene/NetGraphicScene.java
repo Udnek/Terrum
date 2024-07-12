@@ -5,7 +5,7 @@ import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
-import me.udnekjupiter.graphic.object.traceable.*;
+import me.udnekjupiter.graphic.object.renderable.*;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.SphereObject;
@@ -39,9 +39,9 @@ public class NetGraphicScene extends GraphicScene3d {
     }
 
     @Override
-    protected List<TraceableObject> initializeSceneObjects() {
+    protected List<RenderableObject> initializeSceneObjects() {
 
-        List<TraceableObject> graphicObjects = new ArrayList<>();
+        List<RenderableObject> graphicObjects = new ArrayList<>();
 
         for (CellularNet net : netPhysicsScene.getNets()) {
             initializeNet(graphicObjects, net);
@@ -57,7 +57,7 @@ public class NetGraphicScene extends GraphicScene3d {
         return graphicObjects;
     }
 
-    protected void initializeNet(List<TraceableObject> objects, CellularNet net){
+    protected void initializeNet(List<RenderableObject> objects, CellularNet net){
         List<VertexObject> vertices = new ArrayList<>();
         List<SpringObject> springs = new ArrayList<>();
 

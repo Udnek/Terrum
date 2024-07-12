@@ -1,5 +1,6 @@
 package me.udnekjupiter.graphic;
 
+import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import org.realityforge.vecmath.Vector3d;
 
@@ -7,6 +8,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// TODO: 7/12/2024 REFACTOR OR REMOVAL???
 public class ScreenTracer {
 
     private Camera camera;

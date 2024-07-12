@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.object.fixedsize;
 
-import me.udnekjupiter.graphic.GraphicFrame;
+import me.udnekjupiter.graphic.frame.GraphicFrame;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;

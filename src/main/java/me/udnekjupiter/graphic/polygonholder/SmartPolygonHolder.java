@@ -1,8 +1,8 @@
 package me.udnekjupiter.graphic.polygonholder;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.graphic.triangle.TraceableTriangle;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -11,29 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmartPolygonHolder implements PolygonHolder{
-    private List<TraceableObject> objectsToRender;
+    private List<RenderableObject> objectsToRender;
     private Camera camera;
 
-    private List<TraceableTriangle> leftCachedPlanes;
-    private List<TraceableTriangle> downCachedPlanes;
-    private List<TraceableTriangle> rightCachedPlanes;
-    private List<TraceableTriangle> upCachedPlanes;
+    private List<RenderableTriangle> leftCachedPlanes;
+    private List<RenderableTriangle> downCachedPlanes;
+    private List<RenderableTriangle> rightCachedPlanes;
+    private List<RenderableTriangle> upCachedPlanes;
 
     private Triangle leftTriangle;
     private Triangle downTriangle;
     private Triangle rightTriangle;
     private Triangle upTriangle;
 
-    private List<TraceableTriangle> lightCachedPlanes = new ArrayList<>();
+    private List<RenderableTriangle> lightCachedPlanes = new ArrayList<>();
 
-    public SmartPolygonHolder(List<TraceableObject> objectsToRender, Camera camera){
+    public SmartPolygonHolder(List<RenderableObject> objectsToRender, Camera camera){
         this.objectsToRender = objectsToRender;
         this.camera = camera;
     }
 
     public void recacheObjects(int width, int height){
 
-        double fovMultiplier = width/camera.getFov();
+        double fovMultiplier = height/camera.getFov();
 
         Vector3d centerDirection = new Vector3d(0, 0, 1);
         camera.rotateVector(centerDirection);
@@ -58,9 +58,9 @@ public class SmartPolygonHolder implements PolygonHolder{
 
         Vector3d cameraPosition = camera.getPosition();
 
-        for (TraceableObject object : objectsToRender) {
+        for (RenderableObject object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
-            for (TraceableTriangle plane: object.getRenderTriangles()) {
+            for (RenderableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
 
                 Vector3d vertex0 = plane.getVertex0();
@@ -121,7 +121,7 @@ public class SmartPolygonHolder implements PolygonHolder{
         return VectorUtils.triangleRayIntersection(vector, triangle) != null;
     }
 
-    public List<TraceableTriangle> getCachedPlanes(Vector3d direction) {
+    public List<RenderableTriangle> getCachedPlanes(Vector3d direction) {
         if (isVectorInTriangle(direction, downTriangle)) return downCachedPlanes;
         if (isVectorInTriangle(direction, leftTriangle)) return leftCachedPlanes;
         if (isVectorInTriangle(direction, rightTriangle)) return rightCachedPlanes;
@@ -129,7 +129,7 @@ public class SmartPolygonHolder implements PolygonHolder{
     }
 
     @Override
-    public List<TraceableTriangle> getLightCachedPlanes(Vector3d direction) {
+    public List<RenderableTriangle> getLightCachedPlanes(Vector3d direction) {
         return lightCachedPlanes;
     }
 }

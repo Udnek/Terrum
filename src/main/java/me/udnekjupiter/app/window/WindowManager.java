@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 
 public class WindowManager extends WindowAdapter implements Initializable, Tickable {
 
@@ -63,7 +62,7 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
         Application.getInstance().stop();
     }
 
-    public void setFrame(BufferedImage image){
+    public void setFrame(Image image){
         Graphics graphics = panel.getGraphics();
         if (graphics == null) return;
         graphics.drawImage(image, 0, 0, panel.getWidth(), panel.getHeight(), null);

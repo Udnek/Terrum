@@ -5,20 +5,22 @@ import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
-public class TraceableTriangle extends Triangle {
-    public TraceableTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
+import java.awt.*;
+
+public class RenderableTriangle extends Triangle {
+    public RenderableTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
         super(vertex0, vertex1, vertex2);
     }
 
-    public TraceableTriangle(TraceableTriangle triangle) {
+    public RenderableTriangle(RenderableTriangle triangle) {
         super(triangle);
     }
 
-    public static TraceableTriangle empty(){
-        return new TraceableTriangle(new Vector3d(), new Vector3d(), new Vector3d());
+    public static RenderableTriangle empty(){
+        return new RenderableTriangle(new Vector3d(), new Vector3d(), new Vector3d());
     }
 
-    public int getColorWhenTraced(Vector3d hitPosition){
+    public int getTraceColor(Vector3d hitPosition){
         double d0 = VectorUtils.distance(hitPosition, vertex0);
         double d1 = VectorUtils.distance(hitPosition, vertex1);
         double d2 = VectorUtils.distance(hitPosition, vertex2);
@@ -37,14 +39,19 @@ public class TraceableTriangle extends Triangle {
         return Utils.vectorToColor(color).getRGB();
     }
 
-    public TraceableTriangle copyWithVertices(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2){
-        TraceableTriangle newTriangle = copy();
+    public int getRasterizeColor(){
+        return Color.GRAY.getRGB();
+    }
+
+    
+    public RenderableTriangle copyWithVertices(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2){
+        RenderableTriangle newTriangle = copy();
         newTriangle.setVertices(vertex0, vertex1, vertex2);
         return newTriangle;
     }
 
     @Override
-    public TraceableTriangle copy() {
-        return new TraceableTriangle(this);
+    public RenderableTriangle copy() {
+        return new RenderableTriangle(this);
     }
 }

@@ -5,7 +5,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class MassEssenceTriangle extends TraceableTriangle{
+public class MassEssenceTriangle extends RenderableTriangle {
 
     protected int color = DEFAULT_COLOR;
     public static final int DEFAULT_COLOR = Color.LIGHT_GRAY.getRGB();
@@ -20,7 +20,7 @@ public class MassEssenceTriangle extends TraceableTriangle{
     }
 
     @Override
-    public int getColorWhenTraced(Vector3d hitPosition) {
+    public int getTraceColor(Vector3d hitPosition) {
         double d0 = VectorUtils.distance(hitPosition, vertex0);
         double d1 = VectorUtils.distance(hitPosition, vertex1);
         double d2 = VectorUtils.distance(hitPosition, vertex2);
@@ -46,7 +46,7 @@ public class MassEssenceTriangle extends TraceableTriangle{
     }
 
     @Override
-    public TraceableTriangle copy() {
+    public RenderableTriangle copy() {
         return new MassEssenceTriangle(this);
     }
 }

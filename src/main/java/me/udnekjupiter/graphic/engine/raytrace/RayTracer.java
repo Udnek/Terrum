@@ -1,9 +1,11 @@
-package me.udnekjupiter.graphic;
+package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.app.Application;
+import me.udnekjupiter.graphic.Camera;
+import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
-import me.udnekjupiter.graphic.triangle.TraceableTriangle;
+import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
@@ -14,7 +16,6 @@ public class RayTracer {
     private Camera camera;
     private Vector3d cameraPosition;
     // TODO: 7/6/2024 FIX FIND USAGES
-    private double cameraYaw, cameraPitch;
     private int width, height;
     private double fovMultiplier;
 
@@ -39,10 +40,10 @@ public class RayTracer {
 
     public int rayTrace(Vector3d direction){
         Vector3d nearestHitPosition = null;
-        TraceableTriangle nearestPlane = null;
+        RenderableTriangle nearestPlane = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
-        for (TraceableTriangle plane : polygonHolder.getCachedPlanes(direction)) {
+        for (RenderableTriangle plane : polygonHolder.getCachedPlanes(direction)) {
             Vector3d hitPosition = VectorUtils.triangleRayIntersection(direction, plane);
 
             if (hitPosition == null) continue;
@@ -65,9 +66,7 @@ public class RayTracer {
         this.camera = camera;
         this.polygonHolder = polygonHolder;
         this.cameraPosition = camera.getPosition();
-        this.cameraYaw = Math.toRadians(camera.getYaw());
-        this.cameraPitch = Math.toRadians(camera.getPitch());
-        this.fovMultiplier = width/camera.getFov();
+        this.fovMultiplier = height/camera.getFov();
         this.debugColorizePlanes = Application.APPLICATION_SETTINGS.debugColorizePlanes;
         this.doLight = Application.APPLICATION_SETTINGS.doLight;
         if (doLight) lightPosition = lightSource.getPosition();
@@ -99,7 +98,7 @@ public class RayTracer {
     // COLORIZING
     ///////////////////////////////////////////////////////////////////////////
 
-    private double positionLighted(Vector3d position, TraceableTriangle plane){
+    private double positionLighted(Vector3d position, RenderableTriangle plane){
 
         // to absolute position;
         position.add(cameraPosition);
@@ -122,9 +121,9 @@ public class RayTracer {
         return perpendicularity;
     }
 
-    private int colorizeRayTrace(Vector3d hitPosition, TraceableTriangle plane){
+    private int colorizeRayTrace(Vector3d hitPosition, RenderableTriangle plane){
 
-        int color =  plane.getColorWhenTraced(hitPosition);
+        int color =  plane.getTraceColor(hitPosition);
 
         if (doLight){
             float light = (float) positionLighted(hitPosition, plane);

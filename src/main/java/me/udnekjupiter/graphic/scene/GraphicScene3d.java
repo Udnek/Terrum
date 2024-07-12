@@ -10,7 +10,7 @@ import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.util.*;
 import org.realityforge.vecmath.Vector3d;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public abstract class GraphicScene3d implements GraphicScene, ControllerListener {
 
     protected Camera camera;
-    protected List<TraceableObject> traceableObjects;
+    protected List<RenderableObject> renderableObjects;
     protected LightSource lightSource;
     protected List<FixedSizeObject> fixedSizeObjects;
 
@@ -39,9 +39,9 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         camera = initializeCamera();
         lightSource = initializeLightSource();
 
-        traceableObjects = initializeSceneObjects();
-        if (traceableObjects == null){
-            traceableObjects = new ArrayList<>();
+        renderableObjects = initializeSceneObjects();
+        if (renderableObjects == null){
+            renderableObjects = new ArrayList<>();
         }
 
         fixedSizeObjects = initializeFixedSizeObjects();
@@ -56,13 +56,13 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     }
 
     protected abstract Camera initializeCamera();
-    protected abstract List<TraceableObject> initializeSceneObjects();
+    protected abstract List<RenderableObject> initializeSceneObjects();
     protected abstract LightSource initializeLightSource();
     protected abstract List<FixedSizeObject> initializeFixedSizeObjects();
 
     public Camera getCamera() { return camera;}
     public LightSource getLightSource() {return lightSource;}
-    public List<TraceableObject> getTraceableObjects() {return traceableObjects;}
+    public List<RenderableObject> getTraceableObjects() {return renderableObjects;}
     public List<FixedSizeObject> getFixedSizeObjects() {return fixedSizeObjects;}
     public Selectable getSelectedObject() {return selectedObject;}
 
@@ -70,9 +70,9 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         this.width = width;
         this.height = height;
 
-        for (TraceableObject traceableObject : traceableObjects) {
-            if (traceableObject instanceof Tickable tickable) tickable.tick();
-            if (traceableObject instanceof PhysicLinked physicLinked) physicLinked.synchronizeWithPhysic();
+        for (RenderableObject renderableObject : renderableObjects) {
+            if (renderableObject instanceof Tickable tickable) tickable.tick();
+            if (renderableObject instanceof PhysicLinked physicLinked) physicLinked.synchronizeWithPhysic();
         }
 
         for (InputKey pressedKey : controller.getPressedKeys()) {
@@ -155,7 +155,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void handleMousePressedDifference(){
         InputKey mouseKey = controller.getMouseKey();
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
-            float sensitivity = (float) (10f * Math.min(Application.getFrameDeltaTime(), 0.01) * Application.APPLICATION_SETTINGS.pixelScaling);
+            float sensitivity = (float) (20f * Math.min(Application.getFrameDeltaTime(), 0.01));
             Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);
@@ -195,7 +195,9 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         Selectable nearestObject = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
-        for (TraceableObject object : traceableObjects) {
+        // TODO: 7/12/2024 MOVE FUNCTION TO RAYTRACER
+
+        for (RenderableObject object : renderableObjects) {
             if (!(object instanceof Selectable selectable)) continue;
             Vector3d objectPosition = object.getPosition();
 

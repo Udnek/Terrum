@@ -1,6 +1,5 @@
 package me.udnekjupiter.physic.object.vertex;
 
-import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 public class NetDebugVertex extends NetDynamicVertex {

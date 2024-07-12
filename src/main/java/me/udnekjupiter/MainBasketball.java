@@ -1,7 +1,7 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.GraphicEngine3d;
+import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
@@ -47,7 +47,7 @@ public class MainBasketball extends Main{
         physicScene.addObject(sphere);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
-        GraphicEngine3d graphicEngine = new GraphicEngine3d(graphicScene);
+        RayTracingEngine graphicEngine = new RayTracingEngine(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
 

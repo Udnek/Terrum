@@ -4,8 +4,8 @@ import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeLine;
 import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.traceable.PlaneObject;
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
+import me.udnekjupiter.graphic.object.renderable.PlaneObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class SmallGraphicScene extends GraphicScene3d{
     }
 
     @Override
-    protected List<TraceableObject> initializeSceneObjects() {
-        List<TraceableObject> objects = new ArrayList<>();
+    protected List<RenderableObject> initializeSceneObjects() {
+        List<RenderableObject> objects = new ArrayList<>();
         PlaneObject planeObject = new PlaneObject(new Vector3d(), -1, -1, 1, 1, 0);
         objects.add(planeObject);
         return objects;

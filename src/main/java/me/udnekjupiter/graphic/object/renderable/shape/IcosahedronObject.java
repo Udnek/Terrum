@@ -1,21 +1,21 @@
-package me.udnekjupiter.graphic.object.traceable.shape;
+package me.udnekjupiter.graphic.object.renderable.shape;
 
-import me.udnekjupiter.graphic.object.traceable.TraceableObject;
-import me.udnekjupiter.graphic.triangle.TraceableTriangle;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class IcosahedronObject extends TraceableObject {
+public class IcosahedronObject extends RenderableObject {
 
     public static final float FI = (float) ((1.0f + Math.sqrt(5.0f))/2.0f);
-    protected TraceableTriangle[] polygons;
+    protected RenderableTriangle[] polygons;
     public final double size;
-    public IcosahedronObject(Vector3d position, double size, TraceableTriangle example) {
+    public IcosahedronObject(Vector3d position, double size, RenderableTriangle example) {
         super(position);
         this.size = size;
         generatePolygons(example);
     }
 
-    protected void generatePolygons(TraceableTriangle example){
+    protected void generatePolygons(RenderableTriangle example){
 
         Vector3d v1 = new Vector3d(FI, 1, 0).mul(size);
         Vector3d v2 = new Vector3d(FI, -1, 0).mul(size);
@@ -32,7 +32,7 @@ public class IcosahedronObject extends TraceableObject {
         Vector3d v11 = new Vector3d(0, -FI, -1).mul(size);
         Vector3d v12 = new Vector3d(0, -FI, 1).mul(size);
 
-        polygons = new TraceableTriangle[20];
+        polygons = new RenderableTriangle[20];
 
         // up
         // z -
@@ -80,8 +80,8 @@ public class IcosahedronObject extends TraceableObject {
     }
 
     @Override
-    public TraceableTriangle[] getRenderTriangles() {
-       TraceableTriangle[] copy = new TraceableTriangle[polygons.length];
+    public RenderableTriangle[] getRenderTriangles() {
+       RenderableTriangle[] copy = new RenderableTriangle[polygons.length];
         for (int i = 0; i < polygons.length; i++) {
             copy[i] = polygons[i].copy();
         }

@@ -1,4 +1,4 @@
-package me.udnekjupiter.graphic.object.traceable;
+package me.udnekjupiter.graphic.object.renderable;
 
 import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;

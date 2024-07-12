@@ -59,7 +59,7 @@ public class DebugMenu {
     public void addTextToRight(String text){rightText.add(text);}
     public void addTextToLeft(String text){leftText.add(text);}
 
-    public void drawText(TextPosition textPosition, String text) {
+    private void drawText(TextPosition textPosition, String text) {
         if (textPosition == TextPosition.LEFT) {
             textYLeft += textSize;
             graphics.drawString(text, 0, textYLeft);

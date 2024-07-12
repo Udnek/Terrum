@@ -1,6 +1,5 @@
 package me.udnekjupiter.app;
 
-import me.udnekjupiter.GPUGraphicEngine;
 import me.udnekjupiter.Main;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
@@ -10,6 +9,7 @@ import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
+import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import me.udnekjupiter.util.Utils;
@@ -117,6 +117,7 @@ public class Application implements ConsoleListener, ControllerListener {
 
                 BufferedImage frame = Utils.resizeImage(rendered, windowManager.getWidth(), windowManager.getHeight());
 
+                // TODO: 7/12/2024 MOVE DEBUG RENDER INTO GRAPHIC ENGINE
                 DEBUG_MENU.draw(frame, 15);
                 windowManager.setFrame(frame);
 
@@ -138,6 +139,7 @@ public class Application implements ConsoleListener, ControllerListener {
 
             BufferedImage rendered = graphicEngine.renderFrame(width, height);
             BufferedImage frame = Utils.resizeImage(rendered, width, height);
+            // TODO: 7/12/2024 MOVE DEBUG RENDER INTO GRAPHIC ENGINE
             DEBUG_MENU.draw(frame, 15);
             windowManager.setFrame(frame);
 
@@ -179,7 +181,7 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     public void stop(){
-        if (graphicEngine instanceof GPUGraphicEngine graphicEngine){
+        if (graphicEngine instanceof KernelRayTracingEngine graphicEngine){
             graphicEngine.stop();
         }
         videoRecorder.save();
