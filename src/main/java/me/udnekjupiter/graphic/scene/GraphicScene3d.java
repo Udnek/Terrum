@@ -196,7 +196,6 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         Selectable nearestObject = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
 
-        // TODO: 7/12/2024 MOVE FUNCTION TO RAYTRACER
 
         for (RenderableObject object : renderableObjects) {
             if (!(object instanceof Selectable selectable)) continue;

@@ -15,7 +15,6 @@ public class RayTracer {
 
     private Camera camera;
     private Vector3d cameraPosition;
-    // TODO: 7/6/2024 FIX FIND USAGES
     private int width, height;
     private double fovMultiplier;
 

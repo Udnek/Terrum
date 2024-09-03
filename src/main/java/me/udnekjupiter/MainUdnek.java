@@ -19,7 +19,7 @@ public class MainUdnek extends Main{
     @Override
     public void run() {
         NetPhysicsScene physicScene = new NetPhysicsScene(
-                new CellularNet("big_frame.png",
+                new CellularNet("medium_frame.png",
                         new Vector3d(0, 0, 0)));
         SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2.5, 10_000, 100);
         physicScene.addObject(sphere);

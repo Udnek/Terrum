@@ -1,7 +1,8 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
+import me.udnekjupiter.graphic.engine.GraphicEngine;
+import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
@@ -20,7 +21,7 @@ public class MainBasketball extends Main{
                 "тачдаун",
                 16,
                 PolygonHolder.Type.SMART);*/
-        return ApplicationSettings.defaultNoRecording(4, 16, PolygonHolder.Type.SMART);
+        return ApplicationSettings.defaultNoRecording(1, 1, PolygonHolder.Type.SMART);
     }
     public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
@@ -47,7 +48,7 @@ public class MainBasketball extends Main{
         physicScene.addObject(sphere);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
-        RayTracingEngine graphicEngine = new RayTracingEngine(graphicScene);
+        GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
 

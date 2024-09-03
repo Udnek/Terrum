@@ -12,14 +12,12 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-;
 
-// TODO: 7/12/2024 DEPTH BUFFER
 public class RasterizationEngine extends GraphicScene3dEngine {
 
     public static final int WIREFRAME_COLOR = Color.CYAN.getRGB();
     public static final boolean DRAW_WIREFRAME = true;
-    public static final boolean DRAW_WIREFRAME_ONLY = false;
+    public static final boolean DRAW_PLANES = true;
 
     private final RasterizationFrame frame;
     private int width;
@@ -61,13 +59,13 @@ public class RasterizationEngine extends GraphicScene3dEngine {
 
 
     public void drawTriangle(RenderableTriangle triangle){
-        Point project0 = project(camera.rotateBackVector(triangle.getVertex0()));
+        Vector3d project0 = project(camera.rotateBackVector(triangle.getVertex0()));
         if (project0 == null) return;
-        Point project1 = project(camera.rotateBackVector(triangle.getVertex1()));
+        Vector3d project1 = project(camera.rotateBackVector(triangle.getVertex1()));
         if (project1 == null) return;
-        Point project2 = project(camera.rotateBackVector(triangle.getVertex2()));
+        Vector3d project2 = project(camera.rotateBackVector(triangle.getVertex2()));
         if (project2 == null) return;
-        if (!DRAW_WIREFRAME_ONLY){
+        if (DRAW_PLANES){
             frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
         }
         if (DRAW_WIREFRAME){
@@ -75,12 +73,12 @@ public class RasterizationEngine extends GraphicScene3dEngine {
         }
     }
 
-    public Point project(Vector3d pos){
+    public Vector3d project(Vector3d pos){
         if (pos.z < 0.1) return null;
         double multiplier = 1 / pos.z * height / camera.getFov();
         int x = (int) (pos.x * multiplier);
         int y = (int) (pos.y * multiplier);
 
-        return new Point(x, y);
+        return new Vector3d(x, y, pos.z);
     }
 }

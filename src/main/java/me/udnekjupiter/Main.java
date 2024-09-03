@@ -9,7 +9,7 @@ import me.udnekjupiter.physic.engine.PhysicEngine;
 
 public abstract class Main{
 
-    public static final Main.Type MAIN_TO_RUN = Type.UDNEK;
+    public static final Main.Type MAIN_TO_RUN = Type.BASKETBALL;
     private static Main main;
     public static void main(String ...args){
         main = switch (MAIN_TO_RUN) {
