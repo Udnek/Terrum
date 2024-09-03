@@ -1,9 +1,6 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.app.console.Command;
-import me.udnekjupiter.app.console.Console;
-import me.udnekjupiter.app.console.ConsoleListener;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.ScreenTracer;
@@ -19,7 +16,7 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
-public class RayTracingEngine extends GraphicScene3dEngine implements ConsoleListener {
+public class RayTracingEngine extends GraphicScene3dEngine{
 
     protected RayTracer rayTracer;
     protected final GraphicFrame frame;
@@ -35,6 +32,7 @@ public class RayTracingEngine extends GraphicScene3dEngine implements ConsoleLis
 
     @Override
     public void initialize() {
+        super.initialize();
         scene.initialize();
         rayTracer = new RayTracer(scene.getLightSource());
         if (Application.APPLICATION_SETTINGS.polygonHolderType == PolygonHolder.Type.SMART){
@@ -42,7 +40,6 @@ public class RayTracingEngine extends GraphicScene3dEngine implements ConsoleLis
         } else {
             polygonHolder = new DefaultPolygonHolder(scene.getTraceableObjects(), scene.getCamera(), scene.getLightSource());
         }
-        Console.getInstance().addListener(this);
     }
 
     @Override
@@ -68,10 +65,4 @@ public class RayTracingEngine extends GraphicScene3dEngine implements ConsoleLis
         return frame.toImage();
     }
 
-    // TODO: 7/12/2024 MOVE TO ABSTRACT
-    @Override
-    public void handleCommand(Command command, Object[] args) {
-        if (command != Command.SET_FOV) return;
-        scene.getCamera().setFov((double) args[0]);
-    }
 }

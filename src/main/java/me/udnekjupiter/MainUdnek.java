@@ -1,7 +1,7 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.RasterizationEngine;
+import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
@@ -19,7 +19,7 @@ public class MainUdnek extends Main{
     @Override
     public void run() {
         NetPhysicsScene physicScene = new NetPhysicsScene(
-                new CellularNet("small_frame.png",
+                new CellularNet("big_frame.png",
                         new Vector3d(0, 0, 0)));
         SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2.5, 10_000, 100);
         physicScene.addObject(sphere);
@@ -45,7 +45,7 @@ public class MainUdnek extends Main{
 
     @Override
     public ApplicationSettings initializeGraphicsSettings() {
-        return ApplicationSettings.defaultNoRecording(2, 12, PolygonHolder.Type.SMART);
+        return ApplicationSettings.defaultNoRecording(1, 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(512, 512, "newEngineTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);

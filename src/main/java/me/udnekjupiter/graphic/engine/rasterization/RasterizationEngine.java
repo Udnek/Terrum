@@ -1,10 +1,9 @@
-package me.udnekjupiter.graphic.engine;
+package me.udnekjupiter.graphic.engine.rasterization;
 
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.frame.CenteredFrame;
-import me.udnekjupiter.graphic.frame.GraphicFrame;
+import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
@@ -20,20 +19,21 @@ public class RasterizationEngine extends GraphicScene3dEngine {
 
     public static final int WIREFRAME_COLOR = Color.CYAN.getRGB();
     public static final boolean DRAW_WIREFRAME = true;
-    public static final boolean DRAW_WIREFRAME_ONLY = true;
+    public static final boolean DRAW_WIREFRAME_ONLY = false;
 
-    private final GraphicFrame frame;
+    private final RasterizationFrame frame;
     private int width;
     private int height;
     private Camera camera;
 
     public RasterizationEngine(GraphicScene3d graphicScene) {
         super(graphicScene);
-        frame = new CenteredFrame();
+        frame = new RasterizationFrame();
     }
 
     @Override
     public void initialize() {
+        super.initialize();
         scene.initialize();
     }
 
@@ -41,13 +41,12 @@ public class RasterizationEngine extends GraphicScene3dEngine {
     public BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
-        this.width = Math.max(rawWidth / Application.APPLICATION_SETTINGS.pixelScaling, 1);
-        this.height = Math.max(rawHeight / Application.APPLICATION_SETTINGS.pixelScaling, 1);
+        width = Math.max(rawWidth / Application.APPLICATION_SETTINGS.pixelScaling, 1);
+        height = Math.max(rawHeight / Application.APPLICATION_SETTINGS.pixelScaling, 1);
 
         frame.reset(width, height);
 
-        Camera camera = scene.getCamera();
-        this.camera = camera;
+        camera = scene.getCamera();
 
         Vector3d cameraPosition = camera.getPosition();
         for (RenderableObject object : scene.getTraceableObjects()) {
@@ -68,11 +67,11 @@ public class RasterizationEngine extends GraphicScene3dEngine {
         if (project1 == null) return;
         Point project2 = project(camera.rotateBackVector(triangle.getVertex2()));
         if (project2 == null) return;
-        if (DRAW_WIREFRAME){
-            frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
-        }
         if (!DRAW_WIREFRAME_ONLY){
             frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
+        }
+        if (DRAW_WIREFRAME){
+            frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
         }
     }
 

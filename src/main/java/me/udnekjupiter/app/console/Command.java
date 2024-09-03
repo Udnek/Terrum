@@ -65,7 +65,7 @@ public enum Command{
         String[] args = getArgs(fullCommand);
         ArgumentType<?>[] argTypes = command.argTypes;
         if (args.length != argTypes.length){
-            System.out.println("Incorrect amount of argument");
+            System.out.println("Incorrect amount of arguments");
             return;
         }
         Object[] actualArgs = new Object[args.length];

@@ -100,6 +100,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
                         Utils.roundToPrecision(camera.getYaw(), 2) + ", " +
                         Utils.roundToPrecision(camera.getPitch(), 2)
         );
+        debugMenu.addTextToLeft("FOV: " + camera.getFov());
     }
 
     @Override

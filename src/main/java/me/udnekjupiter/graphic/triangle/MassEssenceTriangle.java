@@ -40,7 +40,6 @@ public class MassEssenceTriangle extends RenderableTriangle {
     public void setColor(int color) {
         this.color = color;
     }
-
     public int getColor() {
         return color;
     }
