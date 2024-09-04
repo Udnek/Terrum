@@ -33,7 +33,7 @@ public class RayTracingEngine extends GraphicScene3dEngine{
     @Override
     public void initialize() {
         super.initialize();
-        scene.initialize();
+
         rayTracer = new RayTracer(scene.getLightSource());
         if (Application.APPLICATION_SETTINGS.polygonHolderType == PolygonHolder.Type.SMART){
             polygonHolder = new SmartPolygonHolder(scene.getTraceableObjects(), scene.getCamera());

@@ -3,21 +3,8 @@ package me.udnekjupiter.graphic.engine.rasterization;
 import me.udnekjupiter.graphic.frame.CenteredFrame;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.Arrays;
-
-public class RasterizationFrame extends CenteredFrame {
-
-    protected int[] depthBuffer;
-
-    public void setPixel(int x, int y, int z, int color){
-        x += width/2;
-        y += height/2;
-        int row = height-1-y;
-        int pos = row * width + x;
-        if (depthBuffer[pos] < z) return;
-        depthBuffer[pos] = z;
-        data[pos] = color;
-    }
+public abstract class RasterizationFrame extends CenteredFrame {
+    public abstract void setPixel(int x, int y, int z, int color);
     public void safeSetPixel(int x, int y, int z, int color){
         if (!isInBounds(x, y)) return;
         setPixel(x, y, z, color);
@@ -115,12 +102,4 @@ public class RasterizationFrame extends CenteredFrame {
         v1.y = y;
         v1.z = z;
     }
-
-    @Override
-    public void reset(int width, int height) {
-        super.reset(width, height);
-        depthBuffer = new int[width * height];
-        Arrays.fill(depthBuffer, 100);
-    }
-
 }

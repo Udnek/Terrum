@@ -49,6 +49,9 @@ public class Triangle {
     public Vector3d getVertex0() {return vertex0.dup();}
     public Vector3d getVertex1() {return vertex1.dup();}
     public Vector3d getVertex2() {return vertex2.dup();}
+    public Vector3d getUnsafeVertex0() {return vertex0;}
+    public Vector3d getUnsafeVertex1() {return vertex1;}
+    public Vector3d getUnsafeVertex2() {return vertex2;}
 
     public Vector3d[] getVertices() {
         return new Vector3d[]{getVertex0(), getVertex1(), getVertex2()};
@@ -89,10 +92,6 @@ public class Triangle {
 
     public Triangle copy(){
         return new Triangle(this);
-    }
-
-    public String asString() {
-        return vertex0.asString() + vertex1.asString() + vertex2.asString();
     }
 
 }

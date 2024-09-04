@@ -39,6 +39,7 @@ public class RenderableTriangle extends Triangle {
         return Utils.vectorToColor(color).getRGB();
     }
 
+    // TODO: 9/3/2024 WTF
     public int getRasterizeColor(){
         return Color.GRAY.getRGB();
     }

@@ -34,4 +34,9 @@ public class PolygonObject extends RenderableObject {
     public RenderableTriangle[] getRenderTriangles() {
         return new RenderableTriangle[]{getPlane()};
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{plane};
+    }
 }

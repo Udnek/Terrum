@@ -1,6 +1,7 @@
 package me.udnekjupiter.graphic;
 
 import me.udnekjupiter.util.PositionedObject;
+import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
@@ -56,6 +57,13 @@ public class Camera extends PositionedObject {
         VectorUtils.rotateYaw(vector, Math.toRadians(Utils.normalizeYaw(-yaw)));
         VectorUtils.rotatePitch(vector, Math.toRadians(Utils.normalizePitch(-pitch)));
         return vector;
+    }
+
+    public Triangle rotateBackTriangle(Triangle triangle){
+        rotateBackVector(triangle.getUnsafeVertex0());
+        rotateBackVector(triangle.getUnsafeVertex1());
+        rotateBackVector(triangle.getUnsafeVertex2());
+        return triangle;
     }
 
     public void rotateVectorYaw(Vector3d vector3d){VectorUtils.rotateYaw(vector3d, Math.toRadians(yaw));}

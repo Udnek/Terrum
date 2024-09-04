@@ -15,6 +15,7 @@ public abstract class GraphicScene3dEngine implements GraphicEngine, ConsoleList
     @Override
     public void initialize() {
         Console.getInstance().addListener(this);
+        scene.initialize();
     }
 
     public GraphicScene3d getScene() {return scene;}

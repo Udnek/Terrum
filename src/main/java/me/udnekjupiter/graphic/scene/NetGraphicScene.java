@@ -21,6 +21,7 @@ import java.util.Map;
 public class NetGraphicScene extends GraphicScene3d {
     private final NetPhysicsScene netPhysicsScene;
     public NetGraphicScene(NetPhysicsScene netPhysicsScene){
+        super();
         this.netPhysicsScene = netPhysicsScene;
     }
 

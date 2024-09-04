@@ -41,4 +41,9 @@ public class DoubleSpringObject extends SpringObject{
     public RenderableTriangle[] getRenderTriangles() {
         return new RenderableTriangle[]{plane.copy(), plane1.copy()};
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{plane, plane1};
+    }
 }

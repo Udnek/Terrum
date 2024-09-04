@@ -26,4 +26,9 @@ public class AxisCrosshairObject extends RenderableObject {
     public RenderableTriangle[] getRenderTriangles() {
         return new RenderableTriangle[]{planeX.copy(), planeY.copy(), planeZ.copy()};
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{planeX, planeY, planeZ};
+    }
 }

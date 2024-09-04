@@ -5,15 +5,19 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class MassEssenceTriangle extends RenderableTriangle {
+public class MassEssenceTriangle extends ColoredTriangle {
 
-    protected int color = DEFAULT_COLOR;
-    public static final int DEFAULT_COLOR = Color.LIGHT_GRAY.getRGB();
-    public static final int HIGHLIGHTED_COLOR = Color.RED.getRGB();
+    public static final int DEFAULT_COLOR = new Color(128, 128, 128, 80).getRGB();
+    public static final int HIGHLIGHTED_COLOR = new Color(200, 0, 0, 80).getRGB();
+
+    protected int color;
+
     public MassEssenceTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
-        super(vertex0, vertex1, vertex2);
+        super(vertex0, vertex1, vertex2, DEFAULT_COLOR);
     }
-
+    public MassEssenceTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, int color) {
+        super(vertex0, vertex1, vertex2, color);
+    }
     public MassEssenceTriangle(MassEssenceTriangle triangle) {
         super(triangle);
         this.color = triangle.getColor();
@@ -37,15 +41,9 @@ public class MassEssenceTriangle extends RenderableTriangle {
         return color;
     }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
-    public int getColor() {
-        return color;
-    }
 
     @Override
-    public RenderableTriangle copy() {
+    public MassEssenceTriangle copy() {
         return new MassEssenceTriangle(this);
     }
 }
