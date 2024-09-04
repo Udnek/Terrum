@@ -24,7 +24,7 @@ public class SphereCollider extends Collider{
             double distanceBetweenColliders = VectorUtils.distance(this.getCenterPosition(), sphereCollider.getCenterPosition());
             return (sphereCollider.radius + this.radius >= distanceBetweenColliders);
         } else {
-            System.out.println("BoxCollider intersection checker is not ready");
+            System.out.println("BoxCollider intersection checker is not implemented yet");
             return false;
         }
     }

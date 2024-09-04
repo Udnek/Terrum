@@ -46,7 +46,7 @@ public abstract class CollisionCalculator {
                 double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
                 double depth = stableDistance - criticalRadiiDistance;
                 Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * thisCollider.stiffness); // TODO: 7/9/2024 STIFFNESS????
+                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * thisCollider.stiffness);
                 collisionForce.add(collisionForceCache);
             }
         }

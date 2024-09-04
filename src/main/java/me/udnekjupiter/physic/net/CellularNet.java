@@ -19,7 +19,7 @@ import java.util.List;
 public class CellularNet implements Initializable, Freezable, Resettable {
     private Vector3d globalOffset;
     private Vector3x3 perPositionMultiplier;
-
+    //TODO Try scaling net, so system would look more authentic
     private final EnvironmentSettings settings;
     private boolean frozen;
     private int sizeX;
