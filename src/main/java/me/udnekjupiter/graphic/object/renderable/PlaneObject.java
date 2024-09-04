@@ -27,4 +27,9 @@ public class PlaneObject extends RenderableObject {
     public RenderableTriangle[] getRenderTriangles() {
         return new RenderableTriangle[]{plane0.copy(), plane1.copy()};
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{plane0, plane1};
+    }
 }

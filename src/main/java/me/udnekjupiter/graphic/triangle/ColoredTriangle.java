@@ -5,7 +5,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 
 public class ColoredTriangle extends RenderableTriangle {
-    private int color;
+    protected int color;
     public ColoredTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, int color) {
         super(vertex0, vertex1, vertex2);
         this.color = color;

@@ -11,15 +11,15 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
-;
 
-// TODO: 7/12/2024 DEPTH BUFFER
 public class RasterizationEngine extends GraphicScene3dEngine {
 
     public static final int WIREFRAME_COLOR = Color.CYAN.getRGB();
-    public static final boolean DRAW_WIREFRAME = true;
-    public static final boolean DRAW_WIREFRAME_ONLY = false;
+    public static final boolean DRAW_WIREFRAME = false;
+    public static final boolean DRAW_PLANES = true;
 
     private final RasterizationFrame frame;
     private int width;
@@ -28,14 +28,9 @@ public class RasterizationEngine extends GraphicScene3dEngine {
 
     public RasterizationEngine(GraphicScene3d graphicScene) {
         super(graphicScene);
-        frame = new RasterizationFrame();
+        frame = new TransparentRasterizationFrame();
     }
 
-    @Override
-    public void initialize() {
-        super.initialize();
-        scene.initialize();
-    }
 
     @Override
     public BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
@@ -48,26 +43,34 @@ public class RasterizationEngine extends GraphicScene3dEngine {
 
         camera = scene.getCamera();
 
+        List<RenderableTriangle> polygons = new ArrayList<>();
+
         Vector3d cameraPosition = camera.getPosition();
         for (RenderableObject object : scene.getTraceableObjects()) {
             Vector3d objectPosition = object.getPosition();
             for (RenderableTriangle triangle : object.getRenderTriangles()) {
                 triangle.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
-                drawTriangle(triangle);
+                camera.rotateBackTriangle(triangle);
+                polygons.add(triangle);
             }
         }
+
+        polygons.sort((o1, o2) -> Double.compare(o2.getCenter().z, o1.getCenter().z));
+
+        polygons.forEach(this::drawTriangle);
+
         return frame.toImage();
     }
 
 
     public void drawTriangle(RenderableTriangle triangle){
-        Point project0 = project(camera.rotateBackVector(triangle.getVertex0()));
+        Vector3d project0 = project(triangle.getVertex0());
         if (project0 == null) return;
-        Point project1 = project(camera.rotateBackVector(triangle.getVertex1()));
+        Vector3d project1 = project(triangle.getVertex1());
         if (project1 == null) return;
-        Point project2 = project(camera.rotateBackVector(triangle.getVertex2()));
+        Vector3d project2 = project(triangle.getVertex2());
         if (project2 == null) return;
-        if (!DRAW_WIREFRAME_ONLY){
+        if (DRAW_PLANES){
             frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
         }
         if (DRAW_WIREFRAME){
@@ -75,12 +78,12 @@ public class RasterizationEngine extends GraphicScene3dEngine {
         }
     }
 
-    public Point project(Vector3d pos){
+    public Vector3d project(Vector3d pos){
         if (pos.z < 0.1) return null;
         double multiplier = 1 / pos.z * height / camera.getFov();
         int x = (int) (pos.x * multiplier);
         int y = (int) (pos.y * multiplier);
 
-        return new Point(x, y);
+        return new Vector3d(x, y, pos.z);
     }
 }

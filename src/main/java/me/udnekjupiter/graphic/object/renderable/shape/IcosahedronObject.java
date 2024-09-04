@@ -87,4 +87,9 @@ public class IcosahedronObject extends RenderableObject {
         }
         return copy;
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return polygons;
+    }
 }

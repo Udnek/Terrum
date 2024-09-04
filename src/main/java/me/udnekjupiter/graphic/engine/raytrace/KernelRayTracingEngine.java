@@ -43,8 +43,7 @@ public class KernelRayTracingEngine extends GraphicScene3dEngine {
 
     @Override
     public void initialize() {
-
-        scene.initialize();
+        super.initialize();
 
         final int platformIndex = 0;
         final long deviceType = CL.CL_DEVICE_TYPE_ALL;

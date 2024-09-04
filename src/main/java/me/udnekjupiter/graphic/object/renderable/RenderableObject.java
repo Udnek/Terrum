@@ -9,4 +9,5 @@ public abstract class RenderableObject extends GraphicObject {
         super(position);
     }
     public abstract RenderableTriangle[] getRenderTriangles();
+    public abstract RenderableTriangle[] getUnsafeRenderTriangles();
 }

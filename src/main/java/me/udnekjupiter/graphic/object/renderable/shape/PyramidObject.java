@@ -28,4 +28,9 @@ public class PyramidObject extends RenderableObject {
     public RenderableTriangle[] getRenderTriangles() {
         return new RenderableTriangle[]{plane0.copy(), plane1.copy(), plane2.copy(), planeBottom.copy()};
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{plane0, plane1, plane2, planeBottom};
+    }
 }

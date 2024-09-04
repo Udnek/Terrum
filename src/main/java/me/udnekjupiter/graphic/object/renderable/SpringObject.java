@@ -41,4 +41,9 @@ public class SpringObject extends RenderableObject implements Tickable {
     public RenderableTriangle[] getRenderTriangles() {
         return new RenderableTriangle[]{plane.copy()};
     }
+
+    @Override
+    public RenderableTriangle[] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{plane};
+    }
 }

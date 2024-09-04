@@ -162,7 +162,6 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
         return CollisionCalculator.getHookeCollisionForce(this);
     }
 
-
     @Override
     public void freeze(){
         frozen = true;

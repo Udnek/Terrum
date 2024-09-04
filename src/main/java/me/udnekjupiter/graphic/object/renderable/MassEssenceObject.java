@@ -13,28 +13,24 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
 
     private final SphereObject sphereObject;
 
-    public MassEssenceObject(SphereObject sphereObject) {
+    public MassEssenceObject(SphereObject sphereObject){
         super(sphereObject.getPosition(), sphereObject.getCollider().radius, 1,
                 new MassEssenceTriangle(new Vector3d(), new Vector3d(), new Vector3d()));
         this.sphereObject = sphereObject;
     }
-
     @Override
     public void synchronizeWithPhysic() {
         setPosition(sphereObject.getPosition());
     }
-
     @Override
     public void setPosition(Vector3d position) {
         super.setPosition(position);
         sphereObject.setPosition(position);
     }
-
     @Override
     public PhysicObject getPhysicRepresentation() {
         return sphereObject;
     }
-
     @Override
     public void select() {
         for (RenderableTriangle polygon : polygons) {
@@ -42,7 +38,6 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
             triangle.setColor(MassEssenceTriangle.HIGHLIGHTED_COLOR);
         }
     }
-
     @Override
     public void unselect() {
         for (RenderableTriangle polygon : polygons) {
