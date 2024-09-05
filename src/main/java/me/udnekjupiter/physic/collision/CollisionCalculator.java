@@ -9,13 +9,13 @@ import static me.udnekjupiter.physic.engine.PhysicEngine.MAX_DEPTH;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public abstract class CollisionCalculator {
-    public static Vector3d getAtomicCollisionForce(RKMObject thisObject){
+    public static Vector3d getAtomicCollisionForce(Collidable thisObject){
         Vector3d collisionForce = new Vector3d();
-        for (RKMObject collidingObject : thisObject.getCollidingObjects()) {
+        for (Collidable collidingObject : thisObject.getCollidingObjects()) {
             if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
 
-            Vector3d thisPosition = thisObject.getCurrentRKMPosition();
-            Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
+            Vector3d thisPosition = thisObject.getPosition();
+            Vector3d otherPosition = collidingObject.getPosition();
             Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
             double distance = VectorUtils.distance(thisPosition, otherPosition);
             double maxDepth = Application.ENVIRONMENT_SETTINGS.maxDepth;
@@ -31,13 +31,13 @@ public abstract class CollisionCalculator {
         return collisionForce;
     }
 
-    public static Vector3d getHookeCollisionForce(RKMObject thisObject){
+    public static Vector3d getHookeCollisionForce(Collidable thisObject){
         Vector3d collisionForce = new Vector3d();
-        for (RKMObject collidingObject : thisObject.getCollidingObjects()) {
+        for (Collidable collidingObject : thisObject.getCollidingObjects()) {
             if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
 
-            Vector3d thisPosition = thisObject.getCurrentRKMPosition();
-            Vector3d otherPosition = collidingObject.getCurrentRKMPosition();
+            Vector3d thisPosition = thisObject.getPosition();
+            Vector3d otherPosition = collidingObject.getPosition();
             double distance = VectorUtils.distance(thisPosition, otherPosition);
             SphereCollider thisCollider = (SphereCollider) thisObject.getCollider();
             double maxDistance = thisCollider.radius + otherSphereCollider.radius;

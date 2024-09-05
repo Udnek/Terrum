@@ -8,14 +8,14 @@ public class SphereCollider extends Collider{
     public final double radius;
     public final double stiffness;
 
-    public SphereCollider(double radius, double stiffness, RKMObject parent) {
+    public SphereCollider(double radius, double stiffness, Collidable parent) {
         this.radius = radius;
         this.stiffness = stiffness;
         this.parent = parent;
     }
 
     public Vector3d getCenterPosition(){
-        return parent.getCurrentRKMPosition();
+        return parent.getPosition();
     }
 
     @Override
