@@ -180,7 +180,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         Vector3d direction = new Vector3d(
                 (mousePosition.x - width/2f),
                 ((height-mousePosition.y-1) - height/2f),
-                width/camera.getFov()
+                height/camera.getFov()
         );
         camera.rotateVector(direction);
         return direction;
