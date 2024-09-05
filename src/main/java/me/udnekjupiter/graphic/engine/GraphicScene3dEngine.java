@@ -1,9 +1,12 @@
 package me.udnekjupiter.graphic.engine;
 
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
+
+import java.awt.image.BufferedImage;
 
 public abstract class GraphicScene3dEngine implements GraphicEngine, ConsoleListener {
 
@@ -16,6 +19,11 @@ public abstract class GraphicScene3dEngine implements GraphicEngine, ConsoleList
     public void initialize() {
         Console.getInstance().addListener(this);
         scene.initialize();
+    }
+
+    @Override
+    public void postVideoRender(BufferedImage image) {
+        Application.DEBUG_MENU.draw(image, 15);
     }
 
     public GraphicScene3d getScene() {return scene;}

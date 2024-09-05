@@ -1,6 +1,5 @@
-package me.udnekjupiter.graphic.engine.rasterization;
+package me.udnekjupiter.graphic.frame;
 
-import me.udnekjupiter.graphic.frame.CenteredFrame;
 import org.realityforge.vecmath.Vector3d;
 
 public abstract class RasterizationFrame extends CenteredFrame {

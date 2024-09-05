@@ -6,7 +6,6 @@ import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
-import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
@@ -35,16 +34,16 @@ public class MainUdnek extends Main{
         SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
         physicScene.addObject(sphere);
 
-        sphere = new SphereObject(new Vector3d(3, 10, 3), 3, 10_000, 5);
-        physicScene.addObject(sphere);
+/*        sphere = new SphereObject(new Vector3d(3, 10, 3), 3, 10_000, 5);
+        physicScene.addObject(sphere);*/
 
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
         //
         //GraphicScene3d graphicScene = new SmallGraphicScene();
         GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
 
-        RayTracingEngine def = new RayTracingEngine(graphicScene);
-        KernelRayTracingEngine gpu = new KernelRayTracingEngine(graphicScene);
+        RayTracingEngine rayTracing = new RayTracingEngine(graphicScene);
+        KernelRayTracingEngine kernel = new KernelRayTracingEngine(graphicScene);
         RasterizationEngine rasterizer = new RasterizationEngine(graphicScene);
 
 
@@ -66,7 +65,8 @@ public class MainUdnek extends Main{
 
     @Override
     public ApplicationSettings initializeGraphicsSettings() {
-        return ApplicationSettings.defaultNoRecording(1, 2, PolygonHolder.Type.SMART);
+        ApplicationSettings settings = ApplicationSettings.noRecording();
+        return settings;
         //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(512, 512, "newEngineTest", 1, PolygonHolder.Type.SMART, false, false);
         //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);

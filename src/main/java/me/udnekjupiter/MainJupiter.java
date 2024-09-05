@@ -2,7 +2,6 @@ package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
-import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
@@ -21,7 +20,7 @@ public class MainJupiter extends Main{
 //                "Default",
 //                16,
 //                PolygonHolder.Type.SMART);
-      return ApplicationSettings.defaultNoRecording(4, 16, PolygonHolder.Type.SMART);
+      return ApplicationSettings.noRecording();
     }
     public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 

@@ -25,6 +25,7 @@ public class RayTracer {
     private Vector3d lightPosition;
 
     private boolean doLight;
+    // TODO: 9/5/2024 DEBUG COLORIZE DOESNT WORK
     private boolean debugColorizePlanes;
 
     public RayTracer(LightSource lightSource){

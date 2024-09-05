@@ -1,12 +1,8 @@
-package me.udnekjupiter.graphic.engine.rasterization;
+package me.udnekjupiter.graphic.frame;
 
 import java.awt.*;
 
 public class TransparentRasterizationFrame extends RasterizationFrame {
-
-/*    List<int[]> transparentBuffers = new ArrayList<>();
-    List<Integer> colors = new ArrayList<>();
-    protected int[] depthBuffer;*/
 
     @Override
     public void setPixel(int x, int y, int z, int color) {

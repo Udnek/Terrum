@@ -116,12 +116,9 @@ public class Application implements ConsoleListener, ControllerListener {
                 videoRecorder.addFrame(rendered);
 
                 BufferedImage frame = Utils.resizeImage(rendered, windowManager.getWidth(), windowManager.getHeight());
+                graphicEngine.postVideoRender(frame);
 
-                // TODO: 7/12/2024 MOVE DEBUG RENDER INTO GRAPHIC ENGINE
-                DEBUG_MENU.draw(frame, 15);
                 windowManager.setFrame(frame);
-
-
                 applicationData.framePerformed();
             }
 
@@ -154,24 +151,14 @@ public class Application implements ConsoleListener, ControllerListener {
         console.start();
 
         if (APPLICATION_SETTINGS.recordVideo){
-            Thread renderThread = new Thread(new Runnable() {
-                @Override
-                public void run() {videoRenderLoop();}
-            });
+            Thread renderThread = new Thread(this::videoRenderLoop);
             renderThread.setName("RenderThread");
             renderThread.start();
 
         } else {
-            Thread physicThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    livePhysicLoop();}
-            });
+            Thread physicThread = new Thread(this::livePhysicLoop);
             physicThread.setName("PhysicLoop");
-            Thread graphicThread = new Thread(new Runnable() {
-                @Override
-                public void run() {liveGraphicLoop();}
-            });
+            Thread graphicThread = new Thread(this::liveGraphicLoop);
             graphicThread.setName("GraphicLoop");
 
             physicThread.start();
@@ -181,8 +168,8 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     public void stop(){
-        if (graphicEngine instanceof KernelRayTracingEngine graphicEngine){
-            graphicEngine.stop();
+        if (graphicEngine instanceof KernelRayTracingEngine kernel){
+            kernel.stop();
         }
         videoRecorder.save();
     }
@@ -226,6 +213,8 @@ public class Application implements ConsoleListener, ControllerListener {
             case SET_DEBUG_COLORIZE_PLANES -> APPLICATION_SETTINGS.debugColorizePlanes = (boolean) args[0];
             case SET_PIXEL_SCALING -> APPLICATION_SETTINGS.pixelScaling = (int) args[0];
             case SET_WINDOW_SIZE -> windowManager.setSize((int) args[0], (int) args[1]);
+            case SET_DRAW_PLANES -> APPLICATION_SETTINGS.drawPlanes = (boolean) args[0];
+            case SET_DRAW_WIREFRAME -> APPLICATION_SETTINGS.drawWireframe = (boolean) args[0];
         }
     }
 

@@ -11,7 +11,9 @@ public enum Command{
     SET_DEBUG_COLORIZE_PLANES("dbColPlanes", "sets debugColorizePlanes parameter", "", ArgumentType.BOOLEAN),
     SET_ITERATIONS_PER_TICK("ipt", "sets iterations per tick in physical simulation", "", ArgumentType.INTEGER),
     SET_WINDOW_SIZE("size", "sets window size", new String[]{"x", "y"}, new ArgumentType[]{ArgumentType.INTEGER, ArgumentType.INTEGER}),
-    SET_FOV("fov", "sets camera fov", "", ArgumentType.DOUBLE);
+    SET_FOV("fov", "sets camera fov", "", ArgumentType.DOUBLE),
+    SET_DRAW_WIREFRAME("drawWF", "sets drawWireFrame parameter", "", ArgumentType.BOOLEAN),
+    SET_DRAW_PLANES("drawPlanes", "sets drawPlanes parameter", "", ArgumentType.BOOLEAN);
 
     public final String name;
     public final String description;
@@ -42,7 +44,7 @@ public enum Command{
         if (split.length == 0) return null;
         String name = split[0];
         for (Command command : Command.values()) {
-            if (command.name.equals(name)){
+            if (command.name.equalsIgnoreCase(name)){
                 return command;
             }
         }

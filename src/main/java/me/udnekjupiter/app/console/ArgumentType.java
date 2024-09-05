@@ -7,7 +7,6 @@ public abstract class ArgumentType<T> {
         public String getName() {
             return "int";
         }
-
         @Override
         public Integer convert(String string) {
             try {
@@ -22,7 +21,6 @@ public abstract class ArgumentType<T> {
         public String getName() {
             return "double";
         }
-
         @Override
         public Double convert(String string) {
             try {
@@ -34,16 +32,14 @@ public abstract class ArgumentType<T> {
     };
     public static final ArgumentType<Boolean> BOOLEAN = new ArgumentType<>() {
         @Override
-        public String getName() {
-            return "boolean";
-        }
-
+        public String getName() {return "boolean";}
         @Override
         public Boolean convert(String string) {
             try {
-                return Boolean.parseBoolean(string);
+                double number = Double.parseDouble(string);
+                return number > 0;
             } catch (NumberFormatException e) {
-                return null;
+                return Boolean.parseBoolean(string);
             }
         }
     };
