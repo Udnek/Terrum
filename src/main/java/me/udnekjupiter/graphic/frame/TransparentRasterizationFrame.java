@@ -2,15 +2,11 @@ package me.udnekjupiter.graphic.frame;
 
 import java.awt.*;
 
-public class TransparentRasterizationFrame extends RasterizationFrame {
+public class TransparentRasterizationFrame extends CenteredFrame {
 
     @Override
-    public void setPixel(int x, int y, int z, int color) {
-        x += width/2;
-        y += height/2;
-        int row = height-1-y;
-        int pos = row * width + x;
-
+    public void setPixel(int x, int y, int color) {
+        int pos = toPosition(x, y);
         int alpha = getAlpha(color);
         if (alpha < 255){
             data[pos] = blend(data[pos], color, alpha);
@@ -34,10 +30,6 @@ public class TransparentRasterizationFrame extends RasterizationFrame {
                 ((int) (base.getGreen() * baseMul + overlap.getGreen() * overMul)),
                 ((int) (base.getBlue() * baseMul + overlap.getBlue() * overMul))
         ).getRGB();
-    }
-    @Override
-    public void reset(int width, int height) {
-        super.reset(width, height);
     }
 }
 

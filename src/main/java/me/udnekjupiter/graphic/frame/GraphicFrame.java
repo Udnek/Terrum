@@ -17,12 +17,13 @@ public abstract class GraphicFrame {
         this.height = height;
         data = new int[width*height];
     }
-    public int[] getData(){return data;}
     public abstract boolean isInBounds(int x, int y);
-    public abstract void setPixel(int x, int y, int color);
+    public abstract int toPosition(int x, int y);
+    public void setPixel(int x, int y, int color){
+        data[toPosition(x, y)] = color;
+    }
     public void safeSetPixel(int x, int y, int color){
-        if (!isInBounds(x, y)) return;
-        setPixel(x, y, color);
+        if (isInBounds(x, y)) setPixel(x, y, color);
     }
     ///////////////////////////////////////////////////////////////////////////
     // IMAGE
@@ -47,26 +48,28 @@ public abstract class GraphicFrame {
     public void drawLine(int x0, int y0, int x1, int y1, int color){
         if (!isInBounds(x0, y0) && !isInBounds(x1, y1)) return;
 
-        float dx = x1 - x0;
-        float dy = y1 - y0;
+        double dx = x1 - x0;
+        double dy = y1 - y0;
         int steps;
         if (Math.abs(dx) > Math.abs(dy)) {
             steps = (int) Math.abs(dx);
         } else{
             steps = (int) Math.abs(dy);
         }
-        dx /= steps;
-        dy /= steps;
+        if (steps == 0) steps = 1;
+        dx /= (steps);
+        dy /= (steps);
+
 
         // UNSAFE DRAWING
         if (isInBounds(x0, y0) && isInBounds(x1, y1)){
-            for (int i = 0; i < steps; i++) {
+            for (int i = 0; i <= steps; i++) {
                 setPixel((int) (x0 + dx*i), (int) (y0 + dy*i), color);
             }
         }
         // SAFE DRAWING
         else {
-            for (int i = 0; i < steps; i++) {
+            for (int i = 0; i <= steps; i++) {
                 safeSetPixel((int) (x0 + dx*i), (int) (y0 + dy*i), color);
             }
         }
@@ -92,21 +95,24 @@ public abstract class GraphicFrame {
             if (lowest.y > middle.y) swapPoints(lowest, middle);
         }
 
-        double dxLeft = (double) -(highest.x - lowest.x) / (highest.y - lowest.y);
-        double dxRightH = (double) -(highest.x - middle.x) / (highest.y - middle.y);
-        double dxRightL = (double) -(middle.x - lowest.x) / (middle.y - lowest.y);
+        double dxLeft = (double) -(highest.x - lowest.x) / Math.max(highest.y - lowest.y, 1);
+        double dxRightH = (double) -(highest.x - middle.x) / Math.max(highest.y - middle.y, 1);
+        double dxRightL = (double) -(middle.x - lowest.x) / Math.max(middle.y - lowest.y, 1);
+
 
         int ys = highest.y - middle.y;
-        for (int i = 0; i < ys; i++) {
-            int y = highest.y - i;
-            drawLine((int) (highest.x + dxLeft * i), y, (int) (highest.x + dxRightH * i), y, color);
+        int y = highest.y;
+        for (int step = 0; step <= ys; step++) {
+            drawLine((int) (highest.x + dxLeft * step), y, (int) (highest.x + dxRightH * step), y, color);
+            y--;
         }
 
-        highest.x += (int) (dxLeft * ys);
 
-        for (int i = 0; i < middle.y - lowest.y; i++) {
-            int y = middle.y - i;
-            drawLine((int) (highest.x + dxLeft * i), y, (int) (middle.x + dxRightL * i), y, color);
+        ys = middle.y - lowest.y;
+        y = lowest.y;
+        for (int step = 0; step < ys; step++) {
+            drawLine((int) (lowest.x -dxLeft*step), y, (int) (lowest.x -dxRightL*step), y, color);
+            y++;
         }
     }
 

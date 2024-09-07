@@ -31,10 +31,18 @@ public class MainUdnek extends Main{
                         new Vector3d(0, 0, 0)));
 
 
-        SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
-        physicScene.addObject(sphere);
+/*        SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
+        physicScene.addObject(sphere);*/
 
-/*        sphere = new SphereObject(new Vector3d(3, 10, 3), 3, 10_000, 5);
+        SphereObject sphere = new SphereObject(new Vector3d(5, 11, 5), 3, 10_000, 150);
+        physicScene.addObject(sphere);
+        sphere = new SphereObject(new Vector3d(5, 15, 5), 4, 10_000, 150);
+        physicScene.addObject(sphere);
+        sphere = new SphereObject(new Vector3d(5, 19, 5), 4, 10_000, 150);
+        physicScene.addObject(sphere);
+/*        sphere = new SphereObject(new Vector3d(5, 23, 5), 4, 10_000, 150);
+        physicScene.addObject(sphere);
+        sphere = new SphereObject(new Vector3d(5, 27, 5), 4, 10_000, 150);
         physicScene.addObject(sphere);*/
 
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
@@ -66,6 +74,10 @@ public class MainUdnek extends Main{
     @Override
     public ApplicationSettings initializeGraphicsSettings() {
         ApplicationSettings settings = ApplicationSettings.noRecording();
+        settings.pixelScaling = 4;
+/*        settings.pixelScaling = 60;
+        settings.startWindowWidth = 10 * settings.pixelScaling;
+        settings.startWindowHeight = 10 * settings.pixelScaling;*/
         return settings;
         //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
         //return ApplicationSettings.withRecording(512, 512, "newEngineTest", 1, PolygonHolder.Type.SMART, false, false);

@@ -2,6 +2,7 @@ package me.udnekjupiter.graphic.frame;
 
 import org.realityforge.vecmath.Vector3d;
 
+@Deprecated
 public abstract class RasterizationFrame extends CenteredFrame {
     public abstract void setPixel(int x, int y, int z, int color);
     public void safeSetPixel(int x, int y, int z, int color){
