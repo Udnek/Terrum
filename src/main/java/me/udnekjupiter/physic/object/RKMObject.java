@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class RKMObject extends PhysicObject implements Freezable, Collidable, Resettable {
     protected EnvironmentSettings settings;
-    protected List<RKMObject> collidingObjects;
+    protected List<Collidable> collidingObjects;
     protected Vector3d[] currentRKMPhaseVector;
     protected Vector3d[] basePhaseVector;
     protected Vector3d[] coefficient1;
@@ -47,7 +47,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     public void addCollidingObject(RKMObject object){
         collidingObjects.add(object);
     }
-    public List<RKMObject> getCollidingObjects(){return collidingObjects;}
+    public List<Collidable> getCollidingObjects(){return collidingObjects;}
     public void clearCollidingObjects(){
         collidingObjects = new ArrayList<>();
     }

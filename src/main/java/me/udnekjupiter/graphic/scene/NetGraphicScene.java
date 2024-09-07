@@ -7,8 +7,10 @@ import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.renderable.*;
 import me.udnekjupiter.physic.net.CellularNet;
+import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.StandardObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import org.realityforge.vecmath.Vector3d;
@@ -49,8 +51,8 @@ public class NetGraphicScene extends GraphicScene3d {
         }
 
 
-        List<RKMObject> rkmObjects = netPhysicsScene.getAllObjects();
-        for (RKMObject object : rkmObjects) {
+        List<StandardObject> physicObjects = netPhysicsScene.getAllObjects();
+        for (PhysicObject object : physicObjects) {
             if (!(object instanceof SphereObject sphereObject)) continue;
             graphicObjects.add(new MassEssenceObject(sphereObject));
         }

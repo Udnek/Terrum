@@ -29,15 +29,14 @@ public class NetDynamicVertex extends NetVertex {
         this.mass = settings.vertexMass;
         this.deltaTime = settings.deltaTime;
         this.decayCoefficient = settings.decayCoefficient;
-        this.basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
 
     @Override
     protected Vector3d getAppliedForce(Vector3d position){
         Vector3d appliedForce = new Vector3d(0, 0, 0);
         for (NetVertex neighbor : neighbors) {
-            Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(position, neighbor.getCurrentRKMPosition());
-            double distanceToNeighbour = VectorUtils.distance(position, neighbor.getCurrentRKMPosition());
+            Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(position, neighbor.getPosition());
+            double distanceToNeighbour = VectorUtils.distance(position, neighbor.getPosition());
             double distanceDifferential = distanceToNeighbour - springRelaxedLength;
             double elasticForce = springStiffness * distanceDifferential;
             appliedForce.add(normalizedDirection.mul(elasticForce));
@@ -47,8 +46,8 @@ public class NetDynamicVertex extends NetVertex {
     }
 
     @Override
-    protected Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity){
-        Vector3d appliedForce = getAppliedForce(position);
+    protected Vector3d calculateAcceleration(){
+        Vector3d appliedForce = getAppliedForce(position.dup());
         Vector3d decayValue = velocity.dup().mul(decayCoefficient);
         Vector3d resultAcceleration = appliedForce.dup().sub(decayValue);
         resultAcceleration.div(mass);
