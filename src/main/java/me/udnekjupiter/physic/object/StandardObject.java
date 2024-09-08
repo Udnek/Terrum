@@ -57,57 +57,6 @@ public abstract class StandardObject extends PhysicObject implements Freezable, 
         this.velocity = velocity.dup();
     }
 
-//    // TODO [mess around] WITH SWITCH
-//    public void calculateNextPhaseVector(){
-//        switch (coefficientCounter) {
-//            case 1 -> {
-//                setCurrentPhaseVector(RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient1));
-//                coefficientCounter = 2;
-//            }
-//            case 2 -> {
-//                setCurrentPhaseVector((RKMethodCalculateNextPhaseVector(basePhaseVector, coefficient2)));
-//                coefficientCounter = 3;
-//            }
-//            case 3 -> {
-//                setCurrentPhaseVector(RKMethodCalculateFinalPhaseVector(basePhaseVector, coefficient3));
-//                coefficientCounter = 4;
-//            }
-//            case 4 -> {}
-//            default -> System.out.println("RKMCounter error in calculateNextPhaseVector");
-//        }
-//    }
-//    public void calculateNextCoefficient(){
-//        switch (coefficientCounter) {
-//            case 1 -> coefficient1 = RKMethodFunction(getCurrentPhaseVector());
-//            case 2 -> coefficient2 = RKMethodFunction(getCurrentPhaseVector());
-//            case 3 -> coefficient3 = RKMethodFunction(getCurrentPhaseVector());
-//            case 4 -> {
-//                coefficient4 = RKMethodFunction(getCurrentPhaseVector());
-//                coefficientCounter = 1;
-//            }
-//            default -> System.out.println("RKMCounter error in calculateNextCoefficient");
-//        }
-//    }
-
-//    protected Vector3d[] calculatePhaseDifferentialVector(){
-//        if (this.isFrozen()){
-//            return new Vector3d[]{new Vector3d(0,0,0), new Vector3d(0,0,0)};
-//        }
-//        Vector3d positionDifferentialComponent = new Vector3d(coefficient1[0].dup().add(
-//                coefficient2[0].dup().mul(2)).add(
-//                coefficient3[0].dup().mul(2)).add(
-//                coefficient4[0].dup()));
-//        positionDifferentialComponent.mul(deltaTime/6.0);
-//
-//        Vector3d velocityDifferentialComponent = new Vector3d(coefficient1[1].dup().add(
-//                coefficient2[1].dup().mul(2)).add(
-//                coefficient3[1].dup().mul(2)).add(
-//                coefficient4[1].dup()));
-//        velocityDifferentialComponent.mul(deltaTime/6.0);
-//
-//        return new Vector3d[]{positionDifferentialComponent, velocityDifferentialComponent};
-//    }
-
     public void calculatePhaseDifferential(){
         if (this.isFrozen()){
             velocityDifferential.mul(0);

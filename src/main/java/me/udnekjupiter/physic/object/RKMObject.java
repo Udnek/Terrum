@@ -76,7 +76,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     protected Vector3d[] RKMethodFunction(Vector3d[] inputComponents){
         Vector3d[] resultComponents = new Vector3d[2];
         resultComponents[0] = inputComponents[1];
-        resultComponents[1] = RKMethodCalculateAcceleration(inputComponents[0], inputComponents[1]);
+        resultComponents[1] = calculateAcceleration(inputComponents[0], inputComponents[1]);
         return resultComponents;
     }
 
@@ -156,7 +156,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
         basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
 
-    protected abstract Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity);
+    protected abstract Vector3d calculateAcceleration(Vector3d position, Vector3d velocity);
     protected abstract Vector3d getAppliedForce(Vector3d position);
     protected Vector3d getCollisionForce() {
         return CollisionCalculator.getHookeCollisionForce(this);
