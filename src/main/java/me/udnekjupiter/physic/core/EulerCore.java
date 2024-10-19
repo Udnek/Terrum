@@ -1,35 +1,35 @@
-package me.udnekjupiter.physic.scene;
+package me.udnekjupiter.physic.core;
 
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.physic.object.PhysicObject;
+import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.StandardObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StandardPhysicScene{
-    protected List<StandardObject> allObjects = new ArrayList<>();
-    protected List<StandardObject> collisionInitiators = new ArrayList<>();
+public class EulerCore implements PhysicCore {
+    protected List<PhysicObject> allObjects = new ArrayList<>();
+    protected List<PhysicObject> collisionInitiators = new ArrayList<>();
 
-    public void addObject(StandardObject object){
-        allObjects.add(object);}
-    public List<StandardObject> getAllObjects(){
+    public void addObject(PhysicObject object){allObjects.add(object);}
+    public List<PhysicObject> getAllObjects(){
         return allObjects;
     }
-    public void addCollisionInitiator(StandardObject object){
+    public void addCollisionInitiator(PhysicObject object){
         collisionInitiators.add(object);
     }
-    public List<StandardObject> getCollisionInitiators(){
+    public List<PhysicObject> getCollisionInitiators(){
         return collisionInitiators;
     }
 
     // TODO Should try optimising it
     public void updateColliders(){
-        for (StandardObject object : allObjects) {
+        for (PhysicObject object : allObjects) {
             object.clearCollidingObjects();
         }
-        for (StandardObject targetObject : collisionInitiators) {
-            for (StandardObject anotherObject : allObjects) {
+        for (PhysicObject targetObject : collisionInitiators) {
+            for (PhysicObject anotherObject : allObjects) {
                 if (targetObject == anotherObject) continue;
                 if (targetObject.isCollisionIgnored(anotherObject)) continue;
                 if (targetObject.collidingObjectIsAlreadyListed(anotherObject)) continue;
@@ -41,8 +41,8 @@ public abstract class StandardPhysicScene{
     }
 
     public void updateObjectsPositionDifferentials(){
-        for (StandardObject object : allObjects) {
-            object.calculatePhaseDifferential();
+        for (PhysicObject object:allObjects) {
+            (RKMObject) object.calculatePhaseDifferential();
         }
     }
     public void updateObjectsPositions(){
@@ -63,6 +63,7 @@ public abstract class StandardPhysicScene{
         }
     }
 
+    @Override
     public void reset() {
         for (PhysicObject object : allObjects) {
             object.reset();
