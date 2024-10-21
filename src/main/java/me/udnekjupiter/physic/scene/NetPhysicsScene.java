@@ -28,12 +28,6 @@ public class NetPhysicsScene extends PhysicScene3d {
                     addObject(vertex);
                 }
             }
-
-            for (StandardObject3d object : getAllObjects()) {
-                if (!(object instanceof NetVertex)){
-                    addCollisionInitiator(object);
-                }
-            }
         }
     }
 
