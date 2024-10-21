@@ -16,7 +16,6 @@ public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
     public void addObject(@NotNull PhysicObject3d object) {
         objects.add(object);
     }
-
     @Override
     public void removeObject(@NotNull PhysicObject3d object) {
         objects.remove(object);
