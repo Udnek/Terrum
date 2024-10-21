@@ -1,3 +1,4 @@
+/*
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.collision.Collidable;
@@ -86,3 +87,4 @@ public abstract class StandardObject3d extends PhysicObject3d implements Freezab
     @Override
     public boolean isFrozen() {return frozen;}
 }
+*/

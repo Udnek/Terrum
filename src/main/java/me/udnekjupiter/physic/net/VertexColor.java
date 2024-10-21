@@ -5,7 +5,6 @@ import me.udnekjupiter.physic.object.vertex.NetDebugVertex;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
@@ -14,19 +13,19 @@ public enum VertexColor {
     DYNAMIC(new Color(0f, 1f, 0f), NetDynamicVertex.class) {
         @Override
         NetVertex getNewVertex() {
-            return new NetDynamicVertex(new Vector3d());
+            return new NetDynamicVertex();
         }
     },
     STATIC(new Color(0f, 0f, 1f), NetStaticVertex.class) {
         @Override
         NetVertex getNewVertex() {
-            return new NetStaticVertex(new Vector3d());
+            return new NetStaticVertex();
         }
     },
     DEBUG(new Color(1f, 0f, 0f), NetDebugVertex.class){
         @Override
         NetVertex getNewVertex() {
-            return new NetDebugVertex(new Vector3d());
+            return new NetDebugVertex();
         }
     },
     UNKNOWN(new Color(1f, 0f, 1f), null){

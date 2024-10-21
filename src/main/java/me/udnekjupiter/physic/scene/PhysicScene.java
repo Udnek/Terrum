@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface PhysicScene<ObjectType extends PhysicObject> extends Resettable, Initializable {
+public interface PhysicScene<ObjectType extends PhysicObject<?>> extends Resettable, Initializable {
     void addObject(@NotNull ObjectType object);
     void removeObject(@NotNull ObjectType object);
     @NotNull List<? extends ObjectType> getAllObjects();

@@ -1,3 +1,4 @@
+/*
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.app.StandartApplication;
@@ -113,4 +114,4 @@ public abstract class RKMObject3d extends PhysicObject3d implements Freezable, C
         setPosition(getPosition().add(positionDifferential));
         basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
-}
+}*/

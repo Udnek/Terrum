@@ -1,7 +1,7 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.app.StandartApplication;
-import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.ImplementedPhysicObject3d;
 import me.udnekjupiter.physic.object.StandardObject3d;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public abstract class StandardPhysicScene{
     }
 
     public void reset() {
-        for (PhysicObject3d object : allObjects) {
+        for (ImplementedPhysicObject3d object : allObjects) {
             object.reset();
         }
     }

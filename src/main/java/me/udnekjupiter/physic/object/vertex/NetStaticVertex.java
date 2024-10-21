@@ -1,18 +1,20 @@
 package me.udnekjupiter.physic.object.vertex;
 
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.List;
 
 public class NetStaticVertex extends NetVertex {
 
-    public NetStaticVertex(Vector3d position) {
-        super(position);
+    protected Vector3d appliedForce = new Vector3d();
+
+    public NetStaticVertex() {
         freeze();
     }
 
     @Override
-    public void addNeighbors(List<NetVertex> toAddNeighbors) {
+    public void addNeighbors(@NotNull List<NetVertex> toAddNeighbors) {
         for (NetVertex neighbor : toAddNeighbors) {
             if (neighbors.contains(neighbor)) continue;
             if (neighbor instanceof NetStaticVertex) continue;
@@ -20,15 +22,11 @@ public class NetStaticVertex extends NetVertex {
             neighbor.addOneWayNeighbour(this);
         }
     }
-
+    
     @Override
-    protected Vector3d calculateAcceleration() {
-        return new Vector3d();
-    }
-
-    @Override
-    protected Vector3d getAppliedForce(Vector3d position) {
-        return null;
+    public @NotNull Vector3d getAppliedForce(@NotNull Vector3d position) {
+        appliedForce.mul(0);
+        return appliedForce;
     }
 
     @Override

@@ -1,14 +1,7 @@
 package me.udnekjupiter.physic.object.vertex;
 
-import org.realityforge.vecmath.Vector3d;
-
 public class NetDebugVertex extends NetDynamicVertex {
     private int internalCounter;
-
-    public NetDebugVertex(Vector3d position)
-    {
-        super(position);
-    }
 
     private boolean isCurrentIterationObserved() {
         if (internalCounter < 0) return true;

@@ -2,27 +2,26 @@ package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.SphereCollider;
-import me.udnekjupiter.physic.object.StandardObject3d;
+import me.udnekjupiter.physic.object.ImplementedCollidablePhysicObject3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NetVertex extends StandardObject3d {
+public abstract class NetVertex extends ImplementedCollidablePhysicObject3d {
     public Vector3d position;
 
     protected List<NetVertex> neighbors = new ArrayList<>();
 
-    public NetVertex(Vector3d position) {
-        super(position);
+    public NetVertex() {
         collider = new SphereCollider(0.2, 100_000, this);
     }
 
     public @NotNull Vector3d getPosition() {return position.dup();}
     public void setPosition(@NotNull Vector3d position) {this.position = position;}
 
-    public void addNeighbors(List<NetVertex> toAddNeighbors){
+    public void addNeighbors(@NotNull List<NetVertex> toAddNeighbors){
         for (NetVertex neighbor : toAddNeighbors) {
             if (neighbors.contains(neighbor)) continue;
             neighbors.add(neighbor);
@@ -30,7 +29,7 @@ public abstract class NetVertex extends StandardObject3d {
         }
     }
 
-    protected void addOneWayNeighbour(NetVertex neighbor){
+    protected void addOneWayNeighbour(@NotNull NetVertex neighbor){
         if (neighbors.contains(neighbor)) return;
         neighbors.add(neighbor);
     }
@@ -43,7 +42,8 @@ public abstract class NetVertex extends StandardObject3d {
     }
 
     @Override
-    public boolean isCollisionIgnored(Collidable object){
+    public boolean isCollisionIgnoredWith(@NotNull Collidable object) {
         return object instanceof NetVertex;
     }
+
 }
