@@ -12,6 +12,7 @@ import me.udnekjupiter.graphic.polygonholder.DefaultPolygonHolder;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.polygonholder.SmartPolygonHolder;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class RayTracingEngine extends GraphicEngine3d {
     }
 
     @Override
-    public BufferedImage renderFrame(final int width, final int height){
+    public @NotNull BufferedImage renderFrame(final int width, final int height){
 
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 

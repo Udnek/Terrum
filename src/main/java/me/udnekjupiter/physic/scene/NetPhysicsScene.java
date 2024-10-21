@@ -5,7 +5,7 @@ import me.udnekjupiter.physic.core.EulerCore;
 import me.udnekjupiter.physic.core.PhysicCore;
 import me.udnekjupiter.physic.core.RKMCore;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.StandardObject;
+import me.udnekjupiter.physic.object.StandardObject3d;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class NetPhysicsScene extends StandardPhysicScene {
                 }
             }
 
-            for (StandardObject object : getAllObjects()) {
+            for (StandardObject3d object : getAllObjects()) {
                 if (!(object instanceof NetVertex)){
                     addCollisionInitiator(object);
                 }

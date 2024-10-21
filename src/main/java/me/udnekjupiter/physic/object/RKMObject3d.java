@@ -6,7 +6,7 @@ import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Resettable;
 import org.realityforge.vecmath.Vector3d;
 
-public abstract class RKMObject extends PhysicObject implements Freezable, Collidable, Resettable {
+public abstract class RKMObject3d extends PhysicObject3d implements Freezable, Collidable, Resettable {
     protected Vector3d[] currentRKMPhaseVector;
     protected Vector3d[] basePhaseVector;
     protected Vector3d[] coefficient1;
@@ -15,7 +15,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     protected Vector3d[] coefficient4;
     protected int coefficientCounter = 1;
 
-    public RKMObject(Vector3d position) {
+    public RKMObject3d(Vector3d position) {
         super(position);
         settings = Application.ENVIRONMENT_SETTINGS;
         this.velocity = new Vector3d(0,0,0);

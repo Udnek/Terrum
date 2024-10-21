@@ -2,8 +2,9 @@ package me.udnekjupiter.physic.core;
 
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.physic.object.PhysicObject;
-import me.udnekjupiter.physic.object.RKMObject;
-import me.udnekjupiter.physic.object.StandardObject;
+import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.RKMObject3d;
+import me.udnekjupiter.physic.object.StandardObject3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,11 @@ public class EulerCore implements PhysicCore {
 
     // TODO Should try optimising it
     public void updateColliders(){
-        for (PhysicObject object : allObjects) {
+        for (PhysicObject3d object : allObjects) {
             object.clearCollidingObjects();
         }
-        for (PhysicObject targetObject : collisionInitiators) {
-            for (PhysicObject anotherObject : allObjects) {
+        for (PhysicObject3d targetObject : collisionInitiators) {
+            for (PhysicObject3d anotherObject : allObjects) {
                 if (targetObject == anotherObject) continue;
                 if (targetObject.isCollisionIgnored(anotherObject)) continue;
                 if (targetObject.collidingObjectIsAlreadyListed(anotherObject)) continue;
@@ -42,11 +43,11 @@ public class EulerCore implements PhysicCore {
 
     public void updateObjectsPositionDifferentials(){
         for (PhysicObject object:allObjects) {
-            (RKMObject) object.calculatePhaseDifferential();
+            (RKMObject3d) object.calculatePhaseDifferential();
         }
     }
     public void updateObjectsPositions(){
-        for (StandardObject object : allObjects) {
+        for (StandardObject3d object : allObjects) {
             object.updatePosition();
         }
     }
@@ -65,7 +66,7 @@ public class EulerCore implements PhysicCore {
 
     @Override
     public void reset() {
-        for (PhysicObject object : allObjects) {
+        for (PhysicObject3d object : allObjects) {
             object.reset();
         }
     }

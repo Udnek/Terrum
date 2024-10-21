@@ -23,7 +23,7 @@ public abstract class GraphicEngine3d implements GraphicEngine, ConsoleListener 
     }
 
     @Override
-    public void postVideoRender(BufferedImage image) {
+    public void postVideoRender(@NotNull BufferedImage image) {
         Application.DEBUG_MENU.draw(image, 15);
     }
 

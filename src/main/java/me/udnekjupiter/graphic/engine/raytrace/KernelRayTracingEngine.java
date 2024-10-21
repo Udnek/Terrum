@@ -6,6 +6,7 @@ import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
 import org.jocl.*;
 import org.realityforge.vecmath.Vector3d;
 
@@ -114,7 +115,7 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
         return stringBuilder.toString();
     }
     @Override
-    public BufferedImage renderFrame(int width, int height) {
+    public @NotNull BufferedImage renderFrame(int width, int height) {
         scene.beforeFrameUpdate(width, height);
 
         int w = width/1;

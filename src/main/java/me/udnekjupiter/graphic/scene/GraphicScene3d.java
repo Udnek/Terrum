@@ -12,6 +12,7 @@ import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.util.*;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -60,7 +61,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected abstract LightSource initializeLightSource();
     protected abstract List<FixedSizeObject> initializeFixedSizeObjects();
 
-    public Camera getCamera() { return camera;}
+    public @NotNull Camera getCamera() { return camera;}
     public LightSource getLightSource() {return lightSource;}
     public List<RenderableObject> getTraceableObjects() {return renderableObjects;}
     public List<FixedSizeObject> getFixedSizeObjects() {return fixedSizeObjects;}

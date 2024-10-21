@@ -25,7 +25,7 @@ public class Application implements ConsoleListener, ControllerListener {
     public static final ApplicationSettings APPLICATION_SETTINGS = Main.getMain().initializeGraphicsSettings();
     public static final EnvironmentSettings ENVIRONMENT_SETTINGS = Main.getMain().initializePhysicsSettings();
 
-    private PhysicEngine physicEngine;
+    private PhysicEngine<?> physicEngine;
     private GraphicEngine graphicEngine;
     private WindowManager windowManager;
     private Console console;
@@ -41,13 +41,15 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     public static Application getInstance() {
-        if (instance == null){
-            instance = new Application();
-        }
+        if (instance == null){instance = new Application();}
         return instance;
     }
 
-    public void initialize(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine physicEngine){
+    public @NotNull PhysicEngine<?> getPhysicEngine() {return physicEngine;}
+
+    public @NotNull GraphicEngine getGraphicEngine() {return graphicEngine;}
+
+    public void initialize(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine){
         windowManager = WindowManager.getInstance();
 
         this.graphicEngine = graphicEngine;
