@@ -7,7 +7,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 import java.util.List;
 
-public class FixedSizeLine extends FixedSizeObject{
+public class FixedSizeLine extends FixedSizeObject3d {
 
     private final Vector3d point0;
     private final Vector3d point1;

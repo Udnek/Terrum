@@ -1,5 +1,6 @@
 package me.udnekjupiter.graphic.triangle;
 
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -31,7 +32,7 @@ public class ColoredTriangle extends RenderableTriangle {
     public int getRasterizeColor() {return color;}
 
     @Override
-    public ColoredTriangle copy() {
+    public @NotNull ColoredTriangle copy() {
         return new ColoredTriangle(this);
     }
 }

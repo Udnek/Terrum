@@ -3,6 +3,7 @@ package me.udnekjupiter.graphic.triangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -52,7 +53,7 @@ public class RenderableTriangle extends Triangle {
     }
 
     @Override
-    public RenderableTriangle copy() {
+    public @NotNull RenderableTriangle copy() {
         return new RenderableTriangle(this);
     }
 }

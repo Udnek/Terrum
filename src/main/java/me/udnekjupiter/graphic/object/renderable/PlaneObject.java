@@ -6,7 +6,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class PlaneObject extends RenderableObject {
+public class PlaneObject extends RenderableObject3d {
 
     protected RenderableTriangle plane0;
     protected RenderableTriangle plane1;

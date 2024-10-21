@@ -1,10 +1,10 @@
 package me.udnekjupiter.graphic.object.light;
 
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
-public abstract class LightSource extends RenderableObject {
+public abstract class LightSource extends RenderableObject3d {
     public LightSource(Vector3d position) {
         super(position);
     }

@@ -1,7 +1,7 @@
 package me.udnekjupiter.graphic;
 
 import me.udnekjupiter.graphic.frame.GraphicFrame;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -18,16 +18,16 @@ public class ScreenTracer {
     public ScreenTracer(){
     }
 
-    public void renderFrame(GraphicFrame frame, List<FixedSizeObject> objects, Camera camera){
+    public void renderFrame(GraphicFrame frame, List<FixedSizeObject3d> objects, Camera camera){
         this.camera = camera;
         this.frame = frame;
 
-        for (FixedSizeObject object : objects) {
+        for (FixedSizeObject3d object : objects) {
             proceedObject(object);
         }
     }
 
-    public void proceedObject(FixedSizeObject object){
+    public void proceedObject(FixedSizeObject3d object){
         Vector3d cameraPosition = camera.getPosition();
         Vector3d position = object.getPosition();
         List<Point> foundPoints = new ArrayList<>();

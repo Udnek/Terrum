@@ -2,13 +2,13 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.renderable.*;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.PhysicObject;
-import me.udnekjupiter.physic.object.SphereObject3d;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.object.StandardObject3d;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
@@ -41,9 +41,9 @@ public class NetGraphicScene extends GraphicScene3d {
     }
 
     @Override
-    protected List<RenderableObject> initializeSceneObjects() {
+    protected List<RenderableObject3d> initializeSceneObjects() {
 
-        List<RenderableObject> graphicObjects = new ArrayList<>();
+        List<RenderableObject3d> graphicObjects = new ArrayList<>();
 
         for (CellularNet net : netPhysicsScene.getNets()) {
             initializeNet(graphicObjects, net);
@@ -52,14 +52,14 @@ public class NetGraphicScene extends GraphicScene3d {
 
         List<StandardObject3d> physicObjects = netPhysicsScene.getAllObjects();
         for (PhysicObject object : physicObjects) {
-            if (!(object instanceof SphereObject3d sphereObject)) continue;
+            if (!(object instanceof SphereObject sphereObject)) continue;
             graphicObjects.add(new MassEssenceObject(sphereObject));
         }
 
         return graphicObjects;
     }
 
-    protected void initializeNet(List<RenderableObject> objects, CellularNet net){
+    protected void initializeNet(List<RenderableObject3d> objects, CellularNet net){
         List<VertexObject> vertices = new ArrayList<>();
         List<SpringObject> springs = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class NetGraphicScene extends GraphicScene3d {
     }
 
     @Override
-    protected List<FixedSizeObject> initializeFixedSizeObjects() {
+    protected List<FixedSizeObject3d> initializeFixedSizeObjects() {
         return null;
     }
 }

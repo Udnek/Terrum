@@ -40,7 +40,7 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
     }
 
     @Override
-    public PhysicObject getPhysicRepresentation() {
+    public @NotNull PhysicObject getPhysicRepresentation() {
         return netVertex;
     }
 

@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.scene;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.StandardObject3d;
 
@@ -58,7 +58,7 @@ public abstract class StandardPhysicScene{
     }
 
     public void tick() {
-        for (int i = 0; i < Application.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
+        for (int i = 0; i < StandartApplication.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
             updateObjects();
         }
     }

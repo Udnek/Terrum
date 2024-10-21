@@ -9,7 +9,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 
-public class SpringObject extends RenderableObject implements Tickable {
+public class SpringObject extends RenderableObject3d implements Tickable {
 
     protected PositionedObject tipA;
     protected PositionedObject tipB;

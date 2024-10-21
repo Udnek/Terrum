@@ -1,10 +1,10 @@
 package me.udnekjupiter.graphic.object.renderable.shape;
 
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class IcosahedronObject extends RenderableObject {
+public class IcosahedronObject extends RenderableObject3d {
 
     public static final float FI = (float) ((1.0f + Math.sqrt(5.0f))/2.0f);
     protected RenderableTriangle[] polygons;

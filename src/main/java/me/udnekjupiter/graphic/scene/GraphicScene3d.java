@@ -1,16 +1,17 @@
 package me.udnekjupiter.graphic.scene;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.DebugMenu;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.util.*;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -22,9 +23,9 @@ import java.util.List;
 public abstract class GraphicScene3d implements GraphicScene, ControllerListener {
 
     protected Camera camera;
-    protected List<RenderableObject> renderableObjects;
+    protected List<RenderableObject3d> renderableObjects;
     protected LightSource lightSource;
-    protected List<FixedSizeObject> fixedSizeObjects;
+    protected List<FixedSizeObject3d> fixedSizeObjects;
 
     protected int width;
     protected int height;
@@ -52,26 +53,26 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
 
         controller = Controller.getInstance();
         controller.addListener(this);
-        debugMenu = Application.DEBUG_MENU;
+        debugMenu = StandartApplication.DEBUG_MENU;
 
     }
 
     protected abstract Camera initializeCamera();
-    protected abstract List<RenderableObject> initializeSceneObjects();
+    protected abstract List<RenderableObject3d> initializeSceneObjects();
     protected abstract LightSource initializeLightSource();
-    protected abstract List<FixedSizeObject> initializeFixedSizeObjects();
+    protected abstract List<FixedSizeObject3d> initializeFixedSizeObjects();
 
     public @NotNull Camera getCamera() { return camera;}
     public LightSource getLightSource() {return lightSource;}
-    public List<RenderableObject> getTraceableObjects() {return renderableObjects;}
-    public List<FixedSizeObject> getFixedSizeObjects() {return fixedSizeObjects;}
+    public List<RenderableObject3d> getTraceableObjects() {return renderableObjects;}
+    public List<FixedSizeObject3d> getFixedSizeObjects() {return fixedSizeObjects;}
     public Selectable getSelectedObject() {return selectedObject;}
 
     public void beforeFrameUpdate(int width, int height) {
         this.width = width;
         this.height = height;
 
-        for (RenderableObject renderableObject : renderableObjects) {
+        for (RenderableObject3d renderableObject : renderableObjects) {
             if (renderableObject instanceof Tickable tickable) tickable.tick();
             if (renderableObject instanceof PhysicLinked physicLinked) physicLinked.synchronizeWithPhysic();
         }
@@ -141,7 +142,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
 
 
     public void keyContinuouslyPressed(InputKey inputKey){
-        final float deltaTime = (float) Application.getInstance().getFrameDeltaTime();
+        final float deltaTime = (float) Main.getMain().getApplication().getFrameDeltaTime();
         final float moveSpeed = 5f * deltaTime;
         final float rotateSpeed = 60f * deltaTime;
         switch (inputKey){
@@ -161,7 +162,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void handleMousePressedDifference(){
         InputKey mouseKey = controller.getMouseKey();
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
-            float sensitivity = (float) (20f * Math.min(Application.getInstance().getFrameDeltaTime(), 0.01));
+            float sensitivity = (float) (20f * Math.min(Main.getMain().getApplication().getFrameDeltaTime(), 0.01));
             Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);
@@ -202,7 +203,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         double nearestDistance = Double.POSITIVE_INFINITY;
 
 
-        for (RenderableObject object : renderableObjects) {
+        for (RenderableObject3d object : renderableObjects) {
             if (!(object instanceof Selectable selectable)) continue;
             Vector3d objectPosition = object.getPosition();
 

@@ -1,11 +1,11 @@
 package me.udnekjupiter.graphic.engine.rasterization;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.TransparentRasterizationFrame;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +34,8 @@ public class RasterizationEngine extends GraphicEngine3d {
     public @NotNull BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
-        width = Math.max(rawWidth / Application.APPLICATION_SETTINGS.pixelScaling, 1);
-        height = Math.max(rawHeight / Application.APPLICATION_SETTINGS.pixelScaling, 1);
+        width = Math.max(rawWidth / StandartApplication.APPLICATION_SETTINGS.pixelScaling, 1);
+        height = Math.max(rawHeight / StandartApplication.APPLICATION_SETTINGS.pixelScaling, 1);
 
         frame.reset(width, height);
 
@@ -51,7 +51,7 @@ public class RasterizationEngine extends GraphicEngine3d {
         List<RenderableTriangle> polygons = new ArrayList<>();
 
         Vector3d cameraPosition = camera.getPosition();
-        for (RenderableObject object : scene.getTraceableObjects()) {
+        for (RenderableObject3d object : scene.getTraceableObjects()) {
             Vector3d objectPosition = object.getPosition();
             for (RenderableTriangle triangle : object.getRenderTriangles()) {
                 triangle.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
@@ -76,8 +76,8 @@ public class RasterizationEngine extends GraphicEngine3d {
         Point project2 = project(triangle.getVertex2());
         if (project2 == null) return;
 
-        if (Application.APPLICATION_SETTINGS.drawPlanes) frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
-        if (Application.APPLICATION_SETTINGS.drawWireframe) frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
+        if (StandartApplication.APPLICATION_SETTINGS.drawPlanes) frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
+        if (StandartApplication.APPLICATION_SETTINGS.drawWireframe) frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
     }
 
     public Point project(Vector3d pos){

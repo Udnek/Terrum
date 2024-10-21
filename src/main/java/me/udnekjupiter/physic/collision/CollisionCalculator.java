@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.collision;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -17,7 +17,7 @@ public abstract class CollisionCalculator {
             Vector3d otherPosition = collidingObject.getPosition();
             Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
             double distance = VectorUtils.distance(thisPosition, otherPosition);
-            double maxDepth = Application.ENVIRONMENT_SETTINGS.maxDepth;
+            double maxDepth = StandartApplication.ENVIRONMENT_SETTINGS.maxDepth;
             double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - maxDepth;
             double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
             double criticalDistance = thisCriticalRadius + otherCriticalRadius;

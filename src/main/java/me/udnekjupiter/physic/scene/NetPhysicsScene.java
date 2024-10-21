@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.scene;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.physic.core.EulerCore;
 import me.udnekjupiter.physic.core.PhysicCore;
 import me.udnekjupiter.physic.core.RKMCore;
@@ -20,7 +20,7 @@ public class NetPhysicsScene extends StandardPhysicScene {
     public PhysicCore core;
 
     public void initialize(){
-        if (Application.ENVIRONMENT_SETTINGS.physicCoreType == PhysicCore.Type.EULER){
+        if (StandartApplication.ENVIRONMENT_SETTINGS.physicCoreType == PhysicCore.Type.EULER){
             core = new EulerCore();
         } else {
             core = new RKMCore();

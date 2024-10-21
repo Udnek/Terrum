@@ -2,12 +2,11 @@ package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.SphereCollider;
+import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import org.realityforge.vecmath.Vector3d;
 
-import static me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine.GRAVITATIONAL_ACCELERATION;
-
-public class SphereObject3d extends StandardObject3d {
-    public SphereObject3d(Vector3d position, double colliderRadius, double stiffness, double mass) {
+public class SphereObject extends StandardObject3d {
+    public SphereObject(Vector3d position, double colliderRadius, double stiffness, double mass) {
         super(position);
         this.deltaTime = settings.deltaTime;
         this.mass = mass;
@@ -15,14 +14,14 @@ public class SphereObject3d extends StandardObject3d {
         collider = new SphereCollider(colliderRadius, stiffness, this);
     }
 
-    public SphereObject3d(Vector3d position, double colliderRadius, double mass){
+    public SphereObject(Vector3d position, double colliderRadius, double mass){
         this(position, colliderRadius, 10_000, mass);
     }
 
     @Override
     protected Vector3d getAppliedForce(Vector3d position){
         Vector3d appliedForce = new Vector3d();
-        appliedForce.y += GRAVITATIONAL_ACCELERATION * mass;
+        appliedForce.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION * mass;
         appliedForce.add(getCollisionForce());
         return appliedForce;
     }

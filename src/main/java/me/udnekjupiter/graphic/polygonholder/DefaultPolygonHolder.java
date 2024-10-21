@@ -1,9 +1,9 @@
 package me.udnekjupiter.graphic.polygonholder;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
@@ -13,12 +13,12 @@ import java.util.List;
 public class DefaultPolygonHolder implements PolygonHolder{
 
     private Camera camera;
-    private List<? extends RenderableObject> objectsToRender;
+    private List<? extends RenderableObject3d> objectsToRender;
     private List<RenderableTriangle> cachedPlanes;
     private List<RenderableTriangle> lightCachedPlanes;
     private LightSource lightSource;
 
-    public DefaultPolygonHolder(List<RenderableObject> objectsToRender, Camera camera, LightSource lightSource){
+    public DefaultPolygonHolder(List<RenderableObject3d> objectsToRender, Camera camera, LightSource lightSource){
         this.camera = camera;
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
@@ -30,7 +30,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
         Vector3d cameraPosition = camera.getPosition();
         cachedPlanes = new ArrayList<>();
 
-        for (RenderableObject object : objectsToRender) {
+        for (RenderableObject3d object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
             for (RenderableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
@@ -38,11 +38,11 @@ public class DefaultPolygonHolder implements PolygonHolder{
             }
         }
 
-        if (!Application.APPLICATION_SETTINGS.doLight) return;
+        if (!StandartApplication.APPLICATION_SETTINGS.doLight) return;
 
         lightCachedPlanes = new ArrayList<>();
         Vector3d lightPosition = lightSource.getPosition();
-        for (RenderableObject object : objectsToRender) {
+        for (RenderableObject3d object : objectsToRender) {
             Vector3d objectPosition = object.getPosition();
             for (RenderableTriangle plane: object.getRenderTriangles()) {
                 plane.addToAllVertexes(objectPosition).subFromAllVertexes(lightPosition);

@@ -1,10 +1,10 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.object.renderable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
@@ -20,8 +20,8 @@ public class LightTestGraphicScene extends GraphicScene3d {
     }
 
     @Override
-    protected List<RenderableObject> initializeSceneObjects() {
-        List<RenderableObject> graphicObjects = new ArrayList<>();
+    protected List<RenderableObject3d> initializeSceneObjects() {
+        List<RenderableObject3d> graphicObjects = new ArrayList<>();
         graphicObjects.add(
                 new IcosphereObject(
                         new Vector3d(0, 0, 2),
@@ -41,7 +41,7 @@ public class LightTestGraphicScene extends GraphicScene3d {
     }
 
     @Override
-    protected List<FixedSizeObject> initializeFixedSizeObjects() {
+    protected List<FixedSizeObject3d> initializeFixedSizeObjects() {
         return null;
     }
 

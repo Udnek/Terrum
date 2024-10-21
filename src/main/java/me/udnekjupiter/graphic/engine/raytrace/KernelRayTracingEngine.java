@@ -2,7 +2,7 @@ package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.file.FileManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
@@ -28,7 +28,7 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
     int[] pixelToPlane;
 
 
-    private final RenderableObject object =
+    private final RenderableObject3d object =
             new PolygonObject(
                     new Vector3d(),
                     new RenderableTriangle(
@@ -129,7 +129,7 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
 
         return bufferedImage;
     }
-    public void generate(List<RenderableObject> renderableObjects, int width, int height){
+    public void generate(List<RenderableObject3d> renderableObjects, int width, int height){
         int planesAmount = getPlanesAmount(renderableObjects);
 
         planeHits = new double[planesAmount];
@@ -186,18 +186,18 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
 
     }
 
-    public int getPlanesAmount(List<RenderableObject> objects){
+    public int getPlanesAmount(List<RenderableObject3d> objects){
         int planesAmount = 0;
-        for (RenderableObject renderableObject : objects) {
+        for (RenderableObject3d renderableObject : objects) {
             planesAmount += renderableObject.getRenderTriangles().length;
         }
         return planesAmount;
     }
 
-    public double[] objectsToVerticesPositions(List<RenderableObject> renderableObjects, int planesAmount){
+    public double[] objectsToVerticesPositions(List<RenderableObject3d> renderableObjects, int planesAmount){
         int index = 0;
         double[] result = new double[planesAmount * 3 * 3];
-        for (RenderableObject object : renderableObjects) {
+        for (RenderableObject3d object : renderableObjects) {
             RenderableTriangle[] renderTriangles =  object.getRenderTriangles();
             for (int i = 0, renderTrianglesLength = renderTriangles.length; i < renderTrianglesLength; i++) {
                 RenderableTriangle renderTriangle = renderTriangles[i];

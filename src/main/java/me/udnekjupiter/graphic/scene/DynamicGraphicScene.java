@@ -1,11 +1,11 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
+import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.renderable.AxisCrosshairObject;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.object.renderable.SpringObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
 import org.realityforge.vecmath.Vector3d;
@@ -42,13 +42,13 @@ public class DynamicGraphicScene extends GraphicScene3d {
     }
 
     @Override
-    protected List<FixedSizeObject> initializeFixedSizeObjects() {
+    protected List<FixedSizeObject3d> initializeFixedSizeObjects() {
         return null;
     }
 
     @Override
-    protected List<RenderableObject> initializeSceneObjects() {
-        List<RenderableObject> graphicObjects = new ArrayList<>();
+    protected List<RenderableObject3d> initializeSceneObjects() {
+        List<RenderableObject3d> graphicObjects = new ArrayList<>();
 
         vertex0 = new VertexObject(new Vector3d(-1, 0, 3), null);
         vertex1 = new VertexObject(new Vector3d(1, 0, 3), null);

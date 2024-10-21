@@ -57,7 +57,7 @@ public class ApplicationData {
     public void physicTickStarted(){
         physicTicks++;
         physicStart = System.nanoTime();
-        estimatedNextTickTime += ((long) Math.pow(10, 9))/Application.PHYSIC_TICKS_PER_SECOND;
+        estimatedNextTickTime += ((long) Math.pow(10, 9))/ StandartApplication.PHYSIC_TICKS_PER_SECOND;
         //estimatedNextTickTime = physicStart + ((long) Math.pow(10, 9))/Application.PHYSIC_TICKS_PER_SECOND;
     }
     public void physicTickPerformed(){

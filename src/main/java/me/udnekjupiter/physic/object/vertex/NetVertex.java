@@ -19,7 +19,7 @@ public abstract class NetVertex extends StandardObject3d {
         collider = new SphereCollider(0.2, 100_000, this);
     }
 
-    public Vector3d getPosition() {return position.dup();}
+    public @NotNull Vector3d getPosition() {return position.dup();}
     public void setPosition(@NotNull Vector3d position) {this.position = position;}
 
     public void addNeighbors(List<NetVertex> toAddNeighbors){

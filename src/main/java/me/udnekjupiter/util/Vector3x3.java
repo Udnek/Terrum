@@ -1,14 +1,15 @@
 package me.udnekjupiter.util;
 
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class Vector3x3 {
 
-    public Vector3d x;
-    public Vector3d y;
-    public Vector3d z;
+    public @NotNull Vector3d x;
+    public @NotNull Vector3d y;
+    public @NotNull Vector3d z;
 
-    public Vector3x3(Vector3d x, Vector3d y, Vector3d z){
+    public Vector3x3(@NotNull Vector3d x, @NotNull Vector3d y, @NotNull Vector3d z){
         this.x = x;
         this.y = y;
         this.z = z;
@@ -25,7 +26,7 @@ public class Vector3x3 {
         this.z = new Vector3d();
     }
 
-    public Vector3x3 dup(){
+    public @NotNull Vector3x3 dup(){
         return new Vector3x3(this);
     }
 }

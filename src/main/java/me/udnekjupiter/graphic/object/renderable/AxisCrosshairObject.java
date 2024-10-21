@@ -3,7 +3,7 @@ package me.udnekjupiter.graphic.object.renderable;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class AxisCrosshairObject extends RenderableObject {
+public class AxisCrosshairObject extends RenderableObject3d {
 
     private final RenderableTriangle planeX;
     private final RenderableTriangle planeY;

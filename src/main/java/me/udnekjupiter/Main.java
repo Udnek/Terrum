@@ -1,14 +1,16 @@
 package me.udnekjupiter;
 
-
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Main{
+
+    private Application application;
 
     public static final Main.Type MAIN_TO_RUN = Type.JUPITER;
     private static Main main;
@@ -22,7 +24,7 @@ public abstract class Main{
         main.run();
     }
 
-    public static Main getMain() {
+    public static @NotNull Main getMain() {
         return main;
     }
 
@@ -30,9 +32,12 @@ public abstract class Main{
     public abstract @NotNull EnvironmentSettings initializePhysicsSettings();
 
     public abstract void run();
+    public @NotNull Application getApplication(){
+        return application;
+    }
 
-    public static void runApplication(GraphicEngine graphicEngine, PhysicEngine physicEngine){
-        Application application = Application.getInstance();
+    public void runApplication(GraphicEngine graphicEngine, PhysicEngine<?> physicEngine){
+        application = new StandartApplication();
         application.initialize(graphicEngine, physicEngine);
         application.start();
     }

@@ -1,10 +1,10 @@
 package me.udnekjupiter.graphic.object.renderable.shape;
 
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class PolygonObject extends RenderableObject {
+public class PolygonObject extends RenderableObject3d {
 
     private RenderableTriangle plane;
 

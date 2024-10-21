@@ -1,6 +1,7 @@
 package me.udnekjupiter.graphic.triangle;
 
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -43,7 +44,7 @@ public class MassEssenceTriangle extends ColoredTriangle {
 
 
     @Override
-    public MassEssenceTriangle copy() {
+    public @NotNull MassEssenceTriangle copy() {
         return new MassEssenceTriangle(this);
     }
 }

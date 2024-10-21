@@ -6,7 +6,7 @@ import me.udnekjupiter.util.PositionedObject;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
-public class DoubleSpringObject extends SpringObject{
+public class DoubleSpringObject extends SpringObject {
 
     private RenderableTriangle plane1;
 

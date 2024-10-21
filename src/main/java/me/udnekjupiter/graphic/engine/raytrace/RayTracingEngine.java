@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.ScreenTracer;
@@ -36,7 +36,7 @@ public class RayTracingEngine extends GraphicEngine3d {
         super.initialize();
 
         rayTracer = new RayTracer(scene.getLightSource());
-        if (Application.APPLICATION_SETTINGS.polygonHolderType == PolygonHolder.Type.SMART){
+        if (StandartApplication.APPLICATION_SETTINGS.polygonHolderType == PolygonHolder.Type.SMART){
             polygonHolder = new SmartPolygonHolder(scene.getTraceableObjects(), scene.getCamera());
         } else {
             polygonHolder = new DefaultPolygonHolder(scene.getTraceableObjects(), scene.getCamera(), scene.getLightSource());
@@ -48,8 +48,8 @@ public class RayTracingEngine extends GraphicEngine3d {
 
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
-        int renderWidth = Math.max(width / Application.APPLICATION_SETTINGS.pixelScaling, 1);
-        int renderHeight = Math.max(height / Application.APPLICATION_SETTINGS.pixelScaling, 1);
+        int renderWidth = Math.max(width / StandartApplication.APPLICATION_SETTINGS.pixelScaling, 1);
+        int renderHeight = Math.max(height / StandartApplication.APPLICATION_SETTINGS.pixelScaling, 1);
 
         frame.reset(renderWidth, renderHeight);
         polygonHolder.recacheObjects(renderWidth, renderHeight);
@@ -58,7 +58,7 @@ public class RayTracingEngine extends GraphicEngine3d {
         rayTracer.renderFrame(frame, polygonHolder, camera);
         screenTracer.renderFrame(frame, scene.getFixedSizeObjects(), camera);
 
-        if (Application.DEBUG_MENU.isEnabled()){
+        if (StandartApplication.DEBUG_MENU.isEnabled()){
             axisCrosshair.setPosition(camera.getPosition().add(camera.getDirection()));
             screenTracer.renderFrame(frame, Collections.singletonList(axisCrosshair), camera);
         }

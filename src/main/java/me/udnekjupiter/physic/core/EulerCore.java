@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.core;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.RKMObject3d;
@@ -59,7 +59,7 @@ public class EulerCore implements PhysicCore {
     }
 
     public void tick() {
-        for (int i = 0; i < Application.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
+        for (int i = 0; i < StandartApplication.ENVIRONMENT_SETTINGS.iterationsPerTick; i++) {
             updateObjects();
         }
     }

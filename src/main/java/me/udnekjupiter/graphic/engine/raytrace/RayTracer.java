@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.object.light.LightSource;
@@ -29,7 +29,7 @@ public class RayTracer {
     private boolean debugColorizePlanes;
 
     public RayTracer(LightSource lightSource){
-        this.doLight = Application.APPLICATION_SETTINGS.doLight;
+        this.doLight = StandartApplication.APPLICATION_SETTINGS.doLight;
         this.lightSource = lightSource;
     }
 
@@ -67,11 +67,11 @@ public class RayTracer {
         this.polygonHolder = polygonHolder;
         this.cameraPosition = camera.getPosition();
         this.fovMultiplier = height/camera.getFov();
-        this.debugColorizePlanes = Application.APPLICATION_SETTINGS.debugColorizePlanes;
-        this.doLight = Application.APPLICATION_SETTINGS.doLight;
+        this.debugColorizePlanes = StandartApplication.APPLICATION_SETTINGS.debugColorizePlanes;
+        this.doLight = StandartApplication.APPLICATION_SETTINGS.doLight;
         if (doLight) lightPosition = lightSource.getPosition();
 
-        int cores = Application.APPLICATION_SETTINGS.cores;
+        int cores = StandartApplication.APPLICATION_SETTINGS.cores;
         if (cores != 1){
 
             Thread[] threads = new Thread[cores];

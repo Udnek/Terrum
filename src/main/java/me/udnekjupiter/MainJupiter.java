@@ -6,7 +6,7 @@ import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject3d;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import me.udnekjupiter.util.Vector3x3;
 import org.jetbrains.annotations.NotNull;
@@ -44,14 +44,14 @@ public class MainJupiter extends Main{
 
         NetPhysicsScene physicScene = new NetPhysicsScene(net0, net1);
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        SphereObject3d sphere = new SphereObject3d(new Vector3d(16, 7, 3), 2.5, 500);
+        SphereObject sphere = new SphereObject(new Vector3d(16, 7, 3), 2.5, 500);
         physicScene.addObject(sphere);
 //        physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         RayTracingEngine graphicEngine = new RayTracingEngine(graphicScene);
 
-        Main.runApplication(graphicEngine, physicEngine);
+        runApplication(graphicEngine, physicEngine);
 
         graphicScene.getCamera().setPosition(new Vector3d(7, 8, -7.5));
         graphicScene.getCamera().setPitch(20);

@@ -1,10 +1,10 @@
 package me.udnekjupiter.graphic.object.renderable.shape;
 
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.realityforge.vecmath.Vector3d;
 
-public class IcosphereObject extends RenderableObject {
+public class IcosphereObject extends RenderableObject3d {
 
     protected final double radius;
     protected RenderableTriangle[] polygons;
@@ -17,7 +17,7 @@ public class IcosphereObject extends RenderableObject {
     }
 
     protected void generatePolygons(RenderableTriangle example){
-        double icoSize =  radius/2/IcosahedronObject.calculateCircumradius(1);
+        double icoSize =  radius/2/ IcosahedronObject.calculateCircumradius(1);
         IcosahedronObject icosahedronObject = new IcosahedronObject(new Vector3d(), icoSize, example);
 
         polygons = icosahedronObject.getRenderTriangles();

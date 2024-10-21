@@ -5,7 +5,7 @@ import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
+import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
@@ -13,7 +13,7 @@ import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject3d;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -33,11 +33,11 @@ public class MainUdnek extends Main{
 /*        SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
         physicScene.addObject(sphere);*/
 
-        SphereObject3d sphere = new SphereObject3d(new Vector3d(5, 11, 5), 1, 100_000, 150);
+        SphereObject sphere = new SphereObject(new Vector3d(5, 11, 5), 1, 100_000, 150);
         physicScene.addObject(sphere);
-        sphere = new SphereObject3d(new Vector3d(5, 15, 5), 1, 100_000, 150);
+        sphere = new SphereObject(new Vector3d(5, 15, 5), 1, 100_000, 150);
         physicScene.addObject(sphere);
-        sphere = new SphereObject3d(new Vector3d(5, 19, 5), 1, 100_000, 150);
+        sphere = new SphereObject(new Vector3d(5, 19, 5), 1, 100_000, 150);
         physicScene.addObject(sphere);
 /*        sphere = new SphereObject(new Vector3d(5, 23, 5), 4, 10_000, 150);
         physicScene.addObject(sphere);
@@ -54,14 +54,14 @@ public class MainUdnek extends Main{
         RasterizationEngine rasterizer = new RasterizationEngine(graphicScene);
 
 
-        Main.runApplication(rasterizer, physicEngine);
+        runApplication(rasterizer, physicEngine);
 
         graphicScene.getCamera().setPosition(new Vector3d(2, 6, -5));
         graphicScene.getCamera().setYaw(-31.7f);
         graphicScene.getCamera().setPitch(24);
 
 
-        for (RenderableObject traceableObject : graphicScene.getTraceableObjects()) {
+        for (RenderableObject3d traceableObject : graphicScene.getTraceableObjects()) {
             if (traceableObject instanceof MassEssenceObject massEssenceObject){
                 for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
                     ((ColoredTriangle) renderTriangle).setColor(new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f).getRGB());

@@ -6,7 +6,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 import java.util.List;
 
-public class AxisCrosshair extends FixedSizeObject{
+public class AxisCrosshair extends FixedSizeObject3d {
 
     private static final double size = 0.1;
 

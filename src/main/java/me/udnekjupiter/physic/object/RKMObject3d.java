@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.object;
 
-import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Resettable;
@@ -17,7 +17,7 @@ public abstract class RKMObject3d extends PhysicObject3d implements Freezable, C
 
     public RKMObject3d(Vector3d position) {
         super(position);
-        settings = Application.ENVIRONMENT_SETTINGS;
+        settings = StandartApplication.ENVIRONMENT_SETTINGS;
         this.velocity = new Vector3d(0,0,0);
         this.acceleration = new Vector3d(0,0,0);
         this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
