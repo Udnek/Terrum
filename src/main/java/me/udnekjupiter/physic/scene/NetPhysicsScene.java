@@ -10,27 +10,22 @@ import me.udnekjupiter.physic.object.vertex.NetVertex;
 
 import java.util.List;
 
-public class NetPhysicsScene extends StandardPhysicScene {
+public class NetPhysicsScene extends PhysicScene3d {
     private final CellularNet[] nets;
+
     public NetPhysicsScene(CellularNet ...nets){
         this.nets = nets;
     }
     public CellularNet getNet(int id){return nets[id];}
     public CellularNet[] getNets(){return nets;}
-    public PhysicCore core;
 
     public void initialize(){
-        if (StandartApplication.ENVIRONMENT_SETTINGS.physicCoreType == PhysicCore.Type.EULER){
-            core = new EulerCore();
-        } else {
-            core = new RKMCore();
-        }
         for (CellularNet net : nets) {
             net.initialize();
             List<NetVertex> vertices = net.getVerticesObjects();
             for (NetVertex vertex : vertices) {
                 if (vertex != null) {
-                    core.addObject(vertex);
+                    addObject(vertex);
                 }
             }
 
@@ -44,7 +39,6 @@ public class NetPhysicsScene extends StandardPhysicScene {
 
     @Override
     public void reset(){
-        super.reset();
         for (CellularNet net : nets) {
             net.reset();
         }

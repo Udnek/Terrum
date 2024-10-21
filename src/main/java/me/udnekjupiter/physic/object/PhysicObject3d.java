@@ -13,7 +13,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PhysicObject3d extends PositionedObject implements Resettable, Collidable, Freezable, PhysicObject {
+public abstract class PhysicObject3d extends PositionedObject implements Resettable, Freezable, PhysicObject {
     protected PhysicCalculationContainer container;
     protected EnvironmentSettings settings;
     protected List<Collidable> collidingObjects;
