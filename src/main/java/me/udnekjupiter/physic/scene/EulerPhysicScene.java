@@ -7,7 +7,7 @@ import me.udnekjupiter.physic.object.StandardObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StandardPhysicScene{
+public abstract class EulerPhysicScene {
     protected List<StandardObject> allObjects = new ArrayList<>();
     protected List<StandardObject> collisionInitiators = new ArrayList<>();
 

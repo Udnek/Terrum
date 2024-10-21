@@ -1,4 +1,4 @@
 package me.udnekjupiter.physic.object.container;
 
-public class EulerObjectContainer implements PhysicCalculationContainer{
+public class EulerObjectContainer implements VariableContainer {
 }

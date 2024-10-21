@@ -5,13 +5,12 @@ import me.udnekjupiter.physic.core.PhysicCore;
 import me.udnekjupiter.physic.core.EulerCore;
 import me.udnekjupiter.physic.core.RKMCore;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.StandardObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 
 import java.util.List;
 
-public class NetPhysicsScene extends StandardPhysicScene {
+public class NetPhysicsScene extends EulerPhysicScene {
     private final CellularNet[] nets;
     public NetPhysicsScene(CellularNet ...nets){
         this.nets = nets;

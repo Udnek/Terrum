@@ -4,7 +4,7 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.collision.CollisionCalculator;
-import me.udnekjupiter.physic.object.container.PhysicCalculationContainer;
+import me.udnekjupiter.physic.object.container.VariableContainer;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.PositionedObject;
 import me.udnekjupiter.util.Resettable;
@@ -12,10 +12,9 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public abstract class PhysicObject extends PositionedObject implements Resettable, Collidable, Freezable {
-    protected PhysicCalculationContainer container;
+    protected VariableContainer container;
     protected EnvironmentSettings settings;
     protected List<Collidable> collidingObjects;
     protected final Vector3d initialPosition;

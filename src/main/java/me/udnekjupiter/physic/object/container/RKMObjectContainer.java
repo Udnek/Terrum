@@ -1,4 +1,4 @@
 package me.udnekjupiter.physic.object.container;
 
-public class RKMObjectContainer implements PhysicCalculationContainer{
+public class RKMObjectContainer implements VariableContainer {
 }
