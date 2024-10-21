@@ -10,6 +10,7 @@ import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.scene.PhysicScene;
 import me.udnekjupiter.util.Resettable;
+import org.jetbrains.annotations.NotNull;
 
 public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener, ControllerListener, Resettable {
     private final PhysicScene physicScene;
@@ -36,7 +37,7 @@ public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener
     }
 
     @Override
-    public void handleCommand(Command command, Object[] args) {
+    public void handleCommand(@NotNull Command command, Object[] args) {
         if (command != Command.SET_ITERATIONS_PER_TICK) return;
         Application.ENVIRONMENT_SETTINGS.iterationsPerTick = (int) args[0];
     }

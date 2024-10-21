@@ -1,7 +1,7 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.file.FileManager;
-import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
+import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-public class KernelRayTracingEngine extends GraphicScene3dEngine {
+public class KernelRayTracingEngine3d extends GraphicEngine3d {
     private final String kernelCode = readKernelCodeFile();
 
     private static final String kernelName = "rayTracer";
@@ -37,7 +37,7 @@ public class KernelRayTracingEngine extends GraphicScene3dEngine {
                     )
             );
 
-    public KernelRayTracingEngine(GraphicScene3d scene) {
+    public KernelRayTracingEngine3d(GraphicScene3d scene) {
         super(scene);
     }
 

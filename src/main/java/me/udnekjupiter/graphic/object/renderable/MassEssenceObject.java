@@ -7,6 +7,7 @@ import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.SphereObject;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class MassEssenceObject extends IcosphereObject implements PhysicLinked, Draggable {
@@ -23,7 +24,7 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
         setPosition(sphereObject.getPosition());
     }
     @Override
-    public void setPosition(Vector3d position) {
+    public void setPosition(@NotNull Vector3d position) {
         super.setPosition(position);
         sphereObject.setPosition(position);
     }

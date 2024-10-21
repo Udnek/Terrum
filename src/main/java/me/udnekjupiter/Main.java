@@ -6,6 +6,7 @@ import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Main{
 
@@ -25,8 +26,8 @@ public abstract class Main{
         return main;
     }
 
-    public abstract ApplicationSettings initializeGraphicsSettings();
-    public abstract EnvironmentSettings initializePhysicsSettings();
+    public abstract @NotNull ApplicationSettings initializeGraphicsSettings();
+    public abstract @NotNull EnvironmentSettings initializePhysicsSettings();
 
     public abstract void run();
 

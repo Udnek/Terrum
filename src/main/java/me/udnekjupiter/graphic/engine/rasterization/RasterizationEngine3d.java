@@ -3,7 +3,7 @@ package me.udnekjupiter.graphic.engine.rasterization;
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
+import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.TransparentRasterizationFrame;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RasterizationEngine extends GraphicScene3dEngine {
+public class RasterizationEngine3d extends GraphicEngine3d {
 
     public static final int WIREFRAME_COLOR = Color.CYAN.getRGB();
     private final TransparentRasterizationFrame frame;
@@ -24,7 +24,7 @@ public class RasterizationEngine extends GraphicScene3dEngine {
     private int height;
     private Camera camera;
 
-    public RasterizationEngine(GraphicScene3d graphicScene) {
+    public RasterizationEngine3d(GraphicScene3d graphicScene) {
         super(graphicScene);
         frame = new TransparentRasterizationFrame();
     }

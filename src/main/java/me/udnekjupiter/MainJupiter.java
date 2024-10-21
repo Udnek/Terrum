@@ -1,7 +1,7 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
+import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
@@ -9,12 +9,13 @@ import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import me.udnekjupiter.util.Vector3x3;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class MainJupiter extends Main{
 
     @Override
-    public ApplicationSettings initializeGraphicsSettings() {
+    public @NotNull ApplicationSettings initializeGraphicsSettings() {
 //        return ApplicationSettings.defaultWithRecording(512,
 //                512,
 //                "Default",
@@ -22,7 +23,7 @@ public class MainJupiter extends Main{
 //                PolygonHolder.Type.SMART);
       return ApplicationSettings.noRecording();
     }
-    public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
+    public @NotNull EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
     public void run() {
@@ -48,7 +49,7 @@ public class MainJupiter extends Main{
 //        physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
-        RayTracingEngine graphicEngine = new RayTracingEngine(graphicScene);
+        RayTracingEngine3d graphicEngine = new RayTracingEngine3d(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
 

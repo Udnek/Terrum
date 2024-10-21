@@ -2,7 +2,7 @@ package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
-import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
+import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
@@ -10,11 +10,12 @@ import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import me.udnekjupiter.util.Vector3x3;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class MainBasketball extends Main{
     @Override
-    public ApplicationSettings initializeGraphicsSettings() {
+    public @NotNull ApplicationSettings initializeGraphicsSettings() {
 /*        return ApplicationSettings.defaultWithRecording(200,
                 200,
                 "тачдаун",
@@ -22,7 +23,7 @@ public class MainBasketball extends Main{
                 PolygonHolder.Type.SMART);*/
         return ApplicationSettings.noRecording();
     }
-    public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
+    public @NotNull EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
     public void run() {
@@ -47,7 +48,7 @@ public class MainBasketball extends Main{
         physicScene.addObject(sphere);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
-        GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
+        GraphicEngine graphicEngine = new RasterizationEngine3d(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
 

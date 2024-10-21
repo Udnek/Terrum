@@ -1,6 +1,7 @@
 package me.udnekjupiter.app.console;
 
 import me.udnekjupiter.util.Listenable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Console implements Runnable, Listenable<ConsoleListener> {
     }
 
     @Override
-    public void addListener(ConsoleListener listener) {
+    public void addListener(@NotNull ConsoleListener listener) {
         listeners.add(listener);
     }
 

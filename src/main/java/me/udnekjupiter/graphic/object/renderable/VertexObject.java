@@ -6,6 +6,7 @@ import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.physic.net.VertexColor;
 import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -28,7 +29,7 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
     }
 
     @Override
-    public void setPosition(Vector3d position) {
+    public void setPosition(@NotNull Vector3d position) {
         super.setPosition(position);
         netVertex.setPosition(position);
     }

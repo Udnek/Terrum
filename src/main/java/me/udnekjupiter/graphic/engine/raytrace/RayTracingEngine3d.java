@@ -4,7 +4,7 @@ import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.ScreenTracer;
-import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
+import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.frame.LeftUpFrame;
 import me.udnekjupiter.graphic.object.fixedsize.AxisCrosshair;
@@ -16,7 +16,7 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
-public class RayTracingEngine extends GraphicScene3dEngine{
+public class RayTracingEngine3d extends GraphicEngine3d {
 
     protected RayTracer rayTracer;
     protected final GraphicFrame frame;
@@ -24,7 +24,7 @@ public class RayTracingEngine extends GraphicScene3dEngine{
     protected final ScreenTracer screenTracer;
     protected final AxisCrosshair axisCrosshair = new AxisCrosshair();
 
-    public RayTracingEngine(GraphicScene3d graphicScene){
+    public RayTracingEngine3d(GraphicScene3d graphicScene){
         super(graphicScene);
         this.frame = new LeftUpFrame();
         this.screenTracer = new ScreenTracer();
