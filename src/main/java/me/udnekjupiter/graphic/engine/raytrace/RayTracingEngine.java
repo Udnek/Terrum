@@ -7,7 +7,6 @@ import me.udnekjupiter.graphic.ScreenTracer;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.frame.LeftUpFrame;
-import me.udnekjupiter.graphic.object.fixedsize.AxisCrosshair;
 import me.udnekjupiter.graphic.polygonholder.DefaultPolygonHolder;
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.polygonholder.SmartPolygonHolder;
@@ -15,7 +14,6 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.image.BufferedImage;
-import java.util.Collections;
 
 public class RayTracingEngine extends GraphicEngine3d {
 
@@ -23,9 +21,8 @@ public class RayTracingEngine extends GraphicEngine3d {
     protected final GraphicFrame frame;
     protected PolygonHolder polygonHolder;
     protected final ScreenTracer screenTracer;
-    protected final AxisCrosshair axisCrosshair = new AxisCrosshair();
 
-    public RayTracingEngine(GraphicScene3d graphicScene){
+    public RayTracingEngine(@NotNull GraphicScene3d graphicScene){
         super(graphicScene);
         this.frame = new LeftUpFrame();
         this.screenTracer = new ScreenTracer();
@@ -56,12 +53,6 @@ public class RayTracingEngine extends GraphicEngine3d {
 
         Camera camera = scene.getCamera();
         rayTracer.renderFrame(frame, polygonHolder, camera);
-        screenTracer.renderFrame(frame, scene.getFixedSizeObjects(), camera);
-
-        if (StandartApplication.DEBUG_MENU.isEnabled()){
-            axisCrosshair.setPosition(camera.getPosition().add(camera.getDirection()));
-            screenTracer.renderFrame(frame, Collections.singletonList(axisCrosshair), camera);
-        }
 
         return frame.toImage();
     }

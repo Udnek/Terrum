@@ -2,7 +2,10 @@ package me.udnekjupiter.graphic.object.renderable.shape;
 
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
+
+import java.util.function.Consumer;
 
 public class PolygonObject extends RenderableObject3d {
 
@@ -31,12 +34,16 @@ public class PolygonObject extends RenderableObject3d {
     }
 
     @Override
-    public RenderableTriangle[] getRenderTriangles() {
+    public RenderableTriangle @NotNull [] getRenderTriangles() {
         return new RenderableTriangle[]{getPlane()};
+    }
+    @Override
+    public RenderableTriangle @NotNull [] getUnsafeRenderTriangles() {
+        return new RenderableTriangle[]{plane};
     }
 
     @Override
-    public RenderableTriangle[] getUnsafeRenderTriangles() {
-        return new RenderableTriangle[]{plane};
+    public void getUnsafeRenderTriangles(@NotNull Consumer<RenderableTriangle> consumer) {
+        consumer.accept(plane.copy());
     }
 }

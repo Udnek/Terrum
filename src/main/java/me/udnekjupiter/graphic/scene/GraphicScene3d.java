@@ -9,7 +9,6 @@ import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.util.*;
@@ -25,7 +24,6 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected Camera camera;
     protected List<RenderableObject3d> renderableObjects;
     protected LightSource lightSource;
-    protected List<FixedSizeObject3d> fixedSizeObjects;
 
     protected int width;
     protected int height;
@@ -46,11 +44,6 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
             renderableObjects = new ArrayList<>();
         }
 
-        fixedSizeObjects = initializeFixedSizeObjects();
-        if (fixedSizeObjects == null){
-            fixedSizeObjects = new ArrayList<>();
-        }
-
         controller = Controller.getInstance();
         controller.addListener(this);
         debugMenu = StandartApplication.DEBUG_MENU;
@@ -60,12 +53,10 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected abstract Camera initializeCamera();
     protected abstract List<RenderableObject3d> initializeSceneObjects();
     protected abstract LightSource initializeLightSource();
-    protected abstract List<FixedSizeObject3d> initializeFixedSizeObjects();
 
     public @NotNull Camera getCamera() { return camera;}
     public LightSource getLightSource() {return lightSource;}
     public List<RenderableObject3d> getTraceableObjects() {return renderableObjects;}
-    public List<FixedSizeObject3d> getFixedSizeObjects() {return fixedSizeObjects;}
     public Selectable getSelectedObject() {return selectedObject;}
 
     public void beforeFrameUpdate(int width, int height) {

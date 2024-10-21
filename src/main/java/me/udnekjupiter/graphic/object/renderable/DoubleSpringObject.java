@@ -4,7 +4,10 @@ import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.PositionedObject;
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
+
+import java.util.function.Consumer;
 
 public class DoubleSpringObject extends SpringObject {
 
@@ -38,12 +41,18 @@ public class DoubleSpringObject extends SpringObject {
     }
 
     @Override
-    public RenderableTriangle[] getRenderTriangles() {
+    public RenderableTriangle @NotNull [] getRenderTriangles() {
         return new RenderableTriangle[]{plane.copy(), plane1.copy()};
     }
 
     @Override
-    public RenderableTriangle[] getUnsafeRenderTriangles() {
+    public RenderableTriangle @NotNull [] getUnsafeRenderTriangles() {
         return new RenderableTriangle[]{plane, plane1};
+    }
+
+    @Override
+    public void getUnsafeRenderTriangles(@NotNull Consumer<RenderableTriangle> consumer) {
+        super.getUnsafeRenderTriangles(consumer);
+        consumer.accept(plane1);
     }
 }

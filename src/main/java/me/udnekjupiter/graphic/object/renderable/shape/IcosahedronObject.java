@@ -2,7 +2,10 @@ package me.udnekjupiter.graphic.object.renderable.shape;
 
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
+
+import java.util.function.Consumer;
 
 public class IcosahedronObject extends RenderableObject3d {
 
@@ -80,7 +83,7 @@ public class IcosahedronObject extends RenderableObject3d {
     }
 
     @Override
-    public RenderableTriangle[] getRenderTriangles() {
+    public RenderableTriangle @NotNull [] getRenderTriangles() {
        RenderableTriangle[] copy = new RenderableTriangle[polygons.length];
         for (int i = 0; i < polygons.length; i++) {
             copy[i] = polygons[i].copy();
@@ -89,7 +92,14 @@ public class IcosahedronObject extends RenderableObject3d {
     }
 
     @Override
-    public RenderableTriangle[] getUnsafeRenderTriangles() {
+    public RenderableTriangle @NotNull [] getUnsafeRenderTriangles() {
         return polygons;
+    }
+
+    @Override
+    public void getUnsafeRenderTriangles(@NotNull Consumer<RenderableTriangle> consumer) {
+        for (RenderableTriangle polygon : polygons) {
+            consumer.accept(polygon);
+        }
     }
 }

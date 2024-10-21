@@ -5,6 +5,8 @@ import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -117,11 +119,11 @@ public class SmartPolygonHolder implements PolygonHolder{
         }
     }
 
-    private boolean isVectorInTriangle(Vector3d vector, Triangle triangle){
+    private boolean isVectorInTriangle(@NotNull Vector3d vector, @NotNull Triangle triangle){
         return VectorUtils.triangleRayIntersection(vector, triangle) != null;
     }
 
-    public List<RenderableTriangle> getCachedPlanes(Vector3d direction) {
+    public @NotNull List<RenderableTriangle> getCachedPlanes(@NotNull Vector3d direction) {
         if (isVectorInTriangle(direction, downTriangle)) return downCachedPlanes;
         if (isVectorInTriangle(direction, leftTriangle)) return leftCachedPlanes;
         if (isVectorInTriangle(direction, rightTriangle)) return rightCachedPlanes;
@@ -129,7 +131,7 @@ public class SmartPolygonHolder implements PolygonHolder{
     }
 
     @Override
-    public List<RenderableTriangle> getLightCachedPlanes(Vector3d direction) {
+    public @NotNull List<RenderableTriangle> getLightCachedPlanes(@Nullable Vector3d direction) {
         return lightCachedPlanes;
     }
 }

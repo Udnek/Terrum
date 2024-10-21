@@ -9,19 +9,19 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 
 public class RenderableTriangle extends Triangle {
-    public RenderableTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
+    public RenderableTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2) {
         super(vertex0, vertex1, vertex2);
     }
 
-    public RenderableTriangle(RenderableTriangle triangle) {
+    public RenderableTriangle(@NotNull RenderableTriangle triangle) {
         super(triangle);
     }
 
-    public static RenderableTriangle empty(){
+    public static @NotNull RenderableTriangle empty(){
         return new RenderableTriangle(new Vector3d(), new Vector3d(), new Vector3d());
     }
 
-    public int getTraceColor(Vector3d hitPosition){
+    public int getTraceColor(@NotNull Vector3d hitPosition){
         double d0 = VectorUtils.distance(hitPosition, vertex0);
         double d1 = VectorUtils.distance(hitPosition, vertex1);
         double d2 = VectorUtils.distance(hitPosition, vertex2);

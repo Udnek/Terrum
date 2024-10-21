@@ -5,9 +5,11 @@ import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.PositionedObject;
 import me.udnekjupiter.util.Tickable;
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
+import java.util.function.Consumer;
 
 public class SpringObject extends RenderableObject3d implements Tickable {
 
@@ -38,12 +40,17 @@ public class SpringObject extends RenderableObject3d implements Tickable {
     }
 
     @Override
-    public RenderableTriangle[] getRenderTriangles() {
+    public RenderableTriangle @NotNull [] getRenderTriangles() {
         return new RenderableTriangle[]{plane.copy()};
     }
 
     @Override
-    public RenderableTriangle[] getUnsafeRenderTriangles() {
+    public RenderableTriangle @NotNull [] getUnsafeRenderTriangles() {
         return new RenderableTriangle[]{plane};
+    }
+
+    @Override
+    public void getUnsafeRenderTriangles(@NotNull Consumer<RenderableTriangle> consumer) {
+        consumer.accept(plane);
     }
 }

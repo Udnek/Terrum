@@ -9,6 +9,7 @@ import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class RayTracer {
@@ -28,7 +29,7 @@ public class RayTracer {
     // TODO: 9/5/2024 DEBUG COLORIZE DOESNT WORK
     private boolean debugColorizePlanes;
 
-    public RayTracer(LightSource lightSource){
+    public RayTracer(@NotNull LightSource lightSource){
         this.doLight = StandartApplication.APPLICATION_SETTINGS.doLight;
         this.lightSource = lightSource;
     }
@@ -38,7 +39,7 @@ public class RayTracer {
     // TRACING
     ///////////////////////////////////////////////////////////////////////////
 
-    public int rayTrace(Vector3d direction){
+    public int rayTrace(@NotNull Vector3d direction){
         Vector3d nearestHitPosition = null;
         RenderableTriangle nearestPlane = null;
         double nearestDistance = Double.POSITIVE_INFINITY;
@@ -58,7 +59,7 @@ public class RayTracer {
         return colorizeRayTrace(nearestHitPosition, nearestPlane);
     }
 
-    public void renderFrame(GraphicFrame frame, PolygonHolder polygonHolder, Camera camera){;
+    public void renderFrame(@NotNull GraphicFrame frame, @NotNull PolygonHolder polygonHolder, @NotNull Camera camera){;
         this.frame = frame;
         this.width = frame.getWidth();
         this.height = frame.getHeight();
@@ -98,7 +99,7 @@ public class RayTracer {
     // COLORIZING
     ///////////////////////////////////////////////////////////////////////////
 
-    private double positionLighted(Vector3d position, RenderableTriangle plane){
+    private double positionLighted(@NotNull Vector3d position, @NotNull RenderableTriangle plane){
 
         // to absolute position;
         position.add(cameraPosition);
@@ -121,7 +122,7 @@ public class RayTracer {
         return perpendicularity;
     }
 
-    private int colorizeRayTrace(Vector3d hitPosition, RenderableTriangle plane){
+    private int colorizeRayTrace(@NotNull Vector3d hitPosition, @NotNull RenderableTriangle plane){
 
         int color =  plane.getTraceColor(hitPosition);
 

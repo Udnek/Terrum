@@ -7,16 +7,16 @@ import java.awt.*;
 
 public class ColoredTriangle extends RenderableTriangle {
     protected int color;
-    public ColoredTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, int color) {
+    public ColoredTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2, int color) {
         super(vertex0, vertex1, vertex2);
         this.color = color;
     }
 
-    public ColoredTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2, Color color) {
+    public ColoredTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2, @NotNull Color color) {
         this(vertex0, vertex1, vertex2, color.getRGB());
     }
 
-    public ColoredTriangle(ColoredTriangle triangle) {
+    public ColoredTriangle(@NotNull ColoredTriangle triangle) {
         super(triangle);
         this.color = triangle.color;
     }
@@ -25,7 +25,7 @@ public class ColoredTriangle extends RenderableTriangle {
     public int getColor() {return color;}
 
     @Override
-    public int getTraceColor(Vector3d hitPosition) {
+    public int getTraceColor(@NotNull Vector3d hitPosition) {
         return color;
     }
     @Override

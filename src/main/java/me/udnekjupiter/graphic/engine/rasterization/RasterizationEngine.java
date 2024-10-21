@@ -53,15 +53,14 @@ public class RasterizationEngine extends GraphicEngine3d {
         Vector3d cameraPosition = camera.getPosition();
         for (RenderableObject3d object : scene.getTraceableObjects()) {
             Vector3d objectPosition = object.getPosition();
-            for (RenderableTriangle triangle : object.getRenderTriangles()) {
+            object.getRenderTriangles(triangle -> {
                 triangle.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);
                 camera.rotateBackTriangle(triangle);
                 polygons.add(triangle);
-            }
+            });
         }
 
         polygons.sort((o1, o2) -> Double.compare(o2.getCenter().z, o1.getCenter().z));
-
         polygons.forEach(this::drawTriangle);
 
         return frame.toImage();

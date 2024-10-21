@@ -1,7 +1,10 @@
 package me.udnekjupiter.graphic.object.renderable;
 
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
+
+import java.util.function.Consumer;
 
 public class AxisCrosshairObject extends RenderableObject3d {
 
@@ -23,12 +26,19 @@ public class AxisCrosshairObject extends RenderableObject3d {
 
 
     @Override
-    public RenderableTriangle[] getRenderTriangles() {
+    public RenderableTriangle @NotNull [] getRenderTriangles() {
         return new RenderableTriangle[]{planeX.copy(), planeY.copy(), planeZ.copy()};
     }
 
     @Override
-    public RenderableTriangle[] getUnsafeRenderTriangles() {
+    public RenderableTriangle @NotNull [] getUnsafeRenderTriangles() {
         return new RenderableTriangle[]{planeX, planeY, planeZ};
+    }
+
+    @Override
+    public void getUnsafeRenderTriangles(@NotNull Consumer<RenderableTriangle> consumer) {
+        consumer.accept(planeX);
+        consumer.accept(planeY);
+        consumer.accept(planeZ);
     }
 }

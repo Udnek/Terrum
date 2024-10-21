@@ -4,7 +4,6 @@ import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.physic.net.VertexColor;
-import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -40,7 +39,7 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
     }
 
     @Override
-    public @NotNull PhysicObject getPhysicRepresentation() {
+    public @NotNull NetVertex getPhysicRepresentation() {
         return netVertex;
     }
 

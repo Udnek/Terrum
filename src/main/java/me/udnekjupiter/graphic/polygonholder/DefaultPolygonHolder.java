@@ -5,6 +5,8 @@ import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
     private List<RenderableTriangle> lightCachedPlanes;
     private LightSource lightSource;
 
-    public DefaultPolygonHolder(List<RenderableObject3d> objectsToRender, Camera camera, LightSource lightSource){
+    public DefaultPolygonHolder(@NotNull List<RenderableObject3d> objectsToRender, @NotNull Camera camera, @NotNull LightSource lightSource){
         this.camera = camera;
         this.objectsToRender = objectsToRender;
         this.lightSource = lightSource;
@@ -53,7 +55,7 @@ public class DefaultPolygonHolder implements PolygonHolder{
     }
 
     @Override
-    public List<RenderableTriangle> getCachedPlanes(Vector3d direction) { return cachedPlanes;}
+    public @NotNull List<RenderableTriangle> getCachedPlanes(@Nullable Vector3d direction) { return cachedPlanes;}
     @Override
-    public List<RenderableTriangle> getLightCachedPlanes(Vector3d direction) {return lightCachedPlanes;}
+    public @NotNull List<RenderableTriangle> getLightCachedPlanes(@Nullable Vector3d direction) {return lightCachedPlanes;}
 }

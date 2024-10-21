@@ -9,13 +9,13 @@ public class Triangle {
     protected Vector3d vertex1;
     protected Vector3d vertex2;
 
-    public Triangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
+    public Triangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2) {
         this.vertex0 = vertex0;
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
     }
 
-    public Triangle(Triangle triangle) {
+    public Triangle(@NotNull Triangle triangle) {
         this(triangle.getVertex0(), triangle.getVertex1(), triangle.getVertex2());
     }
 

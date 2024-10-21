@@ -25,7 +25,7 @@ public class MassEssenceTriangle extends ColoredTriangle {
     }
 
     @Override
-    public int getTraceColor(Vector3d hitPosition) {
+    public int getTraceColor(@NotNull Vector3d hitPosition) {
         double d0 = VectorUtils.distance(hitPosition, vertex0);
         double d1 = VectorUtils.distance(hitPosition, vertex1);
         double d2 = VectorUtils.distance(hitPosition, vertex2);
