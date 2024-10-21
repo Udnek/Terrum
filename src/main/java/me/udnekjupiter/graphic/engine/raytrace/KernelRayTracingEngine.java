@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-public class KernelRayTracingEngine3d extends GraphicEngine3d {
+public class KernelRayTracingEngine extends GraphicEngine3d {
     private final String kernelCode = readKernelCodeFile();
 
     private static final String kernelName = "rayTracer";
@@ -37,7 +37,7 @@ public class KernelRayTracingEngine3d extends GraphicEngine3d {
                     )
             );
 
-    public KernelRayTracingEngine3d(GraphicScene3d scene) {
+    public KernelRayTracingEngine(GraphicScene3d scene) {
         super(scene);
     }
 

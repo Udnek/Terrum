@@ -16,7 +16,7 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 
-public class RayTracingEngine3d extends GraphicEngine3d {
+public class RayTracingEngine extends GraphicEngine3d {
 
     protected RayTracer rayTracer;
     protected final GraphicFrame frame;
@@ -24,7 +24,7 @@ public class RayTracingEngine3d extends GraphicEngine3d {
     protected final ScreenTracer screenTracer;
     protected final AxisCrosshair axisCrosshair = new AxisCrosshair();
 
-    public RayTracingEngine3d(GraphicScene3d graphicScene){
+    public RayTracingEngine(GraphicScene3d graphicScene){
         super(graphicScene);
         this.frame = new LeftUpFrame();
         this.screenTracer = new ScreenTracer();

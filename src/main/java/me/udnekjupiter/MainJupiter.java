@@ -1,7 +1,7 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine3d;
+import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
@@ -49,7 +49,7 @@ public class MainJupiter extends Main{
 //        physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
-        RayTracingEngine3d graphicEngine = new RayTracingEngine3d(graphicScene);
+        RayTracingEngine graphicEngine = new RayTracingEngine(graphicScene);
 
         Main.runApplication(graphicEngine, physicEngine);
 

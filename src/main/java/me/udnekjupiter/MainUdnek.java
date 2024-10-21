@@ -2,8 +2,8 @@ package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine3d;
-import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine3d;
-import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine3d;
+import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
+import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
@@ -49,8 +49,8 @@ public class MainUdnek extends Main{
         //GraphicScene3d graphicScene = new SmallGraphicScene();
         GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
 
-        RayTracingEngine3d rayTracing = new RayTracingEngine3d(graphicScene);
-        KernelRayTracingEngine3d kernel = new KernelRayTracingEngine3d(graphicScene);
+        RayTracingEngine rayTracing = new RayTracingEngine(graphicScene);
+        KernelRayTracingEngine kernel = new KernelRayTracingEngine(graphicScene);
         RasterizationEngine3d rasterizer = new RasterizationEngine3d(graphicScene);
 
 

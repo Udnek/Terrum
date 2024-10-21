@@ -9,7 +9,7 @@ import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
-import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine3d;
+import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import me.udnekjupiter.util.Utils;
@@ -169,7 +169,7 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     public void stop(){
-        if (graphicEngine instanceof KernelRayTracingEngine3d kernel){
+        if (graphicEngine instanceof KernelRayTracingEngine kernel){
             kernel.stop();
         }
         videoRecorder.save();
