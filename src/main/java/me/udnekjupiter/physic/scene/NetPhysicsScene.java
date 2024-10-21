@@ -1,29 +1,36 @@
 package me.udnekjupiter.physic.scene;
 
+import me.udnekjupiter.app.Application;
+import me.udnekjupiter.physic.core.EulerCore;
+import me.udnekjupiter.physic.core.PhysicCore;
+import me.udnekjupiter.physic.core.RKMCore;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.PhysicObject;
-import me.udnekjupiter.physic.object.RKMObject;
 import me.udnekjupiter.physic.object.StandardObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import me.udnekjupiter.util.Resettable;
 
 import java.util.List;
 
-public class NetPhysicsScene extends StandardPhysicScene implements Resettable {
+public class NetPhysicsScene extends StandardPhysicScene {
     private final CellularNet[] nets;
     public NetPhysicsScene(CellularNet ...nets){
         this.nets = nets;
     }
     public CellularNet getNet(int id){return nets[id];}
     public CellularNet[] getNets(){return nets;}
+    public PhysicCore core;
 
     public void initialize(){
+        if (Application.ENVIRONMENT_SETTINGS.physicCoreType == PhysicCore.Type.EULER){
+            core = new EulerCore();
+        } else {
+            core = new RKMCore();
+        }
         for (CellularNet net : nets) {
             net.initialize();
             List<NetVertex> vertices = net.getVerticesObjects();
             for (NetVertex vertex : vertices) {
                 if (vertex != null) {
-                    addObject(vertex);
+                    core.addObject(vertex);
                 }
             }
 
@@ -35,6 +42,7 @@ public class NetPhysicsScene extends StandardPhysicScene implements Resettable {
         }
     }
 
+    @Override
     public void reset(){
         super.reset();
         for (CellularNet net : nets) {

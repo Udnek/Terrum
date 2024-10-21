@@ -1,35 +1,18 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.collision.Collidable;
-import me.udnekjupiter.physic.collision.Collider;
-import me.udnekjupiter.physic.collision.CollisionCalculator;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Resettable;
 import org.realityforge.vecmath.Vector3d;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class RKMObject extends PhysicObject implements Freezable, Collidable, Resettable {
-    protected EnvironmentSettings settings;
-    protected List<Collidable> collidingObjects;
     protected Vector3d[] currentRKMPhaseVector;
     protected Vector3d[] basePhaseVector;
     protected Vector3d[] coefficient1;
     protected Vector3d[] coefficient2;
     protected Vector3d[] coefficient3;
     protected Vector3d[] coefficient4;
-    protected Vector3d velocity;
-    protected Vector3d acceleration;
-    protected Vector3d positionDifferential;
-    protected Vector3d velocityDifferential;
-    protected Collider collider;
-    protected boolean frozen;
-    protected double deltaTime;
-    protected double decayCoefficient;
-    protected double mass;
     protected int coefficientCounter = 1;
 
     public RKMObject(Vector3d position) {
@@ -39,31 +22,6 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
         this.acceleration = new Vector3d(0,0,0);
         this.basePhaseVector = new Vector3d[]{position, new Vector3d(0,0,0)};
         setCurrentRKMPhaseVector(basePhaseVector);
-    }
-
-    public Collider getCollider(){
-        return collider;
-    }
-    public void addCollidingObject(RKMObject object){
-        collidingObjects.add(object);
-    }
-    public List<Collidable> getCollidingObjects(){return collidingObjects;}
-    public void clearCollidingObjects(){
-        collidingObjects = new ArrayList<>();
-    }
-    public boolean collidingObjectIsAlreadyListed(RKMObject object){
-        return collidingObjects.contains(object);
-    }
-    public void reset(){
-        setPosition(getInitialPosition());
-        setVelocity(new Vector3d());
-    }
-
-    public Vector3d getVelocity(){
-        return velocity.dup();
-    }
-    public void setVelocity(Vector3d velocity) {
-        this.velocity = velocity.dup();
     }
     public void setCurrentRKMPhaseVector(Vector3d[] newRKMPhaseVector) {
         this.currentRKMPhaseVector = newRKMPhaseVector;
@@ -76,7 +34,7 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
     protected Vector3d[] RKMethodFunction(Vector3d[] inputComponents){
         Vector3d[] resultComponents = new Vector3d[2];
         resultComponents[0] = inputComponents[1];
-        resultComponents[1] = RKMethodCalculateAcceleration(inputComponents[0], inputComponents[1]);
+        resultComponents[1] = calculateAcceleration(inputComponents[0], inputComponents[1]);
         return resultComponents;
     }
 
@@ -155,20 +113,4 @@ public abstract class RKMObject extends PhysicObject implements Freezable, Colli
         setPosition(getPosition().add(positionDifferential));
         basePhaseVector = new Vector3d[]{this.getPosition(), this.getVelocity()};
     }
-
-    protected abstract Vector3d RKMethodCalculateAcceleration(Vector3d position, Vector3d velocity);
-    protected abstract Vector3d getAppliedForce(Vector3d position);
-    protected Vector3d getCollisionForce() {
-        return CollisionCalculator.getHookeCollisionForce(this);
-    }
-
-    @Override
-    public void freeze(){
-        frozen = true;
-        setVelocity(new Vector3d());
-    }
-    @Override
-    public void unfreeze(){frozen = false;}
-    @Override
-    public boolean isFrozen() {return frozen;}
 }

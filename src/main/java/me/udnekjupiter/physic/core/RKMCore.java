@@ -1,4 +1,4 @@
-package me.udnekjupiter.physic.scene;
+package me.udnekjupiter.physic.core;
 
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.physic.object.RKMObject;
@@ -7,7 +7,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RKMPhysicsScene {
+public abstract class RKMCore implements PhysicCore {
     protected List<RKMObject> allObjects = new ArrayList<>();
     protected List<RKMObject> collisionInitiators = new ArrayList<>();
 
@@ -85,6 +85,7 @@ public abstract class RKMPhysicsScene {
         }
     }
 
+    @Override
     public void reset() {
         for (RKMObject object : allObjects) {
             object.reset();

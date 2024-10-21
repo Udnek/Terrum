@@ -1,10 +1,7 @@
 
 package me.udnekjupiter.physic.net;
 
-import me.udnekjupiter.app.Application;
 import me.udnekjupiter.file.ImageWrapper;
-import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Initializable;
@@ -20,7 +17,6 @@ public class CellularNet implements Initializable, Freezable, Resettable {
     private Vector3d globalOffset;
     private Vector3x3 perPositionMultiplier;
     //TODO Try scaling net, so system would look more authentic
-    private final EnvironmentSettings settings;
     private boolean frozen;
     private int sizeX;
     private int sizeZ;
@@ -31,7 +27,6 @@ public class CellularNet implements Initializable, Freezable, Resettable {
     private NetVertex[][] netMap;
 
     public CellularNet(String mapImageName, Vector3d globalOffset, Vector3x3 perPositionMultiplier) {
-        this.settings = Application.ENVIRONMENT_SETTINGS;
         this.mapImageName = mapImageName;
         this.globalOffset = globalOffset;
         this.perPositionMultiplier = perPositionMultiplier;
@@ -93,7 +88,6 @@ public class CellularNet implements Initializable, Freezable, Resettable {
     public void initialize() {
         initializeNet();
         initializeNeighbours();
-        initializeVerticesVariables();
     }
 
     public void reset(){
@@ -133,15 +127,6 @@ public class CellularNet implements Initializable, Freezable, Resettable {
 
                 List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
                 netVertex.addNeighbors(neighbourVertices);
-            }
-        }
-    }
-    private void initializeVerticesVariables(){
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j, i) instanceof NetDynamicVertex){
-                    ((NetDynamicVertex) getVertex(j, i)).setVariables(settings);
-                }
             }
         }
     }

@@ -12,7 +12,6 @@ import java.util.List;
 public abstract class NetVertex extends StandardObject {
     public Vector3d position;
 
-
     protected List<NetVertex> neighbors = new ArrayList<>();
 
     public NetVertex(Vector3d position) {

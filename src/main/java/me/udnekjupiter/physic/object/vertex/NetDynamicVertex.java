@@ -1,13 +1,13 @@
 
 package me.udnekjupiter.physic.object.vertex;
 
-import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.app.Application;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
 import static me.udnekjupiter.physic.engine.PhysicEngine.GRAVITATIONAL_ACCELERATION;
 
-@SuppressWarnings("FieldMayBeFinal")
+//@SuppressWarnings("FieldMayBeFinal")
 public class NetDynamicVertex extends NetVertex {
     protected double springStiffness;
     protected double springRelaxedLength;
@@ -16,19 +16,11 @@ public class NetDynamicVertex extends NetVertex {
         super(position);
         this.velocity = new Vector3d(0, 0, 0);
         this.acceleration = new Vector3d(0, 0, 0);
-        this.springStiffness = 1;
-        this.springRelaxedLength = 1;
-        this.mass = 1;
-        this.deltaTime = 0.1;
-        this.decayCoefficient = 0;
-    }
-
-    public void setVariables(EnvironmentSettings settings){
-        this.springStiffness = settings.springStiffness;
-        this.springRelaxedLength = settings.springRelaxedLength;
-        this.mass = settings.vertexMass;
-        this.deltaTime = settings.deltaTime;
-        this.decayCoefficient = settings.decayCoefficient;
+        this.springStiffness = Application.ENVIRONMENT_SETTINGS.springStiffness;
+        this.springRelaxedLength = Application.ENVIRONMENT_SETTINGS.springRelaxedLength;
+        this.mass = Application.ENVIRONMENT_SETTINGS.vertexMass;
+        this.deltaTime = Application.ENVIRONMENT_SETTINGS.deltaTime;
+        this.decayCoefficient = Application.ENVIRONMENT_SETTINGS.decayCoefficient;
     }
 
     @Override
