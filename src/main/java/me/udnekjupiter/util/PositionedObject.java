@@ -1,5 +1,6 @@
 package me.udnekjupiter.util;
 
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public abstract class PositionedObject implements Positioned{
@@ -13,10 +14,10 @@ public abstract class PositionedObject implements Positioned{
         return position.dup();
     }
 
-    public void setPosition(Vector3d position) {
+    public void setPosition(@NotNull Vector3d position) {
         this.position = position;
     }
-    public void move(Vector3d newPosition){
+    public void move(@NotNull Vector3d newPosition){
         setPosition(position.add(newPosition));
     }
     public void move(double x, double y, double z){

@@ -1,11 +1,12 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.file.FileManager;
-import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
+import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
 import org.jocl.*;
 import org.realityforge.vecmath.Vector3d;
 
@@ -14,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-public class KernelRayTracingEngine extends GraphicScene3dEngine {
+public class KernelRayTracingEngine extends GraphicEngine3d {
     private final String kernelCode = readKernelCodeFile();
 
     private static final String kernelName = "rayTracer";
@@ -114,7 +115,7 @@ public class KernelRayTracingEngine extends GraphicScene3dEngine {
         return stringBuilder.toString();
     }
     @Override
-    public BufferedImage renderFrame(int width, int height) {
+    public @NotNull BufferedImage renderFrame(int width, int height) {
         scene.beforeFrameUpdate(width, height);
 
         int w = width/1;

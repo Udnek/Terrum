@@ -1,10 +1,7 @@
 
 package me.udnekjupiter.physic.net;
 
-import me.udnekjupiter.app.Application;
 import me.udnekjupiter.file.ImageWrapper;
-import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Initializable;

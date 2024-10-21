@@ -1,7 +1,9 @@
 package me.udnekjupiter.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface Listenable<T> {
 
-    void addListener(T listener);
+    void addListener(@NotNull T listener);
 
 }

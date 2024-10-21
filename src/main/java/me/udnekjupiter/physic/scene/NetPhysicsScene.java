@@ -1,16 +1,16 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.physic.core.PhysicCore;
 import me.udnekjupiter.physic.core.EulerCore;
+import me.udnekjupiter.physic.core.PhysicCore;
 import me.udnekjupiter.physic.core.RKMCore;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.StandardObject;
+import me.udnekjupiter.physic.object.StandardObject3d;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 
 import java.util.List;
 
-public class NetPhysicsScene extends EulerPhysicScene {
+public class NetPhysicsScene extends StandardPhysicScene {
     private final CellularNet[] nets;
     public NetPhysicsScene(CellularNet ...nets){
         this.nets = nets;
@@ -34,7 +34,7 @@ public class NetPhysicsScene extends EulerPhysicScene {
                 }
             }
 
-            for (StandardObject object : getAllObjects()) {
+            for (StandardObject3d object : getAllObjects()) {
                 if (!(object instanceof NetVertex)){
                     addCollisionInitiator(object);
                 }

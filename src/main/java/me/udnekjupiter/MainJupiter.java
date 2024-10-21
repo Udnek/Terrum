@@ -1,80 +1,59 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
-import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
-import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject;
-import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
-import me.udnekjupiter.graphic.triangle.ColoredTriangle;
-import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.SphereObject3d;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import me.udnekjupiter.util.Vector3x3;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
-
-import java.awt.*;
 
 public class MainJupiter extends Main{
 
     @Override
+    public @NotNull ApplicationSettings initializeGraphicsSettings() {
+//        return ApplicationSettings.defaultWithRecording(512,
+//                512,
+//                "Default",
+//                16,
+//                PolygonHolder.Type.SMART);
+      return ApplicationSettings.noRecording();
+    }
+    public @NotNull EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
+
+    @Override
     public void run() {
-        CellularNet net1 = new CellularNet("medium_frame.png", new Vector3d());
-        NetPhysicsScene physicScene = new NetPhysicsScene(net1);
 
-        SphereObject sphere = new SphereObject(new Vector3d(5, 11, 5), 3, 10_000, 100);
-        physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 15, 5), 4, 10_000, 100);
-        physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 19, 5), 4, 10_000, 100);
-        physicScene.addObject(sphere);
+        Vector3x3 offset0 = new Vector3x3(
+                new Vector3d(-1, 0.5, 0),
+                new Vector3d(),
+                new Vector3d(0, 0, 1)
+        );
+        Vector3x3 offset1 = new Vector3x3(
+                new Vector3d(1, 0.5, 0),
+                new Vector3d(),
+                new Vector3d(0, 0, 1)
+        );
 
+        CellularNet net0 = new CellularNet("basket.png", new Vector3d(0,0,-3), offset0);
+        CellularNet net1 = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), offset1);
+
+        NetPhysicsScene physicScene = new NetPhysicsScene(net0, net1);
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
+        SphereObject3d sphere = new SphereObject3d(new Vector3d(16, 7, 3), 2.5, 500);
+        physicScene.addObject(sphere);
+//        physicScene.addSphereObject(new Vector3d(3, 11, 3), 1.5, 50);
 
-        RayTracingEngine rayTracing = new RayTracingEngine(graphicScene);
-        KernelRayTracingEngine kernel = new KernelRayTracingEngine(graphicScene);
-        RasterizationEngine rasterizer = new RasterizationEngine(graphicScene);
+        NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
+        RayTracingEngine graphicEngine = new RayTracingEngine(graphicScene);
 
+        Main.runApplication(graphicEngine, physicEngine);
 
-        Main.runApplication(rasterizer, physicEngine);
-
-        graphicScene.getCamera().setPosition(new Vector3d(2, 6, -5));
-        graphicScene.getCamera().setYaw(-31.7f);
-        graphicScene.getCamera().setPitch(24);
-
-
-        for (RenderableObject traceableObject : graphicScene.getTraceableObjects()) {
-            if (traceableObject instanceof MassEssenceObject massEssenceObject){
-                for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
-                    ((ColoredTriangle) renderTriangle).setColor(new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f).getRGB());
-                }
-            }
-        }
-    }
-
-    @Override
-    public ApplicationSettings initializeGraphicsSettings() {
-        ApplicationSettings settings = ApplicationSettings.noRecording();
-        settings.pixelScaling = 1;
-/*        settings.pixelScaling = 60;
-        settings.startWindowWidth = 10 * settings.pixelScaling;
-        settings.startWindowHeight = 10 * settings.pixelScaling;*/
-        return settings;
-        //return ApplicationSettings.defaultWithRecording(64, 64, "evenMoreNewTest3", 2, PolygonHolder.Type.SMART);
-        //return ApplicationSettings.withRecording(512, 512, "newEngineTest", 1, PolygonHolder.Type.SMART, false, false);
-        //return ApplicationSettings.noRecording(2, 6, PolygonHolder.Type.SMART, false, false);
-    }
-
-    @Override
-    public EnvironmentSettings initializePhysicsSettings() {
-        EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
-        environmentSettings.iterationsPerTick = 200;
-        return environmentSettings;
+        graphicScene.getCamera().setPosition(new Vector3d(7, 8, -7.5));
+        graphicScene.getCamera().setPitch(20);
     }
 }

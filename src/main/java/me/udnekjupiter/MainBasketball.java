@@ -7,14 +7,15 @@ import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.SphereObject3d;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import me.udnekjupiter.util.Vector3x3;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class MainBasketball extends Main{
     @Override
-    public ApplicationSettings initializeGraphicsSettings() {
+    public @NotNull ApplicationSettings initializeGraphicsSettings() {
 /*        return ApplicationSettings.defaultWithRecording(200,
                 200,
                 "тачдаун",
@@ -22,7 +23,7 @@ public class MainBasketball extends Main{
                 PolygonHolder.Type.SMART);*/
         return ApplicationSettings.noRecording();
     }
-    public EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
+    public @NotNull EnvironmentSettings initializePhysicsSettings(){return EnvironmentSettings.defaultPreset();}
 
     @Override
     public void run() {
@@ -43,7 +44,7 @@ public class MainBasketball extends Main{
 
         NetPhysicsScene physicScene = new NetPhysicsScene(basketNet, launcherNet);
         PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        SphereObject sphere = new SphereObject(new Vector3d(16, 7, 3), 2.5, 10_000, 500);
+        SphereObject3d sphere = new SphereObject3d(new Vector3d(16, 7, 3), 2.5, 10_000, 500);
         physicScene.addObject(sphere);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);

@@ -3,7 +3,7 @@ package me.udnekjupiter.physic.object;
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.collision.CollisionCalculator;
-import me.udnekjupiter.physic.object.container.VariableContainer;
+import me.udnekjupiter.physic.object.container.PhysicCalculationContainer;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Resettable;
 import org.realityforge.vecmath.Vector3d;
@@ -11,8 +11,8 @@ import org.realityforge.vecmath.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StandardObject extends PhysicObject implements Freezable, Collidable, Resettable {
-    public VariableContainer container;
+public abstract class StandardObject3d extends PhysicObject3d implements Freezable, Collidable, Resettable {
+    public PhysicCalculationContainer container;
     protected List<Collidable> collidingObjects = new ArrayList<>();
     protected Vector3d velocity;
     protected Vector3d acceleration;
@@ -24,7 +24,7 @@ public abstract class StandardObject extends PhysicObject implements Freezable, 
     protected double decayCoefficient;
     protected double mass;
 
-    public StandardObject(Vector3d position) {
+    public StandardObject3d(Vector3d position) {
         super(position);
         this.velocity = new Vector3d(0,0,0);
         this.acceleration = new Vector3d(0,0,0);

@@ -6,8 +6,8 @@ import org.realityforge.vecmath.Vector3d;
 
 import static me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine.GRAVITATIONAL_ACCELERATION;
 
-public class SphereObject extends StandardObject {
-    public SphereObject(Vector3d position, double colliderRadius, double stiffness, double mass) {
+public class SphereObject3d extends StandardObject3d {
+    public SphereObject3d(Vector3d position, double colliderRadius, double stiffness, double mass) {
         super(position);
         this.deltaTime = settings.deltaTime;
         this.mass = mass;
@@ -15,7 +15,7 @@ public class SphereObject extends StandardObject {
         collider = new SphereCollider(colliderRadius, stiffness, this);
     }
 
-    public SphereObject(Vector3d position, double colliderRadius, double mass){
+    public SphereObject3d(Vector3d position, double colliderRadius, double mass){
         this(position, colliderRadius, 10_000, mass);
     }
 

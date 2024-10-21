@@ -1,45 +1,45 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.physic.object.RKMObject;
+import me.udnekjupiter.physic.object.RKMObject3d;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RKMPhysicsScene {
-    protected List<RKMObject> allObjects = new ArrayList<>();
-    protected List<RKMObject> collisionInitiators = new ArrayList<>();
+    protected List<RKMObject3d> allObjects = new ArrayList<>();
+    protected List<RKMObject3d> collisionInitiators = new ArrayList<>();
 
-    public void addObject(RKMObject object){
+    public void addObject(RKMObject3d object){
         allObjects.add(object);}
-    public List<RKMObject> getAllObjects(){
+    public List<RKMObject3d> getAllObjects(){
         return allObjects;
     }
-    public void addCollisionInitiator(RKMObject object){
+    public void addCollisionInitiator(RKMObject3d object){
         collisionInitiators.add(object);
     }
-    public List<RKMObject> getCollisionInitiators(){
+    public List<RKMObject3d> getCollisionInitiators(){
         return collisionInitiators;
     }
     public void updateNextObjectsCoefficients() {
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.calculateNextCoefficient();
         }
     }
     public void updateNextObjectsPhaseVectors(){
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.calculateNextPhaseVector();
         }
     }
 
     // TODO Should try optimising it
     public void updateColliders(){
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.clearCollidingObjects();
         }
-        for (RKMObject targetObject : collisionInitiators) {
-            for (RKMObject anotherObject : allObjects) {
+        for (RKMObject3d targetObject : collisionInitiators) {
+            for (RKMObject3d anotherObject : allObjects) {
                 if (targetObject == anotherObject) continue;
                 if (targetObject.isCollisionIgnored(anotherObject)) continue;
                 if (targetObject.collidingObjectIsAlreadyListed(anotherObject)) continue;
@@ -51,17 +51,17 @@ public abstract class RKMPhysicsScene {
     }
 
     public void updateObjectsPositionDifferentials(){
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.RKMCalculatePositionDifferential();
         }
     }
     public void updateObjectsPositions(){
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.updatePosition();
         }
     }
     public void syncObjectsRKMPhaseVectors(){
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.setCurrentRKMPhaseVector(new Vector3d[]{object.getPosition(), object.getVelocity()});
         }
     }
@@ -86,7 +86,7 @@ public abstract class RKMPhysicsScene {
     }
 
     public void reset() {
-        for (RKMObject object : allObjects) {
+        for (RKMObject3d object : allObjects) {
             object.reset();
         }
     }

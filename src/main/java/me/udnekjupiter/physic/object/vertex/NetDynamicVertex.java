@@ -2,7 +2,6 @@
 package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 

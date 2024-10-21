@@ -2,14 +2,14 @@ package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.SphereCollider;
-import me.udnekjupiter.physic.object.RKMObject;
-import me.udnekjupiter.physic.object.StandardObject;
+import me.udnekjupiter.physic.object.StandardObject3d;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NetVertex extends StandardObject {
+public abstract class NetVertex extends StandardObject3d {
     public Vector3d position;
 
     protected List<NetVertex> neighbors = new ArrayList<>();
@@ -20,7 +20,7 @@ public abstract class NetVertex extends StandardObject {
     }
 
     public Vector3d getPosition() {return position.dup();}
-    public void setPosition(Vector3d position) {this.position = position;}
+    public void setPosition(@NotNull Vector3d position) {this.position = position;}
 
     public void addNeighbors(List<NetVertex> toAddNeighbors){
         for (NetVertex neighbor : toAddNeighbors) {

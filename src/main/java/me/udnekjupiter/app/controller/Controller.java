@@ -1,6 +1,7 @@
 package me.udnekjupiter.app.controller;
 
 import me.udnekjupiter.util.Listenable;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -10,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Controller implements Listenable<ControllerListener>{
+
+    // TODO: 10/7/2024 USE VECTOR ISNTEAD OF LIST
 
     private final List<InputKey> pressedKeys = Collections.synchronizedList(new ArrayList<>());
     private Point mousePreviousPosition;
@@ -23,11 +26,13 @@ public class Controller implements Listenable<ControllerListener>{
         if (instance == null){
             instance = new Controller();
         }
+
+
         return instance;
     }
 
     @Override
-    public void addListener(ControllerListener listener){
+    public void addListener(@NotNull ControllerListener listener){
         listeners.add(listener);
     }
 

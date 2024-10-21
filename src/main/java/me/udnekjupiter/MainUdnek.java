@@ -13,8 +13,9 @@ import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.SphereObject3d;
 import me.udnekjupiter.physic.scene.NetPhysicsScene;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -23,8 +24,6 @@ public class MainUdnek extends Main{
 
     @Override
     public void run() {
-/*        Test.run();
-        if (true) return;*/
 
         NetPhysicsScene physicScene = new NetPhysicsScene(
                 new CellularNet("medium_frame.png",
@@ -34,11 +33,11 @@ public class MainUdnek extends Main{
 /*        SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
         physicScene.addObject(sphere);*/
 
-        SphereObject sphere = new SphereObject(new Vector3d(5, 11, 5), 3, 10_000, 150);
+        SphereObject3d sphere = new SphereObject3d(new Vector3d(5, 11, 5), 1, 100_000, 150);
         physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 15, 5), 4, 10_000, 150);
+        sphere = new SphereObject3d(new Vector3d(5, 15, 5), 1, 100_000, 150);
         physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 19, 5), 4, 10_000, 150);
+        sphere = new SphereObject3d(new Vector3d(5, 19, 5), 1, 100_000, 150);
         physicScene.addObject(sphere);
 /*        sphere = new SphereObject(new Vector3d(5, 23, 5), 4, 10_000, 150);
         physicScene.addObject(sphere);
@@ -72,9 +71,9 @@ public class MainUdnek extends Main{
     }
 
     @Override
-    public ApplicationSettings initializeGraphicsSettings() {
+    public @NotNull ApplicationSettings initializeGraphicsSettings() {
         ApplicationSettings settings = ApplicationSettings.noRecording();
-        settings.pixelScaling = 4;
+        settings.pixelScaling = 1;
 /*        settings.pixelScaling = 60;
         settings.startWindowWidth = 10 * settings.pixelScaling;
         settings.startWindowHeight = 10 * settings.pixelScaling;*/
@@ -85,7 +84,7 @@ public class MainUdnek extends Main{
     }
 
     @Override
-    public EnvironmentSettings initializePhysicsSettings() {
+    public @NotNull EnvironmentSettings initializePhysicsSettings() {
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
         environmentSettings.iterationsPerTick = 200;
         return environmentSettings;

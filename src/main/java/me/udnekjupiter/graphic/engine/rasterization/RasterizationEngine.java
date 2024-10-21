@@ -3,11 +3,12 @@ package me.udnekjupiter.graphic.engine.rasterization;
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.engine.GraphicScene3dEngine;
+import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.TransparentRasterizationFrame;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RasterizationEngine extends GraphicScene3dEngine {
+public class RasterizationEngine extends GraphicEngine3d {
 
     public static final int WIREFRAME_COLOR = Color.CYAN.getRGB();
     private final TransparentRasterizationFrame frame;
@@ -30,7 +31,7 @@ public class RasterizationEngine extends GraphicScene3dEngine {
     }
 
     @Override
-    public BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
+    public @NotNull BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
         width = Math.max(rawWidth / Application.APPLICATION_SETTINGS.pixelScaling, 1);

@@ -8,15 +8,23 @@ import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.scene.PhysicScene;
+import me.udnekjupiter.physic.scene.PhysicScene3d;
 import me.udnekjupiter.util.Resettable;
+import org.jetbrains.annotations.NotNull;
 
 public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener, ControllerListener, Resettable {
-    private final PhysicScene physicScene;
+
+    double GRAVITATIONAL_ACCELERATION = -9.80665;
+    double MAX_VELOCITY = 500;
+    double MAX_FORCE = 50000;
+    double MAX_DEPTH = 0.1;     //Жесткое ограничение, отражающее максимальную глубину на которую один хитбокс может погрузиться в другой
+
+
+    private final PhysicScene3d physicScene;
     private int beforePauseIPT = Application.ENVIRONMENT_SETTINGS.iterationsPerTick;
 //    private int internalCounter = 0;
 
-    public PrimitiveScenePhysicEngine(PhysicScene physicScene){
+    public PrimitiveScenePhysicEngine(PhysicScene3d physicScene){
         this.physicScene = physicScene;
     }
     @Override
@@ -36,7 +44,7 @@ public class PrimitiveScenePhysicEngine implements PhysicEngine, ConsoleListener
     }
 
     @Override
-    public void handleCommand(Command command, Object[] args) {
+    public void handleCommand(@NotNull Command command, Object[] args) {
         if (command != Command.SET_ITERATIONS_PER_TICK) return;
         Application.ENVIRONMENT_SETTINGS.iterationsPerTick = (int) args[0];
     }

@@ -12,6 +12,7 @@ import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject;
 import me.udnekjupiter.util.*;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -60,7 +61,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected abstract LightSource initializeLightSource();
     protected abstract List<FixedSizeObject> initializeFixedSizeObjects();
 
-    public Camera getCamera() { return camera;}
+    public @NotNull Camera getCamera() { return camera;}
     public LightSource getLightSource() {return lightSource;}
     public List<RenderableObject> getTraceableObjects() {return renderableObjects;}
     public List<FixedSizeObject> getFixedSizeObjects() {return fixedSizeObjects;}
@@ -86,6 +87,10 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
 
         debugMenu.addTextToLeft("DraggingObject: " + draggingObject);
         debugMenu.addTextToLeft("SelectedObject:" + selectedObject);
+        if (selectedObject != null && selectedObject instanceof Positioned positioned){
+            debugMenu.addTextToLeft("SelectedObjectPos:" + positioned.getPosition().asString());
+        }
+
 
         debugMenu.addTextToLeft("MouseCurrentPosition: " + controller.getMouseCurrentPosition());
         Vector3d position = camera.getPosition();
@@ -136,7 +141,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
 
 
     public void keyContinuouslyPressed(InputKey inputKey){
-        final float deltaTime = (float) Application.getFrameDeltaTime();
+        final float deltaTime = (float) Application.getInstance().getFrameDeltaTime();
         final float moveSpeed = 5f * deltaTime;
         final float rotateSpeed = 60f * deltaTime;
         switch (inputKey){
@@ -156,7 +161,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     public void handleMousePressedDifference(){
         InputKey mouseKey = controller.getMouseKey();
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
-            float sensitivity = (float) (20f * Math.min(Application.getFrameDeltaTime(), 0.01));
+            float sensitivity = (float) (20f * Math.min(Application.getInstance().getFrameDeltaTime(), 0.01));
             Point mouseDifference = controller.getMouseDifference();
             camera.rotateYaw(mouseDifference.x*-sensitivity);
             camera.rotatePitch(mouseDifference.y*sensitivity);

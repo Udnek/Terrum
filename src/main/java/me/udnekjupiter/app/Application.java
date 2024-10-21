@@ -13,6 +13,7 @@ import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import me.udnekjupiter.util.Utils;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.image.BufferedImage;
 
@@ -24,7 +25,7 @@ public class Application implements ConsoleListener, ControllerListener {
     public static final ApplicationSettings APPLICATION_SETTINGS = Main.getMain().initializeGraphicsSettings();
     public static final EnvironmentSettings ENVIRONMENT_SETTINGS = Main.getMain().initializePhysicsSettings();
 
-    private PhysicEngine physicEngine;
+    private PhysicEngine<?> physicEngine;
     private GraphicEngine graphicEngine;
     private WindowManager windowManager;
     private Console console;
@@ -35,18 +36,20 @@ public class Application implements ConsoleListener, ControllerListener {
 
     private Application(){}
 
-    public static double getFrameDeltaTime(){
+    public double getFrameDeltaTime(){
         return (double) getInstance().applicationData.frameRenderTime / Utils.NANOS_IN_SECOND;
     }
 
     public static Application getInstance() {
-        if (instance == null){
-            instance = new Application();
-        }
+        if (instance == null){instance = new Application();}
         return instance;
     }
 
-    public void initialize(GraphicEngine graphicEngine, PhysicEngine physicEngine){
+    public @NotNull PhysicEngine<?> getPhysicEngine() {return physicEngine;}
+
+    public @NotNull GraphicEngine getGraphicEngine() {return graphicEngine;}
+
+    public void initialize(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine){
         windowManager = WindowManager.getInstance();
 
         this.graphicEngine = graphicEngine;
@@ -206,7 +209,7 @@ public class Application implements ConsoleListener, ControllerListener {
     }
 
     @Override
-    public void handleCommand(Command command, Object[] args) {
+    public void handleCommand(@NotNull Command command, Object[] args) {
         switch (command){
             case SET_CORES -> APPLICATION_SETTINGS.cores = (int) args[0];
             case SET_DO_LIGHT -> APPLICATION_SETTINGS.doLight = (boolean) args[0];
