@@ -17,6 +17,7 @@ public class EulerContainer extends PhysicVariableContainer {
         this.velocity = other.velocity;
         this.acceleration = other.acceleration;
         this.initialPosition = other.initialPosition;
+        this.appliedForce = other.appliedForce;
         this.mass = other.mass;
     }
 }

@@ -6,5 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public interface PhysicObject3d extends Freezable, PhysicObject<PhysicVariableContainer>{
-    @NotNull Vector3d getAppliedForce(@NotNull Vector3d position);
+    //@NotNull Vector3d getAppliedForce(@NotNull Vector3d position);
+    void applyForce(@NotNull Vector3d position);
 }
