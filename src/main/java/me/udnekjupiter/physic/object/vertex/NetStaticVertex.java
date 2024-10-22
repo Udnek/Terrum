@@ -24,10 +24,7 @@ public class NetStaticVertex extends NetVertex {
     }
     
     @Override
-    public @NotNull Vector3d getAppliedForce(@NotNull Vector3d position) {
-        appliedForce.mul(0);
-        return appliedForce;
-    }
+    public void calculateForces(@NotNull Vector3d position) {}
 
     @Override
     public void unfreeze(){}

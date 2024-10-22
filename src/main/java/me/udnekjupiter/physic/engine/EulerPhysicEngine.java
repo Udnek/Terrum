@@ -8,6 +8,8 @@ import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
+import java.util.List;
+
 public class EulerPhysicEngine extends PhysicEngine3d {
     public EulerPhysicEngine(PhysicScene3d scene, EnvironmentSettings settings)
     {
@@ -16,37 +18,48 @@ public class EulerPhysicEngine extends PhysicEngine3d {
     }
 
     public void tick() {
-        calculatePhaseDifferentials();
-        updatePositions();
+        List<? extends PhysicObject3d> objects = scene.getAllObjects();
+        for (int i = 0; i < settings.iterationsPerTick; i++) {
+            recalculateForces(objects);
+            calculatePhaseDifferentials(objects);
+            updatePositions(objects);
+        }
     }
 
-    public void calculatePhaseDifferentials(){
-        for (PhysicObject3d object : scene.getAllObjects()) {
+    public void calculatePhaseDifferentials(List<? extends PhysicObject3d> objects){
+        for (PhysicObject3d object : objects) {
             EulerContainer container = (EulerContainer) object.getContainer();
             container.velocityDifferential = calculateAcceleration(object).mul(settings.deltaTime);
             container.positionDifferential = container.velocity.dup().mul(settings.deltaTime);
         }
     }
 
+    protected void updatePositions(List<? extends PhysicObject3d> objects){
+        for (PhysicObject3d object : objects) {
+            EulerContainer container = (EulerContainer) object.getContainer();
+            container.position.add(container.positionDifferential);
+            container.velocity.add(container.velocityDifferential);
+        }
+    }
+
+    protected void recalculateForces(List<? extends PhysicObject3d> objects){
+        for (PhysicObject3d object : objects) {
+            object.getContainer().appliedForce.mul(0);
+        }
+        for (PhysicObject3d object : objects) {
+            object.calculateForces(object.getContainer().position);
+        }
+    }
+
     protected Vector3d calculateAcceleration(PhysicObject3d object){
         EulerContainer container = (EulerContainer) object.getContainer();
-
-        Vector3d appliedForce = object.getAppliedForce(container.position.dup());
         Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
-        Vector3d resultAcceleration = appliedForce.dup().sub(decayValue);
+        Vector3d resultAcceleration = container.appliedForce.dup().sub(decayValue);
         resultAcceleration.div(container.mass);
         resultAcceleration.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION;
 
         return resultAcceleration;
 
-    }
-
-    protected void updatePositions(){
-        for (PhysicObject3d object : scene.getAllObjects()) {
-            EulerContainer container = (EulerContainer) object.getContainer();
-            container.position.add(container.positionDifferential);
-            container.velocity.add(container.velocityDifferential);
-        }
     }
 
     @Override
