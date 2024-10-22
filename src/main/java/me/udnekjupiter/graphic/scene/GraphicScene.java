@@ -10,5 +10,8 @@ import java.util.List;
 public interface GraphicScene<GObject extends GraphicObject> extends Initializable {
       @NotNull Camera getCamera();
       void addObject(@NotNull GObject object);
+      default void addObjects(@NotNull Iterable<? extends @NotNull GObject> objects){
+            for (@NotNull GObject object : objects) addObject(object);
+      }
       @NotNull List<? extends @NotNull GObject> getObjects();
 }
