@@ -20,6 +20,7 @@ public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements Phy
 
 
     protected Scene scene;
+    protected EnvironmentSettings settings;
     protected int beforePauseIPT = StandartApplication.ENVIRONMENT_SETTINGS.iterationsPerTick;
 
     @Override

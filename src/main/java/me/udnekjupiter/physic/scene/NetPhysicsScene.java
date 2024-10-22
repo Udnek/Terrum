@@ -1,11 +1,6 @@
 package me.udnekjupiter.physic.scene;
 
-import me.udnekjupiter.app.StandartApplication;
-import me.udnekjupiter.physic.core.EulerCore;
-import me.udnekjupiter.physic.core.PhysicCore;
-import me.udnekjupiter.physic.core.RKMCore;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.StandardObject3d;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 
 import java.util.List;
