@@ -4,12 +4,11 @@ import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
-import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.object.SphereObject;
-import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -45,7 +44,7 @@ public class MainBasketball extends Main{
         sphere.setContainer(new PhysicVariableContainer(new Vector3d()));
 
         physicEngine.addObject(sphere);
-        graphicScene.addObject(new MassEssenceObject(sphere));
+        graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 
         graphicScene.getCamera().setPosition(new Vector3d(0, 0, 0));
         graphicScene.getCamera().setPitch(10);

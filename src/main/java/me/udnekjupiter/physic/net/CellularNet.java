@@ -2,19 +2,15 @@
 package me.udnekjupiter.physic.net;
 
 import me.udnekjupiter.file.ImageWrapper;
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import me.udnekjupiter.util.Freezable;
-import me.udnekjupiter.util.Initializable;
-import me.udnekjupiter.util.Resettable;
 import me.udnekjupiter.util.Vector3x3;
 import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 //TODO Implements angular net rotation

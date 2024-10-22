@@ -14,9 +14,9 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
 
     private static final double SCALE_MULTIPLIER = 0.2;
     private final NetVertex netVertex;
-    public VertexObject(Vector3d position, NetVertex netVertex) {
+    public VertexObject(NetVertex netVertex) {
         super(
-                position,
+                netVertex.getPosition(),
                 -1*SCALE_MULTIPLIER,
                 -1*SCALE_MULTIPLIER,
                 1*SCALE_MULTIPLIER,

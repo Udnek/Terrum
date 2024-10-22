@@ -1,9 +1,9 @@
 package me.udnekjupiter.physic.engine;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.container.EulerContainer;
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.container.EulerContainer;
-import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;

@@ -3,7 +3,7 @@ package me.udnekjupiter.graphic.object.renderable;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
-import me.udnekjupiter.util.PositionedObject;
+import me.udnekjupiter.util.Positioned;
 import me.udnekjupiter.util.Tickable;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
@@ -14,16 +14,16 @@ import java.util.function.Consumer;
 
 public class SpringObject extends GraphicObject3d implements Tickable {
 
-    protected PositionedObject tipA;
-    protected PositionedObject tipB;
+    protected Positioned tipA;
+    protected Positioned tipB;
     protected RenderableTriangle plane;
 
     protected final int color = Color.WHITE.getRGB();
 
-    public SpringObject(PositionedObject tipA, PositionedObject tipSecond) {
+    public SpringObject(@NotNull me.udnekjupiter.physic.object.SpringObject springObject) {
         super(new Vector3d());
-        this.tipA = tipA;
-        this.tipB = tipSecond;
+        this.tipA = springObject.getEndpointA();
+        this.tipB = springObject.getEndpointB();
         this.plane = new ColoredTriangle(new Vector3d(), new Vector3d(), new Vector3d(), color);
     }
 

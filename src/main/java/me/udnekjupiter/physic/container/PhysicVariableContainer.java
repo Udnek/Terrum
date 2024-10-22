@@ -1,9 +1,8 @@
-package me.udnekjupiter.physic.object.container;
+package me.udnekjupiter.physic.container;
 
+import me.udnekjupiter.util.VariableContainer;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
-
-import java.util.Vector;
 
 public class PhysicVariableContainer implements VariableContainer {
     public @NotNull Vector3d position;

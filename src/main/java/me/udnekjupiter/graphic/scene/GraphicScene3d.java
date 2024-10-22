@@ -10,6 +10,12 @@ import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.light.LightSource;
+import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
+import me.udnekjupiter.graphic.object.renderable.VertexObject;
+import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.SpringObject;
+import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +54,18 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
     @Override
     @NotNull
     public Camera getCamera() {return camera;}
+
+    // TODO TRY IMPLEMENTING SAME BEHAVIOUR IN ANOTHER WAY
+    public void tryRepresentingAsGraphic(@NotNull Iterable<? extends @NotNull PhysicObject3d> physicObjects){
+        for (@NotNull PhysicObject3d physicObject : physicObjects) {
+            switch (physicObject) {
+                case SphereObject sphereObject -> addObject(new MassEssenceObject(sphereObject));
+                case NetVertex vertex -> addObject(new VertexObject(vertex));
+                case SpringObject springObject -> addObject(new me.udnekjupiter.graphic.object.renderable.SpringObject(springObject));
+                default -> {}
+            }
+        }
+    }
 
     @Override
     public void addObject(@NotNull GraphicObject3d object) {

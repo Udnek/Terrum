@@ -1,30 +1,33 @@
 package me.udnekjupiter.physic.object;
 
-import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 public class SpringObject extends ImplementedPhysicObject3d {
-    private PhysicObject3d endpoint1;
-    private PhysicObject3d endpoint2;
+    private PhysicObject3d endpointA;
+    private PhysicObject3d endpointB;
     private final double relaxedLength;
     private final double stiffness;
 
-    SpringObject(PhysicObject3d endpoint1, PhysicObject3d endpoint2, double relaxedLength, double stiffness)
+    // TODO THING ABOUT NULLABLE ENDPOINTS, MASS, COLLIDER
+    public SpringObject(@NotNull PhysicObject3d endpointA, @NotNull PhysicObject3d endpointB, double relaxedLength, double stiffness)
     {
-        this.endpoint1 = endpoint1;
-        this.endpoint2 = endpoint2;
+        this.endpointA = endpointA;
+        this.endpointB = endpointB;
         this.relaxedLength = relaxedLength;
         this.stiffness = stiffness;
     }
 
     @Override
     public void calculateForces(@NotNull Vector3d pos) {
-        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(endpoint1.getPosition(), endpoint2.getPosition());
-        double elasticForce = stiffness * VectorUtils.distance(endpoint1.getPosition(), endpoint2.getPosition()) - relaxedLength;
-        endpoint1.getContainer().appliedForce.add(normalizedDirection.mul(elasticForce));
-        endpoint2.getContainer().appliedForce.add((normalizedDirection.mul(elasticForce)).mul(-1));
+        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(endpointA.getPosition(), endpointB.getPosition());
+        double elasticForce = stiffness * VectorUtils.distance(endpointA.getPosition(), endpointB.getPosition()) - relaxedLength;
+        endpointA.getContainer().appliedForce.add(normalizedDirection.mul(elasticForce));
+        endpointB.getContainer().appliedForce.add((normalizedDirection.mul(elasticForce)).mul(-1));
     }
 
+    public @NotNull PhysicObject3d getEndpointA() {return endpointA;}
+
+    public @NotNull PhysicObject3d getEndpointB() {return endpointB;}
 }

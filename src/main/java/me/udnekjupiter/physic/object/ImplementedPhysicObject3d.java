@@ -1,7 +1,6 @@
 package me.udnekjupiter.physic.object;
 
-import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
-import me.udnekjupiter.physic.scene.PhysicScene3d;
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 

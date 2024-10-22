@@ -1,4 +1,4 @@
-package me.udnekjupiter.physic.object.container;
+package me.udnekjupiter.physic.container;
 
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;

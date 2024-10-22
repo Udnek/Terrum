@@ -1,8 +1,8 @@
 package me.udnekjupiter.physic.object;
 
-import me.udnekjupiter.physic.object.container.VariableContainer;
 import me.udnekjupiter.util.Positioned;
 import me.udnekjupiter.util.Resettable;
+import me.udnekjupiter.util.VariableContainer;
 import org.jetbrains.annotations.NotNull;
 
 public interface PhysicObject<ContainerType extends VariableContainer> extends Resettable, Positioned {
