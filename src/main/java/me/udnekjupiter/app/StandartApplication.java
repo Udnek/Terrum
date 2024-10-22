@@ -1,6 +1,5 @@
 package me.udnekjupiter.app;
 
-import me.udnekjupiter.Main;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
@@ -10,7 +9,6 @@ import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
-import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import me.udnekjupiter.util.Utils;
 import org.jetbrains.annotations.NotNull;
@@ -19,30 +17,32 @@ import java.awt.image.BufferedImage;
 
 public class StandartApplication implements ConsoleListener, ControllerListener, Application {
 
-    // TODO: 7/4/2024 SOMETHING ABOUT TPS, IPT, DELTA TIME
-    public static final int PHYSIC_TICKS_PER_SECOND = 50;
-    public static final DebugMenu DEBUG_MENU = new DebugMenu();
-    public static final ApplicationSettings APPLICATION_SETTINGS = Main.getMain().initializeGraphicsSettings();
-    public static final EnvironmentSettings ENVIRONMENT_SETTINGS = Main.getMain().initializePhysicsSettings();
-
     private PhysicEngine<?> physicEngine;
     private GraphicEngine graphicEngine;
     private WindowManager windowManager;
     private Console console;
     private ApplicationData applicationData;
     private VideoRecorder videoRecorder;
+    private final ApplicationSettings settings;
+    private final DebugMenu debugMenu = new DebugMenu();
 
-    public StandartApplication(){}
+    public StandartApplication(@NotNull ApplicationSettings settings){
+        this.settings = settings;
+    }
 
     @Override
     public double getFrameDeltaTime(){
         return (double) applicationData.frameRenderTime / Utils.NANOS_IN_SECOND;
     }
 
-
+    @Override
+    @NotNull
+    public DebugMenu getDebugMenu() {return debugMenu;}
+    @Override
+    @NotNull
+    public ApplicationSettings getSettings() {return settings;}
     @Override
     public @NotNull PhysicEngine<?> getPhysicEngine() {return physicEngine;}
-
     @Override
     public @NotNull GraphicEngine getGraphicEngine() {return graphicEngine;}
 
@@ -57,7 +57,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
         console.addListener(this);
         Controller.getInstance().addListener(this);
         videoRecorder = new VideoRecorder();
-        videoRecorder.start(APPLICATION_SETTINGS);
+        videoRecorder.start(settings);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -98,8 +98,8 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
             graphicTicks = 1;
         }
 
-        int renderWidth = APPLICATION_SETTINGS.videoWidth;
-        int renderHeight = APPLICATION_SETTINGS.videoHeight;
+        int renderWidth = settings.videoWidth;
+        int renderHeight = settings.videoHeight;
 
         while (true){
 
@@ -110,7 +110,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
             for (int i = 0; i < graphicTicks; i++) {
 
                 windowManager.tick();
-                DEBUG_MENU.reset();
+                debugMenu.reset();
                 addDebugInformation();
 
                 BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
@@ -129,7 +129,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     private void liveGraphicLoop(){
         while (true){
             windowManager.tick();
-            DEBUG_MENU.reset();
+            debugMenu.reset();
             addDebugInformation();
 
             int width = windowManager.getWidth();
@@ -138,7 +138,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
             BufferedImage rendered = graphicEngine.renderFrame(width, height);
             BufferedImage frame = Utils.resizeImage(rendered, width, height);
             // TODO: 7/12/2024 MOVE DEBUG RENDER INTO GRAPHIC ENGINE
-            DEBUG_MENU.draw(frame, 15);
+            debugMenu.draw(frame, 15);
             windowManager.setFrame(frame);
 
             applicationData.framePerformed();
@@ -152,7 +152,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
         graphicEngine.initialize();
         console.start();
 
-        if (APPLICATION_SETTINGS.recordVideo){
+        if (settings.recordVideo){
             Thread renderThread = new Thread(this::videoRenderLoop);
             renderThread.setName("RenderThread");
             renderThread.start();
@@ -179,32 +179,32 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
 
     @Override
     public void addDebugInformation(){
-        if (!DEBUG_MENU.isEnabled()) return;
+        if (!debugMenu.isEnabled()) return;
 
-        DEBUG_MENU.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
-        DEBUG_MENU.addTextToRight(
-                "Cores: " + APPLICATION_SETTINGS.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
+        debugMenu.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
+        debugMenu.addTextToRight(
+                "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );
-        DEBUG_MENU.addTextToRight(
+        debugMenu.addTextToRight(
                 "Size: " + windowManager.getWidth() + "x" + windowManager.getHeight()
         );
-        DEBUG_MENU.addTextToRight("RenderTime: " + Utils.roundToPrecision((double) applicationData.frameRenderTime / Utils.NANOS_IN_SECOND, 5));
-        DEBUG_MENU.addTextToRight("FramesRendered: " + applicationData.framesAmount);
-        DEBUG_MENU.addTextToRight("PixelScaling: " + APPLICATION_SETTINGS.pixelScaling);
+        debugMenu.addTextToRight("RenderTime: " + Utils.roundToPrecision((double) applicationData.frameRenderTime / Utils.NANOS_IN_SECOND, 5));
+        debugMenu.addTextToRight("FramesRendered: " + applicationData.framesAmount);
+        debugMenu.addTextToRight("PixelScaling: " + settings.pixelScaling);
 
-        DEBUG_MENU.addTextToRight("");
+        debugMenu.addTextToRight("");
 
         double workingTime = (double) (System.nanoTime() - applicationData.applicationStartTime) / Utils.NANOS_IN_SECOND;
         double physicSeconds = (double) applicationData.physicTicks /PHYSIC_TICKS_PER_SECOND;
 
-        DEBUG_MENU.addTextToRight(
+        debugMenu.addTextToRight(
                 "ApplicationWorkingTime: " +
                 Utils.roundToPrecision(workingTime, 3)
         );
-        DEBUG_MENU.addTextToRight("PhysicTickTime: " + Utils.roundToPrecision((double) applicationData.physicTickTime /Utils.NANOS_IN_SECOND, 5));
-        DEBUG_MENU.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicSeconds, 3));
-        DEBUG_MENU.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicSeconds, 3));
-        DEBUG_MENU.addTextToRight("PhysicTicks: " + applicationData.physicTicks);
+        debugMenu.addTextToRight("PhysicTickTime: " + Utils.roundToPrecision((double) applicationData.physicTickTime /Utils.NANOS_IN_SECOND, 5));
+        debugMenu.addTextToRight("PhysicSeconds: " + Utils.roundToPrecision(physicSeconds, 3));
+        debugMenu.addTextToRight("PhysicBehindTime: " + Utils.roundToPrecision(workingTime-physicSeconds, 3));
+        debugMenu.addTextToRight("PhysicTicks: " + applicationData.physicTicks);
 
 
     }
@@ -212,18 +212,18 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     @Override
     public void handleCommand(@NotNull Command command, Object[] args) {
         switch (command){
-            case SET_CORES -> APPLICATION_SETTINGS.cores = (int) args[0];
-            case SET_DO_LIGHT -> APPLICATION_SETTINGS.doLight = (boolean) args[0];
-            case SET_DEBUG_COLORIZE_PLANES -> APPLICATION_SETTINGS.debugColorizePlanes = (boolean) args[0];
-            case SET_PIXEL_SCALING -> APPLICATION_SETTINGS.pixelScaling = (int) args[0];
+            case SET_CORES -> settings.cores = (int) args[0];
+            case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
+            case SET_DEBUG_COLORIZE_PLANES -> settings.debugColorizePlanes = (boolean) args[0];
+            case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
             case SET_WINDOW_SIZE -> windowManager.setSize((int) args[0], (int) args[1]);
-            case SET_DRAW_PLANES -> APPLICATION_SETTINGS.drawPlanes = (boolean) args[0];
-            case SET_DRAW_WIREFRAME -> APPLICATION_SETTINGS.drawWireframe = (boolean) args[0];
+            case SET_DRAW_PLANES -> settings.drawPlanes = (boolean) args[0];
+            case SET_DRAW_WIREFRAME -> settings.drawWireframe = (boolean) args[0];
         }
     }
 
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
-        if (inputKey == InputKey.DEBUG_MENU && pressed) DEBUG_MENU.toggle();
+        if (inputKey == InputKey.DEBUG_MENU && pressed) debugMenu.toggle();
     }
 }

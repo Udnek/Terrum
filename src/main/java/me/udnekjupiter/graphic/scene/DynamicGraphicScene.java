@@ -1,7 +1,6 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
-import me.udnekjupiter.graphic.object.fixedsize.FixedSizeObject3d;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.renderable.AxisCrosshairObject;
@@ -39,11 +38,6 @@ public class DynamicGraphicScene extends GraphicScene3d {
     @Override
     protected LightSource initializeLightSource() {
         return new PointLight(new Vector3d(1, 2, 1));
-    }
-
-    @Override
-    protected List<FixedSizeObject3d> initializeFixedSizeObjects() {
-        return null;
     }
 
     @Override

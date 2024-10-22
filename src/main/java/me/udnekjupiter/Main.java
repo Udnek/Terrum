@@ -37,7 +37,7 @@ public abstract class Main{
     }
 
     public void runApplication(GraphicEngine graphicEngine, PhysicEngine<?> physicEngine){
-        application = new StandartApplication();
+        application = new StandartApplication(initializeGraphicsSettings());
         application.initialize(graphicEngine, physicEngine);
         application.start();
     }

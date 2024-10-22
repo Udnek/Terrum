@@ -2,7 +2,6 @@ package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.Main;
 import me.udnekjupiter.app.DebugMenu;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
@@ -46,7 +45,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
 
         controller = Controller.getInstance();
         controller.addListener(this);
-        debugMenu = StandartApplication.DEBUG_MENU;
+        debugMenu = Main.getMain().getApplication().getDebugMenu();
 
     }
 

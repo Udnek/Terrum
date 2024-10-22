@@ -5,7 +5,7 @@ import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.renderable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
-import me.udnekjupiter.physic.object.PhysicObject;
+import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.SphereObject;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -29,7 +29,7 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
         sphereObject.setPosition(position);
     }
     @Override
-    public @NotNull PhysicObject getPhysicRepresentation() {
+    public @NotNull PhysicObject3d getPhysicRepresentation() {
         return sphereObject;
     }
     @Override
