@@ -1,8 +1,11 @@
 package me.udnekjupiter.app.window;
 
+import me.udnekjupiter.Main;
+import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.file.FileManager;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.util.Initializable;
 import me.udnekjupiter.util.Tickable;
 
@@ -34,12 +37,13 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
     @Override
     public void initialize() {
 
+        ApplicationSettings settings = Main.getMain().getApplication().getSettings();
         frame = new Frame();
         panel = new Panel();
 
         frame.add(panel);
 
-        panel.setPreferredSize(new Dimension(StandartApplication.APPLICATION_SETTINGS.startWindowWidth, StandartApplication.APPLICATION_SETTINGS.startWindowHeight));
+        panel.setPreferredSize(new Dimension(settings.startWindowWidth, settings.startWindowHeight));
 
         frame.setIgnoreRepaint(true);
         frame.setFocusable(true);
@@ -59,7 +63,7 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
     @Override
     public void windowClosing(WindowEvent e) {
         frame.dispose();
-        StandartApplication.getInstance().stop();
+        Main.getMain().getApplication().stop();
     }
 
     public void setFrame(Image image){

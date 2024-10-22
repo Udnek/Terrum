@@ -5,7 +5,7 @@ import org.realityforge.vecmath.Vector3d;
 
 import java.util.Vector;
 
-public abstract class PhysicVariableContainer implements VariableContainer {
+public class PhysicVariableContainer implements VariableContainer {
     public @NotNull Vector3d position;
     public @NotNull Vector3d velocity = new Vector3d();
     public @NotNull Vector3d acceleration = new Vector3d();
@@ -15,5 +15,4 @@ public abstract class PhysicVariableContainer implements VariableContainer {
         this.position = position;
         initialPosition = position.dup();
     }
-    protected PhysicVariableContainer(){}
 }

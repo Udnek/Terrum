@@ -13,7 +13,7 @@ public class EulerContainer extends PhysicVariableContainer {
 
     public EulerContainer(@NotNull PhysicVariableContainer other)
     {
-        this.position = other.position;
+        super(other.position);
         this.velocity = other.velocity;
         this.acceleration = other.acceleration;
         this.initialPosition = other.initialPosition;

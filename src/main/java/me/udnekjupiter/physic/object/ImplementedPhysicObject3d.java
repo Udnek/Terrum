@@ -1,6 +1,7 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
+import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
@@ -8,8 +9,6 @@ public abstract class ImplementedPhysicObject3d implements PhysicObject3d {
 
     protected PhysicVariableContainer container;
     protected boolean frozen;
-
-    public ImplementedPhysicObject3d(){}
 
     @Override
     public @NotNull PhysicVariableContainer getContainer() {return container;}

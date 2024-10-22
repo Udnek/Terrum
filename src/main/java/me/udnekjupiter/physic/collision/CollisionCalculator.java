@@ -1,10 +1,9 @@
 package me.udnekjupiter.physic.collision;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
-
-import static me.udnekjupiter.physic.engine.PhysicEngine.MAX_DEPTH;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public abstract class CollisionCalculator {
@@ -17,7 +16,7 @@ public abstract class CollisionCalculator {
             Vector3d otherPosition = collidingObject.getPosition();
             Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
             double distance = VectorUtils.distance(thisPosition, otherPosition);
-            double maxDepth = StandartApplication.ENVIRONMENT_SETTINGS.maxDepth;
+            double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
             double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - maxDepth;
             double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
             double criticalDistance = thisCriticalRadius + otherCriticalRadius;
@@ -32,6 +31,7 @@ public abstract class CollisionCalculator {
 
     public static Vector3d getHookeCollisionForce(Collidable thisObject){
         Vector3d collisionForce = new Vector3d();
+        double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
         for (Collidable collidingObject : thisObject.getCollidingObjects()) {
             if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
 
@@ -40,8 +40,8 @@ public abstract class CollisionCalculator {
             double distance = VectorUtils.distance(thisPosition, otherPosition);
             SphereCollider thisCollider = (SphereCollider) thisObject.getCollider();
             double maxDistance = thisCollider.radius + otherSphereCollider.radius;
-            double thisCriticalRadius = thisCollider.radius - MAX_DEPTH;
-            double otherCriticalRadius = otherSphereCollider.radius - MAX_DEPTH;
+            double thisCriticalRadius = thisCollider.radius - maxDepth;
+            double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
             double minCriticalRadiiDistance = thisCriticalRadius + otherCriticalRadius;
             double stableDistance = maxDistance - minCriticalRadiiDistance;
             double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);

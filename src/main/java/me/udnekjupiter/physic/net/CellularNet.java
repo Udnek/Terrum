@@ -2,27 +2,28 @@
 package me.udnekjupiter.physic.net;
 
 import me.udnekjupiter.file.ImageWrapper;
+import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Initializable;
 import me.udnekjupiter.util.Resettable;
 import me.udnekjupiter.util.Vector3x3;
+import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class CellularNet implements Initializable, Freezable, Resettable {
+//TODO Implements angular net rotation
+public class CellularNet {
     private Vector3d globalOffset;
     private Vector3x3 perPositionMultiplier;
     //TODO Try scaling net, so system would look more authentic
-    private boolean frozen;
     private int sizeX;
     private int sizeZ;
-    public double potentialEnergy;
-    public double kineticEnergy;
-    public double fullEnergy;
     private final String mapImageName;
     private NetVertex[][] netMap;
 
@@ -30,6 +31,7 @@ public class CellularNet implements Initializable, Freezable, Resettable {
         this.mapImageName = mapImageName;
         this.globalOffset = globalOffset;
         this.perPositionMultiplier = perPositionMultiplier;
+        initialize();
     }
     public CellularNet(String mapImageName, Vector3d globalOffset) {
         this(mapImageName, globalOffset, new Vector3x3(
@@ -44,8 +46,6 @@ public class CellularNet implements Initializable, Freezable, Resettable {
 
     public int getSizeX(){return this.sizeX;}
     public int getSizeZ(){return this.sizeZ;}
-    public NetVertex getVertex(int x, int z){ return netMap[z][x];}
-    public void setVertex(NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
 
     public void resetVertexPosition(int x, int z){
         Vector3d multiplier = new Vector3d();
@@ -54,6 +54,9 @@ public class CellularNet implements Initializable, Freezable, Resettable {
 
         getVertex(x, z).setPosition(multiplier.add(globalOffset));
     }
+    public @Nullable NetVertex getVertex(int x, int z){ return netMap[z][x];}
+    public void setVertex(NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
+
     public boolean isInBounds(int x, int z) {return (x >= 0 && x < sizeX && z >= 0 && z < sizeZ);}
     public List<NetVertex> getNeighbourVertices(int posX, int posZ) {
         List<NetVertex> vertices = new ArrayList<>();
@@ -74,30 +77,20 @@ public class CellularNet implements Initializable, Freezable, Resettable {
         }
         return vertices;
     }
-    public List<NetVertex> getVerticesObjects(){
-        List<NetVertex> vertices = new ArrayList<>();
+    public List<PhysicObject3d> getVerticesObjects(){
+        List<PhysicObject3d> vertices = new ArrayList<>();
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
+                if (getVertex(j,i) == null) continue;
                 vertices.add(getVertex(j, i));
             }
         }
         return vertices;
     }
 
-    @Override
     public void initialize() {
         initializeNet();
         initializeNeighbours();
-    }
-
-    public void reset(){
-        for (int z = 0; z < sizeZ; z++) {
-            for (int x = 0; x < sizeX; x++) {
-                if (getVertex(x, z) == null) continue;
-                getVertex(x, z).reset();
-                resetVertexPosition(x, z);
-            }
-        }
     }
 
     private void initializeNet() {
@@ -114,6 +107,7 @@ public class CellularNet implements Initializable, Freezable, Resettable {
                 Color color = reader.getColor(x, z);
                 NetVertex netVertex = VertexColor.getVertex(color);
                 if (netVertex == null) continue;
+                netVertex.setContainer(new PhysicVariableContainer(new Vector3d(x, 0, z)));
                 setVertex(netVertex, x, z);
                 resetVertexPosition(x, z);
             }
@@ -124,35 +118,9 @@ public class CellularNet implements Initializable, Freezable, Resettable {
             for (int x = 0; x < sizeX; x++) {
                 NetVertex netVertex = getVertex(x, z);
                 if (netVertex == null) continue;
-
                 List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
                 netVertex.addNeighbors(neighbourVertices);
             }
         }
-    }
-
-    @Override
-    public void freeze() {
-        for (NetVertex[] netRow : netMap) {
-            for (NetVertex netVertex : netRow) {
-                netVertex.freeze();
-            }
-        }
-        this.frozen = true;
-    }
-
-    @Override
-    public void unfreeze() {
-        for (NetVertex[] netRow : netMap) {
-            for (NetVertex netVertex : netRow) {
-                netVertex.unfreeze();
-            }
-        }
-        this.frozen = false;
-    }
-
-    @Override
-    public boolean isFrozen() {
-        return frozen;
     }
 }

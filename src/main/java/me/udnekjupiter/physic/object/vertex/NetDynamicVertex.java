@@ -1,7 +1,9 @@
 
 package me.udnekjupiter.physic.object.vertex;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.StandartApplication;
+import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -12,9 +14,10 @@ public class NetDynamicVertex extends NetVertex {
     protected double decayCoefficient;
 
     public NetDynamicVertex() {
-        this.springStiffness = StandartApplication.ENVIRONMENT_SETTINGS.springStiffness;
-        this.springRelaxedLength = StandartApplication.ENVIRONMENT_SETTINGS.springRelaxedLength;
-        this.decayCoefficient = StandartApplication.ENVIRONMENT_SETTINGS.decayCoefficient;
+        EnvironmentSettings settings = Main.getMain().getApplication().getPhysicEngine().getSettings();
+        this.springStiffness = settings.springStiffness;
+        this.springRelaxedLength = settings.springRelaxedLength;
+        this.decayCoefficient = settings.decayCoefficient;
     }
 
     @Override

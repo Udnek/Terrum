@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.engine;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
@@ -22,12 +23,13 @@ public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements Phy
 
     protected Scene scene;
     protected EnvironmentSettings settings;
-    protected int beforePauseIPT = StandartApplication.ENVIRONMENT_SETTINGS.iterationsPerTick;
+    protected int beforePauseIPT;
 
     @Override
     public void initialize() {
         Console.getInstance().addListener(this);
         Controller.getInstance().addListener(this);
+        this.beforePauseIPT = settings.iterationsPerTick;
     }
 
     public void reset(){scene.reset();}
@@ -35,14 +37,12 @@ public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements Phy
     @Override
     public void handleCommand(@NotNull Command command, Object[] args) {
         if (command != Command.SET_ITERATIONS_PER_TICK) return;
-        StandartApplication.ENVIRONMENT_SETTINGS.iterationsPerTick = (int) args[0];
+        settings.iterationsPerTick = (int) args[0];
     }
 
     @Override
     public void keyEvent(InputKey inputKey, boolean pressed) {
         if (!pressed) return;
-
-        EnvironmentSettings settings = StandartApplication.ENVIRONMENT_SETTINGS;
 
         if (inputKey == InputKey.PAUSE) {
             if (settings.iterationsPerTick == 0){

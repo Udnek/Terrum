@@ -1,5 +1,7 @@
 package me.udnekjupiter.graphic.engine.rasterization;
 
+import me.udnekjupiter.Main;
+import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
@@ -32,10 +34,11 @@ public class RasterizationEngine extends GraphicEngine3d {
 
     @Override
     public @NotNull BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
+        ApplicationSettings settings = Main.getMain().getApplication().getSettings();
         scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
 
-        width = Math.max(rawWidth / StandartApplication.APPLICATION_SETTINGS.pixelScaling, 1);
-        height = Math.max(rawHeight / StandartApplication.APPLICATION_SETTINGS.pixelScaling, 1);
+        width = Math.max(rawWidth / settings.pixelScaling, 1);
+        height = Math.max(rawHeight / settings.pixelScaling, 1);
 
         frame.reset(width, height);
 
@@ -68,6 +71,7 @@ public class RasterizationEngine extends GraphicEngine3d {
 
 
     public void drawTriangle(RenderableTriangle triangle){
+        ApplicationSettings settings = Main.getMain().getApplication().getSettings();
         Point project0 = project(triangle.getVertex0());
         if (project0 == null) return;
         Point project1 = project(triangle.getVertex1());
@@ -75,8 +79,8 @@ public class RasterizationEngine extends GraphicEngine3d {
         Point project2 = project(triangle.getVertex2());
         if (project2 == null) return;
 
-        if (StandartApplication.APPLICATION_SETTINGS.drawPlanes) frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
-        if (StandartApplication.APPLICATION_SETTINGS.drawWireframe) frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
+        if (settings.drawPlanes) frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
+        if (settings.drawWireframe) frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
     }
 
     public Point project(Vector3d pos){

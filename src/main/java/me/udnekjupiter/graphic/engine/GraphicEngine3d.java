@@ -1,5 +1,6 @@
 package me.udnekjupiter.graphic.engine;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
@@ -24,7 +25,7 @@ public abstract class GraphicEngine3d implements GraphicEngine, ConsoleListener 
 
     @Override
     public void postVideoRender(@NotNull BufferedImage image) {
-        StandartApplication.DEBUG_MENU.draw(image, 15);
+        Main.getMain().getApplication().getDebugMenu().draw(image, 15);
     }
 
     public @NotNull GraphicScene3d getScene() {return scene;}

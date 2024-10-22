@@ -7,14 +7,11 @@ import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
-import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
-import me.udnekjupiter.physic.scene.NetPhysicsScene;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
@@ -24,50 +21,50 @@ public class MainUdnek extends Main{
 
     @Override
     public void run() {
-
-        NetPhysicsScene physicScene = new NetPhysicsScene(
-                new CellularNet("medium_frame.png",
-                        new Vector3d(0, 0, 0)));
-
-
-/*        SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
-        physicScene.addObject(sphere);*/
-
-        SphereObject sphere = new SphereObject(new Vector3d(5, 11, 5), 1, 100_000, 150);
-        physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 15, 5), 1, 100_000, 150);
-        physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 19, 5), 1, 100_000, 150);
-        physicScene.addObject(sphere);
-/*        sphere = new SphereObject(new Vector3d(5, 23, 5), 4, 10_000, 150);
-        physicScene.addObject(sphere);
-        sphere = new SphereObject(new Vector3d(5, 27, 5), 4, 10_000, 150);
-        physicScene.addObject(sphere);*/
-
-        PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        //
-        //GraphicScene3d graphicScene = new SmallGraphicScene();
-        GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
-
-        RayTracingEngine rayTracing = new RayTracingEngine(graphicScene);
-        KernelRayTracingEngine kernel = new KernelRayTracingEngine(graphicScene);
-        RasterizationEngine rasterizer = new RasterizationEngine(graphicScene);
-
-
-        runApplication(rasterizer, physicEngine);
-
-        graphicScene.getCamera().setPosition(new Vector3d(2, 6, -5));
-        graphicScene.getCamera().setYaw(-31.7f);
-        graphicScene.getCamera().setPitch(24);
-
-
-        for (RenderableObject3d traceableObject : graphicScene.getTraceableObjects()) {
-            if (traceableObject instanceof MassEssenceObject massEssenceObject){
-                for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
-                    ((ColoredTriangle) renderTriangle).setColor(new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f).getRGB());
-                }
-            }
-        }
+//
+//        NetPhysicsScene physicScene = new NetPhysicsScene(
+//                new CellularNet("medium_frame.png",
+//                        new Vector3d(0, 0, 0)));
+//
+//
+///*        SphereObject sphere = new SphereObject(new Vector3d(3, 6, 3), 2, 10_000, 5);
+//        physicScene.addObject(sphere);*/
+//
+//        SphereObject sphere = new SphereObject(new Vector3d(5, 11, 5), 1, 100_000, 150);
+//        physicScene.addObject(sphere);
+//        sphere = new SphereObject(new Vector3d(5, 15, 5), 1, 100_000, 150);
+//        physicScene.addObject(sphere);
+//        sphere = new SphereObject(new Vector3d(5, 19, 5), 1, 100_000, 150);
+//        physicScene.addObject(sphere);
+///*        sphere = new SphereObject(new Vector3d(5, 23, 5), 4, 10_000, 150);
+//        physicScene.addObject(sphere);
+//        sphere = new SphereObject(new Vector3d(5, 27, 5), 4, 10_000, 150);
+//        physicScene.addObject(sphere);*/
+//
+//        PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
+//        //
+//        //GraphicScene3d graphicScene = new SmallGraphicScene();
+//        GraphicScene3d graphicScene = new NetGraphicScene(physicScene);
+//
+//        RayTracingEngine rayTracing = new RayTracingEngine(graphicScene);
+//        KernelRayTracingEngine kernel = new KernelRayTracingEngine(graphicScene);
+//        RasterizationEngine rasterizer = new RasterizationEngine(graphicScene);
+//
+//
+//        runApplication(rasterizer, physicEngine);
+//
+//        graphicScene.getCamera().setPosition(new Vector3d(2, 6, -5));
+//        graphicScene.getCamera().setYaw(-31.7f);
+//        graphicScene.getCamera().setPitch(24);
+//
+//
+//        for (RenderableObject3d traceableObject : graphicScene.getTraceableObjects()) {
+//            if (traceableObject instanceof MassEssenceObject massEssenceObject){
+//                for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
+//                    ((ColoredTriangle) renderTriangle).setColor(new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f).getRGB());
+//                }
+//            }
+//        }
     }
 
     @Override

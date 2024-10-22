@@ -52,6 +52,9 @@ public class EulerPhysicEngine extends PhysicEngine3d<PhysicScene3d> {
     @Override
     public void initialize() {
         super.initialize();
+        for (PhysicObject3d object : scene.getAllObjects()) {
+            object.setContainer(new EulerContainer(object.getContainer()));
+        }
     }
 
     @Override
