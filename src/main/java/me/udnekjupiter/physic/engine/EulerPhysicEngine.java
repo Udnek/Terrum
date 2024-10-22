@@ -70,10 +70,6 @@ public class EulerPhysicEngine extends PhysicEngine3d {
         }
     }
 
-    @Override
-    public @NotNull EnvironmentSettings getSettings() {
-        return settings;
-    }
 
     @Override
     public void addObject(@NotNull PhysicObject3d object) {
