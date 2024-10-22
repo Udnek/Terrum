@@ -15,4 +15,5 @@ public abstract class PhysicVariableContainer implements VariableContainer {
         this.position = position;
         initialPosition = position.dup();
     }
+    protected PhysicVariableContainer(){}
 }

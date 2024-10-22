@@ -1,21 +1,12 @@
 package me.udnekjupiter.physic.engine;
 
-import me.udnekjupiter.app.console.Console;
-import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collision.Collidable;
-import me.udnekjupiter.physic.collision.Collider;
-import me.udnekjupiter.physic.collision.CollisionCalculator;
-import me.udnekjupiter.physic.object.PhysicObject;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.container.EulerContainer;
 import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
-import me.udnekjupiter.physic.object.container.VariableContainer;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EulerPhysicEngine extends PhysicEngine3d<PhysicScene3d> {
     public EulerPhysicEngine(PhysicScene3d scene, EnvironmentSettings settings)
@@ -61,5 +52,18 @@ public class EulerPhysicEngine extends PhysicEngine3d<PhysicScene3d> {
     @Override
     public void initialize() {
         super.initialize();
+    }
+
+    @Override
+    public @NotNull EnvironmentSettings getSettings() {
+        return settings;
+    }
+
+    @Override
+    public void addObject(@NotNull PhysicObject3d object) {
+        scene.addObject(object);
+        PhysicVariableContainer container = object.getContainer();
+        EulerContainer newContainer = new EulerContainer(container);
+        object.setContainer(newContainer);
     }
 }
