@@ -2,6 +2,7 @@
 package me.udnekjupiter.physic.net;
 
 import me.udnekjupiter.file.ImageWrapper;
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.container.PhysicVariableContainer;

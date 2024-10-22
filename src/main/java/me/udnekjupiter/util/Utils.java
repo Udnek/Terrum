@@ -1,11 +1,11 @@
 package me.udnekjupiter.util;
 
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.NumberFormat;
-import java.util.function.Consumer;
 
 public class Utils {
 
@@ -24,24 +24,16 @@ public class Utils {
         return Math.abs(a + b) <= maxDistance;
     }
 
-    public static <T> void iterate(T[][] array, Consumer<T> consumer){
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                consumer.accept(array[i][j]);
-            }
-        }
-    }
-
 
     ///////////////////////////////////////////////////////////////////////////
     // IMAGE
     ///////////////////////////////////////////////////////////////////////////
-    public static BufferedImage resizeImage(BufferedImage image, int newWidth, int newHeight){
+    public static BufferedImage resizeImage(@NotNull BufferedImage image, int newWidth, int newHeight){
         BufferedImage newImage = new BufferedImage(newWidth, newHeight, image.getType());
         newImage.getGraphics().drawImage(image, 0, 0, newWidth, newHeight, null);
         return newImage;
     }
-    public static void resizeImage(BufferedImage image, int newWidth, int newHeight, BufferedImage output){
+    public static void resizeImage(@NotNull BufferedImage image, int newWidth, int newHeight, BufferedImage output){
         output.getGraphics().drawImage(image, 0, 0, newWidth, newHeight, null);
     }
 
@@ -49,7 +41,7 @@ public class Utils {
     // COLOR
     ///////////////////////////////////////////////////////////////////////////
 
-    public static Color vectorToColor(Vector3d color){
+    public static Color vectorToColor(@NotNull Vector3d color){
         return new Color((float) color.x, (float) color.y, (float) color.z);
     }
 

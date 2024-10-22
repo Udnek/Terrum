@@ -56,4 +56,8 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
     @Override
     @NotNull
     public PhysicScene3d getScene() {return scene;}
+
+    @Override
+    @NotNull
+    public EnvironmentSettings getSettings() {return settings;}
 }

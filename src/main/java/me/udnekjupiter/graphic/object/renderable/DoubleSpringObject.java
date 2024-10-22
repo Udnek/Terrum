@@ -2,7 +2,6 @@ package me.udnekjupiter.graphic.object.renderable;
 
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
-import me.udnekjupiter.util.PositionedObject;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -11,11 +10,11 @@ import java.util.function.Consumer;
 
 public class DoubleSpringObject extends SpringObject {
 
-    private RenderableTriangle plane1;
+    private RenderableTriangle secondPlane;
 
-    public DoubleSpringObject(PositionedObject tipFirst, PositionedObject tipSecond) {
-        super(tipFirst, tipSecond);
-        plane1 = new ColoredTriangle(new Vector3d(), new Vector3d(), new Vector3d(), color);
+    public DoubleSpringObject(me.udnekjupiter.physic.object.SpringObject springObject) {
+        super(springObject);
+        secondPlane = new ColoredTriangle(new Vector3d(), new Vector3d(), new Vector3d(), color);
     }
 
     @Override
@@ -37,22 +36,22 @@ public class DoubleSpringObject extends SpringObject {
         Vector3d posB2 = posB1.dup().add(direction);
 
         plane.setVertices(posA1, posA2, posB1);
-        plane1.setVertices(posB1, posB2, posA2);
+        secondPlane.setVertices(posB1, posB2, posA2);
     }
 
     @Override
     public RenderableTriangle @NotNull [] getRenderTriangles() {
-        return new RenderableTriangle[]{plane.copy(), plane1.copy()};
+        return new RenderableTriangle[]{plane.copy(), secondPlane.copy()};
     }
 
     @Override
     public RenderableTriangle @NotNull [] getUnsafeRenderTriangles() {
-        return new RenderableTriangle[]{plane, plane1};
+        return new RenderableTriangle[]{plane, secondPlane};
     }
 
     @Override
     public void getUnsafeRenderTriangles(@NotNull Consumer<RenderableTriangle> consumer) {
         super.getUnsafeRenderTriangles(consumer);
-        consumer.accept(plane1);
+        consumer.accept(secondPlane);
     }
 }
