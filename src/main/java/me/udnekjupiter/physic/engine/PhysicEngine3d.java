@@ -8,10 +8,11 @@ import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements PhysicEngine<Scene>, ConsoleListener, ControllerListener {
+public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
 
     public static final double GRAVITATIONAL_ACCELERATION = -9.80665;
     public static final double MAX_VELOCITY = 500;
