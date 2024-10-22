@@ -32,9 +32,9 @@ public class RayTracingEngine extends GraphicEngine3d {
 
         rayTracer = new RayTracer(scene.getLightSource());
         if (Main.getMain().getApplication().getSettings().polygonHolderType == PolygonHolder.Type.SMART){
-            polygonHolder = new SmartPolygonHolder(scene.getTraceableObjects(), scene.getCamera());
+            polygonHolder = new SmartPolygonHolder(scene.getObjects(), scene.getCamera());
         } else {
-            polygonHolder = new DefaultPolygonHolder(scene.getTraceableObjects(), scene.getCamera(), scene.getLightSource());
+            polygonHolder = new DefaultPolygonHolder(scene.getObjects(), scene.getCamera(), scene.getLightSource());
         }
     }
 

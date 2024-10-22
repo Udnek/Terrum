@@ -18,6 +18,7 @@ public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
     public void removeObject(@NotNull PhysicObject3d object) {
         objects.remove(object);
     }
+
     @Override
     public @NotNull List<? extends PhysicObject3d> getAllObjects() {return objects;}
     @Override

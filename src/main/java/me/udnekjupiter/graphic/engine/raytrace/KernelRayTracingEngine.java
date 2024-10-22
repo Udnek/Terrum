@@ -2,7 +2,7 @@ package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.file.FileManager;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
@@ -28,7 +28,7 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
     int[] pixelToPlane;
 
 
-    private final RenderableObject3d object =
+    private final GraphicObject3d object =
             new PolygonObject(
                     new Vector3d(),
                     new RenderableTriangle(
@@ -123,13 +123,13 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        generate(scene.getTraceableObjects(), w, h);
+        generate(scene.getObjects(), w, h);
 
         bufferedImage.setRGB(0, 0, w, h, pixelToPlane, 0 , w);
 
         return bufferedImage;
     }
-    public void generate(List<RenderableObject3d> renderableObjects, int width, int height){
+    public void generate(List<? extends GraphicObject3d> renderableObjects, int width, int height){
         int planesAmount = getPlanesAmount(renderableObjects);
 
         planeHits = new double[planesAmount];
@@ -186,18 +186,18 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
 
     }
 
-    public int getPlanesAmount(List<RenderableObject3d> objects){
+    public int getPlanesAmount(List<? extends GraphicObject3d> objects){
         int planesAmount = 0;
-        for (RenderableObject3d renderableObject : objects) {
+        for (GraphicObject3d renderableObject : objects) {
             planesAmount += renderableObject.getRenderTriangles().length;
         }
         return planesAmount;
     }
 
-    public double[] objectsToVerticesPositions(List<RenderableObject3d> renderableObjects, int planesAmount){
+    public double[] objectsToVerticesPositions(List<? extends GraphicObject3d> renderableObjects, int planesAmount){
         int index = 0;
         double[] result = new double[planesAmount * 3 * 3];
-        for (RenderableObject3d object : renderableObjects) {
+        for (GraphicObject3d object : renderableObjects) {
             RenderableTriangle[] renderTriangles =  object.getRenderTriangles();
             for (int i = 0, renderTrianglesLength = renderTriangles.length; i < renderTrianglesLength; i++) {
                 RenderableTriangle renderTriangle = renderTriangles[i];

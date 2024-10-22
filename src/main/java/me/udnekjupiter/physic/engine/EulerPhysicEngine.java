@@ -8,7 +8,7 @@ import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
-public class EulerPhysicEngine extends PhysicEngine3d<PhysicScene3d> {
+public class EulerPhysicEngine extends PhysicEngine3d {
     public EulerPhysicEngine(PhysicScene3d scene, EnvironmentSettings settings)
     {
         this.scene = scene;

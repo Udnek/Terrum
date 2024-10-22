@@ -2,12 +2,11 @@ package me.udnekjupiter.graphic.engine.rasterization;
 
 import me.udnekjupiter.Main;
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.window.WindowManager;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.TransparentRasterizationFrame;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +53,7 @@ public class RasterizationEngine extends GraphicEngine3d {
         List<RenderableTriangle> polygons = new ArrayList<>();
 
         Vector3d cameraPosition = camera.getPosition();
-        for (RenderableObject3d object : scene.getTraceableObjects()) {
+        for (GraphicObject3d object : scene.getObjects()) {
             Vector3d objectPosition = object.getPosition();
             object.getRenderTriangles(triangle -> {
                 triangle.addToAllVertexes(objectPosition).subFromAllVertexes(cameraPosition);

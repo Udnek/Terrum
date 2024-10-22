@@ -1,12 +1,13 @@
 package me.udnekjupiter.graphic.object.renderable;
 
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.function.Consumer;
 
-public class AxisCrosshairObject extends RenderableObject3d {
+public class AxisCrosshairObject extends GraphicObject3d {
 
     private final RenderableTriangle planeX;
     private final RenderableTriangle planeY;
