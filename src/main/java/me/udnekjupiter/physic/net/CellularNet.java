@@ -3,11 +3,9 @@ package me.udnekjupiter.physic.net;
 
 import me.udnekjupiter.file.ImageWrapper;
 import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import me.udnekjupiter.util.Freezable;
-import me.udnekjupiter.util.Initializable;
-import me.udnekjupiter.util.Resettable;
 import me.udnekjupiter.util.Vector3x3;
 import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
@@ -17,31 +15,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO Implements angular net rotation
+//TODO Try scaling net, so system would look more authentic
+//TODO Implement angular net rotation
 public class CellularNet {
     private Vector3d globalOffset;
     private Vector3x3 perPositionMultiplier;
-    //TODO Try scaling net, so system would look more authentic
     private int sizeX;
     private int sizeZ;
     private final String mapImageName;
     private NetVertex[][] netMap;
+    private List<PhysicObject3d> objects = new ArrayList<>();
+    private double springStiffness;
+    private double springRelaxedLength;
 
-    public CellularNet(String mapImageName, Vector3d globalOffset, Vector3x3 perPositionMultiplier) {
+    public CellularNet(String mapImageName, Vector3d globalOffset, Vector3x3 perPositionMultiplier, double springStiffness, double springRelaxedLength) {
         this.mapImageName = mapImageName;
         this.globalOffset = globalOffset;
         this.perPositionMultiplier = perPositionMultiplier;
+        this.springStiffness = springStiffness;
+        this.springRelaxedLength = springRelaxedLength;
         initialize();
     }
-    public CellularNet(String mapImageName, Vector3d globalOffset) {
-        this(mapImageName, globalOffset, new Vector3x3(
-                new Vector3d(1, 0, 0),
-                new Vector3d(),
-                new Vector3d(0, 0, 1)
-        ));
+    public CellularNet(String mapImageName, Vector3d globalOffset, double springStiffness, double springRelaxedLength) {
+        this(mapImageName, globalOffset, new Vector3x3(new Vector3d(1, 0, 0),
+                                                        new Vector3d(),
+                                                        new Vector3d(0, 0, 1)),
+                springStiffness,
+                springRelaxedLength);
     }
     public CellularNet(String mapImageName) {
-        this(mapImageName, new Vector3d());
+        this(mapImageName, new Vector3d(), new Vector3x3(new Vector3d(1, 0, 0),
+                                                         new Vector3d(),
+                                                         new Vector3d(0, 0, 1)),
+                1000, 1);
     }
 
     public int getSizeX(){return this.sizeX;}
@@ -77,7 +83,7 @@ public class CellularNet {
         }
         return vertices;
     }
-    public List<PhysicObject3d> getVerticesObjects(){
+    public List<PhysicObject3d> getNetObjects(){
         List<PhysicObject3d> vertices = new ArrayList<>();
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
@@ -89,11 +95,11 @@ public class CellularNet {
     }
 
     public void initialize() {
-        initializeNet();
-        initializeNeighbours();
+        initializeVertices();
+        initializeSprings();
     }
 
-    private void initializeNet() {
+    private void initializeVertices() {
         ImageWrapper reader = new ImageWrapper();
         reader.readImage(mapImageName);
 
@@ -107,20 +113,41 @@ public class CellularNet {
                 Color color = reader.getColor(x, z);
                 NetVertex netVertex = VertexColor.getVertex(color);
                 if (netVertex == null) continue;
+                objects.add(netVertex);
                 netVertex.setContainer(new PhysicVariableContainer(new Vector3d(x, 0, z)));
                 setVertex(netVertex, x, z);
                 resetVertexPosition(x, z);
             }
         }
     }
-    private void initializeNeighbours(){
+//    private void initializeNeighbours(){
+//        for (int z = 0; z < sizeZ; z++) {
+//            for (int x = 0; x < sizeX; x++) {
+//                NetVertex netVertex = getVertex(x, z);
+//                if (netVertex == null) continue;
+//                List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
+//                netVertex.addNeighbors(neighbourVertices);
+//            }
+//        }
+//    }
+
+    private void initializeSprings(){
+        List<ArrayList<NetVertex>> pairedVertices = new ArrayList<>();
+        int counter = 0;
         for (int z = 0; z < sizeZ; z++) {
             for (int x = 0; x < sizeX; x++) {
                 NetVertex netVertex = getVertex(x, z);
                 if (netVertex == null) continue;
                 List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
-                netVertex.addNeighbors(neighbourVertices);
+                for (NetVertex neighbourVertex : neighbourVertices) {
+                    ArrayList<NetVertex> pair = new ArrayList<>(Arrays.asList(neighbourVertex, netVertex));
+                    if (pairedVertices.contains(pair)) continue;
+                    pairedVertices.add((ArrayList<NetVertex>) pair.reversed());
+                    counter += 1;
+                    objects.add(new SpringObject(netVertex, neighbourVertex, springRelaxedLength, springStiffness));
+                }
             }
         }
+        System.out.println(counter);
     }
 }

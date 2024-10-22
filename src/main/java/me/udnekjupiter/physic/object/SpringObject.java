@@ -11,7 +11,7 @@ public class SpringObject extends ImplementedPhysicObject3d {
     private final double relaxedLength;
     private final double stiffness;
 
-    SpringObject(PhysicObject3d endpoint1, PhysicObject3d endpoint2, double relaxedLength, double stiffness)
+    public SpringObject(PhysicObject3d endpoint1, PhysicObject3d endpoint2, double relaxedLength, double stiffness)
     {
         this.endpoint1 = endpoint1;
         this.endpoint2 = endpoint2;
