@@ -26,7 +26,7 @@ public class MainBasketball extends Main{
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
-        environmentSettings.iterationsPerTick = 0;
+        environmentSettings.iterationsPerTick = 200;
         return environmentSettings;
     }
 

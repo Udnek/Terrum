@@ -10,6 +10,7 @@ public class PhysicVariableContainer implements VariableContainer {
     public @NotNull Vector3d velocity = new Vector3d();
     public @NotNull Vector3d acceleration = new Vector3d();
     public @NotNull Vector3d initialPosition;
+    public @NotNull Vector3d appliedForce = new Vector3d();
     public double mass = 1;
     public PhysicVariableContainer(@NotNull Vector3d position){
         this.position = position;

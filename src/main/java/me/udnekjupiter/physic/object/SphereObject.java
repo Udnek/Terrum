@@ -17,11 +17,10 @@ public class SphereObject extends ImplementedCollidablePhysicObject3d {
     }
 
     @Override
-    public @NotNull Vector3d getAppliedForce(@NotNull Vector3d pos) {
-        Vector3d appliedForce = new Vector3d();
-        appliedForce.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION * container.mass;
-        appliedForce.add(getCollisionForce());
-        return appliedForce;
+    public void calculateForces(@NotNull Vector3d pos) {
+        container.appliedForce.mul(0);
+        container.appliedForce.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION * container.mass;
+        container.appliedForce.add(getCollisionForce());
     }
 
     @Override
