@@ -56,8 +56,6 @@ public class EulerPhysicEngine extends PhysicEngine3d {
         //Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
         Vector3d resultAcceleration = container.appliedForce.dup();//.sub(decayValue);
         resultAcceleration.div(container.mass);
-
-        System.out.println(resultAcceleration.asString());
         return resultAcceleration;
 
     }
