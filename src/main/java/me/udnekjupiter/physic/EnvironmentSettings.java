@@ -1,14 +1,11 @@
 package me.udnekjupiter.physic;
 
-import me.udnekjupiter.physic.core.PhysicCore;
-
 public class EnvironmentSettings {
     //Global physics settings
     public double deltaTime;
     public int iterationsPerTick;
     public double decayCoefficient;
     public double maxDepth;
-    public PhysicCore.Type physicCoreType = PhysicCore.Type.EULER;
 
     //Net settings
     public double springStiffness;

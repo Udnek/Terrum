@@ -10,4 +10,13 @@ public class EulerContainer extends PhysicVariableContainer {
     public EulerContainer(@NotNull Vector3d position) {
         super(position);
     }
+
+    public EulerContainer(@NotNull PhysicVariableContainer other)
+    {
+        this.position = other.position;
+        this.velocity = other.velocity;
+        this.acceleration = other.acceleration;
+        this.initialPosition = other.initialPosition;
+        this.mass = other.mass;
+    }
 }

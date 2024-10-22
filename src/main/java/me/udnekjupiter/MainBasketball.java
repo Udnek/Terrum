@@ -5,6 +5,7 @@ import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.NetGraphicScene;
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PrimitiveScenePhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
@@ -42,10 +43,11 @@ public class MainBasketball extends Main{
         CellularNet basketNet = new CellularNet("medium_basket.png", new Vector3d(0, 0, -6), besketOffsets);
         CellularNet launcherNet = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), launcherOffsets);
 
+        EnvironmentSettings settings = EnvironmentSettings.defaultPreset();
         NetPhysicsScene physicScene = new NetPhysicsScene(basketNet, launcherNet);
-        PrimitiveScenePhysicEngine physicEngine = new PrimitiveScenePhysicEngine(physicScene);
-        SphereObject sphere = new SphereObject(new Vector3d(16, 7, 3), 2.5, 10_000, 500);
-        physicScene.addObject(sphere);
+        EulerPhysicEngine physicEngine = new EulerPhysicEngine(physicScene, settings);
+        //SphereObject sphere = new SphereObject(new Vector3d(16, 7, 3), 2.5, 10_000, 500);
+        //physicScene.addObject(sphere);
 
         NetGraphicScene graphicScene = new NetGraphicScene(physicScene);
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
