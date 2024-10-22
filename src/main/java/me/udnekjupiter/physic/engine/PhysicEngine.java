@@ -8,16 +8,11 @@ import me.udnekjupiter.util.Resettable;
 import me.udnekjupiter.util.Tickable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
-
-public interface PhysicEngine<ObjectType extends PhysicObject<?>> extends Initializable, Tickable, Resettable {
-    <Scene extends PhysicScene<ObjectType>> @NotNull Scene getScene();
+public interface PhysicEngine<PObject extends PhysicObject<?>> extends Initializable, Tickable, Resettable {
+    @NotNull PhysicScene<PObject> getScene();
     @NotNull EnvironmentSettings getSettings();
-    void addObject(@NotNull ObjectType object);
-    default void addObjects(@NotNull Iterable<ObjectType> objects){
-        for (ObjectType object : objects) {
-            addObject(object);
-        }
+    void addObject(@NotNull PObject object);
+    default void addObjects(@NotNull Iterable<@NotNull PObject> objects){
+        for (PObject object : objects) {addObject(object);}
     }
 }

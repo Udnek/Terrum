@@ -1,5 +1,6 @@
 package me.udnekjupiter.graphic.object.renderable;
 
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.PositionedObject;
@@ -11,7 +12,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 import java.util.function.Consumer;
 
-public class SpringObject extends RenderableObject3d implements Tickable {
+public class SpringObject extends GraphicObject3d implements Tickable {
 
     protected PositionedObject tipA;
     protected PositionedObject tipB;

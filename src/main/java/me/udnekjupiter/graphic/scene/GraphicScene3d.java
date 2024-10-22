@@ -7,21 +7,22 @@ import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.Draggable;
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.light.LightSource;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.util.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GraphicScene3d implements GraphicScene, ControllerListener {
+public class GraphicScene3d implements GraphicScene<GraphicObject3d>, ControllerListener {
 
     protected Camera camera;
-    protected List<RenderableObject3d> renderableObjects;
+    protected List<GraphicObject3d> renderableObjects = new ArrayList<>();
     protected LightSource lightSource;
 
     protected int width;
@@ -33,36 +34,39 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
     protected Controller controller;
     protected DebugMenu debugMenu;
 
+    public GraphicScene3d(@NotNull Camera camera){
+        this.camera = camera;
+    }
+
     @Override
     public void initialize(){
-        camera = initializeCamera();
-        lightSource = initializeLightSource();
-
-        renderableObjects = initializeSceneObjects();
-        if (renderableObjects == null){
-            renderableObjects = new ArrayList<>();
-        }
-
         controller = Controller.getInstance();
         controller.addListener(this);
         debugMenu = Main.getMain().getApplication().getDebugMenu();
-
     }
 
-    protected abstract Camera initializeCamera();
-    protected abstract List<RenderableObject3d> initializeSceneObjects();
-    protected abstract LightSource initializeLightSource();
+    @Override
+    @NotNull
+    public Camera getCamera() {return camera;}
 
-    public @NotNull Camera getCamera() { return camera;}
-    public LightSource getLightSource() {return lightSource;}
-    public List<RenderableObject3d> getTraceableObjects() {return renderableObjects;}
-    public Selectable getSelectedObject() {return selectedObject;}
+    @Override
+    public void addObject(@NotNull GraphicObject3d object) {
+        renderableObjects.add(object);
+    }
+
+    @Override
+    public @NotNull List<? extends @NotNull GraphicObject3d> getObjects() {
+        return renderableObjects;
+    }
+
+    public @Nullable LightSource getLightSource() {return lightSource;}
+    public @NotNull Selectable getSelectedObject() {return selectedObject;}
 
     public void beforeFrameUpdate(int width, int height) {
         this.width = width;
         this.height = height;
 
-        for (RenderableObject3d renderableObject : renderableObjects) {
+        for (GraphicObject3d renderableObject : renderableObjects) {
             if (renderableObject instanceof Tickable tickable) tickable.tick();
             if (renderableObject instanceof PhysicLinked physicLinked) physicLinked.synchronizeWithPhysic();
         }
@@ -73,6 +77,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         if (controller.mouseIsPressed()){
             handleMousePressedDifference();
         }
+
 
         if (!debugMenu.isEnabled()) return;
 
@@ -193,7 +198,7 @@ public abstract class GraphicScene3d implements GraphicScene, ControllerListener
         double nearestDistance = Double.POSITIVE_INFINITY;
 
 
-        for (RenderableObject3d object : renderableObjects) {
+        for (GraphicObject3d object : renderableObjects) {
             if (!(object instanceof Selectable selectable)) continue;
             Vector3d objectPosition = object.getPosition();
 

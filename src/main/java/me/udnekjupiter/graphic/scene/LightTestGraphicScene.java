@@ -1,3 +1,4 @@
+/*
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
@@ -39,3 +40,4 @@ public class LightTestGraphicScene extends GraphicScene3d {
         return new PointLight(new Vector3d(1, 2, 1));
     }
 }
+*/

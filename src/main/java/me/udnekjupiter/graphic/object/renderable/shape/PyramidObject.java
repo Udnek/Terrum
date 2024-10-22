@@ -1,13 +1,13 @@
 package me.udnekjupiter.graphic.object.renderable.shape;
 
-import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.function.Consumer;
 
-public class PyramidObject extends RenderableObject3d {
+public class PyramidObject extends GraphicObject3d {
     private RenderableTriangle plane0;
     private RenderableTriangle plane1;
     private RenderableTriangle plane2;

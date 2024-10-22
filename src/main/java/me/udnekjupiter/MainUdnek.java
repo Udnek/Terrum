@@ -1,21 +1,8 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
-import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
-import me.udnekjupiter.graphic.engine.raytrace.RayTracingEngine;
-import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
-import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
-import me.udnekjupiter.graphic.scene.GraphicScene3d;
-import me.udnekjupiter.graphic.triangle.ColoredTriangle;
-import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
-
-import java.awt.*;
 
 public class MainUdnek extends Main{
 

@@ -1,7 +1,5 @@
 package me.udnekjupiter.physic.engine;
 
-import me.udnekjupiter.Main;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
@@ -13,7 +11,7 @@ import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
+public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
 
     public static final double GRAVITATIONAL_ACCELERATION = -9.80665;
     public static final double MAX_VELOCITY = 500;
@@ -21,7 +19,7 @@ public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements Phy
     public static final double MAX_DEPTH = 0.1;     //Жесткое ограничение, отражающее максимальную глубину на которую один хитбокс может погрузиться в другой
 
 
-    protected Scene scene;
+    protected PhysicScene3d scene;
     protected EnvironmentSettings settings;
     protected int beforePauseIPT;
 
@@ -30,6 +28,7 @@ public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements Phy
         Console.getInstance().addListener(this);
         Controller.getInstance().addListener(this);
         this.beforePauseIPT = settings.iterationsPerTick;
+        scene.initialize();
     }
 
     public void reset(){scene.reset();}
@@ -56,5 +55,5 @@ public abstract class PhysicEngine3d<Scene extends PhysicScene3d> implements Phy
 
     @Override
     @NotNull
-    public Scene getScene() {return scene;}
+    public PhysicScene3d getScene() {return scene;}
 }

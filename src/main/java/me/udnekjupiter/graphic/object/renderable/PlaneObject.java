@@ -1,5 +1,6 @@
 package me.udnekjupiter.graphic.object.renderable;
 
+import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
@@ -8,7 +9,7 @@ import org.realityforge.vecmath.Vector3d;
 import java.awt.*;
 import java.util.function.Consumer;
 
-public class PlaneObject extends RenderableObject3d {
+public class PlaneObject extends GraphicObject3d {
 
     protected RenderableTriangle plane0;
     protected RenderableTriangle plane1;

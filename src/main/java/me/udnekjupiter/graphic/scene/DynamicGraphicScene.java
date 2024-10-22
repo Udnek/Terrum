@@ -1,3 +1,4 @@
+/*
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.graphic.Camera;
@@ -54,6 +55,7 @@ public class DynamicGraphicScene extends GraphicScene3d {
         graphicObjects.add(new AxisCrosshairObject());
 
 
+*/
 /*        sceneObjects.add(
                 new PyramidObject(
                         //pos
@@ -78,8 +80,10 @@ public class DynamicGraphicScene extends GraphicScene3d {
                         new Vector3d(0.6, 0, 0),
                         new Vector3d(-0.1, 0, 0)
                 )
-        );*/
+        );*//*
+
 
         return graphicObjects;
     }
 }
+*/
