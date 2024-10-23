@@ -2,7 +2,6 @@ package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.Main;
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.object.light.LightSource;

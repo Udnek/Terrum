@@ -5,35 +5,10 @@ import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.physic.object.ImplementedCollidablePhysicObject3d;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class NetVertex extends ImplementedCollidablePhysicObject3d {
-
-    protected List<NetVertex> neighbors = new ArrayList<>();
 
     public NetVertex() {
         collider = new SphereCollider(0.2, 100_000, this);
-    }
-
-    public void addNeighbors(@NotNull List<@NotNull NetVertex> toAddNeighbors){
-        for (NetVertex neighbor : toAddNeighbors) {
-            if (neighbors.contains(neighbor)) continue;
-            neighbors.add(neighbor);
-            neighbor.addOneWayNeighbour(this);
-        }
-    }
-
-    protected void addOneWayNeighbour(@NotNull NetVertex neighbor){
-        if (neighbors.contains(neighbor)) return;
-        neighbors.add(neighbor);
-    }
-
-    public int getNeighborsAmount(){
-        return neighbors.size();
-    }
-    public @NotNull List<@NotNull NetVertex> getNeighbors(){
-        return this.neighbors;
     }
 
     @Override

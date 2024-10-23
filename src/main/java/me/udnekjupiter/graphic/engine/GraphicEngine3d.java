@@ -1,7 +1,6 @@
 package me.udnekjupiter.graphic.engine;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;

@@ -60,7 +60,7 @@ public class CellularNet {
         getVertex(x, z).setPosition(multiplier.add(globalOffset));
     }
     public @Nullable NetVertex getVertex(int x, int z){ return netMap[z][x];}
-    public void setVertex(NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
+    public void setVertex(@Nullable NetVertex vertex, int x, int z){netMap[z][x] = vertex;}
 
     public boolean isInBounds(int x, int z) {return (x >= 0 && x < sizeX && z >= 0 && z < sizeZ);}
     public List<NetVertex> getNeighbourVertices(int posX, int posZ) {

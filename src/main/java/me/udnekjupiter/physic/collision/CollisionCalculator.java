@@ -1,7 +1,6 @@
 package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 

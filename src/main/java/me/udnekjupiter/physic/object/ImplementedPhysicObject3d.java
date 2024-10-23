@@ -9,6 +9,14 @@ public abstract class ImplementedPhysicObject3d implements PhysicObject3d {
     protected PhysicVariableContainer container;
     protected boolean frozen;
 
+    public ImplementedPhysicObject3d(){
+        this(new Vector3d());
+    }
+
+    public ImplementedPhysicObject3d(@NotNull Vector3d position){
+        container = new PhysicVariableContainer(position);
+    }
+
     @Override
     public @NotNull PhysicVariableContainer getContainer() {return container;}
     @Override

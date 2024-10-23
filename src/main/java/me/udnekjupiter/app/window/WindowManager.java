@@ -2,10 +2,8 @@ package me.udnekjupiter.app.window;
 
 import me.udnekjupiter.Main;
 import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.file.FileManager;
-import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.util.Initializable;
 import me.udnekjupiter.util.Tickable;
 

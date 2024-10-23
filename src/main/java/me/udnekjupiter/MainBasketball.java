@@ -6,7 +6,6 @@ import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
@@ -42,7 +41,6 @@ public class MainBasketball extends Main{
         CellularNet basketNet = new CellularNet("medium_basket.png");
         //CellularNet launcherNet = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), launcherOffsets);
         SphereObject sphere = new SphereObject(2.5, 10_000);
-        sphere.setContainer(new PhysicVariableContainer(new Vector3d()));
         physicEngine.addObject(sphere);
 
         basketNet.initialize();
@@ -51,12 +49,9 @@ public class MainBasketball extends Main{
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 
 
-
         graphicScene.getCamera().setPosition(new Vector3d(0, 0, 0));
         graphicScene.getCamera().setPitch(10);
         graphicScene.getCamera().setYaw(50);
-
-
 
         initializeApplication(graphicEngine, physicEngine);
         startApplication();
