@@ -10,5 +10,6 @@ public interface Collidable extends Positioned {
     @NotNull Collider getCollider();
     boolean isCollisionIgnoredWith(@NotNull Collidable object);
     @NotNull List<Collidable> getCollidingObjects();
+    void clearCollidingObjects();
     @NotNull Vector3d getCollisionForce();
 }

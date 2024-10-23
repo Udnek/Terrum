@@ -1,6 +1,10 @@
 package me.udnekjupiter.physic.scene;
 
+import me.udnekjupiter.physic.collision.Collidable;
+import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
+import me.udnekjupiter.physic.object.CollisionInitiator;
 import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.util.Resettable;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +25,25 @@ public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
 
     @Override
     public @NotNull List<? extends PhysicObject3d> getAllObjects() {return objects;}
+
+    public @NotNull List<? extends CollidablePhysicObject3d> getAllCollidableObjects() {
+        List<CollidablePhysicObject3d> collidableObjects = new ArrayList<>();
+        for (PhysicObject3d object : objects) {
+            if (!(object instanceof CollidablePhysicObject3d)) continue;
+            collidableObjects.add((CollidablePhysicObject3d) object);
+        }
+        return collidableObjects;
+    }
+
+    public @NotNull List<? extends CollidablePhysicObject3d> getAllCollisionInitiators(){
+        List<CollidablePhysicObject3d> collisionInitiators = new ArrayList<>();
+        for (PhysicObject3d object : objects) {
+            if (!(object instanceof CollidablePhysicObject3d)) continue;
+            if (!(object instanceof CollisionInitiator)) continue;
+            collisionInitiators.add((CollidablePhysicObject3d) object);
+        }
+        return collisionInitiators;
+    }
     @Override
     public void initialize() {}
     @Override

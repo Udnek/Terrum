@@ -6,7 +6,7 @@ import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
-public class SphereObject extends ImplementedCollidablePhysicObject3d {
+public class SphereObject extends ImplementedCollidablePhysicObject3d implements CollisionInitiator {
     public SphereObject(double colliderRadius, double stiffness) {
         collider = new SphereCollider(colliderRadius, stiffness, this);
     }

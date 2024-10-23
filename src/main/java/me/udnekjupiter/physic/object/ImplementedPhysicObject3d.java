@@ -23,7 +23,10 @@ public abstract class ImplementedPhysicObject3d implements PhysicObject3d {
     public void setContainer(@NotNull PhysicVariableContainer container) {this.container = container;}
 
     @Override
-    public void freeze() {frozen = true;}
+    public void freeze() {
+        frozen = true;
+        container.velocity.mul(0);
+    }
     @Override
     public void unfreeze() {frozen = false;}
     @Override
