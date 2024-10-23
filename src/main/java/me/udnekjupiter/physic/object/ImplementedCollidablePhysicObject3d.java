@@ -18,12 +18,15 @@ public abstract class ImplementedCollidablePhysicObject3d extends ImplementedPhy
 
     @Override
     public @NotNull List<Collidable> getCollidingObjects() {
-        // TODO IMPLEMENT
         return List.of();
+    }
+
+    public void clearCollidingObjects(){
+        this.collider.currentCollisions.clear();
     }
 
     @Override
     public @NotNull Vector3d getCollisionForce() {
-        return CollisionCalculator.getHookeCollisionForce(this);
+        return CollisionCalculator.getHookeCollisionForce(this.getCollider());
     }
 }

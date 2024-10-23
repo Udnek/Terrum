@@ -1,6 +1,7 @@
 package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.Main;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.util.VectorUtils;
 import org.realityforge.vecmath.Vector3d;
 
@@ -28,26 +29,26 @@ public abstract class CollisionCalculator {
         return collisionForce;
     }
 
-    public static Vector3d getHookeCollisionForce(Collidable thisObject){
+    public static Vector3d getHookeCollisionForce(Collider thisCollider){
         Vector3d collisionForce = new Vector3d();
         double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
-        for (Collidable collidingObject : thisObject.getCollidingObjects()) {
-            if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
-
-            Vector3d thisPosition = thisObject.getPosition();
-            Vector3d otherPosition = collidingObject.getPosition();
-            double distance = VectorUtils.distance(thisPosition, otherPosition);
-            SphereCollider thisCollider = (SphereCollider) thisObject.getCollider();
-            double maxDistance = thisCollider.radius + otherSphereCollider.radius;
-            double thisCriticalRadius = thisCollider.radius - maxDepth;
-            double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
-            double minCriticalRadiiDistance = thisCriticalRadius + otherCriticalRadius;
-            double stableDistance = maxDistance - minCriticalRadiiDistance;
-            double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
-            double depth = stableDistance - criticalRadiiDistance;
-            Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-            Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * thisCollider.stiffness); // TODO: 7/9/2024 STIFFNESS????
-            collisionForce.add(collisionForceCache);
+        if (thisCollider instanceof SphereCollider sphereCollider){
+            for (Collider otherCollider : thisCollider.getCurrentCollisions()) {
+                if (!(otherCollider instanceof SphereCollider otherSphereCollider)) continue;
+                Vector3d thisPosition = thisCollider.parent.getPosition();
+                Vector3d otherPosition = otherSphereCollider.parent.getPosition();
+                double distance = VectorUtils.distance(thisPosition, otherPosition);
+                double maxDistance = sphereCollider.radius + otherSphereCollider.radius;
+                double thisCriticalRadius = sphereCollider.radius - maxDepth;
+                double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
+                double minCriticalRadiiDistance = thisCriticalRadius + otherCriticalRadius;
+                double stableDistance = maxDistance - minCriticalRadiiDistance;
+                double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
+                double depth = stableDistance - criticalRadiiDistance;
+                Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
+                Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * sphereCollider.stiffness); // TODO: 7/9/2024 STIFFNESS????
+                collisionForce.add(collisionForceCache);
+            }
         }
         return collisionForce;
     }
