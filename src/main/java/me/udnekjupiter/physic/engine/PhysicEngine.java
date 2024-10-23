@@ -12,7 +12,7 @@ public interface PhysicEngine<PObject extends PhysicObject<?>> extends Initializ
     @NotNull PhysicScene<PObject> getScene();
     @NotNull EnvironmentSettings getSettings();
     void addObject(@NotNull PObject object);
-    default void addObjects(@NotNull Iterable<@NotNull PObject> objects){
+    default void addObjects(@NotNull Iterable<? extends @NotNull PObject> objects){
         for (PObject object : objects) {addObject(object);}
     }
 }
