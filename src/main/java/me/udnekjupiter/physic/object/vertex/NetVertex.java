@@ -4,7 +4,6 @@ import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.physic.object.ImplementedCollidablePhysicObject3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public abstract class NetVertex extends ImplementedCollidablePhysicObject3d {
         collider = new SphereCollider(0.2, 100_000, this);
     }
 
-    public void addNeighbors(@NotNull List<NetVertex> toAddNeighbors){
+    public void addNeighbors(@NotNull List<@NotNull NetVertex> toAddNeighbors){
         for (NetVertex neighbor : toAddNeighbors) {
             if (neighbors.contains(neighbor)) continue;
             neighbors.add(neighbor);
@@ -33,7 +32,7 @@ public abstract class NetVertex extends ImplementedCollidablePhysicObject3d {
     public int getNeighborsAmount(){
         return neighbors.size();
     }
-    public List<NetVertex> getNeighbors(){
+    public @NotNull List<@NotNull NetVertex> getNeighbors(){
         return this.neighbors;
     }
 

@@ -39,20 +39,27 @@ public class MainBasketball extends Main{
         GraphicScene3d graphicScene = new GraphicScene3d(new Camera());
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
-        CellularNet basketNet = new CellularNet("brick.png");
+        CellularNet basketNet = new CellularNet("medium_basket.png");
         //CellularNet launcherNet = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), launcherOffsets);
         SphereObject sphere = new SphereObject(2.5, 10_000);
         sphere.setContainer(new PhysicVariableContainer(new Vector3d()));
-
         physicEngine.addObject(sphere);
+
+        basketNet.initialize();
+        physicEngine.addObjects(basketNet.getNetObjects());
+
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
+
+
 
         graphicScene.getCamera().setPosition(new Vector3d(0, 0, 0));
         graphicScene.getCamera().setPitch(10);
         graphicScene.getCamera().setYaw(50);
 
-        runApplication(graphicEngine, physicEngine);
 
-        basketNet.initialize();
+
+        initializeApplication(graphicEngine, physicEngine);
+        startApplication();
+
     }
 }
