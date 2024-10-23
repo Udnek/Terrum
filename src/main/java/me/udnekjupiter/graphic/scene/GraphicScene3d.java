@@ -10,6 +10,7 @@ import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.light.LightSource;
+import me.udnekjupiter.graphic.object.renderable.DoubleSpringObject;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
 import me.udnekjupiter.physic.object.PhysicObject3d;
@@ -61,7 +62,7 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
             switch (physicObject) {
                 case SphereObject sphereObject -> addObject(new MassEssenceObject(sphereObject));
                 case NetVertex vertex -> addObject(new VertexObject(vertex));
-                case SpringObject springObject -> addObject(new me.udnekjupiter.graphic.object.renderable.SpringObject(springObject));
+                case SpringObject springObject -> addObject(new DoubleSpringObject(springObject));
                 default -> {}
             }
         }

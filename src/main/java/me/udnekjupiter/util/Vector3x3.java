@@ -14,10 +14,10 @@ public class Vector3x3 {
         this.y = y;
         this.z = z;
     }
-    public Vector3x3(Vector3x3 v){
-        this.x = v.x.dup();
-        this.y = v.y.dup();
-        this.z = v.z.dup();
+    public Vector3x3(@NotNull Vector3x3 other){
+        this.x = other.x.dup();
+        this.y = other.y.dup();
+        this.z = other.z.dup();
     }
 
     public Vector3x3(){

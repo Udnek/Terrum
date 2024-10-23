@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.object;
 
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -21,10 +22,12 @@ public class SpringObject extends ImplementedPhysicObject3d {
 
     @Override
     public void calculateForces(@NotNull Vector3d pos) {
-        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(endpointA.getPosition(), endpointB.getPosition());
-        double elasticForce = stiffness * VectorUtils.distance(endpointA.getPosition(), endpointB.getPosition()) - relaxedLength;
-        endpointA.getContainer().appliedForce.add(normalizedDirection.mul(elasticForce));
-        endpointB.getContainer().appliedForce.add((normalizedDirection.mul(elasticForce)).mul(-1));
+        PhysicVariableContainer containerA = endpointA.getContainer();
+        PhysicVariableContainer containerB = endpointB.getContainer();
+        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(containerA.position, containerB.position);
+        double elasticForce = stiffness * VectorUtils.distance(containerA.position, containerB.position) - relaxedLength;
+        containerA.appliedForce.add(normalizedDirection.dup().mul(elasticForce));
+        containerB.appliedForce.add(normalizedDirection.mul(-elasticForce));
     }
 
     public @NotNull PhysicObject3d getEndpointA() {return endpointA;}
