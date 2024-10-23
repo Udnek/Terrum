@@ -53,11 +53,9 @@ public class EulerPhysicEngine extends PhysicEngine3d {
 
     protected Vector3d calculateAcceleration(PhysicObject3d object){
         EulerContainer container = (EulerContainer) object.getContainer();
-        Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
-        Vector3d resultAcceleration = container.appliedForce.dup().sub(decayValue);
+        //Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
+        Vector3d resultAcceleration = container.appliedForce.dup();//.sub(decayValue);
         resultAcceleration.div(container.mass);
-        resultAcceleration.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION;
-
         return resultAcceleration;
 
     }
