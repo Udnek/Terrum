@@ -83,14 +83,7 @@ public class CellularNet {
         return vertices;
     }
     public List<PhysicObject3d> getNetObjects(){
-        List<PhysicObject3d> vertices = new ArrayList<>();
-        for (int i = 0; i < sizeZ; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                if (getVertex(j,i) == null) continue;
-                vertices.add(getVertex(j, i));
-            }
-        }
-        return vertices;
+        return objects;
     }
 
     public void initialize() {
