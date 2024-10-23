@@ -36,10 +36,12 @@ public abstract class Main{
         return application;
     }
 
-    public void runApplication(GraphicEngine graphicEngine, PhysicEngine<?> physicEngine){
+    public void initializeApplication(GraphicEngine graphicEngine, PhysicEngine<?> physicEngine) {
         application = new StandartApplication(initializeGraphicsSettings());
         application.initialize(graphicEngine, physicEngine);
-        application.start();
+    }
+    public void startApplication(){
+        getApplication().start();
     }
 
     public enum Type {

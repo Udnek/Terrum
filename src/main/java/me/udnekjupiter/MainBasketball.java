@@ -50,6 +50,6 @@ public class MainBasketball extends Main{
         graphicScene.getCamera().setPitch(10);
         graphicScene.getCamera().setYaw(50);
 
-        runApplication(graphicEngine, physicEngine);
+        initializeApplication(graphicEngine, physicEngine);
     }
 }
