@@ -3,12 +3,14 @@ package me.udnekjupiter.physic.engine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.container.EulerContainer;
 import me.udnekjupiter.physic.container.RKMContainer;
+import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.List;
-
+//TODO Optimize engine by minimizing new Vector3d()'s creation
+//TODO Reconsider usage of currentPhaseVector, because it seems to not make any practical sense while dramatically increasing algorithm's difficulty
 public class RKMPhysicEngine extends PhysicEngine3d{
 
     public RKMPhysicEngine(PhysicScene3d scene, EnvironmentSettings settings)
@@ -19,9 +21,10 @@ public class RKMPhysicEngine extends PhysicEngine3d{
 
     @Override
     public void tick() {
-
+        List<? extends PhysicObject3d> objects = scene.getAllObjects();
+        List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
+        List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
     }
-
     protected Vector3d[] RKMethodFunction(Vector3d[] inputComponents){
         Vector3d[] resultComponents = new Vector3d[2];
         resultComponents[0] = inputComponents[1];
@@ -47,6 +50,21 @@ public class RKMPhysicEngine extends PhysicEngine3d{
         return new Vector3d[]{resultPositionComponent, resultVelocityComponent};
     }
 
+    public void calculateNextCoefficient(List<? extends PhysicObject3d> objects){
+        for (PhysicObject3d object : objects) {
+            RKMContainer container = (RKMContainer) object.getContainer();
+            switch (container.coefficientCounter) {
+                case 1 -> container.coefficient1 = RKMethodFunction(container.currentPhaseVector);
+                case 2 -> container.coefficient2 = RKMethodFunction(container.currentPhaseVector);
+                case 3 -> container.coefficient3 = RKMethodFunction(container.currentPhaseVector);
+                case 4 -> {
+                    container.coefficient4 = RKMethodFunction(container.currentPhaseVector);
+                    container.coefficientCounter = 1;
+                }
+                default -> System.out.println("RKMCounter error in calculateNextCoefficient");
+            }
+        }
+    }
     // TODO [mess around] WITH SWITCH
     public void calculateNextPhaseVector(List<? extends PhysicObject3d> objects){
         for (PhysicObject3d object : objects) {
@@ -67,21 +85,6 @@ public class RKMPhysicEngine extends PhysicEngine3d{
                 }
                 case 4 -> {}
                 default -> System.out.println("RKMCounter error in calculateNextPhaseVector");
-            }
-        }
-    }
-    public void calculateNextCoefficient(List<? extends PhysicObject3d> objects){
-        for (PhysicObject3d object : objects) {
-            RKMContainer container = (RKMContainer) object.getContainer();
-            switch (container.coefficientCounter) {
-                case 1 -> container.coefficient1 = RKMethodFunction(container.currentPhaseVector);
-                case 2 -> container.coefficient2 = RKMethodFunction(container.currentPhaseVector);
-                case 3 -> container.coefficient3 = RKMethodFunction(container.currentPhaseVector);
-                case 4 -> {
-                    container.coefficient4 = RKMethodFunction(container.currentPhaseVector);
-                    container.coefficientCounter = 1;
-                }
-                default -> System.out.println("RKMCounter error in calculateNextCoefficient");
             }
         }
     }
