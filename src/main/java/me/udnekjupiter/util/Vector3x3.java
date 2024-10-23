@@ -15,9 +15,7 @@ public class Vector3x3 {
         this.z = z;
     }
     public Vector3x3(@NotNull Vector3x3 other){
-        this.x = other.x.dup();
-        this.y = other.y.dup();
-        this.z = other.z.dup();
+        this(other.x.dup(), other.y.dup(), other.z.dup());
     }
 
     public Vector3x3(){
