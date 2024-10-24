@@ -17,7 +17,7 @@ public class MainBasketball extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
         return ApplicationSettings.noRecording();
-        //return ApplicationSettings.withRecording(512, 512, "Optimizationasd");
+        //return ApplicationSettings.withRecording(512, 512, "noBufferClearasd");
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
