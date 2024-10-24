@@ -27,6 +27,6 @@ public abstract class ImplementedCollidablePhysicObject3d extends ImplementedPhy
 
     @Override
     public @NotNull Vector3d getCollisionForce() {
-        return CollisionCalculator.getHookeCollisionForce(this.getCollider());
+        return CollisionCalculator.getHookeCollisionForce(getCollider());
     }
 }

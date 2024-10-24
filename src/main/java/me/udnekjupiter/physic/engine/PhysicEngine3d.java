@@ -7,8 +7,6 @@ import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.container.EulerContainer;
-import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
@@ -62,12 +60,4 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
     @Override
     @NotNull
     public EnvironmentSettings getSettings() {return settings;}
-
-    @Override
-    public void addObject(@NotNull PhysicObject3d object) {
-        scene.addObject(object);
-        PhysicVariableContainer container = object.getContainer();
-        EulerContainer newContainer = new EulerContainer(container);
-        object.setContainer(newContainer);
-    }
 }

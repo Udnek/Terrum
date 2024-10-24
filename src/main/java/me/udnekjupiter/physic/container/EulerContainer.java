@@ -13,11 +13,11 @@ public class EulerContainer extends PhysicVariableContainer {
 
     public EulerContainer(@NotNull PhysicVariableContainer other)
     {
-        super(other.position);
-        this.velocity = other.velocity;
-        this.acceleration = other.acceleration;
-        this.initialPosition = other.initialPosition;
-        this.appliedForce = other.appliedForce;
+        super(other.position.dup());
+        this.velocity = other.velocity.dup();
+        this.acceleration = other.acceleration.dup();
+        this.initialPosition = other.initialPosition.dup();
+        this.appliedForce = other.appliedForce.dup();
         this.mass = other.mass;
     }
 }

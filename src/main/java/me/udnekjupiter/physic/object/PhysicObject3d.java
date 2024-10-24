@@ -7,5 +7,6 @@ import org.realityforge.vecmath.Vector3d;
 
 public interface PhysicObject3d extends Freezable, PhysicObject<PhysicVariableContainer>{
     //@NotNull Vector3d getAppliedForce(@NotNull Vector3d position);
-    void calculateForces(@NotNull Vector3d position);
+    void calculateForces();
+    @NotNull Vector3d getVelocity();
 }

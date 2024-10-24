@@ -1,13 +1,13 @@
 package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.util.VectorUtils;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public abstract class CollisionCalculator {
-    public static Vector3d getAtomicCollisionForce(Collidable thisObject){
+    public static @NotNull Vector3d getAtomicCollisionForce(@NotNull Collidable thisObject){
         Vector3d collisionForce = new Vector3d();
         for (Collidable collidingObject : thisObject.getCollidingObjects()) {
             if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
@@ -29,7 +29,7 @@ public abstract class CollisionCalculator {
         return collisionForce;
     }
 
-    public static Vector3d getHookeCollisionForce(Collider thisCollider){
+    public static @NotNull Vector3d getHookeCollisionForce(@NotNull Collider thisCollider){
         Vector3d collisionForce = new Vector3d();
         double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
         if (thisCollider instanceof SphereCollider sphereCollider){

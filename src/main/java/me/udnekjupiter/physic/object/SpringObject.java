@@ -21,13 +21,13 @@ public class SpringObject extends ImplementedPhysicObject3d {
     }
 
     @Override
-    public void calculateForces(@NotNull Vector3d pos) {
+    public void calculateForces() {
         PhysicVariableContainer containerA = endpointA.getContainer();
         PhysicVariableContainer containerB = endpointB.getContainer();
-        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(containerA.position, containerB.position);
-        double elasticForce = stiffness * VectorUtils.distance(containerA.position, containerB.position) - relaxedLength;
+        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(containerA.position.dup(), containerB.position.dup());
+        double elasticForce = stiffness * (VectorUtils.distance(containerA.position.dup(), containerB.position.dup()) - relaxedLength);
         containerA.appliedForce.add(normalizedDirection.dup().mul(elasticForce));
-        containerB.appliedForce.add(normalizedDirection.mul(-elasticForce));
+        containerB.appliedForce.add(normalizedDirection.dup().mul(-elasticForce));
     }
 
     public @NotNull PhysicObject3d getEndpointA() {return endpointA;}

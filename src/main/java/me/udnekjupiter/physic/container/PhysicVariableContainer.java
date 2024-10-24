@@ -15,4 +15,10 @@ public class PhysicVariableContainer implements VariableContainer {
         this.position = position;
         initialPosition = position.dup();
     }
+    public @NotNull Vector3d getPosition(){
+        return position;
+    }
+    public @NotNull Vector3d getVelocity(){
+        return velocity;
+    }
 }

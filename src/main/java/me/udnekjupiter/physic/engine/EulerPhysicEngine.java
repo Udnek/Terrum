@@ -2,9 +2,11 @@ package me.udnekjupiter.physic.engine;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.container.EulerContainer;
+import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
+import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.List;
@@ -17,14 +19,19 @@ public class EulerPhysicEngine extends PhysicEngine3d {
 
     public void tick() {
         List<? extends PhysicObject3d> objects = scene.getAllObjects();
-        List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
-        List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
+        //List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
+        //List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
         for (int i = 0; i < settings.iterationsPerTick; i++) {
-            updateColliders(collidableObjects, collisionInitiators);
+            //updateColliders(collidableObjects, collisionInitiators);
             recalculateForces(objects);
             calculatePhaseDifferentials(objects);
             updatePositions(objects);
         }
+    }
+
+    protected void recalculateForces(@NotNull List<? extends PhysicObject3d> objects){
+        for (PhysicObject3d object : objects) object.getContainer().appliedForce.mul(0);
+        for (PhysicObject3d object : objects) object.calculateForces();
     }
 
     public void calculatePhaseDifferentials(List<? extends PhysicObject3d> objects){
@@ -39,24 +46,16 @@ public class EulerPhysicEngine extends PhysicEngine3d {
         for (PhysicObject3d object : objects) {
             if (object.isFrozen()) continue;
             EulerContainer container = (EulerContainer) object.getContainer();
-            container.position.add(container.positionDifferential);
             container.velocity.add(container.velocityDifferential);
+            container.position.add(container.positionDifferential);
         }
     }
 
-    protected void recalculateForces(List<? extends PhysicObject3d> objects){
-        for (PhysicObject3d object : objects) {
-            object.getContainer().appliedForce.mul(0);
-        }
-        for (PhysicObject3d object : objects) {
-            object.calculateForces(object.getContainer().position);
-        }
-    }
 
-    protected Vector3d calculateAcceleration(PhysicObject3d object){
+    protected @NotNull Vector3d calculateAcceleration(@NotNull PhysicObject3d object){
         EulerContainer container = (EulerContainer) object.getContainer();
-        Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
-        Vector3d resultAcceleration = container.appliedForce.dup().sub(decayValue);
+        Vector3d decayForce = container.velocity.dup().mul(settings.decayCoefficient);
+        Vector3d resultAcceleration = container.appliedForce.dup().sub(decayForce);
         resultAcceleration.div(container.mass);
         return resultAcceleration;
     }
@@ -85,5 +84,13 @@ public class EulerPhysicEngine extends PhysicEngine3d {
                 anotherObject.getCollider().addCollision(targetObject.getCollider());
             }
         }
+    }
+
+    @Override
+    public void addObject(@NotNull PhysicObject3d object) {
+        scene.addObject(object);
+        PhysicVariableContainer container = object.getContainer();
+        EulerContainer newContainer = new EulerContainer(container);
+        object.setContainer(newContainer);
     }
 }
