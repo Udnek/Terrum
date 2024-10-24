@@ -27,8 +27,8 @@ public class EnvironmentSettings {
         return new EnvironmentSettings(10000,
                 1,
                 5,
-                0.01,
-                5,
+                0.0001,
+                0,
                 0.1,
                 200);
     }

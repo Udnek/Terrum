@@ -27,6 +27,8 @@ public class RKMContainer extends PhysicVariableContainer {
         this.initialPosition = other.initialPosition;
         this.appliedForce = other.appliedForce;
         this.mass = other.mass;
+        this.currentPhaseVector[0] = other.position.dup();
+        this.currentPhaseVector[1] = other.velocity.dup();
     }
 
     @Override

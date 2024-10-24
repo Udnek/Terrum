@@ -38,7 +38,9 @@ public class VectorUtils {
     public static @NotNull Vector3d getNormalizedDirection(@NotNull Vector3d positionStart, @NotNull Vector3d positionEnd){
 
         Vector3d sub = positionEnd.dup().sub(positionStart);
-        if (sub.lengthSquared() == 0) return sub;
+        if (sub.lengthSquared() == 0){
+            return sub;
+        }
         return sub.normalize();
     }
 

@@ -29,9 +29,17 @@ public class RKMPhysicEngine extends PhysicEngine3d{
         List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
         List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
         if (tickCounter < 6){
-            PhysicObject3d object = objects.get(24);
+            PhysicObject3d object = objects.get(0);
+            RKMContainer container = (RKMContainer) object.getContainer();
             System.out.println("Position: " + object.getPosition().asString());
-            System.out.println("AppliedForce: " + object.getContainer().appliedForce.asString());
+            System.out.println("Actual Position: " + object.getActualPosition().asString());
+            System.out.println("Container Position: " + container.position.asString());
+            System.out.println("AppliedForce: " + container.appliedForce.asString());
+            System.out.println("Velocity: " + container.velocity.asString());
+            System.out.println("Velocity Differential: " + container.velocityDifferential.asString());
+            System.out.println("Position Differential: " + container.positionDifferential.asString());
+            //System.out.print(container.velocity.asString() + " + " + container.velocityDifferential.asString() + " = " + container.velocity.dup().add(container.velocityDifferential).asString() + "\n");
+            System.out.println("\n");
             tickCounter++;
         }
         for (int tick = 0; tick < settings.iterationsPerTick; tick++) {
