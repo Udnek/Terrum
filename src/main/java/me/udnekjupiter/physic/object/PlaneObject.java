@@ -1,7 +1,6 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.collision.Collidable;
-import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.collision.PlaneCollider;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +20,10 @@ public class PlaneObject extends ImplementedCollidablePhysicObject3d implements 
     @Override
     public boolean isCollisionIgnoredWith(@NotNull Collidable object) {
         return false;
+    }
+
+    public double getY(double x, double z){
+        return (-a*x - c*z - d)/b;
     }
 
     @Override

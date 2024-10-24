@@ -14,7 +14,7 @@ public class Utils {
     ///////////////////////////////////////////////////////////////////////////
     // GENERAL
     ///////////////////////////////////////////////////////////////////////////
-    public static String roundToPrecision(double number, int precision){
+    public static @NotNull String roundToPrecision(double number, int precision){
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMinimumFractionDigits(precision);
         return numberFormat.format(number);
@@ -24,6 +24,11 @@ public class Utils {
         return Math.abs(a + b) <= maxDistance;
     }
 
+    public static @NotNull Point clamp(@NotNull Point point, int min, int max){
+        point.x = Math.clamp(point.x, min, max);
+        point.y = Math.clamp(point.y, min, max);
+        return point;
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // IMAGE
@@ -55,7 +60,7 @@ public class Utils {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //
+    // ROTATION
     ///////////////////////////////////////////////////////////////////////////
 
     public static float normalizeYaw(float angle){

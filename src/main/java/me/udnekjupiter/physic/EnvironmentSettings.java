@@ -1,5 +1,7 @@
 package me.udnekjupiter.physic;
 
+import me.udnekjupiter.app.Application;
+
 public class EnvironmentSettings {
     //Global physics settings
     public double deltaTime;
@@ -24,12 +26,14 @@ public class EnvironmentSettings {
 
 
     public static EnvironmentSettings defaultPreset(){
+        double deltaTime = 0.0001;
         return new EnvironmentSettings(10000,
                 1,
                 5,
-                0.0001,
+                deltaTime,
                 0,
                 0.1,
-                200);
+                (int) (1/deltaTime/Application.PHYSIC_TICKS_PER_SECOND)
+        );
     }
 }

@@ -10,6 +10,7 @@ import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
@@ -25,10 +26,17 @@ public class RasterizationEngine extends GraphicEngine3d {
     private int width;
     private int height;
     private Camera camera;
+    private ApplicationSettings settings;
 
     public RasterizationEngine(GraphicScene3d graphicScene) {
         super(graphicScene);
         frame = new TransparentRasterizationFrame();
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        settings = Main.getMain().getApplication().getSettings();
     }
 
     @Override
@@ -69,8 +77,7 @@ public class RasterizationEngine extends GraphicEngine3d {
     }
 
 
-    public void drawTriangle(RenderableTriangle triangle){
-        ApplicationSettings settings = Main.getMain().getApplication().getSettings();
+    public void drawTriangle(@NotNull RenderableTriangle triangle){
         Point project0 = project(triangle.getVertex0());
         if (project0 == null) return;
         Point project1 = project(triangle.getVertex1());
@@ -82,13 +89,11 @@ public class RasterizationEngine extends GraphicEngine3d {
         if (settings.drawWireframe) frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
     }
 
-    public Point project(Vector3d pos){
+    public @Nullable Point project(@NotNull Vector3d pos){
         if (pos.z < 0.1) return null;
-        double multiplier = 1 / pos.z * height / camera.getFov();
+        double multiplier = 1d / pos.z * height / camera.getFov();
         int x = (int) Math.round(pos.x * multiplier);
         int y = (int) Math.round(pos.y * multiplier);
-
-
         return new Point(x, y);
     }
 }

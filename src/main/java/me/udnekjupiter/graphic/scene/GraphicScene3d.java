@@ -12,8 +12,10 @@ import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.object.renderable.DoubleSpringObject;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
+import me.udnekjupiter.graphic.object.renderable.SurfaceObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
 import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
@@ -63,6 +65,7 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
                 case SphereObject sphereObject -> addObject(new MassEssenceObject(sphereObject));
                 case NetVertex vertex -> addObject(new VertexObject(vertex));
                 case SpringObject springObject -> addObject(new DoubleSpringObject(springObject));
+                case PlaneObject planeObject -> addObject(new SurfaceObject(planeObject, null));
                 default -> {}
             }
         }

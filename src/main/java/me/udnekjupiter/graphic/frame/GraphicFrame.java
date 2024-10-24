@@ -1,5 +1,8 @@
 package me.udnekjupiter.graphic.frame;
 
+import org.jetbrains.annotations.NotNull;
+import org.realityforge.vecmath.Vector4d;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -18,6 +21,8 @@ public abstract class GraphicFrame {
         data = new int[width*height];
     }
     public abstract boolean isInBounds(int x, int y);
+    public boolean isInBounds(@NotNull Point point){return isInBounds(point.x, point.y);}
+    public abstract @NotNull Vector4d getBounds();
     public abstract int toPosition(int x, int y);
     public void setPixel(int x, int y, int color){
         data[toPosition(x, y)] = color;
@@ -48,17 +53,32 @@ public abstract class GraphicFrame {
     public void drawLine(int x0, int y0, int x1, int y1, int color){
         if (!isInBounds(x0, y0) && !isInBounds(x1, y1)) return;
 
-        double dx = x1 - x0;
-        double dy = y1 - y0;
+        float dx = x1 - x0;
+        float dy = y1 - y0;
         int steps;
+
         if (Math.abs(dx) > Math.abs(dy)) {
             steps = (int) Math.abs(dx);
-        } else{
+        }
+        else {
             steps = (int) Math.abs(dy);
         }
+
         if (steps == 0) steps = 1;
-        dx /= (steps);
-        dy /= (steps);
+
+        dx /= steps;
+        dy /= steps;
+/*
+        if (x0 < bounds.x){
+            y0 += (int) ((bounds.x - x0) * dy);
+            x0 = (int) bounds.x;}
+        else if (x0 > bounds.z){
+            y0 += (int) ((x0 - bounds.x) * dy);
+            x0 = (int) bounds.x;}
+
+        if (y0 < bounds.y){
+
+        else if (y0 > bounds.w){*/
 
 
         // UNSAFE DRAWING
@@ -83,11 +103,21 @@ public abstract class GraphicFrame {
     }
 
     public void drawTriangle(Point p0, Point p1, Point p2, int color){
+        //if (!(isInBounds(p0) && isInBounds(p1) && isInBounds(p2))) return;
+
+/*        final int boundExtend = 100;
+
+        Vector4d bounds = getBounds();
+        int minBound = (int) (Math.min(bounds.x, bounds.y) -boundExtend);
+        int maxBound = (int) (Math.max(bounds.z, bounds.w) +boundExtend);
+
+        Point lowest = Utils.clamp(new Point(p0), minBound, maxBound);
+        Point middle = Utils.clamp(new Point(p1), minBound, maxBound);
+        Point highest = Utils.clamp(new Point(p2), minBound, maxBound);*/
 
         Point lowest = new Point(p0);
         Point middle = new Point(p1);
         Point highest = new Point(p2);
-
 
         if (lowest.y > middle.y) swapPoints(lowest, middle);
         if (middle.y > highest.y){

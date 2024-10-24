@@ -7,10 +7,8 @@ import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
-import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.net.SpringSphereNet;
 import me.udnekjupiter.physic.object.PlaneObject;
-import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -19,12 +17,12 @@ public class MainBasketball extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
         return ApplicationSettings.noRecording();
-        //return ApplicationSettings.withRecording(512, 512, "Collapse2");
+        //return ApplicationSettings.withRecording(512, 512, "Optimizationasd");
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
         environmentSettings.iterationsPerTick = 200;
-        environmentSettings.decayCoefficient = 1;
+        environmentSettings.decayCoefficient = 0.1;
         return environmentSettings;
     }
 
@@ -44,7 +42,7 @@ public class MainBasketball extends Main{
         sphere.getContainer().mass = 1000;
         physicEngine.addObject(sphere);*/
 
-        PlaneObject plane = new PlaneObject(0, 1, 0, 2, 10_000);
+        PlaneObject plane = new PlaneObject(0, 1, 0, 2, 100_000);
         physicEngine.addObject(plane);
 
 
@@ -53,7 +51,7 @@ public class MainBasketball extends Main{
         physicEngine.addObjects(basketNet.getNetObjects());*/
 
 
-        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d));
+        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d, 1000));
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
