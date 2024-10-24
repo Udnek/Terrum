@@ -52,7 +52,7 @@ public class EulerPhysicEngine extends PhysicEngine3d {
             object.getContainer().appliedForce.mul(0);
         }
         for (PhysicObject3d object : objects) {
-            object.calculateForces(object.getContainer().position);
+            object.calculateForces();
         }
     }
 
@@ -88,5 +88,13 @@ public class EulerPhysicEngine extends PhysicEngine3d {
                 anotherObject.getCollider().addCollision(targetObject.getCollider());
             }
         }
+    }
+
+    @Override
+    public void addObject(@NotNull PhysicObject3d object) {
+        scene.addObject(object);
+        PhysicVariableContainer container = object.getContainer();
+        EulerContainer newContainer = new EulerContainer(container);
+        object.setContainer(newContainer);
     }
 }

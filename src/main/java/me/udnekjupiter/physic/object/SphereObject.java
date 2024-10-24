@@ -4,7 +4,6 @@ import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
 
 public class SphereObject extends ImplementedCollidablePhysicObject3d implements CollisionInitiator {
     public SphereObject(double colliderRadius, double stiffness) {
@@ -16,7 +15,7 @@ public class SphereObject extends ImplementedCollidablePhysicObject3d implements
     }
 
     @Override
-    public void calculateForces(@NotNull Vector3d pos) {
+    public void calculateForces() {
         container.appliedForce.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION * container.mass;
         container.appliedForce.add(getCollisionForce());
     }

@@ -19,7 +19,7 @@ public class SphereCollider extends Collider{
     }
 
     public Vector3d getCenterPosition(){
-        return parent.getPosition();
+        return parent.getActualPosition();
     }
 
     @Override

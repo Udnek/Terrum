@@ -36,7 +36,10 @@ public class VectorUtils {
         return vectorLength(newX, newY, newZ) / 2.0;
     }
     public static @NotNull Vector3d getNormalizedDirection(@NotNull Vector3d positionStart, @NotNull Vector3d positionEnd){
-        return positionEnd.dup().sub(positionStart).normalize();
+
+        Vector3d sub = positionEnd.dup().sub(positionStart);
+        if (sub.lengthSquared() == 0) return sub;
+        return sub.normalize();
     }
 
     public static @NotNull Vector3d getNormal(@NotNull Vector3d edge0, @NotNull Vector3d edge1){

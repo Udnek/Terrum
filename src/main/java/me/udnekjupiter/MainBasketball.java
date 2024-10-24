@@ -7,6 +7,7 @@ import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
+import me.udnekjupiter.physic.engine.RKMPhysicEngine;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.net.SpringSphereNet;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
@@ -25,7 +26,7 @@ public class MainBasketball extends Main{
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
-        environmentSettings.iterationsPerTick = 0;
+        environmentSettings.iterationsPerTick = 200;
         return environmentSettings;
     }
 
@@ -33,7 +34,7 @@ public class MainBasketball extends Main{
     public void run() {
 
         PhysicScene3d physicScene = new PhysicScene3d();
-        EulerPhysicEngine physicEngine = new EulerPhysicEngine(physicScene, initializePhysicsSettings());
+        RKMPhysicEngine physicEngine = new RKMPhysicEngine(physicScene, initializePhysicsSettings());
 
         GraphicScene3d graphicScene = new GraphicScene3d(new Camera());
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
@@ -46,9 +47,9 @@ public class MainBasketball extends Main{
         sphere.getContainer().mass = 1000;
         physicEngine.addObject(sphere);*/
 
-        //basketNet.initialize();
-        //physicEngine.addObjects(basketNet.getNetObjects());
-        physicEngine.addObjects(SpringSphereNet.create(2, 2d/4d));
+        basketNet.initialize();
+        physicEngine.addObjects(basketNet.getNetObjects());
+        //physicEngine.addObjects(SpringSphereNet.create(2, 2d/4d));
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());

@@ -36,6 +36,15 @@ public abstract class ImplementedPhysicObject3d implements PhysicObject3d {
     public @NotNull Vector3d getPosition() {
         return container.position.dup();
     }
+    @Override
+    public @NotNull Vector3d getVelocity() {
+        return container.getVelocity().dup();
+    }
+
+    @Override
+    public @NotNull Vector3d getActualPosition(){
+        return container.getPosition().dup();
+    }
 
     @Override
     public void setPosition(@NotNull Vector3d position) {

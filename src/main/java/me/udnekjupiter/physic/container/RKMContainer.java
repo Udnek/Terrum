@@ -12,7 +12,7 @@ public class RKMContainer extends PhysicVariableContainer {
     public @NotNull Vector3d[] coefficient4 = new Vector3d[]{new Vector3d(), new Vector3d()};
     public @NotNull Vector3d positionDifferential = new Vector3d();
     public @NotNull Vector3d velocityDifferential = new Vector3d();
-    public @NotNull int coefficientCounter = 1;
+    public int coefficientCounter = 1;
 
     public RKMContainer(@NotNull Vector3d position)
     {
@@ -27,5 +27,14 @@ public class RKMContainer extends PhysicVariableContainer {
         this.initialPosition = other.initialPosition;
         this.appliedForce = other.appliedForce;
         this.mass = other.mass;
+    }
+
+    @Override
+    public @NotNull Vector3d getPosition(){
+        return currentPhaseVector[0];
+    }
+    @Override
+    public @NotNull Vector3d getVelocity(){
+        return currentPhaseVector[1];
     }
 }

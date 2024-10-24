@@ -64,10 +64,5 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
     public EnvironmentSettings getSettings() {return settings;}
 
     @Override
-    public void addObject(@NotNull PhysicObject3d object) {
-        scene.addObject(object);
-        PhysicVariableContainer container = object.getContainer();
-        EulerContainer newContainer = new EulerContainer(container);
-        object.setContainer(newContainer);
-    }
+    public void addObject(@NotNull PhysicObject3d object){}
 }

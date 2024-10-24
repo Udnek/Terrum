@@ -1,8 +1,5 @@
 package me.udnekjupiter.physic.object.vertex;
 
-import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
-
 public class NetStaticVertex extends NetVertex {
 
     public NetStaticVertex() {
@@ -10,7 +7,7 @@ public class NetStaticVertex extends NetVertex {
     }
 
     @Override
-    public void calculateForces(@NotNull Vector3d position) {}
+    public void calculateForces() {}
 
     @Override
     public void unfreeze(){}

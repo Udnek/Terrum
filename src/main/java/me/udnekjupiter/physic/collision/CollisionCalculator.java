@@ -35,8 +35,8 @@ public abstract class CollisionCalculator {
         if (thisCollider instanceof SphereCollider sphereCollider){
             for (Collider otherCollider : thisCollider.getCurrentCollisions()) {
                 if (!(otherCollider instanceof SphereCollider otherSphereCollider)) continue;
-                Vector3d thisPosition = thisCollider.parent.getPosition();
-                Vector3d otherPosition = otherSphereCollider.parent.getPosition();
+                Vector3d thisPosition = thisCollider.parent.getActualPosition();
+                Vector3d otherPosition = otherSphereCollider.parent.getActualPosition();
                 double distance = VectorUtils.distance(thisPosition, otherPosition);
                 double maxDistance = sphereCollider.radius + otherSphereCollider.radius;
                 double thisCriticalRadius = sphereCollider.radius - maxDepth;
