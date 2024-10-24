@@ -1,7 +1,6 @@
 package me.udnekjupiter.physic.engine;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.container.EulerContainer;
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.container.RKMContainer;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;

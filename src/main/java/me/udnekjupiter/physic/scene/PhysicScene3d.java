@@ -1,10 +1,8 @@
 package me.udnekjupiter.physic.scene;
 
-import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.CollisionInitiator;
 import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.util.Resettable;
 import org.jetbrains.annotations.NotNull;
 

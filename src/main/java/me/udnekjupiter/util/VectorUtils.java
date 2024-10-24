@@ -4,15 +4,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 public class VectorUtils {
     public static double vectorLength(double x, double y, double z){
         return Math.sqrt(x*x + y*y + z*z);
     }
     public static double distanceSquared(@NotNull Vector3d vector0, @NotNull Vector3d vector1){
-        return Math.pow((vector0.x-vector1.x), 2) + Math.pow((vector0.y-vector1.y), 2) + Math.pow((vector0.z-vector1.z), 2);
+        return pow((vector0.x-vector1.x), 2) + pow((vector0.y-vector1.y), 2) + pow((vector0.z-vector1.z), 2);
     }
     public static double distance(@NotNull Vector3d vector0, @NotNull Vector3d vector1){
-        return Math.sqrt(distanceSquared(vector0, vector1));
+        return sqrt(distanceSquared(vector0, vector1));
     }
     public static @NotNull Vector3d getMin(@NotNull Vector3d vector1, @NotNull Vector3d vector2){
         if (vector1.length() > vector2.length()) return vector2;
@@ -36,12 +39,9 @@ public class VectorUtils {
         return vectorLength(newX, newY, newZ) / 2.0;
     }
     public static @NotNull Vector3d getNormalizedDirection(@NotNull Vector3d positionStart, @NotNull Vector3d positionEnd){
-
-        Vector3d sub = positionEnd.dup().sub(positionStart);
-        if (sub.lengthSquared() == 0){
-            return sub;
-        }
-        return sub.normalize();
+        Vector3d difference = positionEnd.dup().sub(positionStart);
+        if (difference.lengthSquared() == 0) return difference;
+        return difference.normalize();
     }
 
     public static @NotNull Vector3d getNormal(@NotNull Vector3d edge0, @NotNull Vector3d edge1){

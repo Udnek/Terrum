@@ -5,6 +5,7 @@ import me.udnekjupiter.file.ImageWrapper;
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.SpringObject;
+import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.Vector3x3;
 import org.jetbrains.annotations.Nullable;
@@ -126,18 +127,21 @@ public class CellularNet {
 
     private void initializeSprings(){
         ArrayList<ArrayList<NetVertex>> pairedVertices = new ArrayList<>();
+        List<SpringObject> springs = new ArrayList<>();
         for (int z = 0; z < sizeZ; z++) {
             for (int x = 0; x < sizeX; x++) {
                 NetVertex netVertex = getVertex(x, z);
                 if (netVertex == null) continue;
                 List<NetVertex> neighbourVertices = getNeighbourVertices(x, z);
                 for (NetVertex neighbourVertex : neighbourVertices) {
+                    if (netVertex instanceof NetStaticVertex && neighbourVertex instanceof NetStaticVertex) continue;
                     ArrayList<NetVertex> pair = new ArrayList<>(Arrays.asList(neighbourVertex, netVertex));
                     if (pairedVertices.contains(pair)) continue;
                     pairedVertices.add(new ArrayList<>(pair.reversed()));
-                    objects.add(new SpringObject(netVertex, neighbourVertex, springRelaxedLength, springStiffness));
+                    springs.add(new SpringObject(netVertex, neighbourVertex, springRelaxedLength, springStiffness));
                 }
             }
         }
+        objects.addAll(springs);
     }
 }

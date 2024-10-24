@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SpringSphereNet {
 
-    public static @NotNull List<? extends PhysicObject3d> create(final double radius, final double step){
+    public static @NotNull List<? extends PhysicObject3d> createFromCuboid(final double radius, final double step){
         List<NetVertex> vertices = new ArrayList<>();
         for (double x = -radius; x <= radius; x+=step) {
             for (double y = -radius; y <= radius; y+=step) {
@@ -30,14 +30,14 @@ public class SpringSphereNet {
         }
         List<SpringObject> springs = new ArrayList<>();
         final double EPSILON = 0.0001;
-        final double maxDistance = Math.sqrt(2*step*step);
+        final double maxDistance = step;
         for (int i = 0; i < vertices.size()-1; i++) {
             for (int j = i+1; j < vertices.size(); j++) {
                 NetVertex vertexA = vertices.get(i);
                 NetVertex vertexB = vertices.get(j);
                 double distance = VectorUtils.distance(vertexA.getPosition(), vertexB.getPosition());
                 if (distance > maxDistance + EPSILON) continue;
-                springs.add(new SpringObject(vertexA, vertexB, distance, 100));
+                springs.add(new SpringObject(vertexA, vertexB, distance, 500));
             }
         }
 
@@ -45,7 +45,5 @@ public class SpringSphereNet {
         objects.addAll(springs);
         return objects;
     }
-
-
 
 }
