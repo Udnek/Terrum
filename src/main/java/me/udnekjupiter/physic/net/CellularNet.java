@@ -107,10 +107,9 @@ public class CellularNet {
                 NetVertex netVertex = VertexColor.getVertex(color);
                 if (netVertex == null) continue;
                 objects.add(netVertex);
-                netVertex.setContainer(new PhysicVariableContainer(new Vector3d(x, 0, z)));
+                netVertex.setContainer(new PhysicVariableContainer(new Vector3d(x, 0, z).add(globalOffset)));
                 netVertex.getContainer().mass = 10;
                 setVertex(netVertex, x, z);
-                resetVertexPosition(x, z);
             }
         }
     }

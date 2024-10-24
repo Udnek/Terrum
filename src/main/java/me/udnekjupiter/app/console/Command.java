@@ -13,7 +13,8 @@ public enum Command{
     SET_WINDOW_SIZE("size", "sets window size", new String[]{"x", "y"}, new ArgumentType[]{ArgumentType.INTEGER, ArgumentType.INTEGER}),
     SET_FOV("fov", "sets camera fov", "", ArgumentType.DOUBLE),
     SET_DRAW_WIREFRAME("drawWF", "sets drawWireFrame parameter", "", ArgumentType.BOOLEAN),
-    SET_DRAW_PLANES("drawPlanes", "sets drawPlanes parameter", "", ArgumentType.BOOLEAN);
+    SET_DRAW_PLANES("drawPlanes", "sets drawPlanes parameter", "", ArgumentType.BOOLEAN),
+    GET_CAMERA_POSITION("camPos", "gets camera position and rotation");
 
     public final String name;
     public final String description;

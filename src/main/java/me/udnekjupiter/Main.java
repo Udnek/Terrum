@@ -12,13 +12,15 @@ public abstract class Main{
 
     private Application application;
 
-    public static final Main.Type MAIN_TO_RUN = Type.BASKETBALL;
+    public static final Main.Type MAIN_TO_RUN = Type.COLORED_BALLS;
     private static Main main;
     public static void main(String ...args){
         main = switch (MAIN_TO_RUN) {
             case UDNEK -> new MainUdnek();
             case JUPITER -> new MainJupiter();
             case BASKETBALL -> new MainBasketball();
+            case BALL -> new BallMain();
+            case COLORED_BALLS -> new ColoredBallsMain();
         };
 
         main.run();
@@ -47,6 +49,8 @@ public abstract class Main{
     public enum Type {
         UDNEK,
         JUPITER,
-        BASKETBALL
+        BASKETBALL,
+        BALL,
+        COLORED_BALLS
     }
 }

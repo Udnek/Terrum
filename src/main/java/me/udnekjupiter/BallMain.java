@@ -13,18 +13,21 @@ import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
-public class MainBasketball extends Main{
+public class BallMain extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
-        ApplicationSettings applicationSettings = ApplicationSettings.noRecording();
+/*        ApplicationSettings applicationSettings = ApplicationSettings.withRecording(720, 720, "Ball2");
         applicationSettings.drawWireframe = false;
-        return applicationSettings;
+        return applicationSettings;*/
         //return ApplicationSettings.withRecording(512, 512, "Collapse2");
+        ApplicationSettings applicationSettings = ApplicationSettings.noRecording();
+        //applicationSettings.pixelScaling = 4;
+        return applicationSettings;
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
         environmentSettings.iterationsPerTick = 200;
-        environmentSettings.decayCoefficient = 0.1;
+        environmentSettings.decayCoefficient = 0.3;
         return environmentSettings;
     }
 
@@ -33,32 +36,19 @@ public class MainBasketball extends Main{
 
         PhysicScene3d physicScene = new PhysicScene3d();
         PhysicEngine3d physicEngine = new EulerPhysicEngine(physicScene, initializePhysicsSettings());
-
         GraphicScene3d graphicScene = new GraphicScene3d(new Camera());
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
-        //CellularNet launcherNet = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), launcherOffsets);
-/*        SphereObject sphere = new SphereObject(4, 100_000);
-        sphere.setPosition(new Vector3d(5, 5, 5));
-        sphere.getContainer().initialPosition = new Vector3d(5, 5, 5);
-        sphere.getContainer().mass = 1000;
-        physicEngine.addObject(sphere);*/
 
-
-/*        CellularNet basketNet = new CellularNet("big_frame.png");
-        basketNet.initialize();
-        physicEngine.addObjects(basketNet.getNetObjects());*/
-
-
-        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2d, 2d/4d, 10000));
+        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2d, 2d/4d, 5000));
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 
 
-        graphicScene.getCamera().setPosition(new Vector3d(4.98, 3.966, -4.187));
-        graphicScene.getCamera().setPitch(21.42f);
-        graphicScene.getCamera().setYaw(-0.7f);
+        graphicScene.getCamera().setPosition(new Vector3d(-0.056768052754865406, 2.6988419722616674, -4.659554678586445));
+        graphicScene.getCamera().setYaw(0);
+        graphicScene.getCamera().setPitch(33);
 
         initializeApplication(graphicEngine, physicEngine);
         startApplication();

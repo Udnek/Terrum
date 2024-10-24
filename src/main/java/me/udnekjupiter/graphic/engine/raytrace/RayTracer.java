@@ -11,6 +11,7 @@ import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.realityforge.vecmath.Vector3d;
 
 public class RayTracer {
@@ -30,7 +31,7 @@ public class RayTracer {
     // TODO: 9/5/2024 DEBUG COLORIZE DOESNT WORK
     private boolean debugColorizePlanes;
 
-    public RayTracer(@NotNull LightSource lightSource){
+    public RayTracer(@Nullable LightSource lightSource){
         this.doLight = Main.getMain().getApplication().getSettings().doLight;
         this.lightSource = lightSource;
     }
