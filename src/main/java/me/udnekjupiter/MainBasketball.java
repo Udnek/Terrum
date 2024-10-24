@@ -7,8 +7,10 @@ import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
-import me.udnekjupiter.physic.engine.PhysicEngine3d;
+import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.net.SpringSphereNet;
+import me.udnekjupiter.physic.object.PlaneObject;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -16,15 +18,13 @@ import org.realityforge.vecmath.Vector3d;
 public class MainBasketball extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
-        ApplicationSettings applicationSettings = ApplicationSettings.noRecording();
-        applicationSettings.drawWireframe = false;
-        return applicationSettings;
+        return ApplicationSettings.noRecording();
         //return ApplicationSettings.withRecording(512, 512, "Collapse2");
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
         environmentSettings.iterationsPerTick = 200;
-        environmentSettings.decayCoefficient = 0.1;
+        environmentSettings.decayCoefficient = 1;
         return environmentSettings;
     }
 
@@ -32,7 +32,7 @@ public class MainBasketball extends Main{
     public void run() {
 
         PhysicScene3d physicScene = new PhysicScene3d();
-        PhysicEngine3d physicEngine = new EulerPhysicEngine(physicScene, initializePhysicsSettings());
+        EulerPhysicEngine physicEngine = new EulerPhysicEngine(physicScene, initializePhysicsSettings());
 
         GraphicScene3d graphicScene = new GraphicScene3d(new Camera());
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
@@ -44,13 +44,16 @@ public class MainBasketball extends Main{
         sphere.getContainer().mass = 1000;
         physicEngine.addObject(sphere);*/
 
+        PlaneObject plane = new PlaneObject(0, 1, 0, 2, 10_000);
+        physicEngine.addObject(plane);
 
-/*        CellularNet basketNet = new CellularNet("big_frame.png");
+
+/*        CellularNet basketNet = new CellularNet("big_square.png");
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());*/
 
 
-        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2d, 2d/4d, 10000));
+        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d));
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());

@@ -151,5 +151,10 @@ public class VectorUtils {
         vector.y = y*Math.cos(angle) + -z*Math.sin(angle);
         vector.z = y*Math.sin(angle) + z*Math.cos(angle);
     }
-
+    ///////////////////////////////////////////////////////////////////////////
+    // GEOMETRY
+    ///////////////////////////////////////////////////////////////////////////
+    public static double distanceFromPointToPlane(double a, double b, double c, double d, double x, double y, double z) {
+        return Math.abs((a * x) + (b * y) + (c * z) + (d)) / Math.sqrt(a * a + b * b + c * c);
+    }
 }

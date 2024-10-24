@@ -47,7 +47,7 @@ public class CellularNet {
         this(mapImageName, new Vector3d(), new Vector3x3(new Vector3d(1, 0, 0),
                                                          new Vector3d(),
                                                          new Vector3d(0, 0, 1)),
-                1000, 1);
+                10_000, 1);
     }
 
     public int getSizeX(){return this.sizeX;}

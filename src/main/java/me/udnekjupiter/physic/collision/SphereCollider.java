@@ -27,8 +27,18 @@ public class SphereCollider extends Collider{
         if (collider instanceof SphereCollider sphereCollider){
             double distanceBetweenColliders = VectorUtils.distance(this.getCenterPosition(), sphereCollider.getCenterPosition());
             return (sphereCollider.radius + this.radius >= distanceBetweenColliders);
+        } else if (collider instanceof  PlaneCollider planeCollider) {
+            double distanceToPlane = Math.abs(
+                    (planeCollider.a*getCenterPosition().x) +
+                    (planeCollider.b*getCenterPosition().y) +
+                    (planeCollider.c*getCenterPosition().z) +
+                    (planeCollider.d))
+                    /
+                    Math.sqrt((planeCollider.a*planeCollider.a) +
+                            (planeCollider.b*planeCollider.b) +
+                            (planeCollider.c*planeCollider.c));
+            return (this.radius >= distanceToPlane);
         } else {
-            System.out.println("BoxCollider intersection checker is not implemented yet");
             return false;
         }
     }
