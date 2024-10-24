@@ -48,7 +48,7 @@ public class MainBasketball extends Main{
 
         //basketNet.initialize();
         //physicEngine.addObjects(basketNet.getNetObjects());
-        physicEngine.addObjects(SpringSphereNet.create(2, 2d/4d));
+        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d));
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());

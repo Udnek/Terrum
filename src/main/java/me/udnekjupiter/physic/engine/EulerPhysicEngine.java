@@ -2,18 +2,15 @@ package me.udnekjupiter.physic.engine;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.container.EulerContainer;
-import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
 
 import java.util.List;
 
 public class EulerPhysicEngine extends PhysicEngine3d {
-    public EulerPhysicEngine(PhysicScene3d scene, EnvironmentSettings settings)
-    {
+    public EulerPhysicEngine(PhysicScene3d scene, EnvironmentSettings settings) {
         this.scene = scene;
         this.settings = settings;
     }

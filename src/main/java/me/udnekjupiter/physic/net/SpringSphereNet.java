@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SpringSphereNet {
 
-    public static @NotNull List<? extends PhysicObject3d> create(final double radius, final double step){
+    public static @NotNull List<? extends PhysicObject3d> createFromCuboid(final double radius, final double step){
         List<NetVertex> vertices = new ArrayList<>();
         for (double x = -radius; x <= radius; x+=step) {
             for (double y = -radius; y <= radius; y+=step) {
@@ -45,7 +45,5 @@ public class SpringSphereNet {
         objects.addAll(springs);
         return objects;
     }
-
-
 
 }
