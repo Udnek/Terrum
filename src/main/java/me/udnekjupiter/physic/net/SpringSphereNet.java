@@ -30,14 +30,14 @@ public class SpringSphereNet {
         }
         List<SpringObject> springs = new ArrayList<>();
         final double EPSILON = 0.0001;
-        final double maxDistance = step;
+        final double maxDistance = Math.sqrt(2*step*step);
         for (int i = 0; i < vertices.size()-1; i++) {
             for (int j = i+1; j < vertices.size(); j++) {
                 NetVertex vertexA = vertices.get(i);
                 NetVertex vertexB = vertices.get(j);
                 double distance = VectorUtils.distance(vertexA.getPosition(), vertexB.getPosition());
                 if (distance > maxDistance + EPSILON) continue;
-                springs.add(new SpringObject(vertexA, vertexB, distance, 500));
+                springs.add(new SpringObject(vertexA, vertexB, distance, 5000));
             }
         }
 

@@ -1,5 +1,6 @@
 package me.udnekjupiter.physic.engine;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
@@ -30,6 +31,8 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
         this.beforePauseIPT = settings.iterationsPerTick;
         scene.initialize();
     }
+    @Override
+    public void tick(){    }
 
     public void reset(){scene.reset();}
 

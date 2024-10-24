@@ -31,7 +31,7 @@ public class RKMPhysicEngine extends PhysicEngine3d{
             PhysicObject3d object = objects.get(0);
             RKMContainer container = (RKMContainer) object.getContainer();
             System.out.println("Position: " + object.getPosition().asString());
-            System.out.println("Actual Position: " + object.getActualPosition().asString());
+            System.out.println("Actual Position: " + object.getPosition().asString());
             System.out.println("Container Position: " + container.position.asString());
             System.out.println("AppliedForce: " + container.appliedForce.asString());
             System.out.println("Velocity: " + container.velocity.asString());

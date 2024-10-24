@@ -101,9 +101,11 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
         if (!debugMenu.isEnabled()) return;
 
         debugMenu.addTextToLeft("DraggingObject: " + draggingObject);
-        debugMenu.addTextToLeft("SelectedObject:" + selectedObject);
-        if (selectedObject != null && selectedObject instanceof Positioned positioned){
-            debugMenu.addTextToLeft("SelectedObjectPos:" + positioned.getPosition().asString());
+        debugMenu.addTextToLeft("SelectedObject: " + selectedObject);
+        if (selectedObject != null && selectedObject instanceof PhysicLinked linkedObject){
+            debugMenu.addTextToLeft("SelectedObjectPos: " + linkedObject.getPhysicRepresentation().getPosition().asString());
+            debugMenu.addTextToLeft("SelectedObjectVelocity: " + linkedObject.getPhysicRepresentation().getVelocity().asString());
+            debugMenu.addTextToLeft("SelectedObjectAcceleration: " + linkedObject.getPhysicRepresentation().getContainer().velocityDifferential.asString());
         }
 
 

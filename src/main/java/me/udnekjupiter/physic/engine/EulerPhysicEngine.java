@@ -17,14 +17,16 @@ public class EulerPhysicEngine extends PhysicEngine3d {
         this.settings = settings;
     }
 
+    @Override
     public void tick() {
+        super.tick();
         List<? extends PhysicObject3d> objects = scene.getAllObjects();
-        //List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
-        //List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
+        List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
+        List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
         for (int i = 0; i < settings.iterationsPerTick; i++) {
-            //updateColliders(collidableObjects, collisionInitiators);
+            updateColliders(collidableObjects, collisionInitiators);
             recalculateForces(objects);
-            calculatePhaseDifferentials(objects);
+            calculateVelocityDifferentials(objects);
             updatePositions(objects);
         }
     }
@@ -34,11 +36,10 @@ public class EulerPhysicEngine extends PhysicEngine3d {
         for (PhysicObject3d object : objects) object.calculateForces();
     }
 
-    public void calculatePhaseDifferentials(List<? extends PhysicObject3d> objects){
+    public void calculateVelocityDifferentials(List<? extends PhysicObject3d> objects){
         for (PhysicObject3d object : objects) {
             EulerContainer container = (EulerContainer) object.getContainer();
             container.velocityDifferential = calculateAcceleration(object).mul(settings.deltaTime);
-            container.positionDifferential = container.velocity.dup().mul(settings.deltaTime);
         }
     }
 
@@ -47,16 +48,16 @@ public class EulerPhysicEngine extends PhysicEngine3d {
             if (object.isFrozen()) continue;
             EulerContainer container = (EulerContainer) object.getContainer();
             container.velocity.add(container.velocityDifferential);
-            container.position.add(container.positionDifferential);
+            container.position.add(container.velocity.dup().mul(settings.deltaTime));
         }
     }
 
 
     protected @NotNull Vector3d calculateAcceleration(@NotNull PhysicObject3d object){
         EulerContainer container = (EulerContainer) object.getContainer();
-        Vector3d decayForce = container.velocity.dup().mul(settings.decayCoefficient);
-        Vector3d resultAcceleration = container.appliedForce.dup().sub(decayForce);
-        resultAcceleration.div(container.mass);
+        Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
+        Vector3d resultAcceleration = container.appliedForce.dup().div(container.mass);
+        resultAcceleration.sub(decayValue);
         return resultAcceleration;
     }
 

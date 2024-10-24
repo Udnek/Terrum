@@ -10,8 +10,6 @@ public class RKMContainer extends PhysicVariableContainer {
     public @NotNull Vector3d[] coefficient2 = new Vector3d[]{new Vector3d(), new Vector3d()};
     public @NotNull Vector3d[] coefficient3 = new Vector3d[]{new Vector3d(), new Vector3d()};
     public @NotNull Vector3d[] coefficient4 = new Vector3d[]{new Vector3d(), new Vector3d()};
-    public @NotNull Vector3d positionDifferential = new Vector3d();
-    public @NotNull Vector3d velocityDifferential = new Vector3d();
     public int coefficientCounter = 1;
 
     public RKMContainer(@NotNull Vector3d position)
