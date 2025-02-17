@@ -7,8 +7,8 @@ import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
-import me.udnekjupiter.physic.net.SpringSphereNet;
-import me.udnekjupiter.physic.object.PlaneObject;
+import me.udnekjupiter.physic.net.CellularNet;
+import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import org.realityforge.vecmath.Vector3d;
@@ -36,22 +36,22 @@ public class MainBasketball extends Main{
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
         //CellularNet launcherNet = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), launcherOffsets);
-/*        SphereObject sphere = new SphereObject(4, 100_000);
+        SphereObject sphere = new SphereObject(4, 10000);
         sphere.setPosition(new Vector3d(5, 5, 5));
         sphere.getContainer().initialPosition = new Vector3d(5, 5, 5);
-        sphere.getContainer().mass = 1000;
-        physicEngine.addObject(sphere);*/
+        sphere.getContainer().mass = 10;
+        physicEngine.addObject(sphere);
 
-        PlaneObject plane = new PlaneObject(0, 1, 0, 2, 100_000);
-        physicEngine.addObject(plane);
+/*        PlaneObject plane = new PlaneObject(0, 1, 0, 2, 100_000);
+        physicEngine.addObject(plane);*/
 
 
-/*        CellularNet basketNet = new CellularNet("big_square.png");
+        CellularNet basketNet = new CellularNet("big_frame.png");
         basketNet.initialize();
-        physicEngine.addObjects(basketNet.getNetObjects());*/
+        physicEngine.addObjects(basketNet.getNetObjects());
 
 
-        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d, 1000));
+        //physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d, 1000));
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
