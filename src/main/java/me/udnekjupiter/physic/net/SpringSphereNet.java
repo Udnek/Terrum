@@ -23,10 +23,11 @@ public class SpringSphereNet {
         for (double x = -radius; x <= radius; x+=step) {
             for (double y = -radius; y <= radius; y+=step) {
                 for (double z = -radius; z <= radius; z+=step) {
-                    Vector3d position = new Vector3d(x, y, z).add(center);
+                    Vector3d position = new Vector3d(x, y, z);
                     double distance = VectorUtils.distance(new Vector3d(), position);
                     if (distance > radius) continue;
                     NetVertex vertex = new NetDynamicVertex();
+                    position.add(center);
                     vertex.getContainer().position = position;
                     vertex.getContainer().initialPosition = position.dup();
                     vertex.getContainer().mass = 0.1;

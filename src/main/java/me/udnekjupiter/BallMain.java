@@ -9,6 +9,7 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.SpringSphereNet;
+import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
@@ -40,11 +41,17 @@ public class BallMain extends Main{
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
 
-        physicEngine.addObjects(SpringSphereNet.createFromCuboid(2d, 2d/4d, 5000));
+        physicEngine.addObjects(SpringSphereNet.createFromCuboid(new Vector3d(0, 1, 0), 2d, 2d/4d, 1000));
+
+        PlaneObject plane = new PlaneObject(0, 1, 0, 2, 100_000);
+        physicEngine.addObject(plane);
+
+/*        CellularNet basketNet = new CellularNet("flex.png");
+        basketNet.initialize();
+        physicEngine.addObjects(basketNet.getNetObjects());*/
 
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
-
 
         graphicScene.getCamera().setPosition(new Vector3d(-0.056768052754865406, 2.6988419722616674, -4.659554678586445));
         graphicScene.getCamera().setYaw(0);
