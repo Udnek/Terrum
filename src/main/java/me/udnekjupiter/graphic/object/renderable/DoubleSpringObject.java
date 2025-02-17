@@ -4,7 +4,7 @@ import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.function.Consumer;
 

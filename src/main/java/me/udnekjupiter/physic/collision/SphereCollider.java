@@ -2,7 +2,7 @@ package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.util.VectorUtils;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,15 +14,13 @@ import me.udnekjupiter.graphic.object.renderable.DoubleSpringObject;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.object.renderable.SurfaceObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
-import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.PlaneObject;
-import me.udnekjupiter.physic.object.SphereObject;
-import me.udnekjupiter.physic.object.SpringObject;
+import me.udnekjupiter.physic.engine.PhysicEngine3d;
+import me.udnekjupiter.physic.object.*;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -194,11 +192,15 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
 
             double distance = VectorUtils.distance(draggingObject.getPosition(), camera.getPosition());
             mouseDirection.normalize().mul(distance);
-
+            // TODO: 2/3/2024 Make user controller a separate block instead of putting it into graphic engine
             // TODO: 7/6/2024 THINK ABOUT PHYSICAL LINK
-            draggingObject.setPosition(camera.getPosition().add(mouseDirection));
+//            if (draggingObject instanceof PhysicLinked physicLinked){
+//                physicLinked.getPhysicRepresentation().unfreeze();
+//                physicLinked.getPhysicRepresentation().getContainer().acceleration.add(Utils.getMouseDragAcceleration(camera.getPosition().add(mouseDirection), draggingObject.getPosition()));
+//            } else {
+                draggingObject.setPosition(camera.getPosition().add(mouseDirection));
+            //}
         }
-
     }
 
     public Vector3d getMouseDirection(Point mousePosition){

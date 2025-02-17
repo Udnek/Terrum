@@ -16,4 +16,8 @@ public abstract class NetVertex extends ImplementedCollidablePhysicObject3d {
         return object instanceof NetVertex;
     }
 
+    @Override
+    public @NotNull SphereCollider getCollider() {
+        return (SphereCollider) super.getCollider();
+    }
 }

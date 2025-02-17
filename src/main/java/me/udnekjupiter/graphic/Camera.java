@@ -4,7 +4,7 @@ import me.udnekjupiter.util.PositionedObject;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 public class Camera extends PositionedObject {
 

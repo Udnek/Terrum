@@ -16,7 +16,7 @@ import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.awt.*;
 
@@ -33,8 +33,9 @@ public class ColoredBallsMain extends Main{
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
-        environmentSettings.iterationsPerTick = 200;
+        environmentSettings.iterationsPerTick = 1;
         environmentSettings.decayCoefficient = 0.3;
+        environmentSettings.deltaTime = 0.001;
         return environmentSettings;
     }
 
@@ -51,13 +52,14 @@ public class ColoredBallsMain extends Main{
             Vector3d position = new Vector3d(0, i * 5 + 2, 0);
             sphereObject.getContainer().position = position;
             sphereObject.getContainer().initialPosition = position.dup();
+            sphereObject.getContainer().mass = 50;
             physicEngine.addObject(sphereObject);
         }
 
 
-        CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 5000,  1);
-        basketNet.initialize();
-        physicEngine.addObjects(basketNet.getNetObjects());
+        //CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 10_000,  1, 1);
+        //basketNet.initialize();
+        //physicEngine.addObjects(basketNet.getNetObjects());
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 
@@ -91,3 +93,15 @@ public class ColoredBallsMain extends Main{
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,7 +3,7 @@ package me.udnekjupiter.graphic.object.light;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.function.Consumer;
 

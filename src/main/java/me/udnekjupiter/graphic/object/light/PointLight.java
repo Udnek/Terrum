@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.object.light;
 
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 public class PointLight extends LightSource{
     public PointLight(Vector3d position) {

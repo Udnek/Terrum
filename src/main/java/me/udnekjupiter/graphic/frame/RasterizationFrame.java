@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.frame;
 
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 @Deprecated
 public abstract class RasterizationFrame extends CenteredFrame {

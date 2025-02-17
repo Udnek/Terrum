@@ -2,10 +2,11 @@ package me.udnekjupiter.util;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
+import static me.udnekjupiter.util.Vector3d.cross;
 
 public class VectorUtils {
     public static double vectorLength(double x, double y, double z){
@@ -92,7 +93,7 @@ public class VectorUtils {
 
         Vector3d normal = triangle.getNormal();
         // TODO: 5/29/2024 NORMALIZE VECTORS???
-        double parallelityWithNormal = 1 - new Vector3d().cross(normal, direction).length();
+        double parallelityWithNormal = 1 - cross(normal, direction).length();
         if (-EPSILON <= parallelityWithNormal && parallelityWithNormal <= EPSILON){
             return null;
         }

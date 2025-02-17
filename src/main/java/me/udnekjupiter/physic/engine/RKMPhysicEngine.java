@@ -5,11 +5,14 @@ import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.container.RKMContainer;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.List;
+
+import static java.lang.Math.min;
 
 //TODO Optimize engine by minimizing new Vector3d()'s creation
 //TODO Reconsider usage of currentPhaseVector, because it seems to not make any practical sense while dramatically increasing algorithm's difficulty
@@ -27,8 +30,8 @@ public class RKMPhysicEngine extends PhysicEngine3d{
         List<? extends PhysicObject3d> objects = scene.getAllObjects();
         List<? extends CollidablePhysicObject3d> collidableObjects = scene.getAllCollidableObjects();
         List<? extends CollidablePhysicObject3d> collisionInitiators = scene.getAllCollisionInitiators();
-        if (tickCounter < 6){
-            PhysicObject3d object = objects.get(0);
+        if (tickCounter < 20){
+            PhysicObject3d object = objects.get(13);
             RKMContainer container = (RKMContainer) object.getContainer();
             System.out.println("Position: " + object.getPosition().asString());
             System.out.println("Actual Position: " + object.getPosition().asString());
@@ -54,10 +57,11 @@ public class RKMPhysicEngine extends PhysicEngine3d{
     }
     protected @NotNull Vector3d[] RKMethodFunction(RKMContainer container){
         Vector3d[] resultComponents = new Vector3d[2];
-        resultComponents[0] = container.currentPhaseVector[1].dup();
         resultComponents[1] = calculateAcceleration(container);
+        resultComponents[0] = container.currentPhaseVector[1].dup();
         return resultComponents;
     }
+    //TODO Try coming up with better air resistance formula. Hopefully you won't implement complete bs next time
     protected @NotNull Vector3d calculateAcceleration(RKMContainer container){
         Vector3d decayValue = container.getVelocity().dup().mul(settings.decayCoefficient);
         Vector3d resultAcceleration = container.appliedForce.dup().sub(decayValue);
@@ -103,6 +107,7 @@ public class RKMPhysicEngine extends PhysicEngine3d{
     // TODO [mess around] WITH SWITCH
     public void calculateNextPhaseVectorInObjects(List<? extends PhysicObject3d> objects){
         for (PhysicObject3d object : objects) {
+            if (object.isFrozen()) continue;
             RKMContainer container = (RKMContainer) object.getContainer();
             switch (container.coefficientCounter) {
                 case 1 -> {
@@ -160,10 +165,11 @@ public class RKMPhysicEngine extends PhysicEngine3d{
 
     protected void updatePositions(List<? extends PhysicObject3d> objects){
         for (PhysicObject3d object : objects) {
-            if (object.isFrozen()) continue;
             RKMContainer container = (RKMContainer) object.getContainer();
-            container.position.add(container.positionDifferential);
             container.velocity.add(container.velocityDifferential);
+            container.position.add(container.positionDifferential);
+            container.basePhaseVector = new Vector3d[]{container.position.dup(), container.velocity.dup()};
+            container.currentPhaseVector = container.basePhaseVector.clone();
         }
     }
 

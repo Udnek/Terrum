@@ -3,7 +3,7 @@ package me.udnekjupiter.physic.collision;
 import me.udnekjupiter.Main;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public abstract class CollisionCalculator {

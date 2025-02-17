@@ -2,7 +2,7 @@ package me.udnekjupiter.physic.collision;
 
 import me.udnekjupiter.util.Positioned;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Resettable;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 public abstract class RKMObject3d extends PhysicObject3d implements Freezable, Collidable, Resettable {
     protected Vector3d[] currentRKMPhaseVector;

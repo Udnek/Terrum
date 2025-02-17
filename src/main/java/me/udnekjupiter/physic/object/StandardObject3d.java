@@ -7,7 +7,7 @@ import me.udnekjupiter.physic.collision.CollisionCalculator;
 import me.udnekjupiter.physic.object.container.PhysicCalculationContainer;
 import me.udnekjupiter.util.Freezable;
 import me.udnekjupiter.util.Resettable;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

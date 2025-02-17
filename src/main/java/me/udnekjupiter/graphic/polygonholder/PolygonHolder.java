@@ -3,7 +3,7 @@ package me.udnekjupiter.graphic.polygonholder;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnknownNullability;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.List;
 

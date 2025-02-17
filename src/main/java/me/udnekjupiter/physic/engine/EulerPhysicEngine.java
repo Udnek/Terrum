@@ -9,7 +9,7 @@ import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.List;
 
@@ -57,10 +57,10 @@ public class EulerPhysicEngine extends PhysicEngine3d {
 
     protected @NotNull Vector3d calculateAcceleration(@NotNull PhysicObject3d object){
         EulerContainer container = (EulerContainer) object.getContainer();
-        Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
-        Vector3d resultAcceleration = container.appliedForce.dup().div(container.mass);
-        resultAcceleration.sub(decayValue);
-        return resultAcceleration;
+//        Vector3d decayValue = container.velocity.dup().mul(settings.decayCoefficient);
+//        Vector3d resultAcceleration = container.appliedForce.dup().div(container.mass);
+//        resultAcceleration.sub(decayValue);
+        return container.appliedForce.dup().div(container.mass);
     }
 
     @Override

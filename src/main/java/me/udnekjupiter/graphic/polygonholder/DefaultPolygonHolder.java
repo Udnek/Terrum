@@ -7,7 +7,7 @@ import me.udnekjupiter.graphic.object.light.LightSource;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

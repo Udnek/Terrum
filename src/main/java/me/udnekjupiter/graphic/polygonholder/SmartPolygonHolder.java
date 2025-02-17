@@ -7,7 +7,7 @@ import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

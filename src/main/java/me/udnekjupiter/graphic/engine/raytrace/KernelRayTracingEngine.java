@@ -8,7 +8,7 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import org.jetbrains.annotations.NotNull;
 import org.jocl.*;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;

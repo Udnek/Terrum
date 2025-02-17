@@ -1,7 +1,7 @@
 package me.udnekjupiter.util;
 
+import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -76,5 +76,32 @@ public class Utils {
         if (angle < -90) {return -90;}
         return angle;
     }
+    ///////////////////////////////////////////////////////////////////////////
+    // PHYSICS
+    ///////////////////////////////////////////////////////////////////////////
+
+    public static @NotNull Vector3d getMouseDragAcceleration(@NotNull Vector3d target, @NotNull Vector3d source){
+        double stiffnessConstant = 10_000;
+        double relaxedLengthConstant = 0;
+        Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(target, source);
+        double elasticForce = stiffnessConstant * (VectorUtils.distance(target, source) - relaxedLengthConstant);
+        return normalizedDirection.mul(elasticForce);
+    }
+
+    @NotNull
+    public static Vector3d getStokesDragForce(double radius, Vector3d velocity){
+        // Force = vector velocity * dynamic viscosity * radius * -6pi
+        return velocity.dup().mul(18.27*Math.pow(10, -6)).mul(radius).mul(-6*Math.PI);
+    }
+
+    @NotNull
+    public static Vector3d getSphereDragForce(double radius, Vector3d velocity){
+        double crossSection = 2*Math.PI * radius;
+        double airDensity = 1.2250;
+        double scalarVelocity = velocity.length();
+        double scalarForce = PhysicEngine3d.SPHERE_DRAG_COEFFICIENT * airDensity * (Math.pow(scalarVelocity, 2)/2) * crossSection;
+        return velocity.dup().normalize().mul((-1) * scalarForce);
+    }
+
 
 }

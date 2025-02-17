@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
 
     public static final double GRAVITATIONAL_ACCELERATION = -9.80665;
+    public static final double SPHERE_DRAG_COEFFICIENT = 0.47;
     public static final double MAX_VELOCITY = 500;
     public static final double MAX_FORCE = 50000;
     public static final double MAX_DEPTH = 0.1;     //Жесткое ограничение, отражающее максимальную глубину на которую один хитбокс может погрузиться в другой
@@ -34,7 +35,24 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
     @Override
     public void tick(){    }
 
-    public void reset(){scene.reset();}
+    public void reset(){
+        if (settings.iterationsPerTick == 0) {
+            scene.reset();
+        } else {
+            pauseSwitch();
+            scene.reset();
+            pauseSwitch();
+        }
+    }
+
+    public void pauseSwitch(){
+        if (settings.iterationsPerTick == 0){
+            settings.iterationsPerTick = beforePauseIPT;
+        } else {
+            beforePauseIPT = settings.iterationsPerTick;
+            settings.iterationsPerTick = 0;
+        }
+    }
 
     @Override
     public void handleCommand(@NotNull Command command, Object[] args) {
@@ -47,12 +65,7 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
         if (!pressed) return;
 
         if (inputKey == InputKey.PAUSE) {
-            if (settings.iterationsPerTick == 0){
-                settings.iterationsPerTick = beforePauseIPT;
-            } else {
-                beforePauseIPT = settings.iterationsPerTick;
-                settings.iterationsPerTick = 0;
-            }
+            pauseSwitch();
         } else if (inputKey == InputKey.RESET) reset();
     }
 

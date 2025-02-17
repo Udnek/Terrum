@@ -1,11 +1,11 @@
 package me.udnekjupiter.physic.container;
 
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
+import me.udnekjupiter.util.Vector3d;
 
 public class RKMContainer extends PhysicVariableContainer {
     public @NotNull Vector3d[] currentPhaseVector = new Vector3d[]{new Vector3d(), new Vector3d()};
-    public @NotNull Vector3d[] basePhaseVector = new Vector3d[]{position, velocity};
+    public @NotNull Vector3d[] basePhaseVector = new Vector3d[]{position, new Vector3d()};
     public @NotNull Vector3d[] coefficient1 = new Vector3d[]{new Vector3d(), new Vector3d()};
     public @NotNull Vector3d[] coefficient2 = new Vector3d[]{new Vector3d(), new Vector3d()};
     public @NotNull Vector3d[] coefficient3 = new Vector3d[]{new Vector3d(), new Vector3d()};
