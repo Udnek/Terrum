@@ -16,6 +16,9 @@ public class NetDynamicVertex extends NetVertex {
         if (container.appliedForce.containsNaN()){
             container.appliedForce = new Vector3d();
             freeze();
+        } else if (container.appliedForce.length() > PhysicEngine3d.FORCE_HARD_CAP) {
+            container.appliedForce.normalize().mul(PhysicEngine3d.FORCE_SOFT_CAP);
+            System.out.println("Warning: object reached force limit");
         }
     }
 }

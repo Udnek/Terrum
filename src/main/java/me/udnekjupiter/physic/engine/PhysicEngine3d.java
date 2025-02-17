@@ -17,10 +17,10 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
 
     public static final double GRAVITATIONAL_ACCELERATION = -9.80665;
     public static final double SPHERE_DRAG_COEFFICIENT = 0.47;
+    public static final double FORCE_HARD_CAP = Math.pow(10, 10);
     public static final double MAX_VELOCITY = 500;
-    public static final double MAX_FORCE = 50000;
-    public static final double MAX_DEPTH = 0.1;     //Жесткое ограничение, отражающее максимальную глубину на которую один хитбокс может погрузиться в другой
-
+    public static final double FORCE_SOFT_CAP = 500000;
+    public static final double MAX_DEPTH = 0.1;
 
     protected PhysicScene3d scene;
     protected EnvironmentSettings settings;

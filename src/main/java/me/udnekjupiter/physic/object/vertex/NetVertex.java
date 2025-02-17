@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class NetVertex extends ImplementedCollidablePhysicObject3d {
 
     public NetVertex() {
-        collider = new SphereCollider(0.2, 100_000, this);
+        collider = new SphereCollider(0.2, 1_000, this);
     }
 
     @Override
