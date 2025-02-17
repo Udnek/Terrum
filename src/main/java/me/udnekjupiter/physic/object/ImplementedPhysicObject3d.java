@@ -57,12 +57,14 @@ public abstract class ImplementedPhysicObject3d implements PhysicObject3d {
 
     @Override
     public void reset() {
+        freeze();
         setPosition(container.initialPosition.dup());
-        container.velocity.mul(0);
-        container.appliedForce.mul(0);
-        container.acceleration.mul(0);
-        container.velocityDifferential.mul(0);
-        container.positionDifferential.mul(0);
+        container.velocity = new Vector3d();
+        container.appliedForce = new Vector3d();
+        container.acceleration = new Vector3d();
+        container.velocityDifferential = new Vector3d();
+        container.positionDifferential = new Vector3d();
+        unfreeze();
     }
 
 }

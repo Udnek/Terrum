@@ -33,9 +33,9 @@ public class ColoredBallsMain extends Main{
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
-        environmentSettings.iterationsPerTick = 1;
+        environmentSettings.iterationsPerTick = 200;
         environmentSettings.decayCoefficient = 0.3;
-        environmentSettings.deltaTime = 0.001;
+        environmentSettings.deltaTime = 0.0001;
         return environmentSettings;
     }
 
@@ -48,18 +48,18 @@ public class ColoredBallsMain extends Main{
         GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
         for (int i = 0; i < 5; i++) {
-            SphereObject sphereObject = new SphereObject(2, 1000);
+            SphereObject sphereObject = new SphereObject(i+1, 1000);
             Vector3d position = new Vector3d(0, i * 5 + 2, 0);
             sphereObject.getContainer().position = position;
             sphereObject.getContainer().initialPosition = position.dup();
-            sphereObject.getContainer().mass = 50;
+            sphereObject.getContainer().mass = 500;
             physicEngine.addObject(sphereObject);
         }
 
 
-        //CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 10_000,  1, 1);
-        //basketNet.initialize();
-        //physicEngine.addObjects(basketNet.getNetObjects());
+        CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 10_000,  1, 0.001);
+        basketNet.initialize();
+        physicEngine.addObjects(basketNet.getNetObjects());
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 

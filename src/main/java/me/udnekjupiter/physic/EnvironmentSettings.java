@@ -26,6 +26,7 @@ public class EnvironmentSettings {
 
 
     public static EnvironmentSettings defaultPreset(){
+        //TODO wth dT is outside of constructor?
         double deltaTime = 0.0001;
         return new EnvironmentSettings(10000,
                 1,

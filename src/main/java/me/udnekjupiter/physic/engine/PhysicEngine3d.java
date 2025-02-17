@@ -11,6 +11,7 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
+import org.realityforge.vecmath.Vector3d;
 
 public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
 
