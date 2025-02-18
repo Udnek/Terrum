@@ -8,6 +8,7 @@ import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import org.jetbrains.annotations.NotNull;
+import org.realityforge.vecmath.Vector3d;
 
 public abstract class Main{
 

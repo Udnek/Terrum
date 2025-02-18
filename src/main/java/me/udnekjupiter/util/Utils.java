@@ -1,6 +1,7 @@
 package me.udnekjupiter.util;
 
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
+import org.jcodec.containers.mp4.SampleOffsetUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -76,6 +77,7 @@ public class Utils {
         if (angle < -90) {return -90;}
         return angle;
     }
+
     ///////////////////////////////////////////////////////////////////////////
     // PHYSICS
     ///////////////////////////////////////////////////////////////////////////
@@ -88,7 +90,7 @@ public class Utils {
         return normalizedDirection.mul(elasticForce);
     }
 
-    @NotNull
+    @NotNull @Deprecated
     public static Vector3d getStokesDragForce(double radius, Vector3d velocity){
         // Force = vector velocity * dynamic viscosity * radius * -6pi
         return velocity.dup().mul(18.27*Math.pow(10, -6)).mul(radius).mul(-6*Math.PI);
@@ -96,12 +98,28 @@ public class Utils {
 
     @NotNull
     public static Vector3d getSphereDragForce(double radius, Vector3d velocity){
-        double crossSection = 2*Math.PI * radius;
-        double airDensity = 1.2250;
-        double scalarVelocity = velocity.length();
-        double scalarForce = PhysicEngine3d.SPHERE_DRAG_COEFFICIENT * airDensity * (Math.pow(scalarVelocity, 2)/2) * crossSection;
-        return velocity.dup().normalize().mul((-1) * scalarForce);
+        /*
+        F = Cd * p * (v^2)/2 * A, where:
+        [F] (N) is the force applied to an object
+        [Cd] (dimensionless) is the shape's drag coefficient (constant variable for a specific shape)
+        [p] (kg/m^3) is the density of the medium (air, in our case)
+        [v] (m/s) is the velocity of an object
+        [A] (m^2) is the cross-sectional area of an object (PI*R^2 for sphere, in our case)
+        Force is applied as a vector, opposite to velocity (therefore it's a normalized velocity vector multiplied by -1)
+        */
+        return velocity.dup().normalize().mul((-1) * (PhysicEngine3d.SPHERE_DRAG_COEFFICIENT * 1.225 * (Math.pow(velocity.length(), 2)/2) * (Math.PI * Math.pow(radius, 2))));
     }
 
+    @NotNull
+    public static double getHookeForce(double stiffness, double relaxedLength, double length){
+        /*
+        F = k * (l - l0), where:
+        [F] (N) is the force that imaginary spring is applying to both of its ends
+        [k] (N/m) is the hooke's coefficient or imaginary spring's stiffness
+        [l] (m) is the imaginary spring's current extension
+        [l0] (m) is the imaginary spring's relaxed condition, so if (l = l0) - no force is applied
+        */
+        return stiffness * (length - relaxedLength);
+    }
 
 }

@@ -1,6 +1,7 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
+import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
@@ -25,7 +26,7 @@ public class SpringObject extends ImplementedPhysicObject3d {
         PhysicVariableContainer containerA = endpointA.getContainer();
         PhysicVariableContainer containerB = endpointB.getContainer();
         Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(containerA.getPosition().dup(), containerB.getPosition().dup());
-        double elasticForce = stiffness * (VectorUtils.distance(containerA.getPosition().dup(), containerB.getPosition().dup()) - relaxedLength);
+        double elasticForce = Utils.getHookeForce(stiffness, relaxedLength, VectorUtils.distance(containerA.getPosition().dup(), containerB.getPosition().dup()));
         containerA.appliedForce.add(normalizedDirection.dup().mul(elasticForce));
         containerB.appliedForce.add(normalizedDirection.dup().mul(-elasticForce));
     }

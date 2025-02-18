@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.MatchesPattern;
 import javax.annotation.Nonnull;
 
+import static java.lang.Double.isNaN;
+
 public class Vector3d {
     public double x;
     public double y;
@@ -99,7 +101,7 @@ public class Vector3d {
 
     @NotNull
     public Vector3d normalize(){
-        return this.div(length());
+        return this.div(Math.max(length(), Double.MIN_VALUE));
     }
 
     @NotNull
@@ -113,5 +115,9 @@ public class Vector3d {
         double newY = vector2.x * vector1.z - vector2.z * vector1.x;
         double newZ = vector1.x * vector2.y - vector1.y * vector2.x;
         return new Vector3d(newX, newY, newZ);
+    }
+
+    public boolean containsNaN(){
+        return (Double.isNaN(x) | Double.isNaN(y) | Double.isNaN(z));
     }
 }
