@@ -1,4 +1,4 @@
-package me.udnekjupiter.app;
+package me.udnekjupiter.app.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

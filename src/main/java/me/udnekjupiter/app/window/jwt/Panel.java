@@ -1,4 +1,4 @@
-package me.udnekjupiter.app.window;
+package me.udnekjupiter.app.window.jwt;
 
 import me.udnekjupiter.app.controller.Controller;
 

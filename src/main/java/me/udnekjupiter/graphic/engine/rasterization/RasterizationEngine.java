@@ -1,17 +1,17 @@
 package me.udnekjupiter.graphic.engine.rasterization;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.app.window.WindowManager;
+import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.TransparentRasterizationFrame;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import me.udnekjupiter.util.Vector3d;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.udnekjupiter.util.Vector3d;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -41,20 +41,14 @@ public class RasterizationEngine extends GraphicEngine3d {
 
     @Override
     public @NotNull BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
-        ApplicationSettings settings = Main.getMain().getApplication().getSettings();
-        scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
+        Application application = Main.getMain().getApplication();
+        ApplicationSettings settings = application.getSettings();
+        scene.beforeFrameUpdate(application.getWindow().getWidth(), application.getWindow().getHeight());
 
         width = Math.max(rawWidth / settings.pixelScaling, 1);
         height = Math.max(rawHeight / settings.pixelScaling, 1);
 
         frame.reset(width, height);
-
-        //frame.setPixel(0, 3, WIREFRAME_COLOR);
-        //frame.drawLine(0, 3, 0, 3, Color.RED.getRGB());
-        //frame.drawLine(-4, -3, 0, 3, Color.WHITE.getRGB());
-        //frame.drawTriangle(new Point(-4, -3), new Point(4, -3), new Point(0, 3), WIREFRAME_COLOR);
-        //frame.drawLine(-4, -3, 0, 3, Color.WHITE.getRGB());
-
 
         camera = scene.getCamera();
 

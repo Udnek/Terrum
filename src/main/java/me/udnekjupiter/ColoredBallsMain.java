@@ -1,6 +1,6 @@
 package me.udnekjupiter;
 
-import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
@@ -15,8 +15,8 @@ import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -33,9 +33,7 @@ public class ColoredBallsMain extends Main{
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
-        environmentSettings.iterationsPerTick = 1;
         environmentSettings.decayCoefficient = 0.3;
-        environmentSettings.deltaTime = 0.001;
         return environmentSettings;
     }
 
@@ -57,9 +55,9 @@ public class ColoredBallsMain extends Main{
         }
 
 
-        //CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 10_000,  1, 1);
-        //basketNet.initialize();
-        //physicEngine.addObjects(basketNet.getNetObjects());
+        CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 10_000,  1, 1);
+        basketNet.initialize();
+        physicEngine.addObjects(basketNet.getNetObjects());
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 

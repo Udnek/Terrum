@@ -1,18 +1,20 @@
-package me.udnekjupiter.app.window;
+package me.udnekjupiter.app.window.jwt;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.controller.Controller;
+import me.udnekjupiter.app.util.ApplicationSettings;
+import me.udnekjupiter.app.window.Window;
 import me.udnekjupiter.file.FileManager;
 import me.udnekjupiter.util.Initializable;
 import me.udnekjupiter.util.Tickable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class WindowManager extends WindowAdapter implements Initializable, Tickable {
+public class JWTWindow extends WindowAdapter implements Window, Initializable, Tickable {
 
     public static final String TITLE = "Terrum";
 
@@ -20,17 +22,6 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
     private Panel panel;
 
     private final Controller controller = Controller.getInstance();
-
-    private static WindowManager instance;
-
-    private WindowManager(){}
-
-    public static WindowManager getInstance(){
-        if (instance == null){
-            instance = new WindowManager();
-        }
-        return instance;
-    }
 
     @Override
     public void initialize() {
@@ -64,15 +55,19 @@ public class WindowManager extends WindowAdapter implements Initializable, Ticka
         Main.getMain().getApplication().stop();
     }
 
-    public void setFrame(Image image){
+    @Override
+    public void setFrame(@NotNull Image image){
         Graphics graphics = panel.getGraphics();
         if (graphics == null) return;
         graphics.drawImage(image, 0, 0, panel.getWidth(), panel.getHeight(), null);
     }
 
+    @Override
     public int getWidth() {return panel.getWidth();}
+    @Override
     public int getHeight() {return panel.getHeight();}
 
+    @Override
     public void setSize(int width, int height){
         panel.setPreferredSize(new Dimension(width, height));
         frame.pack();

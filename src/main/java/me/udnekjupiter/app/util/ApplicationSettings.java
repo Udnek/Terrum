@@ -1,4 +1,4 @@
-package me.udnekjupiter.app;
+package me.udnekjupiter.app.util;
 
 import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 

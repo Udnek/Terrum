@@ -1,8 +1,9 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.Application;
-import me.udnekjupiter.app.ApplicationSettings;
 import me.udnekjupiter.app.StandartApplication;
+import me.udnekjupiter.app.util.ApplicationSettings;
+import me.udnekjupiter.app.window.jwt.JWTWindow;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
@@ -40,7 +41,7 @@ public abstract class Main{
 
     public void initializeApplication(GraphicEngine graphicEngine, PhysicEngine<?> physicEngine) {
         application = new StandartApplication(initializeGraphicsSettings());
-        application.initialize(graphicEngine, physicEngine);
+        application.initialize(graphicEngine, physicEngine, new JWTWindow());
     }
     public void startApplication(){
         getApplication().start();

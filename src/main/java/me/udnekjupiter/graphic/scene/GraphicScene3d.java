@@ -1,10 +1,10 @@
 package me.udnekjupiter.graphic.scene;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.DebugMenu;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
+import me.udnekjupiter.app.util.DebugMenu;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
@@ -14,13 +14,14 @@ import me.udnekjupiter.graphic.object.renderable.DoubleSpringObject;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.object.renderable.SurfaceObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
-import me.udnekjupiter.physic.engine.PhysicEngine3d;
-import me.udnekjupiter.physic.object.*;
+import me.udnekjupiter.physic.object.PhysicObject3d;
+import me.udnekjupiter.physic.object.PlaneObject;
+import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.udnekjupiter.util.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;

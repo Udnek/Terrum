@@ -1,4 +1,4 @@
-package me.udnekjupiter.app.window;
+package me.udnekjupiter.app.window.jwt;
 
 import me.udnekjupiter.app.controller.Controller;
 
@@ -9,11 +9,11 @@ import java.awt.event.KeyListener;
 
 public class Frame extends JFrame implements KeyListener {
     private final Controller controller;
+
     public Frame(){
         addKeyListener(this);
         controller = Controller.getInstance();
     }
-
 
     public void paint(Graphics graphics) {}
     public void repaint() {}

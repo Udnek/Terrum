@@ -1,7 +1,7 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.frame.GraphicFrame;
 import me.udnekjupiter.graphic.object.light.LightSource;
@@ -9,10 +9,10 @@ import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
+import me.udnekjupiter.util.Vector3d;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.udnekjupiter.util.Vector3d;
 
 public class RayTracer {
 

@@ -1,6 +1,6 @@
 package me.udnekjupiter;
 
-import me.udnekjupiter.app.ApplicationSettings;
+import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import org.jetbrains.annotations.NotNull;
 

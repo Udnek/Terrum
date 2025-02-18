@@ -1,8 +1,8 @@
 package me.udnekjupiter.graphic.engine.raytrace;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.app.ApplicationSettings;
-import me.udnekjupiter.app.window.WindowManager;
+import me.udnekjupiter.app.Application;
+import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine3d;
 import me.udnekjupiter.graphic.frame.GraphicFrame;
@@ -40,8 +40,9 @@ public class RayTracingEngine extends GraphicEngine3d {
 
     @Override
     public @NotNull BufferedImage renderFrame(final int width, final int height){
-        ApplicationSettings settings = Main.getMain().getApplication().getSettings();
-        scene.beforeFrameUpdate(WindowManager.getInstance().getWidth(), WindowManager.getInstance().getHeight());
+        Application application = Main.getMain().getApplication();
+        ApplicationSettings settings = application.getSettings();
+        scene.beforeFrameUpdate(application.getWindow().getWidth(), application.getWindow().getHeight());
 
         int renderWidth = Math.max(width / settings.pixelScaling, 1);
         int renderHeight = Math.max(height / settings.pixelScaling, 1);

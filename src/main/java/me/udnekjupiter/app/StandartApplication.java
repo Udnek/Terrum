@@ -6,7 +6,11 @@ import me.udnekjupiter.app.console.ConsoleListener;
 import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.controller.ControllerListener;
 import me.udnekjupiter.app.controller.InputKey;
-import me.udnekjupiter.app.window.WindowManager;
+import me.udnekjupiter.app.util.ApplicationData;
+import me.udnekjupiter.app.util.ApplicationSettings;
+import me.udnekjupiter.app.util.DebugMenu;
+import me.udnekjupiter.app.util.VideoRecorder;
+import me.udnekjupiter.app.window.Window;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine;
@@ -19,7 +23,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
 
     private PhysicEngine<?> physicEngine;
     private GraphicEngine graphicEngine;
-    private WindowManager windowManager;
+    private Window window;
     private Console console;
     private ApplicationData applicationData;
     private VideoRecorder videoRecorder;
@@ -38,6 +42,12 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     @Override
     @NotNull
     public DebugMenu getDebugMenu() {return debugMenu;}
+
+    @Override
+    public @NotNull Window getWindow() {
+        return window;
+    }
+
     @Override
     @NotNull
     public ApplicationSettings getSettings() {return settings;}
@@ -47,9 +57,8 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     public @NotNull GraphicEngine getGraphicEngine() {return graphicEngine;}
 
     @Override
-    public void initialize(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine){
-        windowManager = WindowManager.getInstance();
-
+    public void initialize(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine, @NotNull Window window){
+         this.window = window;
         this.graphicEngine = graphicEngine;
         this.physicEngine = physicEngine;
         this.console = Console.getInstance();
@@ -109,17 +118,17 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
 
             for (int i = 0; i < graphicTicks; i++) {
 
-                windowManager.tick();
+                window.tick();
                 debugMenu.reset();
                 addDebugInformation();
 
                 BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
                 videoRecorder.addFrame(rendered);
 
-                BufferedImage frame = Utils.resizeImage(rendered, windowManager.getWidth(), windowManager.getHeight());
+                BufferedImage frame = Utils.resizeImage(rendered, window.getWidth(), window.getHeight());
                 graphicEngine.postVideoRender(frame);
 
-                windowManager.setFrame(frame);
+                window.setFrame(frame);
                 applicationData.framePerformed();
             }
 
@@ -128,18 +137,18 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
 
     private void liveGraphicLoop(){
         while (true){
-            windowManager.tick();
+            window.tick();
             debugMenu.reset();
             addDebugInformation();
 
-            int width = windowManager.getWidth();
-            int height = windowManager.getHeight();
+            int width = window.getWidth();
+            int height = window.getHeight();
 
             BufferedImage rendered = graphicEngine.renderFrame(width, height);
             BufferedImage frame = Utils.resizeImage(rendered, width, height);
             // TODO: 7/12/2024 MOVE DEBUG RENDER INTO GRAPHIC ENGINE
             debugMenu.draw(frame, 15);
-            windowManager.setFrame(frame);
+            window.setFrame(frame);
 
             applicationData.framePerformed();
         }
@@ -147,7 +156,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
 
     @Override
     public void start(){
-        windowManager.initialize();
+        window.initialize();
         physicEngine.initialize();
         graphicEngine.initialize();
         console.start();
@@ -186,7 +195,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
                 "Cores: " + settings.cores + " Total Available: " + Runtime.getRuntime().availableProcessors()
         );
         debugMenu.addTextToRight(
-                "Size: " + windowManager.getWidth() + "x" + windowManager.getHeight()
+                "Size: " + window.getWidth() + "x" + window.getHeight()
         );
         debugMenu.addTextToRight("RenderTime: " + Utils.roundToPrecision((double) applicationData.frameRenderTime / Utils.NANOS_IN_SECOND, 5));
         debugMenu.addTextToRight("FramesRendered: " + applicationData.framesAmount);
@@ -216,7 +225,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
             case SET_DO_LIGHT -> settings.doLight = (boolean) args[0];
             case SET_DEBUG_COLORIZE_PLANES -> settings.debugColorizePlanes = (boolean) args[0];
             case SET_PIXEL_SCALING -> settings.pixelScaling = (int) args[0];
-            case SET_WINDOW_SIZE -> windowManager.setSize((int) args[0], (int) args[1]);
+            case SET_WINDOW_SIZE -> window.setSize((int) args[0], (int) args[1]);
             case SET_DRAW_PLANES -> settings.drawPlanes = (boolean) args[0];
             case SET_DRAW_WIREFRAME -> settings.drawWireframe = (boolean) args[0];
         }

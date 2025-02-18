@@ -1,5 +1,6 @@
-package me.udnekjupiter.app;
+package me.udnekjupiter.app.util;
 
+import me.udnekjupiter.app.StandartApplication;
 import org.jcodec.api.awt.AWTSequenceEncoder;
 
 import java.awt.image.BufferedImage;
