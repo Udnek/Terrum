@@ -10,12 +10,14 @@ import java.util.List;
 public class SphereCollider extends Collider{
     public final double radius;
     public final double stiffness;
+    public final double maxDepth;
     public List<CollidablePhysicObject3d> currentCollisions = new ArrayList<>();
 
     public SphereCollider(double radius, double stiffness, CollidablePhysicObject3d parent) {
         this.radius = radius;
         this.stiffness = stiffness;
         this.parent = parent;
+        this.maxDepth = Math.log10(radius + 1) - 1;
     }
 
     public Vector3d getCenterPosition(){

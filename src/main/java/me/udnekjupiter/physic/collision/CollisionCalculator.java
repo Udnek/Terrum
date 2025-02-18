@@ -30,6 +30,21 @@ public abstract class CollisionCalculator {
     }
 
     public static @NotNull Vector3d getHookeCollisionForce(@NotNull Collider thisCollider){
+        /*
+        F = Σ(k * Dm - (D - Lcr)), where:
+        [F] (N) is the force, applied to the collision initiator (aka thisCollider)
+        [k] (N/m) is the hooke's coefficient, or object's stiffness to some extent
+        [Dm] (m) is the max distance at which force can be applied
+            \_-Dm = R1 + R2, where [R] (m) is the radius of a collider
+        [D] (m) is the distance between interacting colliders
+        [Lcr] (m) is the summary length of interacting colliders' critical radii
+            \_-Lcr = (R1 - M1) + (R2 - M2), where [M] (m) = lg(R + 1) - 1
+
+        Critical radius, essentially, is a limit to objects' depth of collision to
+        reduce stiffness number (because, well, big numbers cause big precision losses, and it stays like that
+                                 until I figure out a better solution)
+        */
+
         Vector3d collisionForce = new Vector3d();
         double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
         if (thisCollider instanceof SphereCollider sphereCollider){
@@ -41,8 +56,7 @@ public abstract class CollisionCalculator {
                     double maxDistance = sphereCollider.radius + otherSphereCollider.radius;
                     double thisCriticalRadius = sphereCollider.radius - maxDepth;
                     double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
-                    double minCriticalRadiiDistance = thisCriticalRadius + otherCriticalRadius;
-                    double stableDistance = maxDistance - minCriticalRadiiDistance;
+                    double stableDistance = maxDistance;
                     double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
                     double depth = stableDistance - criticalRadiiDistance;
                     Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);

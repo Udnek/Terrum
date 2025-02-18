@@ -52,12 +52,12 @@ public class ColoredBallsMain extends Main{
             Vector3d position = new Vector3d(0, i * 5 + 2, 0);
             sphereObject.getContainer().position = position;
             sphereObject.getContainer().initialPosition = position.dup();
-            sphereObject.getContainer().mass = 500;
+            sphereObject.getContainer().mass = 100;
             physicEngine.addObject(sphereObject);
         }
 
 
-        CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 10_000,  1, 0.001);
+        CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 1_000,  1, 0.001);
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
 
