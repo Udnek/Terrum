@@ -25,7 +25,9 @@ public enum InputKey {
 
     PAUSE(KeyEvent.VK_ESCAPE, false),
 
-    RESET(KeyEvent.VK_R, false);
+    RESET(KeyEvent.VK_R, false),
+
+    DELETE(KeyEvent.VK_DELETE, false);
 
     public final int code;
     public final boolean longPress;

@@ -101,6 +101,9 @@ public class Vector3d {
 
     @NotNull
     public Vector3d normalize(){
+        if (length() == 0){
+            set(new Vector3d(0, 1, 0));
+        }
         return this.div(Math.max(length(), Double.MIN_VALUE));
     }
 
@@ -115,6 +118,12 @@ public class Vector3d {
         double newY = vector2.x * vector1.z - vector2.z * vector1.x;
         double newZ = vector1.x * vector2.y - vector1.y * vector2.x;
         return new Vector3d(newX, newY, newZ);
+    }
+
+    public void set(@NotNull Vector3d other){
+        this.x = other.x;
+        this.y = other.y;
+        this.z = other.z;
     }
 
     public boolean containsNaN(){

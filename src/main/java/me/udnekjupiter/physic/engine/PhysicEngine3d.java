@@ -15,7 +15,6 @@ import org.realityforge.vecmath.Vector3d;
 
 public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
 
-    public static final double GRAVITATIONAL_ACCELERATION = -9.80665;
     public static final double SPHERE_DRAG_COEFFICIENT = 0.47;
     public static final double FORCE_HARD_CAP = Math.pow(10, 10);
     public static final double MAX_VELOCITY = 500;
@@ -67,7 +66,11 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
 
         if (inputKey == InputKey.PAUSE) {
             pauseSwitch();
-        } else if (inputKey == InputKey.RESET) reset();
+        } else if (inputKey == InputKey.RESET) {
+            reset();
+        } else if (inputKey == InputKey.DELETE) {
+            removeObject(getScene().getAllObjects().getFirst());
+        }
     }
 
     @Override

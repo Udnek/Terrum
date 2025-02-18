@@ -1,5 +1,6 @@
 package me.udnekjupiter.util;
 
+import me.udnekjupiter.physic.engine.ConstantValues;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import org.jcodec.containers.mp4.SampleOffsetUtils;
 import org.jetbrains.annotations.NotNull;
@@ -107,7 +108,7 @@ public class Utils {
         [A] (m^2) is the cross-sectional area of an object (PI*R^2 for sphere, in our case)
         Force is applied as a vector, opposite to velocity (therefore it's a normalized velocity vector multiplied by -1)
         */
-        return velocity.dup().normalize().mul((-1) * (PhysicEngine3d.SPHERE_DRAG_COEFFICIENT * 1.225 * (Math.pow(velocity.length(), 2)/2) * (Math.PI * Math.pow(radius, 2))));
+        return velocity.dup().normalize().mul((-1) * (ConstantValues.SPHERE_DRAG_COEFFICIENT * ConstantValues.AIR_DENSITY * (Math.pow(velocity.length(), 2)/2) * (Math.PI * Math.pow(radius, 2))));
     }
 
     @NotNull

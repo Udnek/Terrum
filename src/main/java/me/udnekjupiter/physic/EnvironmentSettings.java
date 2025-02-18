@@ -7,7 +7,6 @@ public class EnvironmentSettings {
     public double deltaTime;
     public int iterationsPerTick;
     public double decayCoefficient;
-    public double maxDepth;
 
     //Net settings
     public double springStiffness;
@@ -20,7 +19,6 @@ public class EnvironmentSettings {
         this.vertexMass = vertexMass;
         this.deltaTime = deltaTime;
         this.decayCoefficient = decayCoefficient;
-        this.maxDepth = maxDepth;
         this.iterationsPerTick = iterationsPerTick;
     }
 

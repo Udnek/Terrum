@@ -7,66 +7,58 @@ import me.udnekjupiter.util.Vector3d;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public abstract class CollisionCalculator {
+    @Deprecated
     public static @NotNull Vector3d getAtomicCollisionForce(@NotNull Collidable thisObject){
         Vector3d collisionForce = new Vector3d();
-        for (Collidable collidingObject : thisObject.getCollidingObjects()) {
-            if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
-
-            Vector3d thisPosition = thisObject.getPosition();
-            Vector3d otherPosition = collidingObject.getPosition();
-            Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-            double distance = VectorUtils.distance(thisPosition, otherPosition);
-            double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
-            double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - maxDepth;
-            double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
-            double criticalDistance = thisCriticalRadius + otherCriticalRadius;
-            double subCriticalDistance = criticalDistance + (maxDepth*0.0625)*2;
-            double depth = Math.max(Math.abs(distance - criticalDistance), Math.abs(subCriticalDistance - criticalDistance));
-            Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(depth, 3)));
-            collisionForce.add(collisionForceCache);
-
-        }
+//        for (Collidable collidingObject : thisObject.getCollidingObjects()) {
+//            if (!(collidingObject.getCollider() instanceof SphereCollider otherSphereCollider)) continue;
+//
+//            Vector3d thisPosition = thisObject.getPosition();
+//            Vector3d otherPosition = collidingObject.getPosition();
+//            Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
+//            double distance = VectorUtils.distance(thisPosition, otherPosition);
+//            double thisCriticalRadius = ((SphereCollider) thisObject.getCollider()).radius - ((SphereCollider) thisObject.getCollider()).maxDepth;
+//            double otherCriticalRadius = otherSphereCollider.radius - otherSphereCollider.maxDepth;
+//            double criticalDistance = thisCriticalRadius + otherCriticalRadius;
+//            double subCriticalDistance = criticalDistance + (maxDepth*0.0625)*2;
+//            double depth = Math.max(Math.abs(distance - criticalDistance), Math.abs(subCriticalDistance - criticalDistance));
+//            Vector3d collisionForceCache = normalizedDirection.mul(1 / (Math.pow(depth, 3)));
+//            collisionForce.add(collisionForceCache);
+//
+//        }
         return collisionForce;
     }
 
     public static @NotNull Vector3d getHookeCollisionForce(@NotNull Collider thisCollider){
         /*
-        F = Σ(k * Dm - (D - Lcr)), where:
+        F = Σ(k * |Dm - D|), where:
         [F] (N) is the force, applied to the collision initiator (aka thisCollider)
         [k] (N/m) is the hooke's coefficient, or object's stiffness to some extent
-        [Dm] (m) is the max distance at which force can be applied
-            \_-Dm = R1 + R2, where [R] (m) is the radius of a collider
+        [Dm] (m) is the maximum distance between interacting objects, below which collision is considered happening
+            \_-- Dm = R1 + R2 where R is the radius of the collider
         [D] (m) is the distance between interacting colliders
-        [Lcr] (m) is the summary length of interacting colliders' critical radii
-            \_-Lcr = (R1 - M1) + (R2 - M2), where [M] (m) = lg(R + 1) - 1
-
-        Critical radius, essentially, is a limit to objects' depth of collision to
-        reduce stiffness number (because, well, big numbers cause big precision losses, and it stays like that
-                                 until I figure out a better solution)
         */
 
         Vector3d collisionForce = new Vector3d();
-        double maxDepth = Main.getMain().getApplication().getPhysicEngine().getSettings().maxDepth;
-        if (thisCollider instanceof SphereCollider sphereCollider){
+        if (thisCollider instanceof SphereCollider thisSphereCollider){
             for (Collider otherCollider : thisCollider.getCurrentCollisions()) {
                 if (otherCollider instanceof SphereCollider otherSphereCollider) {
+                    /*
                     Vector3d thisPosition = thisCollider.parent.getPosition();
                     Vector3d otherPosition = otherSphereCollider.parent.getPosition();
                     double distance = VectorUtils.distance(thisPosition, otherPosition);
-                    double maxDistance = sphereCollider.radius + otherSphereCollider.radius;
-                    double thisCriticalRadius = sphereCollider.radius - maxDepth;
-                    double otherCriticalRadius = otherSphereCollider.radius - maxDepth;
-                    double stableDistance = maxDistance;
-                    double criticalRadiiDistance = distance - (thisCriticalRadius + otherCriticalRadius);
-                    double depth = stableDistance - criticalRadiiDistance;
+                    double maxDistance = thisSphereCollider.radius + otherSphereCollider.radius;
+                    double depth = maxDistance - distance;
                     Vector3d normalizedDirection = VectorUtils.getNormalizedDirection(otherPosition, thisPosition);
-                    Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * sphereCollider.stiffness); // TODO: 7/9/2024 STIFFNESS????
+                    Vector3d collisionForceCache = normalizedDirection.mul(Math.abs(depth) * thisSphereCollider.stiffness);
                     collisionForce.add(collisionForceCache);
+                    */
+                    collisionForce.add(VectorUtils.getNormalizedDirection(otherSphereCollider.parent.getPosition(), thisCollider.parent.getPosition()).mul(Math.abs(thisSphereCollider.radius + otherSphereCollider.radius - VectorUtils.distance(thisCollider.parent.getPosition(), otherSphereCollider.parent.getPosition())) * thisSphereCollider.stiffness));
                 } else if (otherCollider instanceof PlaneCollider planeCollider) {
-                    double stableDistance = sphereCollider.radius;
-                    double distance = VectorUtils.distanceFromPointToPlane(planeCollider.a, planeCollider.b, planeCollider.c, planeCollider.d, sphereCollider.getCenterPosition().x, sphereCollider.getCenterPosition().y, sphereCollider.getCenterPosition().z);
+                    double stableDistance = thisSphereCollider.radius;
+                    double distance = VectorUtils.distanceFromPointToPlane(planeCollider.a, planeCollider.b, planeCollider.c, planeCollider.d, thisSphereCollider.getCenterPosition().x, thisSphereCollider.getCenterPosition().y, thisSphereCollider.getCenterPosition().z);
                     double depth = stableDistance - distance;
-                    Vector3d collisionForceCache = new Vector3d(planeCollider.a, planeCollider.b, planeCollider.c).normalize().mul(Math.abs(depth) * sphereCollider.stiffness);
+                    Vector3d collisionForceCache = new Vector3d(planeCollider.a, planeCollider.b, planeCollider.c).normalize().mul(Math.abs(depth) * thisSphereCollider.stiffness);
                     collisionForce.add(collisionForceCache);
                 }
             }

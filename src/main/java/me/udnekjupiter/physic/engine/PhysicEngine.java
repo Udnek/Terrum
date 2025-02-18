@@ -15,4 +15,8 @@ public interface PhysicEngine<PObject extends PhysicObject<?>> extends Initializ
     default void addObjects(@NotNull Iterable<? extends @NotNull PObject> objects){
         for (PObject object : objects) {addObject(object);}
     }
+    void removeObject(@NotNull PObject object);
+    default void removeObjects(@NotNull Iterable<? extends @NotNull PObject> objects){
+        for (PObject object : objects) {removeObject(object);}
+    }
 }
