@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
-    protected List<PhysicObject3d> objects = new ArrayList<>();
+    protected PhysicSceneObjects objects = new PhysicSceneObjects();
 
     @Override
     public void addObject(@NotNull PhysicObject3d object) {
@@ -23,11 +23,11 @@ public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
     }
 
     @Override
-    public @NotNull List<? extends PhysicObject3d> getAllObjects() {return objects;}
+    public @NotNull List<? extends PhysicObject3d> getAllObjects() {return objects.getList();}
 
     public @NotNull List<? extends CollidablePhysicObject3d> getAllCollidableObjects() {
         List<CollidablePhysicObject3d> collidableObjects = new ArrayList<>();
-        for (PhysicObject3d object : objects) {
+        for (PhysicObject3d object : objects.getList()) {
             if (!(object instanceof CollidablePhysicObject3d)) continue;
             collidableObjects.add((CollidablePhysicObject3d) object);
         }
@@ -36,7 +36,7 @@ public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
 
     public @NotNull List<? extends CollidablePhysicObject3d> getAllCollisionInitiators(){
         List<CollidablePhysicObject3d> collisionInitiators = new ArrayList<>();
-        for (PhysicObject3d object : objects) {
+        for (PhysicObject3d object : objects.getList()) {
             if (!(object instanceof CollidablePhysicObject3d)) continue;
             if (!(object instanceof CollisionInitiator)) continue;
             collisionInitiators.add((CollidablePhysicObject3d) object);
@@ -46,6 +46,6 @@ public class PhysicScene3d implements PhysicScene<PhysicObject3d> {
     @Override
     public void initialize() {}
     @Override
-    public void reset(){objects.forEach(Resettable::reset);}
+    public void reset(){objects.getList().forEach(Resettable::reset);}
 
 }

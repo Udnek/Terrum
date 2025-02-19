@@ -1,7 +1,7 @@
 package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.collision.Collidable;
-import me.udnekjupiter.physic.collision.PlaneCollider;
+import me.udnekjupiter.physic.collision.shape.PlaneCollider;
 import org.jetbrains.annotations.NotNull;
 
 public class PlaneObject extends ImplementedCollidablePhysicObject3d implements CollisionInitiator {

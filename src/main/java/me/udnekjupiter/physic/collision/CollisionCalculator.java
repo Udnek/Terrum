@@ -1,6 +1,7 @@
 package me.udnekjupiter.physic.collision;
 
-import me.udnekjupiter.Main;
+import me.udnekjupiter.physic.collision.shape.PlaneCollider;
+import me.udnekjupiter.physic.collision.shape.SphereCollider;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;

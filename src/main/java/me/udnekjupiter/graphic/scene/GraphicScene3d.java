@@ -16,7 +16,7 @@ import me.udnekjupiter.graphic.object.renderable.SurfaceObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.PlaneObject;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.*;

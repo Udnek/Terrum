@@ -6,7 +6,7 @@ import me.udnekjupiter.graphic.object.renderable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.sphere.SphereObject;
 import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
 

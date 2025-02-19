@@ -6,12 +6,13 @@ import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.collision.AABB;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.net.SpringSphereNet;
 import me.udnekjupiter.physic.object.PlaneObject;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import me.udnekjupiter.util.Vector3d;
 import org.jetbrains.annotations.NotNull;
@@ -53,8 +54,7 @@ public class MainBasketball extends Main{
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
 
-
-
+        //637
 
         physicEngine.addObjects(SpringSphereNet.createFromCuboid(2, 2d/4d, 10_000));
 

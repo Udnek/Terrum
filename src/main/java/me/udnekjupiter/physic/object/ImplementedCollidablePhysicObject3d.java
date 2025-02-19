@@ -3,7 +3,6 @@ package me.udnekjupiter.physic.object;
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.collision.CollisionCalculator;
-import me.udnekjupiter.physic.collision.SphereCollider;
 import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
 

@@ -1,7 +1,7 @@
 package me.udnekjupiter.physic.object.vertex;
 
 import me.udnekjupiter.physic.collision.Collidable;
-import me.udnekjupiter.physic.collision.SphereCollider;
+import me.udnekjupiter.physic.collision.shape.SphereCollider;
 import me.udnekjupiter.physic.object.ImplementedCollidablePhysicObject3d;
 import org.jetbrains.annotations.NotNull;
 
