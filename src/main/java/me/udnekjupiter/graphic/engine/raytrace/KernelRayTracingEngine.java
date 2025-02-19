@@ -6,9 +6,9 @@ import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.object.renderable.shape.PolygonObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
+import me.udnekjupiter.util.Vector3d;
 import org.jetbrains.annotations.NotNull;
 import org.jocl.*;
-import me.udnekjupiter.util.Vector3d;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -95,7 +95,7 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
 
     }
     private String readKernelCodeFile(){
-        BufferedReader reader = FileManager.readKernel(FileManager.Directory.KERNEL, "kernel.cl");
+        BufferedReader reader = FileManager.readText(FileManager.Directory.KERNEL, "kernel.cl");
 
         String line;
         StringBuilder stringBuilder = new StringBuilder();

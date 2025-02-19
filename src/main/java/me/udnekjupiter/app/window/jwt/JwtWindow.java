@@ -14,14 +14,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class JWTWindow extends WindowAdapter implements Window, Initializable, Tickable {
-
-    public static final String TITLE = "Terrum";
+public class JwtWindow extends WindowAdapter implements Window, Initializable, Tickable {
 
     private Frame frame;
     private Panel panel;
 
-    private final Controller controller = Controller.getInstance();
+    protected final Controller controller = Controller.getInstance();
 
     @Override
     public void initialize() {
@@ -47,6 +45,11 @@ public class JWTWindow extends WindowAdapter implements Window, Initializable, T
         frame.addWindowListener(this);
 
         frame.pack();
+    }
+
+    @Override
+    public void setTitle(@NotNull String title) {
+        frame.setTitle(title);
     }
 
     @Override

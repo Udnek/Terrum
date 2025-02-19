@@ -2,11 +2,6 @@ package me.udnekjupiter.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.MatchesPattern;
-import javax.annotation.Nonnull;
-
-import static java.lang.Double.isNaN;
-
 public class Vector3d {
     public double x;
     public double y;

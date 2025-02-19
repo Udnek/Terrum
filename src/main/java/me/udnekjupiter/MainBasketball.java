@@ -1,9 +1,10 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.util.ApplicationSettings;
+import me.udnekjupiter.app.window.opengl.GlWindow;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
-import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
+import me.udnekjupiter.graphic.engine.opengl.GlEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
@@ -20,7 +21,6 @@ public class MainBasketball extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
         return ApplicationSettings.noRecording();
-        //return ApplicationSettings.withRecording(512, 512, "kkkk");
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
@@ -34,9 +34,10 @@ public class MainBasketball extends Main{
 
         PhysicScene3d physicScene = new PhysicScene3d();
         PhysicEngine3d physicEngine = new EulerPhysicEngine(physicScene, initializePhysicsSettings());
-
         GraphicScene3d graphicScene = new GraphicScene3d(new Camera());
-        GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
+
+        GlWindow window = new GlWindow();
+        GraphicEngine graphicEngine = new GlEngine(window, graphicScene);
 
         //CellularNet launcherNet = new CellularNet("small_launcher.png", new Vector3d(15, 2, 0), launcherOffsets);
         SphereObject sphere = new SphereObject(4, 100_000);
@@ -66,7 +67,7 @@ public class MainBasketball extends Main{
         graphicScene.getCamera().setYaw(-1.1f);
         graphicScene.getCamera().setPitch(-12.0199995f);
 
-        initializeApplication(graphicEngine, physicEngine);
+        initializeApplication(graphicEngine, physicEngine, window);
         startApplication();
 
     }

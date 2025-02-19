@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -41,9 +42,9 @@ public class RasterizationEngine extends GraphicEngine3d {
 
     @Override
     public @NotNull BufferedImage renderFrame(final int rawWidth, final int rawHeight) {
+        super.renderFrame(rawWidth, rawHeight);
         Application application = Main.getMain().getApplication();
         ApplicationSettings settings = application.getSettings();
-        scene.beforeFrameUpdate(application.getWindow().getWidth(), application.getWindow().getHeight());
 
         width = Math.max(rawWidth / settings.pixelScaling, 1);
         height = Math.max(rawHeight / settings.pixelScaling, 1);
@@ -64,7 +65,7 @@ public class RasterizationEngine extends GraphicEngine3d {
             });
         }
 
-        polygons.sort((o1, o2) -> Double.compare(o2.getCenter().z, o1.getCenter().z));
+        polygons.sort(Comparator.comparingDouble(o -> o.getCenter().z));
         polygons.forEach(this::drawTriangle);
 
         return frame.toImage();
@@ -73,19 +74,17 @@ public class RasterizationEngine extends GraphicEngine3d {
 
     public void drawTriangle(@NotNull RenderableTriangle triangle){
         Point project0 = project(triangle.getVertex0());
-        if (project0 == null) return;
         Point project1 = project(triangle.getVertex1());
-        if (project1 == null) return;
         Point project2 = project(triangle.getVertex2());
-        if (project2 == null) return;
+        if (project0 == null || project1 == null || project2 == null) return;
 
         if (settings.drawPlanes) frame.drawTriangle(project0, project1, project2, triangle.getRasterizeColor());
         if (settings.drawWireframe) frame.drawTriangleWireframe(project0, project1, project2, WIREFRAME_COLOR);
     }
 
     public @Nullable Point project(@NotNull Vector3d pos){
-        if (pos.z < 0.1) return null;
-        double multiplier = 1d / pos.z * height / camera.getFov();
+        if (pos.z > -0.1) return null;
+        double multiplier = -1d / pos.z * height / camera.getFov();
         int x = (int) Math.round(pos.x * multiplier);
         int y = (int) Math.round(pos.y * multiplier);
         return new Point(x, y);

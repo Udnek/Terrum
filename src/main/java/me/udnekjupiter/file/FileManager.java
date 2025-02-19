@@ -1,5 +1,7 @@
 package me.udnekjupiter.file;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -9,32 +11,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 public class FileManager {
-/*    public static String getAssetsDirectory(){
-        return System.getProperty("user.dir") + "/src/main/assets/";
-    }*/
-/*    public static File readAssetFile(Directory directory, String fileName){
-        URL url = FileManager.class.getClassLoader().getResource(directory.path + "/" + fileName);
-        File file;
 
-        //file = Paths.get(url.toURI()).toFile();
-        file = new File(url.toExternalForm());
-        if (file.exists()) return file;
-
-        try {
-            file = new File(url.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(file.exists());
-        return file ;
-    }*/
-    public static BufferedReader readKernel(Directory directory, String fileName){
-        BufferedReader reader = new BufferedReader(new InputStreamReader(directory.getStream(fileName)));
-        return reader;
+    public static @NotNull BufferedReader readText(@NotNull Directory directory, @NotNull String fileName){
+        return new BufferedReader(new InputStreamReader(directory.getStream(fileName)));
     }
 
-
-    private static BufferedImage readImage(Directory directory, String imageName){
+    public static @NotNull BufferedImage readImage(@NotNull Directory directory, @NotNull String imageName){
         BufferedImage image;
         try {
             image = ImageIO.read(directory.getURL(imageName));
@@ -44,20 +26,22 @@ public class FileManager {
         return image;
     }
 
-    public static BufferedImage readMap(String imageName){
+    public static @NotNull BufferedImage readMap(@NotNull String imageName){
         return readImage(Directory.IMAGE_MAP, imageName);
     }
-    public static BufferedImage readIcon(){
+    public static @NotNull BufferedImage readIcon(){
         return readImage(Directory.IMAGE_ICON, "icon.png");
     }
-
+    public static @NotNull BufferedImage readTexture(@NotNull String name){
+        return readImage(Directory.TEXTURE, name);
+    }
 
 
     public enum Directory{
         IMAGE_MAP("assets/image/map"),
         IMAGE_ICON("assets/image/icon"),
-        KERNEL("assets/kernel");
-        //VIDEO("out/video");
+        KERNEL("assets/kernel"),
+        TEXTURE("assets/image/texture");
 
         public final String path;
         Directory(String dir){path = dir;}

@@ -40,9 +40,9 @@ public class RayTracingEngine extends GraphicEngine3d {
 
     @Override
     public @NotNull BufferedImage renderFrame(final int width, final int height){
+        super.renderFrame(width, height);
         Application application = Main.getMain().getApplication();
         ApplicationSettings settings = application.getSettings();
-        scene.beforeFrameUpdate(application.getWindow().getWidth(), application.getWindow().getHeight());
 
         int renderWidth = Math.max(width / settings.pixelScaling, 1);
         int renderHeight = Math.max(height / settings.pixelScaling, 1);

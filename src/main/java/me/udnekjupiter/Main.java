@@ -3,18 +3,18 @@ package me.udnekjupiter;
 import me.udnekjupiter.app.Application;
 import me.udnekjupiter.app.StandartApplication;
 import me.udnekjupiter.app.util.ApplicationSettings;
-import me.udnekjupiter.app.window.jwt.JWTWindow;
+import me.udnekjupiter.app.window.Window;
+import me.udnekjupiter.app.window.jwt.JwtWindow;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
 
 public abstract class Main{
 
     private Application application;
 
-    public static final Main.Type MAIN_TO_RUN = Type.COLORED_BALLS;
+    public static final Main.Type MAIN_TO_RUN = Type.BASKETBALL;
     private static Main main;
     public static void main(String ...args){
         main = switch (MAIN_TO_RUN) {
@@ -40,10 +40,17 @@ public abstract class Main{
         return application;
     }
 
-    public void initializeApplication(GraphicEngine graphicEngine, PhysicEngine<?> physicEngine) {
-        application = new StandartApplication(initializeGraphicsSettings());
-        application.initialize(graphicEngine, physicEngine, new JWTWindow());
+    public void initializeApplication(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine) {
+        initializeApplication(graphicEngine, physicEngine, new JwtWindow());
     }
+
+    public void initializeApplication(
+            @NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine, @NotNull Window window
+    ) {
+        application = new StandartApplication(initializeGraphicsSettings(), graphicEngine, physicEngine, window);
+        application.initialize();
+    }
+
     public void startApplication(){
         getApplication().start();
     }

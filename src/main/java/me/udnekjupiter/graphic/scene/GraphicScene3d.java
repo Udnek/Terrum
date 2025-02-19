@@ -128,7 +128,7 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
     }
 
     @Override
-    public void keyEvent(InputKey inputKey, boolean pressed) {
+    public void keyEvent(@NotNull InputKey inputKey, boolean pressed) {
         if (inputKey != InputKey.MOUSE_OBJECT_DRAG) return;
         if (pressed) {
             Selectable objectCursorLookingAt = findObjectCursorLookingAt(controller.getMouseCurrentPosition());
@@ -164,17 +164,17 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
         final float moveSpeed = 5f * deltaTime;
         final float rotateSpeed = 60f * deltaTime;
         switch (inputKey){
-            case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
-            case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_FORWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, -moveSpeed));
+            case MOVE_BACKWARD -> camera.moveAlongDirectionParallelXZ(new Vector3d(0, 0, moveSpeed));
             case MOVE_LEFT -> camera.moveAlongDirectionParallelXZ(new Vector3d(-moveSpeed, 0, 0));
             case MOVE_RIGHT -> camera.moveAlongDirectionParallelXZ(new Vector3d(moveSpeed, 0, 0));
-            case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed, 0));
+            case MOVE_UP -> camera.move(new Vector3d(0, moveSpeed*2, 0));
             case MOVE_DOWN -> camera.move(new Vector3d(0, -moveSpeed*2, 0));
 
-            case CAMERA_UP -> camera.rotatePitch(-rotateSpeed);
-            case CAMERA_DOWN -> camera.rotatePitch(rotateSpeed);
-            case CAMERA_RIGHT -> camera.rotateYaw(-rotateSpeed);
-            case CAMERA_LEFT -> camera.rotateYaw(rotateSpeed);
+            case CAMERA_UP -> camera.rotatePitch(rotateSpeed);
+            case CAMERA_DOWN -> camera.rotatePitch(-rotateSpeed);
+            case CAMERA_RIGHT -> camera.rotateYaw(rotateSpeed);
+            case CAMERA_LEFT -> camera.rotateYaw(-rotateSpeed);
         }
     }
     public void handleMousePressedDifference(){
@@ -182,8 +182,8 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
         if (mouseKey == InputKey.MOUSE_CAMERA_DRAG){
             float sensitivity = (float) (20f * Math.min(Main.getMain().getApplication().getFrameDeltaTime(), 0.01));
             Point mouseDifference = controller.getMouseDifference();
-            camera.rotateYaw(mouseDifference.x*-sensitivity);
-            camera.rotatePitch(mouseDifference.y*sensitivity);
+            camera.rotateYaw(mouseDifference.x*sensitivity);
+            camera.rotatePitch(mouseDifference.y*-sensitivity);
         }
         else if (mouseKey == InputKey.MOUSE_OBJECT_DRAG){
             if (draggingObject == null) return;
@@ -204,17 +204,17 @@ public class GraphicScene3d implements GraphicScene<GraphicObject3d>, Controller
         }
     }
 
-    public Vector3d getMouseDirection(Point mousePosition){
+    public @NotNull Vector3d getMouseDirection(@NotNull Point mousePosition){
         Vector3d direction = new Vector3d(
                 (mousePosition.x - width/2f),
                 ((height-mousePosition.y-1) - height/2f),
-                height/camera.getFov()
+                -height/camera.getFov()
         );
         camera.rotateVector(direction);
         return direction;
     }
 
-    public Selectable findObjectCursorLookingAt(Point mousePosition){
+    public @Nullable Selectable findObjectCursorLookingAt(@NotNull Point mousePosition){
 
         Vector3d cameraPosition = camera.getPosition();
 
