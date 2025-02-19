@@ -29,28 +29,31 @@ public class CellularNet {
     private double springStiffness;
     private double springRelaxedLength;
     private double vertexMass;
+    private float scale;
 
-    public CellularNet(String mapImageName, Vector3d globalOffset, Vector3x3 perPositionMultiplier, double springStiffness, double springRelaxedLength, double vertexMass) {
+    public CellularNet(String mapImageName, Vector3d globalOffset, Vector3x3 perPositionMultiplier, double springStiffness, double springRelaxedLength, double vertexMass, float scale) {
         this.mapImageName = mapImageName;
         this.globalOffset = globalOffset;
         this.perPositionMultiplier = perPositionMultiplier;
         this.springStiffness = springStiffness;
         this.springRelaxedLength = springRelaxedLength;
         this.vertexMass = vertexMass;
+        this.scale = scale;
     }
-    public CellularNet(String mapImageName, Vector3d globalOffset, double springStiffness, double springRelaxedLength, double vertexMass) {
-        this(mapImageName, globalOffset, new Vector3x3(new Vector3d(1, 0, 0),
-                                                        new Vector3d(),
-                                                        new Vector3d(0, 0, 1)),
+    public CellularNet(String mapImageName, Vector3d globalOffset, double springStiffness, double springRelaxedLength, double vertexMass, float scale) {
+        this(mapImageName,
+                globalOffset,
+                new Vector3x3(new Vector3d(1, 0, 0), new Vector3d(), new Vector3d(0, 0, 1)),
                 springStiffness,
                 springRelaxedLength,
-                vertexMass);
+                vertexMass,
+                scale);
     }
     public CellularNet(String mapImageName) {
         this(mapImageName, new Vector3d(), new Vector3x3(new Vector3d(1, 0, 0),
                                                          new Vector3d(),
                                                          new Vector3d(0, 0, 1)),
-                10_000, 1, 1);
+                10_000, 1, 1, 1);
     }
 
     public int getSizeX(){return this.sizeX;}
@@ -110,7 +113,7 @@ public class CellularNet {
                 NetVertex netVertex = VertexColor.getVertex(color);
                 if (netVertex == null) continue;
                 objects.add(netVertex);
-                netVertex.setContainer(new PhysicVariableContainer(new Vector3d(x, 0, z).add(globalOffset)));
+                netVertex.setContainer(new PhysicVariableContainer(new Vector3d(x*scale, 0, z*scale).add(globalOffset)));
                 netVertex.getContainer().mass = vertexMass;
                 setVertex(netVertex, x, z);
             }

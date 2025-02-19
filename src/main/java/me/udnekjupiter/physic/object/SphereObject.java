@@ -2,6 +2,7 @@ package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.SphereCollider;
+import me.udnekjupiter.physic.engine.ConstantValues;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.Vector3d;
@@ -18,7 +19,7 @@ public class SphereObject extends ImplementedCollidablePhysicObject3d implements
 
     @Override
     public void calculateForces() {
-        container.appliedForce.y += PhysicEngine3d.GRAVITATIONAL_ACCELERATION * container.mass;
+        container.appliedForce.y += ConstantValues.GRAVITATIONAL_ACCELERATION * container.mass;
         container.appliedForce.add(getCollisionForce());
         container.appliedForce.add(Utils.getSphereDragForce(getCollider().radius, container.getVelocity()));
         if (container.appliedForce.containsNaN()){

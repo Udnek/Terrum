@@ -180,4 +180,9 @@ public class RKMPhysicEngine extends PhysicEngine3d{
         RKMContainer newContainer = new RKMContainer(container);
         object.setContainer(newContainer);
     }
+
+    @Override
+    public void removeObject(@NotNull PhysicObject3d object) {
+
+    }
 }

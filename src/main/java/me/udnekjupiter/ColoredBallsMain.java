@@ -51,17 +51,29 @@ public class ColoredBallsMain extends Main{
         GraphicEngine graphicEngine = new GlEngine(window, graphicScene);
 
 
-        for (int i = 0; i < 5; i++) {
-            SphereObject sphereObject = new SphereObject(i+1, 1000);
-            Vector3d position = new Vector3d(0, i * 5 + 2, 0);
-            sphereObject.getContainer().position = position;
-            sphereObject.getContainer().initialPosition = position.dup();
-            sphereObject.getContainer().mass = 100;
-            physicEngine.addObject(sphereObject);
-        }
+//        for (int i = 0; i < 5; i++) {
+//            SphereObject sphereObject = new SphereObject(i+1, 1000);
+//            Vector3d position = new Vector3d(0, i * 5 + 2, 0);
+//            sphereObject.getContainer().position = position;
+//            sphereObject.getContainer().initialPosition = position.dup();
+//            sphereObject.getContainer().mass = (i+1) * 2;
+//            physicEngine.addObject(sphereObject);
+//        }
+        SphereObject sphereObject = new SphereObject(5, 10000);
+        Vector3d position = new Vector3d(0, 5, 0);
+        sphereObject.getContainer().position = position;
+        sphereObject.getContainer().initialPosition = position.dup();
+        sphereObject.getContainer().mass = 4702;
+        physicEngine.addObject(sphereObject);
 
 
-        CellularNet basketNet = new CellularNet("big_frame.png", new Vector3d(-5, -1, -5), 1_000,  1, 0.001);
+        CellularNet basketNet = new CellularNet(
+                "big_frame.png",
+                new Vector3d(-5, -1, -5),
+                50_000,
+                0.8,
+                0.7,
+                0.8f);
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
 

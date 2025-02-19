@@ -96,4 +96,9 @@ public class EulerPhysicEngine extends PhysicEngine3d {
         EulerContainer newContainer = new EulerContainer(container);
         object.setContainer(newContainer);
     }
+
+    @Override
+    public void removeObject(@NotNull PhysicObject3d object) {
+        scene.removeObject(object);
+    }
 }
