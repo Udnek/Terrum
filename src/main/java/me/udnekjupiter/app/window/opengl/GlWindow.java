@@ -42,15 +42,12 @@ public class GlWindow implements Window {
         if (id == NULL) throw new RuntimeException("Can not initialize window");
 
         glfwSetKeyCallback(id, (wdw, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                application.stop();
-            } else {
-                Controller.getInstance().keyChanges(InputKey.getByGlCode(key),
-                        action == GLFW_REPEAT || action == GLFW_PRESS);
-            }
+            Controller.getInstance().keyChanges(InputKey.getByGlCode(key),
+                    action == GLFW_REPEAT || action == GLFW_PRESS);
         });
         glfwSetMouseButtonCallback(id, (wnd, key, action, mods) -> {
-                Controller.getInstance().keyChanges(InputKey.getByGlCode(key),action == GLFW_PRESS);
+            Controller.getInstance().keyChanges(
+                    InputKey.getByGlCode(key),action == GLFW_PRESS);
         });
 
         glfwMakeContextCurrent(id);
@@ -61,6 +58,10 @@ public class GlWindow implements Window {
 
     @Override
     public void tick() {
+        if (glfwWindowShouldClose(id)){
+            Main.getMain().getApplication().stop();
+            return;
+        }
         glfwGetCursorPos(id, mouseXBuffer, mouseYBuffer);
         controller.setMouseCurrentPosition(new Point((int) mouseXBuffer[0], (int) mouseYBuffer[0]));
     }

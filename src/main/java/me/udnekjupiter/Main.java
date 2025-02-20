@@ -14,7 +14,7 @@ public abstract class Main{
 
     private Application application;
 
-    public static final Main.Type MAIN_TO_RUN = Type.BASKETBALL;
+    public static final Main.Type MAIN_TO_RUN = Type.COLORED_BALLS;
     private static Main main;
     public static void main(String ...args){
         main = switch (MAIN_TO_RUN) {

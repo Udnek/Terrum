@@ -66,8 +66,6 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
             pauseSwitch();
         } else if (inputKey == InputKey.RESET) {
             reset();
-        } else if (inputKey == InputKey.DELETE) {
-            removeObject(getScene().getAllObjects().getFirst());
         }
     }
 

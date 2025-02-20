@@ -51,7 +51,7 @@ public class ShaderProgram implements Initializable {
                     
                     void main() {
                         vec4 textureColor = texture(texImage, textureCoord);
-                        fragColor = vec4(vertexColor, 1.0) * textureColor;
+                        fragColor = vec4(vertexColor, 0.5) * textureColor;
                     }
                     """,
                 GL_FRAGMENT_SHADER);
