@@ -1,9 +1,11 @@
-package me.udnekjupiter.physic.collision;
+package me.udnekjupiter.physic.collision.shape;
 
+import me.udnekjupiter.physic.collision.Collider;
+import me.udnekjupiter.physic.collision.ResponseOnly;
 import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.util.VectorUtils;
 
-public class PlaneCollider extends Collider implements ResponseOnly{
+public class PlaneCollider extends Collider implements ResponseOnly {
     public final double a;
     public final double b;
     public final double c;
@@ -20,7 +22,7 @@ public class PlaneCollider extends Collider implements ResponseOnly{
 
     }
     @Override
-    public boolean isCollidingWith(Collider collider) {
+    public boolean collidingWith(Collider collider) {
         if (collider instanceof  SphereCollider sphereCollider) {
             double distanceToPlane = VectorUtils.distanceFromPointToPlane(a, b, c, d, sphereCollider.getCenterPosition().x, sphereCollider.getCenterPosition().y, sphereCollider.getCenterPosition().z);
             return (sphereCollider.radius >= distanceToPlane);

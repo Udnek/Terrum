@@ -12,9 +12,12 @@ public class VectorUtils {
     public static double vectorLength(double x, double y, double z){
         return Math.sqrt(x*x + y*y + z*z);
     }
+
+    @Deprecated
     public static double distanceSquared(@NotNull Vector3d vector0, @NotNull Vector3d vector1){
         return pow((vector0.x-vector1.x), 2) + pow((vector0.y-vector1.y), 2) + pow((vector0.z-vector1.z), 2);
     }
+    @Deprecated
     public static double distance(@NotNull Vector3d vector0, @NotNull Vector3d vector1){
         return sqrt(distanceSquared(vector0, vector1));
     }
@@ -39,6 +42,7 @@ public class VectorUtils {
         double newZ = edge0.x * edge1.y - edge0.y * edge1.x;
         return vectorLength(newX, newY, newZ) / 2.0;
     }
+    @Deprecated
     public static @NotNull Vector3d getNormalizedDirection(@NotNull Vector3d positionStart, @NotNull Vector3d positionEnd){
         Vector3d difference = positionEnd.dup().sub(positionStart);
         if (difference.lengthSquared() == 0) return difference;

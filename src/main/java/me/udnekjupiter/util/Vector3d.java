@@ -1,6 +1,16 @@
 package me.udnekjupiter.util;
 
+import me.udnekjupiter.physic.net.VertexColor;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.MatchesPattern;
+import javax.annotation.Nonnull;
+
+import java.util.Vector;
+
+import static java.lang.Double.isNaN;
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 public class Vector3d {
     public double x;
@@ -88,7 +98,7 @@ public class Vector3d {
     }
 
     public double length(){
-        return Math.sqrt(lengthSquared());
+        return sqrt(lengthSquared());
     }
     public double lengthSquared(){
         return x*x + y*y + z*z;
@@ -123,5 +133,16 @@ public class Vector3d {
 
     public boolean containsNaN(){
         return (Double.isNaN(x) | Double.isNaN(y) | Double.isNaN(z));
+    }
+
+    public double distanceSquared(Vector3d other){
+        return pow((this.x-other.x), 2) + pow((this.y-other.y), 2) + pow((this.z-other.z), 2);
+    }
+    public double distance(Vector3d other){
+        return sqrt(distanceSquared(other));
+    }
+
+    public @NotNull Vector3d getNormalizedDirection(@NotNull Vector3d other){
+        return sub(other).normalize();
     }
 }

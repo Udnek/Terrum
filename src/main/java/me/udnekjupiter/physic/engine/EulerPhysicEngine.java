@@ -1,12 +1,10 @@
 package me.udnekjupiter.physic.engine;
 
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collision.PlaneCollider;
 import me.udnekjupiter.physic.container.EulerContainer;
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
@@ -82,7 +80,7 @@ public class EulerPhysicEngine extends PhysicEngine3d {
                 if (targetObject == anotherObject) continue;
                 if (targetObject.isCollisionIgnoredWith(anotherObject)) continue;
                 if (targetObject.getCollider().collidingObjectIsAlreadyListed(anotherObject)) continue;
-                if (!targetObject.getCollider().isCollidingWith(anotherObject.getCollider())) continue;
+                if (!targetObject.getCollider().collidingWith(anotherObject.getCollider())) continue;
                 targetObject.getCollider().addCollision(anotherObject.getCollider());
                 anotherObject.getCollider().addCollision(targetObject.getCollider());
             }

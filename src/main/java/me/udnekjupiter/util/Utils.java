@@ -1,8 +1,6 @@
 package me.udnekjupiter.util;
 
 import me.udnekjupiter.physic.engine.ConstantValues;
-import me.udnekjupiter.physic.engine.PhysicEngine3d;
-import org.jcodec.containers.mp4.SampleOffsetUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -111,7 +109,6 @@ public class Utils {
         return velocity.dup().normalize().mul((-1) * (ConstantValues.SPHERE_DRAG_COEFFICIENT * ConstantValues.AIR_DENSITY * (Math.pow(velocity.length(), 2)/2) * (Math.PI * Math.pow(radius, 2))));
     }
 
-    @NotNull
     public static double getHookeForce(double stiffness, double relaxedLength, double length){
         /*
         F = k * (l - l0), where:
@@ -123,4 +120,11 @@ public class Utils {
         return stiffness * (length - relaxedLength);
     }
 
+    public static double getSphereWeight(double density, double radius){
+        return 4*Math.PI*Math.pow(radius, 3)/3 * density;
+    }
+
+    public static double getHollowSphereWeight(double density, double radius, double thickness){
+        return getSphereWeight(density, radius) - getSphereWeight(density, radius - thickness);
+    }
 }

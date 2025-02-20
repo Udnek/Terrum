@@ -1,5 +1,6 @@
-package me.udnekjupiter.physic.collision;
+package me.udnekjupiter.physic.collision.shape;
 
+import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.util.VectorUtils;
 import me.udnekjupiter.util.Vector3d;
@@ -7,7 +8,7 @@ import me.udnekjupiter.util.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SphereCollider extends Collider{
+public class SphereCollider extends Collider {
     public final double radius;
     public final double stiffness;
     public final double maxDepth;
@@ -25,7 +26,7 @@ public class SphereCollider extends Collider{
     }
 
     @Override
-    public boolean isCollidingWith(Collider collider) {
+    public boolean collidingWith(Collider collider) {
         if (collider instanceof SphereCollider sphereCollider){
             double distanceBetweenColliders = VectorUtils.distance(this.getCenterPosition(), sphereCollider.getCenterPosition());
             return (sphereCollider.radius + this.radius >= distanceBetweenColliders);
