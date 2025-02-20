@@ -1,6 +1,7 @@
 package me.udnekjupiter.app.window.jwt;
 
 import me.udnekjupiter.app.controller.Controller;
+import me.udnekjupiter.app.controller.InputKey;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,11 +25,11 @@ public class Frame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        controller.keyChanges(event, true);
+        controller.keyChanges(InputKey.getByAwtCode(event.getKeyCode()),true);
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
-        controller.keyChanges(event, false);
+        controller.keyChanges(InputKey.getByAwtCode(event.getKeyCode()),false);
     }
 }

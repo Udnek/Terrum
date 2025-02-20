@@ -1,5 +1,6 @@
 package me.udnekjupiter.app.console;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.util.Listenable;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,8 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Console implements Runnable, Listenable<ConsoleListener> {
-    private boolean shouldRun = false;
+    private boolean canRun = false;
     private List<ConsoleListener> listeners = new ArrayList<>();
+    Thread thread;
 
     private static Console instance;
     private Console(){}
@@ -24,22 +26,20 @@ public class Console implements Runnable, Listenable<ConsoleListener> {
     }
 
     public void start(){
-        shouldRun = true;
-        Thread thread = new Thread(this);
+        thread = new Thread(this);
         thread.setName("Console");
         thread.start();
     }
     @Override
     public void run() {
-        assert shouldRun;
+        assert canRun;
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input command (type help for help):");
 
-        while (true){
+        while (Main.getMain().getApplication().isRunning()){
             String string = scanner.nextLine();
             Command.execute(listeners, string);
-
         }
 
     }

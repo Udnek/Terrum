@@ -1,6 +1,5 @@
 package me.udnekjupiter.physic.engine;
 
-import me.udnekjupiter.Main;
 import me.udnekjupiter.app.console.Command;
 import me.udnekjupiter.app.console.Console;
 import me.udnekjupiter.app.console.ConsoleListener;
@@ -11,7 +10,6 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import org.jetbrains.annotations.NotNull;
-import org.realityforge.vecmath.Vector3d;
 
 public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, ConsoleListener, ControllerListener {
 
@@ -61,15 +59,13 @@ public abstract class PhysicEngine3d implements PhysicEngine<PhysicObject3d>, Co
     }
 
     @Override
-    public void keyEvent(InputKey inputKey, boolean pressed) {
+    public void keyEvent(@NotNull InputKey inputKey, boolean pressed) {
         if (!pressed) return;
 
         if (inputKey == InputKey.PAUSE) {
             pauseSwitch();
         } else if (inputKey == InputKey.RESET) {
             reset();
-        } else if (inputKey == InputKey.DELETE) {
-            removeObject(getScene().getAllObjects().getFirst());
         }
     }
 

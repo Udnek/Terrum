@@ -1,9 +1,10 @@
 package me.udnekjupiter;
 
 import me.udnekjupiter.app.util.ApplicationSettings;
+import me.udnekjupiter.app.window.opengl.GlWindow;
 import me.udnekjupiter.graphic.Camera;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
-import me.udnekjupiter.graphic.engine.rasterization.RasterizationEngine;
+import me.udnekjupiter.graphic.engine.opengl.GlEngine;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.object.renderable.MassEssenceObject;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
@@ -17,8 +18,8 @@ import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -47,16 +48,19 @@ public class ColoredBallsMain extends Main{
         PhysicScene3d physicScene = new PhysicScene3d();
         PhysicEngine3d physicEngine = new EulerPhysicEngine(physicScene, initializePhysicsSettings());
         GraphicScene3d graphicScene = new GraphicScene3d(new Camera());
-        GraphicEngine graphicEngine = new RasterizationEngine(graphicScene);
 
-//        for (int i = 0; i < 5; i++) {
-//            SphereObject sphereObject = new SphereObject(i+1, 1000);
-//            Vector3d position = new Vector3d(0, i * 5 + 2, 0);
-//            sphereObject.getContainer().position = position;
-//            sphereObject.getContainer().initialPosition = position.dup();
-//            sphereObject.getContainer().mass = (i+1) * 2;
-//            physicEngine.addObject(sphereObject);
-//        }
+        GlWindow window = new GlWindow();
+        GraphicEngine graphicEngine = new GlEngine(window, graphicScene);
+
+
+        for (int i = 0; i < 5; i++) {
+            SphereObject sphereObject = new SphereObject(i+1, 1000);
+            Vector3d position = new Vector3d(0, i * 5 + 2, 0);
+            sphereObject.getContainer().position = position;
+            sphereObject.getContainer().initialPosition = position.dup();
+            sphereObject.getContainer().mass = (i+1) * 2;
+            physicEngine.addObject(sphereObject);
+        }
         SphereObject sphereObject = new SphereObject(5, 10000);
         Vector3d position = new Vector3d(0, 5, 0);
         sphereObject.getContainer().position = position;
@@ -86,10 +90,10 @@ public class ColoredBallsMain extends Main{
         }
         
         graphicScene.getCamera().setPosition(new Vector3d(-0.056768052754865406, 2.6988419722616674, -4.659554678586445));
-        graphicScene.getCamera().setYaw(0);
-        graphicScene.getCamera().setPitch(33);
+        graphicScene.getCamera().setYaw(-180);
+        graphicScene.getCamera().setPitch(-33);
 
-        initializeApplication(graphicEngine, physicEngine);
+        initializeApplication(graphicEngine, physicEngine, window);
         startApplication();
 
         //        for (RenderableObject3d traceableObject : graphicScene.getTraceableObjects()) {

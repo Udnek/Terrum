@@ -1,10 +1,7 @@
 package me.udnekjupiter.graphic;
 
-import me.udnekjupiter.util.PositionedObject;
-import me.udnekjupiter.util.Triangle;
-import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.VectorUtils;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.*;
+import org.jetbrains.annotations.NotNull;
 
 public class Camera extends PositionedObject {
 
@@ -12,13 +9,13 @@ public class Camera extends PositionedObject {
     private float pitch;
     private double fov = 2f;
 
-    public Camera(Vector3d position, float yaw, float pitch) {
+    public Camera(@NotNull Vector3d position, float yaw, float pitch) {
         super(position);
         this.yaw = yaw;
         this.pitch = pitch;
     }
 
-    public Camera(Vector3d position) {
+    public Camera(@NotNull Vector3d position) {
         this(position, 0, 0);
     }
     public Camera(){
@@ -31,9 +28,7 @@ public class Camera extends PositionedObject {
     }
 
     public Vector3d getDirection(){
-        Vector3d direction = new Vector3d(0, 0, 1);
-        rotateVector(direction);
-        return direction;
+        return rotateVector(new Vector3d(0, 0, -1));
     }
     public void moveAlongDirectionParallelXZ(Vector3d position){
         VectorUtils.rotateYaw(position, (float) Math.toRadians(yaw));
@@ -54,8 +49,8 @@ public class Camera extends PositionedObject {
         return vector;
     }
     public Vector3d rotateBackVector(Vector3d vector){
-        VectorUtils.rotateYaw(vector, Math.toRadians(Utils.normalizeYaw(-yaw)));
-        VectorUtils.rotatePitch(vector, Math.toRadians(Utils.normalizePitch(-pitch)));
+        VectorUtils.rotateYaw(vector, Math.toRadians(-yaw));
+        VectorUtils.rotatePitch(vector, Math.toRadians(-pitch));
         return vector;
     }
 
@@ -71,6 +66,9 @@ public class Camera extends PositionedObject {
 
     public double getFov() {
         return fov;
+    }
+    public double getFovAngleRadians(){
+        return Math.atan(fov/2)*2;
     }
     public void setFov(double fov){this.fov = fov;}
 }

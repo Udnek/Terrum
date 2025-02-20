@@ -11,6 +11,7 @@ public interface Window extends Initializable, Tickable {
 
     String TITLE = "Terrum";
 
+    void setTitle(@NotNull String title);
     void setFrame(@NotNull Image image);
     int getWidth();
     int getHeight();

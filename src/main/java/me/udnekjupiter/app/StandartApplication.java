@@ -21,17 +21,25 @@ import java.awt.image.BufferedImage;
 
 public class StandartApplication implements ConsoleListener, ControllerListener, Application {
 
-    private PhysicEngine<?> physicEngine;
-    private GraphicEngine graphicEngine;
-    private Window window;
-    private Console console;
-    private ApplicationData applicationData;
-    private VideoRecorder videoRecorder;
-    private final ApplicationSettings settings;
-    private final DebugMenu debugMenu = new DebugMenu();
+    protected PhysicEngine<?> physicEngine;
+    protected GraphicEngine graphicEngine;
+    protected Window window;
+    protected Console console;
+    protected ApplicationData applicationData;
+    protected VideoRecorder videoRecorder;
+    protected final ApplicationSettings settings;
+    protected DebugMenu debugMenu = new DebugMenu();
+    protected boolean isRunning = false;
 
-    public StandartApplication(@NotNull ApplicationSettings settings){
+    public StandartApplication(@NotNull ApplicationSettings settings,
+                               @NotNull GraphicEngine graphicEngine,
+                               @NotNull PhysicEngine<?> physicEngine,
+                               @NotNull Window window)
+    {
         this.settings = settings;
+        this.graphicEngine = graphicEngine;
+        this.physicEngine = physicEngine;
+        this.window = window;
     }
 
     @Override
@@ -53,35 +61,35 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     public ApplicationSettings getSettings() {return settings;}
     @Override
     public @NotNull PhysicEngine<?> getPhysicEngine() {return physicEngine;}
-    @Override
-    public @NotNull GraphicEngine getGraphicEngine() {return graphicEngine;}
 
     @Override
-    public void initialize(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine, @NotNull Window window){
-         this.window = window;
-        this.graphicEngine = graphicEngine;
-        this.physicEngine = physicEngine;
-        this.console = Console.getInstance();
-        this.applicationData = new ApplicationData();
+    public void initialize(){
+        console = Console.getInstance();
+        applicationData = new ApplicationData();
         console.addListener(this);
         Controller.getInstance().addListener(this);
         videoRecorder = new VideoRecorder();
         videoRecorder.start(settings);
     }
 
+    @Override
+    public boolean isRunning() {
+        return isRunning;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // LOOPS
     ///////////////////////////////////////////////////////////////////////////
 
-    private void physicTick(){
+    protected void physicTick(){
         applicationData.physicTickStarted();
         physicEngine.tick();
         applicationData.physicTickPerformed();
     }
 
-    private void livePhysicLoop(){
-        while (true){
-
+    protected void livePhysicLoop(){
+        physicEngine.initialize();
+        while (isRunning){
             physicTick();
 
             while (System.nanoTime() < applicationData.estimatedNextTickTime){
@@ -91,7 +99,11 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
         }
     }
 
-    private void videoRenderLoop(){
+    protected void videoRenderLoop(){
+        window.initialize();
+        physicEngine.initialize();
+        graphicEngine.initialize();
+
 
         final int FPS = VideoRecorder.VIDEO_FPS;
         final int TPS = PHYSIC_TICKS_PER_SECOND;
@@ -110,33 +122,33 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
         int renderWidth = settings.videoWidth;
         int renderHeight = settings.videoHeight;
 
-        while (true){
-
+        while (isRunning){
             for (int i = 0; i < physicTicks; i++) {
                 physicTick();
             }
 
             for (int i = 0; i < graphicTicks; i++) {
-
                 window.tick();
                 debugMenu.reset();
                 addDebugInformation();
 
                 BufferedImage rendered = graphicEngine.renderFrame(renderWidth, renderHeight);
-                videoRecorder.addFrame(rendered);
+                if (rendered != null){
+                    videoRecorder.addFrame(rendered);
+                    BufferedImage frame = Utils.resizeImage(rendered, window.getWidth(), window.getHeight());
+                    graphicEngine.postVideoRender(frame);
 
-                BufferedImage frame = Utils.resizeImage(rendered, window.getWidth(), window.getHeight());
-                graphicEngine.postVideoRender(frame);
-
-                window.setFrame(frame);
+                    window.setFrame(frame);
+                }
                 applicationData.framePerformed();
             }
-
         }
     }
 
-    private void liveGraphicLoop(){
-        while (true){
+    protected void liveGraphicLoop(){
+        window.initialize();
+        graphicEngine.initialize();
+        while (isRunning){
             window.tick();
             debugMenu.reset();
             addDebugInformation();
@@ -145,21 +157,18 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
             int height = window.getHeight();
 
             BufferedImage rendered = graphicEngine.renderFrame(width, height);
-            BufferedImage frame = Utils.resizeImage(rendered, width, height);
-            // TODO: 7/12/2024 MOVE DEBUG RENDER INTO GRAPHIC ENGINE
-            debugMenu.draw(frame, 15);
-            window.setFrame(frame);
-
+            if (rendered != null){
+                graphicEngine.postVideoRender(rendered);
+                window.setFrame(rendered);
+            }
             applicationData.framePerformed();
         }
     }
 
     @Override
     public void start(){
-        window.initialize();
-        physicEngine.initialize();
-        graphicEngine.initialize();
         console.start();
+        isRunning = true;
 
         if (settings.recordVideo){
             Thread renderThread = new Thread(this::videoRenderLoop);
@@ -180,14 +189,18 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
 
     @Override
     public void stop(){
+        isRunning = false;
         if (graphicEngine instanceof KernelRayTracingEngine kernel){
             kernel.stop();
         }
         videoRecorder.save();
+        System.exit(0);
     }
 
     @Override
     public void addDebugInformation(){
+        window.setTitle(Window.TITLE + " FPS: " + applicationData.averageFpsForLastTimes);
+
         if (!debugMenu.isEnabled()) return;
 
         debugMenu.addTextToRight("FPS: " + Utils.roundToPrecision(applicationData.averageFpsForLastTimes, 3));
@@ -232,7 +245,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     }
 
     @Override
-    public void keyEvent(InputKey inputKey, boolean pressed) {
+    public void keyEvent(@NotNull InputKey inputKey, boolean pressed) {
         if (inputKey == InputKey.DEBUG_MENU && pressed) debugMenu.toggle();
     }
 }

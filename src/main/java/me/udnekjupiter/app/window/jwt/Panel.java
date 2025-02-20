@@ -1,6 +1,7 @@
 package me.udnekjupiter.app.window.jwt;
 
 import me.udnekjupiter.app.controller.Controller;
+import me.udnekjupiter.app.controller.InputKey;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +24,11 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener 
 
     @Override
     public void mousePressed(MouseEvent event) {
-        controller.mouseChanges(event, true);
+        controller.keyChanges(InputKey.getByAwtCode(event.getButton()), true);
     }
     @Override
     public void mouseReleased(MouseEvent event) {
-        controller.mouseChanges(event, false);
+        controller.keyChanges(InputKey.getByAwtCode(event.getButton()), false);
     }
     @Override
     public void mouseMoved(MouseEvent event) {

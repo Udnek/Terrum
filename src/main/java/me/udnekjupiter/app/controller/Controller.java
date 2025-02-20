@@ -2,10 +2,9 @@ package me.udnekjupiter.app.controller;
 
 import me.udnekjupiter.util.Listenable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,16 +35,20 @@ public class Controller implements Listenable<ControllerListener>{
         listeners.add(listener);
     }
 
-    private void keyEventForEveryListener(InputKey key, boolean pressed){
+    private void keyEventForEveryListener(@NotNull InputKey key, boolean pressed){
         for (ControllerListener listener : listeners) {
             listener.keyEvent(key, pressed);
         }
     }
 
-    public void keyChanges(KeyEvent event, boolean nowPressed){
-        InputKey key = InputKey.getByCode(event.getKeyCode());
+    public void keyChanges(@Nullable InputKey key, boolean nowPressed){
         if (key == null) return;
         keyEventForEveryListener(key, nowPressed);
+
+        if (key == InputKey.MOUSE_CAMERA_DRAG || key == InputKey.MOUSE_OBJECT_DRAG){
+            if (nowPressed) currentMouseKey = key;
+            else currentMouseKey = null;
+        }
 
         if (key.longPress){
             boolean pressed = pressedKeys.contains(key);
@@ -55,31 +58,14 @@ public class Controller implements Listenable<ControllerListener>{
         }
     }
 
-    public List<InputKey> getPressedKeys(){
+    public @NotNull List<InputKey> getPressedKeys(){
         return new ArrayList<>(pressedKeys);
-    }
-    public void mouseChanges(MouseEvent event, boolean pressed){
-        if (!mouseIsPressed() && !pressed) return;
-        if (mouseIsPressed() && pressed) return;
-
-        InputKey key = InputKey.getByCode(event.getButton());
-
-        keyEventForEveryListener(key, pressed);
-
-        // PRESSING
-        if (pressed){
-            currentMouseKey = key;
-        }
-        // UN PRESSING
-        else {
-            currentMouseKey = null;
-        }
     }
 
     public boolean mouseIsPressed(){
         return currentMouseKey != null;
     }
-    public InputKey getMouseKey() {
+    public @Nullable InputKey getMouseKey() {
         return currentMouseKey;
     }
     public void setMouseCurrentPosition(Point position){
@@ -87,11 +73,11 @@ public class Controller implements Listenable<ControllerListener>{
         mousePreviousPosition = mouseCurrentPosition;
         mouseCurrentPosition = position;
     }
-    public Point getMouseCurrentPosition() {
+    public @NotNull Point getMouseCurrentPosition() {
         return mouseCurrentPosition;
     }
 
-    public Point getMouseDifference(){
+    public @NotNull Point getMouseDifference(){
         return new Point(
                 mouseCurrentPosition.x - mousePreviousPosition.x,
                 mouseCurrentPosition.y - mousePreviousPosition.y
