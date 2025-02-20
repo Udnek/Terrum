@@ -1,6 +1,6 @@
 package me.udnekjupiter.physic.collision;
 
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public class SphereBounder {
     private double radius;

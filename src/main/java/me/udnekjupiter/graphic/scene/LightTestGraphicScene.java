@@ -7,7 +7,7 @@ import me.udnekjupiter.graphic.object.light.PointLight;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.object.renderable.shape.IcosphereObject;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

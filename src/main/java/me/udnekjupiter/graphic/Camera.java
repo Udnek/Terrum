@@ -1,6 +1,8 @@
 package me.udnekjupiter.graphic;
 
 import me.udnekjupiter.util.*;
+import me.udnekjupiter.util.vector.Vector3d;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class Camera extends PositionedObject {

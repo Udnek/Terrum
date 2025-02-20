@@ -7,7 +7,6 @@ import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.graphic.engine.opengl.GlEngine;
 import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collision.AABB;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
@@ -15,7 +14,7 @@ import me.udnekjupiter.physic.net.SpringSphereNet;
 import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
 
 public class MainBasketball extends Main{

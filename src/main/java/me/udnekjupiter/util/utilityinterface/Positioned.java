@@ -1,7 +1,7 @@
-package me.udnekjupiter.util;
+package me.udnekjupiter.util.utilityinterface;
 
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public interface Positioned {
     @NotNull Vector3d getPosition();

@@ -11,15 +11,19 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
+import me.udnekjupiter.physic.collision.AABoxCollider;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.ColliderAnchor;
+import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.Debugger;
+import me.udnekjupiter.util.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MainJupiter extends Main{
 
@@ -66,6 +70,13 @@ public class MainJupiter extends Main{
         sphereObject.getContainer().mass = 4702;
         physicEngine.addObject(sphereObject);
 
+        ColliderAnchor testAnchor = new ColliderAnchor();
+        AABoxCollider testAnchoredCollider = new AABoxCollider(new Vector3d(10, 10, 10), testAnchor);
+        testAnchor.setCollider(testAnchoredCollider);
+        physicEngine.addObject(testAnchor);
+        debugger = new Debugger(new ArrayList<>());
+        debugger.addSupervisedObject(testAnchor);
+
 
         CellularNet basketNet = new CellularNet(
                 "big_frame.png",
@@ -89,17 +100,6 @@ public class MainJupiter extends Main{
 
         initializeApplication(graphicEngine, physicEngine, new JwtWindow());
         startApplication();
-
-        //        for (RenderableObject3d traceableObject : graphicScene.getTraceableObjects()) {
-//            if (traceableObject instanceof MassEssenceObject massEssenceObject){
-//                for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
-//                    ((ColoredTriangle) renderTriangle).setColor(new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f).getRGB());
-//                }
-//            }
-//        }
-
-
-
     }
 
     public void color(GraphicObject3d object3d, int color){

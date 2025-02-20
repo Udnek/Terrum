@@ -1,8 +1,8 @@
 package me.udnekjupiter.graphic.triangle;
 
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.awt.*;
 

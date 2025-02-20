@@ -2,9 +2,9 @@ package me.udnekjupiter.graphic.object.renderable;
 
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.function.Consumer;
 

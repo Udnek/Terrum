@@ -1,8 +1,8 @@
 package me.udnekjupiter.physic.collision;
 
-import me.udnekjupiter.util.Positioned;
+import me.udnekjupiter.util.utilityinterface.Positioned;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.List;
 

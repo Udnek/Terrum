@@ -3,11 +3,11 @@ package me.udnekjupiter.graphic.object.renderable;
 import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
-import me.udnekjupiter.util.Positioned;
-import me.udnekjupiter.util.Tickable;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.utilityinterface.Positioned;
+import me.udnekjupiter.util.utilityinterface.Tickable;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.awt.*;
 import java.util.function.Consumer;

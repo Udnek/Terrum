@@ -9,8 +9,8 @@ import me.udnekjupiter.graphic.polygonholder.PolygonHolder;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.Vector3d;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.vector.Vector3d;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

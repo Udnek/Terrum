@@ -11,7 +11,7 @@
 //import me.udnekjupiter.physic.object.sphere.SphereObject;
 //import me.udnekjupiter.physic.object.vertex.NetVertex;
 //import me.udnekjupiter.physic.scene.NetPhysicsScene;
-//import me.udnekjupiter.util.Vector3d;
+//import me.udnekjupiter.util.vector.Vector3d;
 //
 //import java.util.ArrayList;
 //import java.util.HashMap;

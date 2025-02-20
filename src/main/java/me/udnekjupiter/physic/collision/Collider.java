@@ -8,7 +8,9 @@ import java.util.List;
 public abstract class Collider {
     protected CollidablePhysicObject3d parent;
     public List<Collider> currentCollisions = new ArrayList<>();
-    public abstract boolean collidingWith(Collider collider);
+
+    public abstract boolean collidesWith(Collider collider);
+
     public boolean collidingObjectIsAlreadyListed(CollidablePhysicObject3d object){
         return currentCollisions.contains(object.getCollider());
     }
@@ -19,4 +21,10 @@ public abstract class Collider {
         return currentCollisions;
     }
 
+    public void setParent(CollidablePhysicObject3d parent) {
+        this.parent = parent;
+    }
+    public CollidablePhysicObject3d getParent(){
+        return parent;
+    }
 }

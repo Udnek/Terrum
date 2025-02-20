@@ -4,7 +4,7 @@ import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.app.util.DebugMenu;
 import me.udnekjupiter.app.window.Window;
 import me.udnekjupiter.physic.engine.PhysicEngine;
-import me.udnekjupiter.util.Initializable;
+import me.udnekjupiter.util.utilityinterface.Initializable;
 import org.jetbrains.annotations.NotNull;
 
 public interface Application extends Initializable {

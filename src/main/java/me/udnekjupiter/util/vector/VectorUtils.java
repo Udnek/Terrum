@@ -1,12 +1,12 @@
-package me.udnekjupiter.util;
+package me.udnekjupiter.util.vector;
 
+import me.udnekjupiter.util.Triangle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.udnekjupiter.util.Vector3d;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
-import static me.udnekjupiter.util.Vector3d.cross;
+import static me.udnekjupiter.util.vector.Vector3d.cross;
 
 public class VectorUtils {
     public static double vectorLength(double x, double y, double z){

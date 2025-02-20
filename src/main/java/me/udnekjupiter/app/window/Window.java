@@ -1,7 +1,7 @@
 package me.udnekjupiter.app.window;
 
-import me.udnekjupiter.util.Initializable;
-import me.udnekjupiter.util.Tickable;
+import me.udnekjupiter.util.utilityinterface.Initializable;
+import me.udnekjupiter.util.utilityinterface.Tickable;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;

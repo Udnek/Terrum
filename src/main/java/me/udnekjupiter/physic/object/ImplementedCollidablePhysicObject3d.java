@@ -4,7 +4,7 @@ import me.udnekjupiter.physic.collision.Collidable;
 import me.udnekjupiter.physic.collision.Collider;
 import me.udnekjupiter.physic.collision.CollisionCalculator;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.List;
 

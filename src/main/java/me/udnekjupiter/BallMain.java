@@ -12,7 +12,7 @@ import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.SpringSphereNet;
 import me.udnekjupiter.physic.object.PlaneObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
 
 public class BallMain extends Main{

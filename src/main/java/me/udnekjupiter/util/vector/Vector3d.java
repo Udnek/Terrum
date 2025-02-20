@@ -1,14 +1,7 @@
-package me.udnekjupiter.util;
+package me.udnekjupiter.util.vector;
 
-import me.udnekjupiter.physic.net.VertexColor;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.MatchesPattern;
-import javax.annotation.Nonnull;
-
-import java.util.Vector;
-
-import static java.lang.Double.isNaN;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 

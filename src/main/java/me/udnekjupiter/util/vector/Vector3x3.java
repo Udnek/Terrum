@@ -1,7 +1,6 @@
-package me.udnekjupiter.util;
+package me.udnekjupiter.util.vector;
 
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
 
 public class Vector3x3 {
 

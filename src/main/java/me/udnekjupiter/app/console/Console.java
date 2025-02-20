@@ -1,7 +1,7 @@
 package me.udnekjupiter.app.console;
 
 import me.udnekjupiter.Main;
-import me.udnekjupiter.util.Listenable;
+import me.udnekjupiter.util.utilityinterface.Listenable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

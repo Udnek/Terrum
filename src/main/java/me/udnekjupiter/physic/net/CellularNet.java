@@ -7,9 +7,9 @@ import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import me.udnekjupiter.util.Vector3x3;
+import me.udnekjupiter.util.vector.Vector3x3;
 import org.jetbrains.annotations.Nullable;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;

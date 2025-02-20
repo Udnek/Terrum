@@ -8,7 +8,7 @@ import me.udnekjupiter.graphic.object.renderable.AxisCrosshairObject;
 import me.udnekjupiter.graphic.object.renderable.RenderableObject3d;
 import me.udnekjupiter.graphic.object.renderable.SpringObject;
 import me.udnekjupiter.graphic.object.renderable.VertexObject;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

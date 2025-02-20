@@ -2,7 +2,7 @@ package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public abstract class ImplementedPhysicObject3d implements PhysicObject3d {
 

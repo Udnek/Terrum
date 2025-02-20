@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.engine.opengl;
 
-import me.udnekjupiter.util.Initializable;
+import me.udnekjupiter.util.utilityinterface.Initializable;
 import org.jetbrains.annotations.NotNull;
 
 import static org.lwjgl.opengl.GL32.*;

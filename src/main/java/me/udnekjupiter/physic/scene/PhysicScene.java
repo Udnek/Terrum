@@ -1,8 +1,8 @@
 package me.udnekjupiter.physic.scene;
 
 import me.udnekjupiter.physic.object.PhysicObject;
-import me.udnekjupiter.util.Initializable;
-import me.udnekjupiter.util.Resettable;
+import me.udnekjupiter.util.utilityinterface.Initializable;
+import me.udnekjupiter.util.utilityinterface.Resettable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

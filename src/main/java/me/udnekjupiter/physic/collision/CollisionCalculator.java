@@ -1,10 +1,8 @@
 package me.udnekjupiter.physic.collision;
 
-import me.udnekjupiter.physic.collision.shape.PlaneCollider;
-import me.udnekjupiter.physic.collision.shape.SphereCollider;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public abstract class CollisionCalculator {

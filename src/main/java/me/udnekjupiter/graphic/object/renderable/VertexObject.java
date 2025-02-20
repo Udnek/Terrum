@@ -6,7 +6,7 @@ import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.physic.net.VertexColor;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.awt.*;
 

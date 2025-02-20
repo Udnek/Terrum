@@ -8,13 +8,15 @@ import me.udnekjupiter.app.window.jwt.JwtWindow;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.PhysicEngine;
+import me.udnekjupiter.util.Debugger;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Main{
 
     private Application application;
+    protected Debugger debugger;
 
-    public static final Main.Type MAIN_TO_RUN = Type.COLORED_BALLS;
+    public static final Main.Type MAIN_TO_RUN = Type.JUPITER;
     private static Main main;
     public static void main(String ...args){
         main = switch (MAIN_TO_RUN) {
@@ -39,6 +41,7 @@ public abstract class Main{
     public @NotNull Application getApplication(){
         return application;
     }
+    public @NotNull Debugger getDebugger(){return debugger;}
 
     public void initializeApplication(@NotNull GraphicEngine graphicEngine, @NotNull PhysicEngine<?> physicEngine) {
         initializeApplication(graphicEngine, physicEngine, new JwtWindow());

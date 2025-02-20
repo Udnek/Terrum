@@ -1,9 +1,8 @@
 package me.udnekjupiter.physic.object.sphere;
 
 import me.udnekjupiter.physic.engine.ConstantValues;
-import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public enum SphereTemplateConstructor {
     WOODEN_SPHERE(){

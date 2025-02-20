@@ -1,12 +1,12 @@
 package me.udnekjupiter.physic.object.sphere;
 
 import me.udnekjupiter.physic.collision.Collidable;
-import me.udnekjupiter.physic.collision.shape.SphereCollider;
+import me.udnekjupiter.physic.collision.SphereCollider;
 import me.udnekjupiter.physic.engine.ConstantValues;
 import me.udnekjupiter.physic.object.CollisionInitiator;
 import me.udnekjupiter.physic.object.ImplementedCollidablePhysicObject3d;
 import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
 
 public class SphereObject extends ImplementedCollidablePhysicObject3d implements CollisionInitiator {

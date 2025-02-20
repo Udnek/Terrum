@@ -3,8 +3,7 @@ package me.udnekjupiter.physic.scene;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
 import me.udnekjupiter.physic.object.CollisionInitiator;
 import me.udnekjupiter.physic.object.PhysicObject3d;
-import me.udnekjupiter.physic.object.PlaneObject;
-import me.udnekjupiter.util.Resettable;
+import me.udnekjupiter.util.utilityinterface.Resettable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

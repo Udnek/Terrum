@@ -4,9 +4,9 @@ import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;

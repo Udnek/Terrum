@@ -1,9 +1,10 @@
 package me.udnekjupiter.util;
 
+import me.udnekjupiter.util.utilityinterface.Positioned;
+import me.udnekjupiter.util.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
 
-public abstract class PositionedObject implements Positioned{
+public abstract class PositionedObject implements Positioned {
     protected @NotNull Vector3d position;
 
     public PositionedObject(@NotNull Vector3d position){

@@ -1,6 +1,6 @@
 package me.udnekjupiter.graphic.engine;
 
-import me.udnekjupiter.util.Initializable;
+import me.udnekjupiter.util.utilityinterface.Initializable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

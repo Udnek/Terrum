@@ -1,4 +1,4 @@
-package me.udnekjupiter.util;
+package me.udnekjupiter.util.utilityinterface;
 
 import org.jetbrains.annotations.NotNull;
 

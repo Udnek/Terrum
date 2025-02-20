@@ -5,8 +5,8 @@ import me.udnekjupiter.app.controller.Controller;
 import me.udnekjupiter.app.util.ApplicationSettings;
 import me.udnekjupiter.app.window.Window;
 import me.udnekjupiter.file.FileManager;
-import me.udnekjupiter.util.Initializable;
-import me.udnekjupiter.util.Tickable;
+import me.udnekjupiter.util.utilityinterface.Initializable;
+import me.udnekjupiter.util.utilityinterface.Tickable;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;

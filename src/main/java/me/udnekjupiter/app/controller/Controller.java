@@ -1,6 +1,6 @@
 package me.udnekjupiter.app.controller;
 
-import me.udnekjupiter.util.Listenable;
+import me.udnekjupiter.util.utilityinterface.Listenable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

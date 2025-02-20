@@ -1,6 +1,8 @@
 package me.udnekjupiter.util;
 
 import me.udnekjupiter.physic.engine.ConstantValues;
+import me.udnekjupiter.util.vector.Vector3d;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;

@@ -1,7 +1,7 @@
 package me.udnekjupiter.physic.container;
 
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public class RKMContainer extends PhysicVariableContainer {
     public @NotNull Vector3d[] currentPhaseVector = new Vector3d[]{new Vector3d(), new Vector3d()};

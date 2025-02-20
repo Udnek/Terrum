@@ -4,7 +4,7 @@ package me.udnekjupiter.physic.object.vertex;
 import me.udnekjupiter.physic.engine.ConstantValues;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public class NetDynamicVertex extends NetVertex {
     public NetDynamicVertex() {}

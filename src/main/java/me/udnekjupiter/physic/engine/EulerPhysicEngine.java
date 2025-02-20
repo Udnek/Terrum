@@ -1,13 +1,16 @@
 package me.udnekjupiter.physic.engine;
 
+import me.udnekjupiter.Main;
 import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.container.EulerContainer;
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.physic.object.CollidablePhysicObject3d;
+import me.udnekjupiter.physic.object.ColliderAnchor;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
+import me.udnekjupiter.util.Debugger;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class EulerPhysicEngine extends PhysicEngine3d {
             calculateVelocityDifferentials(objects);
             updatePositions(objects);
         }
+        Main.getMain().getDebugger().tick();
     }
 
     protected void recalculateForces(@NotNull List<? extends PhysicObject3d> objects){
@@ -80,7 +84,7 @@ public class EulerPhysicEngine extends PhysicEngine3d {
                 if (targetObject == anotherObject) continue;
                 if (targetObject.isCollisionIgnoredWith(anotherObject)) continue;
                 if (targetObject.getCollider().collidingObjectIsAlreadyListed(anotherObject)) continue;
-                if (!targetObject.getCollider().collidingWith(anotherObject.getCollider())) continue;
+                if (!targetObject.getCollider().collidesWith(anotherObject.getCollider())) continue;
                 targetObject.getCollider().addCollision(anotherObject.getCollider());
                 anotherObject.getCollider().addCollision(targetObject.getCollider());
             }

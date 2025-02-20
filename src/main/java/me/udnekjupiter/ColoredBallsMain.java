@@ -11,14 +11,12 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collision.AABB;
-import me.udnekjupiter.physic.collision.shape.SphereCollider;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
 import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -78,10 +76,6 @@ public class ColoredBallsMain extends Main{
                 0.8f);
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
-
-        AABB testBoundingBox = new AABB(new Vector3d(0, 0,0), new Vector3d(1, 1, 1));
-        SphereObject testSphere = new SphereObject(1, 1);
-        testSphere.setPosition(new Vector3d(0, 1, 0));
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 

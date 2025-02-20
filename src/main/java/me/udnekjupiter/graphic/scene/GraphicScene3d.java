@@ -20,6 +20,11 @@ import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.object.SpringObject;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
 import me.udnekjupiter.util.*;
+import me.udnekjupiter.util.utilityinterface.Freezable;
+import me.udnekjupiter.util.utilityinterface.Selectable;
+import me.udnekjupiter.util.utilityinterface.Tickable;
+import me.udnekjupiter.util.vector.Vector3d;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

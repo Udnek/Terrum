@@ -2,9 +2,9 @@ package me.udnekjupiter.physic.object;
 
 import me.udnekjupiter.physic.container.PhysicVariableContainer;
 import me.udnekjupiter.util.Utils;
-import me.udnekjupiter.util.VectorUtils;
+import me.udnekjupiter.util.vector.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
+import me.udnekjupiter.util.vector.Vector3d;
 
 public class SpringObject extends ImplementedPhysicObject3d {
     private PhysicObject3d endpointA;
