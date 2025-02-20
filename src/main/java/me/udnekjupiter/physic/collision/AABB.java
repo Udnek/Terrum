@@ -67,9 +67,7 @@ public final class AABB {
 
     public boolean collidesWith(SphereCollider sphereCollider) {
         Vector3d normalizedDirection = sphereCollider.getCenterPosition().getNormalizedDirection(centerPosition);
-        System.out.println(normalizedDirection.asString());
         Vector3d borderPointRelativePosition = normalizedDirection.mul(sphereCollider.radius);
-        System.out.println(borderPointRelativePosition.asString());
         return containsPoint(sphereCollider.getCenterPosition().add(borderPointRelativePosition));
     }
     public boolean containsPoint(Vector3d point){

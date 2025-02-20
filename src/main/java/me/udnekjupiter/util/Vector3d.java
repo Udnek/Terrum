@@ -143,6 +143,6 @@ public class Vector3d {
     }
 
     public @NotNull Vector3d getNormalizedDirection(@NotNull Vector3d other){
-        return sub(other).normalize();
+        return other.sub(this).normalize();
     }
 }

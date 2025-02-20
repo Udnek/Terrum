@@ -71,13 +71,9 @@ public class ColoredBallsMain extends Main{
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
 
-//        AABB testBoundingBox = new AABB(new Vector3d(0, 0,0), new Vector3d(1, 1, 1));
-//        SphereObject testSphere = new SphereObject(1, 1);
-//        testSphere.setPosition(new Vector3d(0, 1, 0));
-//        System.out.println(testSphere.getPosition().asString());
-//        if (testBoundingBox.collidesWith(testSphere.getCollider())){
-//            System.out.println("Collision detected");
-//        }
+        AABB testBoundingBox = new AABB(new Vector3d(0, 0,0), new Vector3d(1, 1, 1));
+        SphereObject testSphere = new SphereObject(1, 1);
+        testSphere.setPosition(new Vector3d(0, 1, 0));
 
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 
