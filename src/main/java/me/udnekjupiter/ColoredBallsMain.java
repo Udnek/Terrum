@@ -25,6 +25,7 @@ public class ColoredBallsMain extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
         return ApplicationSettings.noRecording();
+        //return ApplicationSettings.withRecording(1920, 1080, "gl_test");
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
@@ -71,7 +72,6 @@ public class ColoredBallsMain extends Main{
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
 
-        AABB testBoundingBox = new AABB(new Vector3d(0, 0,0), new Vector3d(1, 1, 1));
         SphereObject testSphere = new SphereObject(1, 1);
         testSphere.setPosition(new Vector3d(0, 1, 0));
 
@@ -103,7 +103,7 @@ public class ColoredBallsMain extends Main{
     public void color(GraphicObject3d object3d, int color){
         if (!(object3d instanceof MassEssenceObject massEssenceObject)) return;
         for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
-            ((ColoredTriangle) renderTriangle).setColor(color);
+            ((ColoredTriangle) renderTriangle).color = color;
         }
     }
 }

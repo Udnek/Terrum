@@ -212,8 +212,8 @@ public class KernelRayTracingEngine extends GraphicEngine3d {
         return result;
     }
 
-    public void stop(){
-        System.out.println("stopping");
+    @Override
+    public void terminate() {
         CL.clReleaseKernel(kernel);
         CL.clReleaseProgram(program);
         CL.clReleaseCommandQueue(commandQueue);

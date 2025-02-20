@@ -4,9 +4,9 @@ import me.udnekjupiter.graphic.object.GraphicObject3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.object.PlaneObject;
+import me.udnekjupiter.util.Vector3d;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import me.udnekjupiter.util.Vector3d;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,11 +32,11 @@ public class SurfaceObject extends GraphicObject3d {
                 polygonsList.add(new ColoredTriangle(
                         new Vector3d(x, y, z),
                         new Vector3d(x+PIECE_SIZE, y, z+PIECE_SIZE),
-                        new Vector3d(x, y, z+PIECE_SIZE), color));
+                        new Vector3d(x, y, z+PIECE_SIZE), color.getRGB()));
                 polygonsList.add(new ColoredTriangle(
                         new Vector3d(x, y, z),
                         new Vector3d(x+PIECE_SIZE, y, z+PIECE_SIZE),
-                        new Vector3d(x+PIECE_SIZE, y, z), color));
+                        new Vector3d(x+PIECE_SIZE, y, z), color.getRGB()));
             }
         }
         polygons = new RenderableTriangle[polygonsList.size()];

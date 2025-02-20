@@ -7,8 +7,8 @@ import me.udnekjupiter.graphic.triangle.MassEssenceTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.object.PhysicObject3d;
 import me.udnekjupiter.physic.object.sphere.SphereObject;
-import org.jetbrains.annotations.NotNull;
 import me.udnekjupiter.util.Vector3d;
+import org.jetbrains.annotations.NotNull;
 
 public class MassEssenceObject extends IcosphereObject implements PhysicLinked, Draggable {
 
@@ -36,14 +36,14 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
     public void select() {
         for (RenderableTriangle polygon : polygons) {
             MassEssenceTriangle triangle = (MassEssenceTriangle) polygon;
-            triangle.setColor(MassEssenceTriangle.HIGHLIGHTED_COLOR);
+            triangle.color = MassEssenceTriangle.HIGHLIGHTED_COLOR;
         }
     }
     @Override
     public void unselect() {
         for (RenderableTriangle polygon : polygons) {
             MassEssenceTriangle triangle = (MassEssenceTriangle) polygon;
-            triangle.setColor(MassEssenceTriangle.DEFAULT_COLOR);
+            triangle.color = MassEssenceTriangle.DEFAULT_COLOR;
         }
     }
 }

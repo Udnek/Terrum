@@ -1,8 +1,8 @@
 package me.udnekjupiter.graphic.triangle;
 
+import me.udnekjupiter.util.Vector3d;
 import me.udnekjupiter.util.VectorUtils;
 import org.jetbrains.annotations.NotNull;
-import me.udnekjupiter.util.Vector3d;
 
 import java.awt.*;
 
@@ -10,8 +10,6 @@ public class MassEssenceTriangle extends ColoredTriangle {
 
     public static final int DEFAULT_COLOR = new Color(128, 128, 128, 80).getRGB();
     public static final int HIGHLIGHTED_COLOR = new Color(200, 0, 0, 80).getRGB();
-
-    protected int color;
 
     public MassEssenceTriangle(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2) {
         super(vertex0, vertex1, vertex2, DEFAULT_COLOR);
@@ -21,7 +19,6 @@ public class MassEssenceTriangle extends ColoredTriangle {
     }
     public MassEssenceTriangle(MassEssenceTriangle triangle) {
         super(triangle);
-        this.color = triangle.getColor();
     }
 
     @Override

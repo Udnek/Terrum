@@ -20,10 +20,10 @@ public class ShaderProgram implements Initializable {
                     #version 150 core
                     
                     in vec3 position;
-                    in vec3 color;
+                    in vec4 color;
                     in vec2 texcoord;
                     
-                    out vec3 vertexColor;
+                    out vec4 vertexColor;
                     out vec2 textureCoord;
                     
                     uniform mat4 model;
@@ -42,7 +42,7 @@ public class ShaderProgram implements Initializable {
         fragment = createShader("""
                     #version 150 core
                     
-                    in vec3 vertexColor;
+                    in vec4 vertexColor;
                     in vec2 textureCoord;
                     
                     out vec4 fragColor;
@@ -50,8 +50,11 @@ public class ShaderProgram implements Initializable {
                     uniform sampler2D texImage;
                     
                     void main() {
+                        if (vertexColor.a == 0.0){
+                            discard;
+                        }
                         vec4 textureColor = texture(texImage, textureCoord);
-                        fragColor = vec4(vertexColor, 0.5) * textureColor;
+                        fragColor = textureColor * vertexColor;
                     }
                     """,
                 GL_FRAGMENT_SHADER);
@@ -68,7 +71,7 @@ public class ShaderProgram implements Initializable {
         System.out.println("SHADERS INITIALIZED");
     }
 
-    public void clear(){
+    public void terminate(){
         glDeleteShader(vertex);
         glDeleteShader(fragment);
         glDeleteProgram(program);

@@ -105,7 +105,7 @@ public class MainJupiter extends Main{
     public void color(GraphicObject3d object3d, int color){
         if (!(object3d instanceof MassEssenceObject massEssenceObject)) return;
         for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
-            ((ColoredTriangle) renderTriangle).setColor(color);
+            ((ColoredTriangle) renderTriangle).color = color;
         }
     }
 }

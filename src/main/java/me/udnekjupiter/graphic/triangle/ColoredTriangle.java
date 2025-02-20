@@ -1,33 +1,40 @@
 package me.udnekjupiter.graphic.triangle;
 
-import org.jetbrains.annotations.NotNull;
+import me.udnekjupiter.graphic.engine.opengl.Texture;
+import me.udnekjupiter.graphic.engine.opengl.TextureCorners;
 import me.udnekjupiter.util.Vector3d;
-
-import java.awt.*;
+import org.jetbrains.annotations.NotNull;
 
 public class ColoredTriangle extends RenderableTriangle {
-    protected int color;
-    public ColoredTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2, int color) {
+    public int color;
+    public @NotNull Texture texture;
+    public @NotNull TextureCorners textureCorners;
+
+    public ColoredTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2, int color, @NotNull Texture texture, @NotNull TextureCorners textureCorners) {
         super(vertex0, vertex1, vertex2);
         this.color = color;
+        this.texture = texture;
+        this.textureCorners = textureCorners;
     }
 
-    public ColoredTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2, @NotNull Color color) {
-        this(vertex0, vertex1, vertex2, color.getRGB());
+    public ColoredTriangle(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2, int color) {
+        this(vertex0, vertex1, vertex2, color, Texture.BLANK, TextureCorners.FIRST_HALF);
     }
 
     public ColoredTriangle(@NotNull ColoredTriangle triangle) {
         super(triangle);
         this.color = triangle.color;
+        this.texture = triangle.texture;
+        this.textureCorners = triangle.textureCorners;
     }
-
-    public void setColor(int color) {this.color = color;}
-    public int getColor() {return color;}
 
     @Override
-    public int getTraceColor(@NotNull Vector3d hitPosition) {
-        return color;
-    }
+    public @NotNull TextureCorners getTextureCorners() {return textureCorners;}
+    @Override
+    public @NotNull Texture getTexture() {return texture;}
+
+    @Override
+    public int getTraceColor(@NotNull Vector3d hitPosition) {return color;}
     @Override
     public int getRasterizeColor() {return color;}
 

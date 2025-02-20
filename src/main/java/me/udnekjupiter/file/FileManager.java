@@ -13,8 +13,10 @@ import java.net.URL;
 public class FileManager {
 
     public static @NotNull BufferedReader readText(@NotNull Directory directory, @NotNull String fileName){
+
         return new BufferedReader(new InputStreamReader(directory.getStream(fileName)));
     }
+
 
     public static @NotNull BufferedImage readImage(@NotNull Directory directory, @NotNull String imageName){
         BufferedImage image;
@@ -31,9 +33,6 @@ public class FileManager {
     }
     public static @NotNull BufferedImage readIcon(){
         return readImage(Directory.IMAGE_ICON, "icon.png");
-    }
-    public static @NotNull BufferedImage readTexture(@NotNull String name){
-        return readImage(Directory.TEXTURE, name);
     }
 
 

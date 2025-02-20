@@ -9,4 +9,5 @@ import java.awt.image.BufferedImage;
 public interface GraphicEngine extends Initializable{
    @Nullable BufferedImage renderFrame(int width, int height);
    void postVideoRender(@NotNull BufferedImage image);
+   void terminate();
 }
