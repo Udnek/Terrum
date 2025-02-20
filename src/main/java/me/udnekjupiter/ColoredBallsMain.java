@@ -11,8 +11,6 @@ import me.udnekjupiter.graphic.scene.GraphicScene3d;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
 import me.udnekjupiter.graphic.triangle.RenderableTriangle;
 import me.udnekjupiter.physic.EnvironmentSettings;
-import me.udnekjupiter.physic.collision.AABB;
-import me.udnekjupiter.physic.collision.shape.SphereCollider;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
@@ -26,13 +24,7 @@ import java.awt.*;
 public class ColoredBallsMain extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
-/*        ApplicationSettings applicationSettings = ApplicationSettings.withRecording(720, 720, "Ball2");
-        applicationSettings.drawWireframe = false;
-        return applicationSettings;*/
-        //return ApplicationSettings.withRecording(512, 512, "Collapse2");
-        ApplicationSettings applicationSettings = ApplicationSettings.noRecording();
-        //applicationSettings.pixelScaling = 4;
-        return applicationSettings;
+        return ApplicationSettings.noRecording();
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();

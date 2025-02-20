@@ -14,8 +14,8 @@ public class Controller implements Listenable<ControllerListener>{
     // TODO: 10/7/2024 USE VECTOR ISNTEAD OF LIST
 
     private final List<InputKey> pressedKeys = Collections.synchronizedList(new ArrayList<>());
-    private Point mousePreviousPosition;
-    private Point mouseCurrentPosition;
+    private @NotNull Point mousePreviousPosition = new Point();
+    private @NotNull Point mouseCurrentPosition = new Point();
     private InputKey currentMouseKey;
 
     private final List<ControllerListener> listeners = new ArrayList<>();
@@ -68,7 +68,7 @@ public class Controller implements Listenable<ControllerListener>{
     public @Nullable InputKey getMouseKey() {
         return currentMouseKey;
     }
-    public void setMouseCurrentPosition(Point position){
+    public void setMouseCurrentPosition(@Nullable Point position){
         if (position == null) return;
         mousePreviousPosition = mouseCurrentPosition;
         mouseCurrentPosition = position;

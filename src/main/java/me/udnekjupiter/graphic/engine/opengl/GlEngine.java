@@ -139,7 +139,7 @@ public class GlEngine extends GraphicEngine3d {
 
 
         Matrix4f projection = new Matrix4f()
-                .perspective((float) camera.getFovAngleRadians(), 1, 0.001f, 1000f)
+                .perspective((float) camera.getFovAngleRadians(), ((float) window.getHeight()) / window.getWidth(), 0.001f, 1000f)
                 .rotate((float) Math.toRadians(camera.getPitch()), new Vector3f(-1, 0, 0))
                 .rotate((float) Math.toRadians(camera.getYaw()), new Vector3f(0, 1, 0));
 

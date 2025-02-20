@@ -14,7 +14,7 @@ import me.udnekjupiter.physic.EnvironmentSettings;
 import me.udnekjupiter.physic.engine.EulerPhysicEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine3d;
 import me.udnekjupiter.physic.net.CellularNet;
-import me.udnekjupiter.physic.object.SphereObject;
+import me.udnekjupiter.physic.object.sphere.SphereObject;
 import me.udnekjupiter.physic.scene.PhysicScene3d;
 import me.udnekjupiter.util.Vector3d;
 import org.jetbrains.annotations.NotNull;
