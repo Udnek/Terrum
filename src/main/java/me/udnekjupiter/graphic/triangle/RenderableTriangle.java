@@ -1,5 +1,7 @@
 package me.udnekjupiter.graphic.triangle;
 
+import me.udnekjupiter.graphic.engine.opengl.Texture;
+import me.udnekjupiter.graphic.engine.opengl.TextureCorners;
 import me.udnekjupiter.util.Triangle;
 import me.udnekjupiter.util.Utils;
 import me.udnekjupiter.util.vector.VectorUtils;
@@ -15,10 +17,6 @@ public class RenderableTriangle extends Triangle {
 
     public RenderableTriangle(@NotNull RenderableTriangle triangle) {
         super(triangle);
-    }
-
-    public static @NotNull RenderableTriangle empty(){
-        return new RenderableTriangle(new Vector3d(), new Vector3d(), new Vector3d());
     }
 
     public int getTraceColor(@NotNull Vector3d hitPosition){
@@ -40,13 +38,17 @@ public class RenderableTriangle extends Triangle {
         return Utils.vectorToColor(color).getRGB();
     }
 
-    // TODO: 9/3/2024 WTF
     public int getRasterizeColor(){
-        return Color.GRAY.getRGB();
+        return Color.GRAY.getAlpha();
+    }
+    public @NotNull Texture getTexture(){
+        return Texture.BLANK;
+    }
+    public @NotNull TextureCorners getTextureCorners(){
+        return TextureCorners.FIRST_HALF;
     }
 
-    
-    public RenderableTriangle copyWithVertices(Vector3d vertex0, Vector3d vertex1, Vector3d vertex2){
+    public @NotNull RenderableTriangle copyWithVertices(@NotNull Vector3d vertex0, @NotNull Vector3d vertex1, @NotNull Vector3d vertex2){
         RenderableTriangle newTriangle = copy();
         newTriangle.setVertices(vertex0, vertex1, vertex2);
         return newTriangle;

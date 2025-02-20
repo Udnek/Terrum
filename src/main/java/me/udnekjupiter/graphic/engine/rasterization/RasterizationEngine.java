@@ -89,4 +89,7 @@ public class RasterizationEngine extends GraphicEngine3d {
         int y = (int) Math.round(pos.y * multiplier);
         return new Point(x, y);
     }
+
+    @Override
+    public void terminate() {}
 }

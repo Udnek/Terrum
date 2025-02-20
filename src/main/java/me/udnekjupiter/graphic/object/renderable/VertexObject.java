@@ -1,5 +1,7 @@
 package me.udnekjupiter.graphic.object.renderable;
 
+import me.udnekjupiter.graphic.engine.opengl.Texture;
+import me.udnekjupiter.graphic.engine.opengl.TextureCorners;
 import me.udnekjupiter.graphic.object.Draggable;
 import me.udnekjupiter.graphic.object.PhysicLinked;
 import me.udnekjupiter.graphic.triangle.ColoredTriangle;
@@ -22,7 +24,11 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
                 1*SCALE_MULTIPLIER,
                 1*SCALE_MULTIPLIER,
                 0,
-                VertexColor.getColorFromVertex(netVertex));
+                VertexColor.getColorFromVertex(netVertex).getRGB(),
+                Texture.VERTEX,
+                TextureCorners.FIRST_HALF,
+                TextureCorners.SECOND_HALF
+        );
 
         this.netVertex = netVertex;
     }
@@ -45,13 +51,13 @@ public class VertexObject extends PlaneObject implements PhysicLinked, Draggable
 
     @Override
     public void select() {
-        ((ColoredTriangle) plane0).setColor(Color.RED.getRGB());
-        ((ColoredTriangle) plane1).setColor(Color.RED.getRGB());
+        ((ColoredTriangle) plane0).color = Color.RED.getRGB();
+        ((ColoredTriangle) plane1).color = Color.RED.getRGB();
     }
 
     @Override
     public void unselect() {
-        ((ColoredTriangle) plane0).setColor(VertexColor.getColorFromVertex(netVertex).getRGB());
-        ((ColoredTriangle) plane1).setColor(VertexColor.getColorFromVertex(netVertex).getRGB());
+        ((ColoredTriangle) plane0).color = VertexColor.getColorFromVertex(netVertex).getRGB();
+        ((ColoredTriangle) plane1).color = VertexColor.getColorFromVertex(netVertex).getRGB();
     }
 }

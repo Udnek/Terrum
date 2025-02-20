@@ -24,13 +24,8 @@ import java.awt.*;
 public class ColoredBallsMain extends Main{
     @Override
     public @NotNull ApplicationSettings initializeGraphicsSettings() {
-/*        ApplicationSettings applicationSettings = ApplicationSettings.withRecording(720, 720, "Ball2");
-        applicationSettings.drawWireframe = false;
-        return applicationSettings;*/
-        //return ApplicationSettings.withRecording(512, 512, "Collapse2");
-        ApplicationSettings applicationSettings = ApplicationSettings.noRecording();
-        //applicationSettings.pixelScaling = 4;
-        return applicationSettings;
+        return ApplicationSettings.noRecording();
+        //return ApplicationSettings.withRecording(1920, 1080, "gl_test");
     }
     public @NotNull EnvironmentSettings initializePhysicsSettings(){
         EnvironmentSettings environmentSettings = EnvironmentSettings.defaultPreset();
@@ -77,6 +72,9 @@ public class ColoredBallsMain extends Main{
         basketNet.initialize();
         physicEngine.addObjects(basketNet.getNetObjects());
 
+        SphereObject testSphere = new SphereObject(1, 1);
+        testSphere.setPosition(new Vector3d(0, 1, 0));
+
         graphicScene.tryRepresentingAsGraphic(physicEngine.getScene().getAllObjects());
 
         for (@NotNull GraphicObject3d object : graphicScene.getObjects()) {
@@ -105,7 +103,7 @@ public class ColoredBallsMain extends Main{
     public void color(GraphicObject3d object3d, int color){
         if (!(object3d instanceof MassEssenceObject massEssenceObject)) return;
         for (RenderableTriangle renderTriangle : massEssenceObject.getUnsafeRenderTriangles()) {
-            ((ColoredTriangle) renderTriangle).setColor(color);
+            ((ColoredTriangle) renderTriangle).color = color;
         }
     }
 }

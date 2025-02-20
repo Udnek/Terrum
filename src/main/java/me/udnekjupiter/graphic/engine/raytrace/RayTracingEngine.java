@@ -56,4 +56,7 @@ public class RayTracingEngine extends GraphicEngine3d {
         return frame.toImage();
     }
 
+
+    @Override
+    public void terminate() {}
 }

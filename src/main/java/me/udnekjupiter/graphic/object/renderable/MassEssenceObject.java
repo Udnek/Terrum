@@ -36,14 +36,14 @@ public class MassEssenceObject extends IcosphereObject implements PhysicLinked, 
     public void select() {
         for (RenderableTriangle polygon : polygons) {
             MassEssenceTriangle triangle = (MassEssenceTriangle) polygon;
-            triangle.setColor(MassEssenceTriangle.HIGHLIGHTED_COLOR);
+            triangle.color = MassEssenceTriangle.HIGHLIGHTED_COLOR;
         }
     }
     @Override
     public void unselect() {
         for (RenderableTriangle polygon : polygons) {
             MassEssenceTriangle triangle = (MassEssenceTriangle) polygon;
-            triangle.setColor(MassEssenceTriangle.DEFAULT_COLOR);
+            triangle.color = MassEssenceTriangle.DEFAULT_COLOR;
         }
     }
 }

@@ -26,26 +26,28 @@ public class Uniforms implements Initializable {
 
     @Override
     public void initialize(){
-        createUniform(MODEL, new Matrix4f());
-        createUniform(VIEW, new Matrix4f());
-        createUniform(PROJECTION, new Matrix4f().perspective(Math.toRadians(90), 1, 0f, 1000f));
-        createUniform(TEX_IMAGE, 0);
+        create(MODEL, new Matrix4f());
+        create(VIEW, new Matrix4f());
+        create(PROJECTION, new Matrix4f().perspective(Math.toRadians(90), 1, 0f, 1000f));
+        create(TEX_IMAGE, 0);
 
         System.out.println("UNIFORMS INITIALIZED");
     }
 
-    protected void createUniform(@NotNull String name, int value){
+    protected void create(@NotNull String name, int value){
         int id = glGetUniformLocation(shaderProgram.getProgram(), name);
         glUniform1i(id, value);
     }
-    protected void createUniform(@NotNull String name, @NotNull Matrix4f model){
+    protected void create(@NotNull String name, @NotNull Matrix4f model){
         int id = glGetUniformLocation(shaderProgram.getProgram(), name);
         glUniformMatrix4fv(id, false, model.get(new float[4*4]));
         uniforms.put(name, id);
     }
 
-    protected int getLocation(@NotNull String name){
-        return uniforms.get(name);
+    public int getId(@NotNull String name){return uniforms.get(name);}
+
+    public void set(int id, @NotNull Matrix4f matrix){
+        glUniformMatrix4fv(id, false, matrix.get(new float[4*4]));
     }
 
 }

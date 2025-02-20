@@ -48,6 +48,13 @@ public class Utils {
     // COLOR
     ///////////////////////////////////////////////////////////////////////////
 
+    public static int color(int r, int g, int b, int a){
+        return  ((a & 0xFF) << 24) |
+                ((r & 0xFF) << 16) |
+                ((g & 0xFF) << 8)  |
+                ((b & 0xFF));
+    }
+
     public static Color vectorToColor(@NotNull Vector3d color){
         return new Color((float) color.x, (float) color.y, (float) color.z);
     }

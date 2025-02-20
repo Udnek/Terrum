@@ -5,6 +5,8 @@ import me.udnekjupiter.physic.object.vertex.NetDebugVertex;
 import me.udnekjupiter.physic.object.vertex.NetDynamicVertex;
 import me.udnekjupiter.physic.object.vertex.NetStaticVertex;
 import me.udnekjupiter.physic.object.vertex.NetVertex;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
@@ -35,13 +37,13 @@ public enum VertexColor {
 
     public final Color color;
     public final Class<? extends NetVertex> clazz;
-    VertexColor(Color color, Class<? extends NetVertex> clazz){
+    VertexColor(@NotNull Color color, Class<? extends NetVertex> clazz){
         this.color = color;
         this.clazz = clazz;
     }
-    abstract NetVertex getNewVertex();
+    abstract @Nullable NetVertex getNewVertex();
 
-    public static NetVertex getVertex(Color color){
+    public static @Nullable NetVertex getVertex(@NotNull Color color){
         for (VertexColor vertex : VertexColor.values()) {
             if (color.getRGB() == vertex.color.getRGB()){
                 return vertex.getNewVertex();
@@ -50,7 +52,7 @@ public enum VertexColor {
         return VertexColor.UNKNOWN.getNewVertex();
     }
 
-    public static Color getColorFromVertex(NetVertex netVertex){
+    public static @NotNull Color getColorFromVertex(@NotNull NetVertex netVertex){
         for (VertexColor vertex : VertexColor.values()) {
             Class<? extends NetVertex> clazz = netVertex.getClass();
             if (vertex.clazz == clazz){

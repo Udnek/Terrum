@@ -12,7 +12,6 @@ import me.udnekjupiter.app.util.DebugMenu;
 import me.udnekjupiter.app.util.VideoRecorder;
 import me.udnekjupiter.app.window.Window;
 import me.udnekjupiter.graphic.engine.GraphicEngine;
-import me.udnekjupiter.graphic.engine.raytrace.KernelRayTracingEngine;
 import me.udnekjupiter.physic.engine.PhysicEngine;
 import me.udnekjupiter.util.Utils;
 import org.jetbrains.annotations.NotNull;
@@ -190,9 +189,7 @@ public class StandartApplication implements ConsoleListener, ControllerListener,
     @Override
     public void stop(){
         isRunning = false;
-        if (graphicEngine instanceof KernelRayTracingEngine kernel){
-            kernel.stop();
-        }
+        graphicEngine.terminate();
         videoRecorder.save();
         System.exit(0);
     }

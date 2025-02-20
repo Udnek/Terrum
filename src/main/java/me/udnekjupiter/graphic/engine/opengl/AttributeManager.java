@@ -22,7 +22,7 @@ public class AttributeManager implements Initializable {
     @Override
     public void initialize(){
         addAttribute("position", 3);
-        addAttribute("color", 3);
+        addAttribute("color", 4);
         addAttribute("texcoord", 2);
 
 
